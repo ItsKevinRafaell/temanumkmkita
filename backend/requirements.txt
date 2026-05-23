@@ -1,0 +1,9 @@
+fastapi>=0.111
+a2wsgi
+uvicorn[standard]
+sqlalchemy>=2.0
+pymysql
+cryptography
+python-dotenv
+pydantic>=2.0
+python-jose[cryptography]
