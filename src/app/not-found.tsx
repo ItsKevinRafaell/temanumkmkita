@@ -20,19 +20,16 @@ export default function NotFound() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <div className="relative">
-              <span className="text-[160px] sm:text-[200px] font-extrabold text-brand-dark/6 leading-none select-none">
-                404
-              </span>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="inline-flex items-center gap-2 bg-accent/10 border border-accent/30 px-4 py-1.5 rounded-full">
-                  <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-                  <span className="text-sm font-semibold text-brand-dark">Halaman Tidak Ditemukan</span>
-                </div>
-              </div>
+            <div className="inline-flex items-center gap-2 bg-accent/10 border border-accent/30 px-4 py-1.5 rounded-full mb-6">
+              <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
+              <span className="text-sm font-semibold text-brand-dark">Halaman Tidak Ditemukan</span>
             </div>
 
-            <h1 className="text-4xl sm:text-5xl font-extrabold text-brand-dark mt-4 mb-4">
+            <div className="text-[160px] sm:text-[200px] font-extrabold text-brand-dark/6 leading-none select-none">
+              404
+            </div>
+
+            <h1 className="text-4xl sm:text-5xl font-extrabold text-brand-dark mt-2 mb-4">
               Waduh, salah jalan!
             </h1>
             <p className="text-brand-dark/60 text-lg mb-10 max-w-md mx-auto">
@@ -47,7 +44,7 @@ export default function NotFound() {
                 Kembali ke Beranda
               </Link>
               <Link
-                href="/layanan"
+                href="/layanan/web-development"
                 className="text-brand-dark font-semibold px-8 py-4 rounded-full border border-brand-dark/20 hover:border-brand-dark/40 transition-colors"
               >
                 Lihat Layanan
