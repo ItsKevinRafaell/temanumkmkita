@@ -1,30 +1,16 @@
 "use client";
 
 import { motion } from "framer-motion";
+import BlobDecoration from "@/components/ui/BlobDecoration";
 
 const words = "Bisnis kamu layak ditemukan online.".split(" ");
 
 export default function HeroSection() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-canvas pt-16">
-      {/* Animated gradient orbs */}
-      <div className="absolute inset-0 pointer-events-none">
-        <motion.div
-          animate={{ x: [0, 40, -20, 0], y: [0, -30, 20, 0] }}
-          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-1/4 left-1/4 w-96 h-96 bg-accent/20 rounded-full blur-3xl"
-        />
-        <motion.div
-          animate={{ x: [0, -30, 50, 0], y: [0, 40, -20, 0] }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-          className="absolute bottom-1/3 right-1/4 w-72 h-72 bg-accent/15 rounded-full blur-3xl"
-        />
-        <motion.div
-          animate={{ x: [0, 20, -40, 0], y: [0, -50, 30, 0] }}
-          transition={{ duration: 14, repeat: Infinity, ease: "easeInOut", delay: 4 }}
-          className="absolute top-1/2 right-1/3 w-56 h-56 bg-accent/10 rounded-full blur-2xl"
-        />
-      </div>
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
+      {/* Organic blobs */}
+      <BlobDecoration position="top-right" size={480} opacity={0.25} shape={1} />
+      <BlobDecoration position="bottom-left" size={360} opacity={0.18} shape={2} />
 
       <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         {/* Badge */}
@@ -45,7 +31,7 @@ export default function HeroSection() {
               key={i}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 + i * 0.08, duration: 0.4, ease: "easeOut" }}
+              transition={{ delay: 0.3 + i * 0.07, duration: 0.4, ease: "easeOut" }}
               className="inline-block mr-[0.25em]"
             >
               {word === "online." ? (
@@ -77,7 +63,7 @@ export default function HeroSection() {
             href="https://wa.me/6289501925395?text=Halo%2C+saya+ingin+konsultasi+gratis"
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-accent text-brand-dark font-bold px-8 py-4 rounded-full text-lg hover:bg-accent/90 hover:scale-105 transition-all duration-200 shadow-lg shadow-accent/30"
+            className="bg-accent text-white font-bold px-8 py-4 rounded-full text-lg hover:bg-accent/90 hover:scale-105 transition-all duration-200 shadow-lg shadow-accent/30"
           >
             Konsultasi Gratis →
           </a>
@@ -87,22 +73,6 @@ export default function HeroSection() {
           >
             Lihat Layanan
           </a>
-        </motion.div>
-
-        {/* Scroll hint */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2, duration: 0.5 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2"
-        >
-          <motion.div
-            animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity }}
-            className="w-6 h-10 border-2 border-brand-dark/30 rounded-full flex justify-center pt-2"
-          >
-            <div className="w-1 h-2 bg-brand-dark/30 rounded-full" />
-          </motion.div>
         </motion.div>
       </div>
     </section>

@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Package } from "@/lib/data/services";
 
@@ -34,53 +35,67 @@ export default function ServicePackages({ packages }: Props) {
               initial={{ opacity: 0, y: 30 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: i * 0.15, duration: 0.5 }}
-              className={cn(
-                "rounded-2xl p-8 relative",
-                pkg.highlighted
-                  ? "bg-brand-dark text-white ring-2 ring-accent scale-105"
-                  : "bg-white border border-brand-dark/10"
-              )}
+              className={cn(pkg.highlighted ? "scale-105" : "")}
             >
-              {pkg.highlighted && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-accent text-brand-dark text-xs font-bold px-4 py-1 rounded-full">
-                  Paling Populer
+              {pkg.highlighted ? (
+                <div className="relative p-[1.5px] rounded-[17px] bg-gradient-to-b from-accent/60 to-accent/20">
+                  <div className="bg-brand-dark rounded-2xl p-8 relative h-full">
+                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-accent text-white text-xs font-bold px-4 py-1 rounded-full">
+                      Paling Populer
+                    </div>
+
+                    <div className="font-bold text-lg mb-1 text-white">{pkg.name}</div>
+                    <div className="text-3xl font-extrabold mb-1 text-accent">{pkg.price}</div>
+                    {pkg.period && (
+                      <div className="text-sm mb-6 text-white/60">{pkg.period}</div>
+                    )}
+
+                    <ul className="space-y-3 mb-8">
+                      {pkg.features.map((feature, j) => (
+                        <li key={j} className="flex items-start gap-2 text-sm">
+                          <Check size={15} className="text-accent mt-0.5 flex-shrink-0" />
+                          <span className="text-white/80">{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+
+                    <a
+                      href="https://wa.me/6289501925395?text=Halo%2C+saya+tertarik+dengan+paket"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block text-center font-bold py-3 rounded-full transition-colors bg-accent text-white hover:bg-accent/90"
+                    >
+                      Pilih Paket Ini
+                    </a>
+                  </div>
+                </div>
+              ) : (
+                <div className="rounded-2xl p-8 relative bg-white border border-brand-dark/10 card-shadow hover:card-shadow-hover hover:-translate-y-1 transition-all duration-300">
+                  <div className="font-bold text-lg mb-1 text-brand-dark">{pkg.name}</div>
+                  <div className="text-3xl font-extrabold mb-1 text-brand-dark">{pkg.price}</div>
+                  {pkg.period && (
+                    <div className="text-sm mb-6 text-brand-dark/50">{pkg.period}</div>
+                  )}
+
+                  <ul className="space-y-3 mb-8">
+                    {pkg.features.map((feature, j) => (
+                      <li key={j} className="flex items-start gap-2 text-sm">
+                        <Check size={15} className="text-accent mt-0.5 flex-shrink-0" />
+                        <span className="text-brand-dark/70">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <a
+                    href="https://wa.me/6289501925395?text=Halo%2C+saya+tertarik+dengan+paket"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block text-center font-bold py-3 rounded-full transition-colors border border-brand-dark/20 text-brand-dark hover:border-brand-dark/40"
+                  >
+                    Pilih Paket Ini
+                  </a>
                 </div>
               )}
-
-              <div className={cn("font-bold text-lg mb-1", pkg.highlighted ? "text-white" : "text-brand-dark")}>
-                {pkg.name}
-              </div>
-              <div className={cn("text-3xl font-extrabold mb-1", pkg.highlighted ? "text-accent" : "text-brand-dark")}>
-                {pkg.price}
-              </div>
-              {pkg.period && (
-                <div className={cn("text-sm mb-6", pkg.highlighted ? "text-white/60" : "text-brand-dark/50")}>
-                  {pkg.period}
-                </div>
-              )}
-
-              <ul className="space-y-3 mb-8">
-                {pkg.features.map((feature, j) => (
-                  <li key={j} className="flex items-start gap-2 text-sm">
-                    <span className="text-accent font-bold mt-0.5">✓</span>
-                    <span className={pkg.highlighted ? "text-white/80" : "text-brand-dark/70"}>{feature}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <a
-                href="https://wa.me/6289501925395?text=Halo%2C+saya+tertarik+dengan+paket"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={cn(
-                  "block text-center font-bold py-3 rounded-full transition-colors",
-                  pkg.highlighted
-                    ? "bg-accent text-brand-dark hover:bg-accent/90"
-                    : "border border-brand-dark/20 text-brand-dark hover:border-brand-dark/40"
-                )}
-              >
-                Pilih Paket Ini
-              </a>
             </motion.div>
           ))}
         </div>

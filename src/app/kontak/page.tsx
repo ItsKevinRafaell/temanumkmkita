@@ -125,7 +125,7 @@ export default function KontakPage() {
 
                   <button
                     type="submit"
-                    className="w-full bg-accent text-brand-dark font-bold py-4 rounded-xl text-lg hover:bg-accent/90 hover:scale-[1.01] transition-all duration-200 shadow-lg shadow-accent/20"
+                    className="w-full bg-accent text-white font-bold py-4 rounded-xl text-lg hover:bg-accent/90 hover:scale-[1.01] transition-all duration-200 shadow-lg shadow-accent/20"
                   >
                     Kirim via WhatsApp →
                   </button>

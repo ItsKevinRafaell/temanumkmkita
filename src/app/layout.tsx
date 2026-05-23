@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
+import AnimatedDots from "@/components/ui/AnimatedDots";
 import "./globals.css";
 
 const jakarta = Plus_Jakarta_Sans({
@@ -30,8 +31,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="id">
-      <body className={`${jakarta.variable} font-sans antialiased bg-canvas text-brand-dark`}>
-        {children}
+      <body className={`${jakarta.variable} font-sans antialiased bg-canvas text-brand-dark noise`}>
+        <AnimatedDots />
+        <div className="relative" style={{ zIndex: 1 }}>
+          {children}
+        </div>
       </body>
     </html>
   );

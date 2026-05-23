@@ -2,8 +2,10 @@
 
 import { useRef, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import { cn } from "@/lib/utils";
+import Logo from "@/components/ui/Logo";
 
 const navLinks = [
   { label: "Layanan", href: "/layanan" },
@@ -19,6 +21,7 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const lastScrollY = useRef(0);
   const { scrollY } = useScroll();
+  const pathname = usePathname();
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     setScrolled(latest > 20);
@@ -37,34 +40,39 @@ export default function Navbar() {
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
         scrolled
-          ? "bg-canvas/80 backdrop-blur-md border-b border-brand-dark/10 shadow-sm"
+          ? "bg-canvas/85 backdrop-blur-md border-b border-brand-dark/8 shadow-sm"
           : "bg-transparent"
       )}
     >
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 group">
-            <div className="w-8 h-8 bg-accent rounded-lg flex items-center justify-center">
-              <span className="text-brand-dark font-black text-sm">T</span>
-            </div>
-            <span className="font-bold text-brand-dark text-sm leading-tight">
-              Teman<br />
-              <span className="text-accent">UMKM Kita</span>
-            </span>
-          </Link>
+          <Logo />
 
           {/* Desktop nav */}
-          <div className="hidden md:flex items-center gap-6">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="text-sm font-medium text-brand-dark/70 hover:text-brand-dark transition-colors"
-              >
-                {link.label}
-              </Link>
-            ))}
+          <div className="hidden md:flex items-center gap-1">
+            {navLinks.map((link) => {
+              const active = pathname === link.href || pathname.startsWith(link.href + "/");
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={cn(
+                    "nav-link-hover px-3 py-2 text-sm font-medium rounded-lg transition-colors",
+                    active
+                      ? "text-brand-dark"
+                      : "text-brand-dark/60 hover:text-brand-dark"
+                  )}
+                >
+                  {link.label}
+                  {active && (
+                    <motion.div
+                      layoutId="nav-indicator"
+                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-accent rounded-full"
+                    />
+                  )}
+                </Link>
+              );
+            })}
           </div>
 
           {/* CTA */}
@@ -73,7 +81,7 @@ export default function Navbar() {
               href="https://wa.me/6289501925395?text=Halo%2C+saya+ingin+konsultasi+gratis"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-accent text-brand-dark font-bold text-sm px-4 py-2 rounded-full hover:bg-accent/90 transition-colors"
+              className="bg-accent text-white font-bold text-sm px-5 py-2.5 rounded-full hover:bg-accent/90 hover:shadow-md transition-all duration-200"
             >
               Konsultasi Gratis
             </a>
@@ -85,10 +93,10 @@ export default function Navbar() {
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Toggle menu"
           >
-            <div className="w-5 flex flex-col gap-1">
-              <span className={cn("h-0.5 bg-current transition-all", mobileOpen && "rotate-45 translate-y-1.5")} />
-              <span className={cn("h-0.5 bg-current transition-all", mobileOpen && "opacity-0")} />
-              <span className={cn("h-0.5 bg-current transition-all", mobileOpen && "-rotate-45 -translate-y-1.5")} />
+            <div className="w-5 flex flex-col gap-1.5">
+              <span className={cn("h-0.5 bg-current transition-all duration-200", mobileOpen && "rotate-45 translate-y-2")} />
+              <span className={cn("h-0.5 bg-current transition-all duration-200", mobileOpen && "opacity-0")} />
+              <span className={cn("h-0.5 bg-current transition-all duration-200", mobileOpen && "-rotate-45 -translate-y-2")} />
             </div>
           </button>
         </div>
@@ -96,28 +104,35 @@ export default function Navbar() {
         {/* Mobile menu */}
         {mobileOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -10 }}
+            initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
-            className="md:hidden py-4 border-t border-brand-dark/10"
+            className="md:hidden py-4 border-t border-brand-dark/8 space-y-1"
           >
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="block py-2 text-sm font-medium text-brand-dark/70 hover:text-brand-dark"
+                className={cn(
+                  "block px-3 py-2.5 rounded-lg text-sm font-medium transition-colors",
+                  pathname === link.href
+                    ? "bg-accent/10 text-brand-dark"
+                    : "text-brand-dark/60 hover:text-brand-dark hover:bg-brand-dark/5"
+                )}
                 onClick={() => setMobileOpen(false)}
               >
                 {link.label}
               </Link>
             ))}
-            <a
-              href="https://wa.me/6289501925395?text=Halo%2C+saya+ingin+konsultasi+gratis"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-3 block text-center bg-accent text-brand-dark font-bold text-sm px-4 py-2 rounded-full"
-            >
-              Konsultasi Gratis
-            </a>
+            <div className="pt-2">
+              <a
+                href="https://wa.me/6289501925395?text=Halo%2C+saya+ingin+konsultasi+gratis"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block text-center bg-accent text-white font-bold text-sm px-4 py-3 rounded-full"
+              >
+                Konsultasi Gratis
+              </a>
+            </div>
           </motion.div>
         )}
       </nav>

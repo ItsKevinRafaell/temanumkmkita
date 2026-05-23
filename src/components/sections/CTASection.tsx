@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import { MessageCircle, Clock, ShieldCheck } from "lucide-react";
 
 function MagneticButton() {
   const ref = useRef<HTMLAnchorElement>(null);
@@ -36,7 +37,7 @@ function MagneticButton() {
       onMouseLeave={handleLeave}
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.98 }}
-      className="inline-block bg-accent text-brand-dark font-bold text-xl px-10 py-5 rounded-full shadow-2xl shadow-accent/40 cursor-pointer"
+      className="inline-block bg-accent text-white font-bold text-xl px-10 py-5 rounded-full shadow-2xl shadow-accent/40 cursor-pointer"
     >
       Mulai Sekarang, Gratis →
     </motion.a>
@@ -47,27 +48,42 @@ export default function CTASection() {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
 
   return (
-    <section ref={ref} className="py-24 bg-canvas overflow-hidden">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <section ref={ref} className="relative py-24">
+
+      <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
-          <span className="text-accent font-bold text-sm uppercase tracking-wider">Tunggu Apa Lagi?</span>
+          <span className="text-accent font-bold text-sm uppercase tracking-wider">
+            Tunggu Apa Lagi?
+          </span>
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-brand-dark mt-3 mb-6 leading-tight">
-            Waktunya bisnismu<br />
+            Waktunya bisnismu
+            <br />
             <span className="text-accent">ditemukan dunia</span>
           </h2>
           <p className="text-brand-dark/60 text-xl mb-10 max-w-2xl mx-auto">
-            Konsultasi gratis, tanpa tekanan, tanpa syarat. Ceritakan bisnismu dan kami bantu temukan solusinya.
+            Konsultasi gratis, tanpa tekanan, tanpa syarat. Ceritakan bisnismu
+            dan kami bantu temukan solusinya.
           </p>
 
           <MagneticButton />
 
-          <p className="mt-6 text-brand-dark/40 text-sm">
-            WhatsApp langsung · Respons cepat · Konsultasi gratis
-          </p>
+          <div className="mt-6 flex items-center justify-center gap-6 text-brand-dark/40 text-xs">
+            <span className="flex items-center gap-1.5">
+              <MessageCircle size={13} /> WhatsApp langsung
+            </span>
+            <span className="w-px h-3 bg-brand-dark/20" />
+            <span className="flex items-center gap-1.5">
+              <Clock size={13} /> Respons &lt; 2 jam
+            </span>
+            <span className="w-px h-3 bg-brand-dark/20" />
+            <span className="flex items-center gap-1.5">
+              <ShieldCheck size={13} /> Konsultasi gratis
+            </span>
+          </div>
         </motion.div>
       </div>
     </section>

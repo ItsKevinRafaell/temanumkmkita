@@ -60,12 +60,12 @@ export default function LayananPage() {
         {/* Services grid */}
         <section className="pb-24 bg-canvas">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="flex flex-wrap justify-center gap-6">
               {allServices.map((service) => (
                 <Link
                   key={service.slug}
                   href={`/layanan/${service.slug}`}
-                  className="group bg-white rounded-2xl p-8 border border-brand-dark/8 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 shine-sweep"
+                  className="group bg-white rounded-2xl p-8 border border-brand-dark/8 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 shine-sweep w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]"
                 >
                   <div className="text-4xl mb-4">{service.icon}</div>
                   <h2 className="font-bold text-brand-dark text-xl mb-3 group-hover:text-accent transition-colors">
@@ -84,19 +84,19 @@ export default function LayananPage() {
         </section>
 
         {/* CTA */}
-        <section className="py-20 bg-brand-dark">
+        <section className="py-20 bg-accent">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-4">
               Tidak yakin layanan mana yang tepat?
             </h2>
-            <p className="text-white/60 mb-8">
+            <p className="text-white/70 mb-8">
               Ceritakan bisnismu dan kami bantu rekomendasikan solusi terbaik, gratis.
             </p>
             <a
               href="https://wa.me/6289501925395?text=Halo%2C+saya+ingin+konsultasi+layanan+yang+tepat+untuk+bisnis+saya"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block bg-accent text-brand-dark font-bold px-8 py-4 rounded-full text-lg hover:bg-accent/90 transition-colors"
+              className="inline-block bg-brand-dark text-white font-bold px-8 py-4 rounded-full text-lg hover:bg-brand-dark/90 transition-colors"
             >
               Konsultasi Gratis →
             </a>

@@ -1,13 +1,25 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
+import { Globe, MapPin, Smartphone, Wrench, PenLine, ChevronRight } from "lucide-react";
 import type { ServiceData } from "@/lib/data/services";
+
+const iconMap: Record<string, React.ElementType> = {
+  "web-development": Globe,
+  "seo-google-maps": MapPin,
+  "kelola-sosial-media": Smartphone,
+  "maintenance-website": Wrench,
+  "desain-logo": PenLine,
+};
 
 interface Props {
   service: ServiceData;
 }
 
 export default function ServiceHero({ service }: Props) {
+  const IconComponent = iconMap[service.slug] || Globe;
+
   return (
     <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden bg-canvas pt-20 pb-16">
       <div className="absolute inset-0 pointer-events-none">
@@ -19,9 +31,16 @@ export default function ServiceHero({ service }: Props) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="text-5xl mb-6"
         >
-          {service.icon}
+          <div className="flex items-center gap-2 text-sm text-brand-dark/40 mb-6 justify-center">
+            <Link href="/layanan" className="hover:text-brand-dark transition-colors">Layanan</Link>
+            <ChevronRight size={14} />
+            <span className="text-brand-dark/70 font-medium">{service.title}</span>
+          </div>
+
+          <div className="w-16 h-16 bg-accent/10 rounded-2xl flex items-center justify-center mb-6 mx-auto">
+            <IconComponent size={32} className="text-accent" />
+          </div>
         </motion.div>
 
         <motion.div
@@ -70,7 +89,7 @@ export default function ServiceHero({ service }: Props) {
             href={`https://wa.me/6289501925395?text=Halo%2C+saya+tertarik+dengan+layanan+${encodeURIComponent(service.title)}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-accent text-brand-dark font-bold px-8 py-4 rounded-full text-lg hover:bg-accent/90 hover:scale-105 transition-all duration-200 shadow-lg shadow-accent/30 inline-block"
+            className="bg-accent text-white font-bold px-8 py-4 rounded-full text-lg hover:bg-accent/90 hover:scale-105 transition-all duration-200 shadow-lg shadow-accent/30 inline-block"
           >
             Konsultasi Gratis →
           </a>

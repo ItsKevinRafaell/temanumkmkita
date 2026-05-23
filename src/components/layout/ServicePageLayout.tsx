@@ -42,19 +42,19 @@ export default function ServicePageLayout({ service }: Props) {
         <ServiceFAQ faqs={service.faqs} title={service.title} />
 
         {/* CTA */}
-        <section className="py-20 bg-brand-dark">
+        <section className="py-20 bg-accent">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-4">
               Tertarik dengan layanan ini?
             </h2>
-            <p className="text-white/60 mb-8">
+            <p className="text-white/70 mb-8">
               Konsultasi gratis, tidak ada tekanan. Ceritakan kebutuhanmu.
             </p>
             <a
               href={`https://wa.me/6289501925395?text=Halo%2C+saya+tertarik+dengan+layanan+${encodeURIComponent(service.title)}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block bg-accent text-brand-dark font-bold px-8 py-4 rounded-full text-lg hover:bg-accent/90 transition-colors"
+              className="inline-block bg-brand-dark text-white font-bold px-8 py-4 rounded-full text-lg hover:bg-brand-dark/90 transition-colors"
             >
               Hubungi Kami via WhatsApp →
             </a>

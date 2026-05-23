@@ -1,7 +1,7 @@
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import HeroSection from "@/components/sections/HeroSection";
-import StatsSection from "@/components/sections/StatsSection";
+import MarqueeTicker from "@/components/sections/MarqueeTicker";
 import ProblemSection from "@/components/sections/ProblemSection";
 import LayananSection from "@/components/sections/LayananSection";
 import CaraKerjaSection from "@/components/sections/CaraKerjaSection";
@@ -14,7 +14,7 @@ export default function HomePage() {
       <Navbar />
       <main>
         <HeroSection />
-        <StatsSection />
+        <MarqueeTicker />
         <ProblemSection />
         <LayananSection />
         <CaraKerjaSection />
