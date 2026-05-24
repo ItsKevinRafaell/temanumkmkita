@@ -24,7 +24,7 @@ const layananLinks = [
   { label: "Desain Logo", href: "/layanan/desain-logo", icon: PenLine },
 ];
 
-const DARK_HERO_PAGES = ["/tentang-kami"];
+const DARK_HERO_PAGES: string[] = [];
 
 export default function Navbar() {
   const [hidden, setHidden] = useState(false);
