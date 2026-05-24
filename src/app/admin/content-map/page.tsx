@@ -8,7 +8,7 @@ import {
   useNodesState, useEdgesState,
   type Node, type Edge, type NodeMouseHandler, type OnNodeDrag,
 } from "@xyflow/react";
-import { FileText, LogOut, Map } from "lucide-react";
+import { FileText, LogOut } from "lucide-react";
 import { logout } from "@/lib/api/admin";
 import { adminListArticles, type AdminArticle } from "@/lib/api/admin";
 import {
