@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { Globe, ChevronLeft, ChevronRight } from "lucide-react";
@@ -12,32 +12,53 @@ export interface PortfolioItem {
   accent: string;
 }
 
+const AUTO_MS = 3500;
+const SCROLL_PX = 312; // card 288px + gap 24px
+
 export default function PortfolioSlider({ items }: { items: PortfolioItem[] }) {
   const trackRef = useRef<HTMLDivElement>(null);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
 
-  function scroll(dir: "left" | "right") {
-    trackRef.current?.scrollBy({
-      left: dir === "right" ? 312 : -312,
-      behavior: "smooth",
-    });
+  const scrollDir = useCallback((dir: "left" | "right") => {
+    const el = trackRef.current;
+    if (!el) return;
+    if (dir === "right" && el.scrollLeft + el.clientWidth >= el.scrollWidth - 4) {
+      el.scrollTo({ left: 0, behavior: "smooth" });
+    } else {
+      el.scrollBy({ left: dir === "right" ? SCROLL_PX : -SCROLL_PX, behavior: "smooth" });
+    }
+  }, []);
+
+  const resetTimer = useCallback(() => {
+    if (timerRef.current) clearInterval(timerRef.current);
+    timerRef.current = setInterval(() => scrollDir("right"), AUTO_MS);
+  }, [scrollDir]);
+
+  useEffect(() => {
+    resetTimer();
+    return () => { if (timerRef.current) clearInterval(timerRef.current); };
+  }, [resetTimer]);
+
+  function handleClick(dir: "left" | "right") {
+    scrollDir(dir);
+    resetTimer();
   }
 
+  const btnClass =
+    "hidden md:flex flex-shrink-0 w-10 h-10 rounded-full bg-white border border-brand-dark/10 card-shadow items-center justify-center text-brand-dark/40 hover:text-brand-dark hover:shadow-lg transition-all duration-200";
+
   return (
-    <div ref={ref} className="relative">
+    <div ref={ref} className="flex items-center gap-4">
       {/* Prev */}
-      <button
-        onClick={() => scroll("left")}
-        aria-label="Sebelumnya"
-        className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-5 z-10 w-10 h-10 rounded-full bg-white border border-brand-dark/10 card-shadow items-center justify-center text-brand-dark/40 hover:text-brand-dark hover:shadow-lg transition-all duration-200"
-      >
+      <button onClick={() => handleClick("left")} aria-label="Sebelumnya" className={btnClass}>
         <ChevronLeft size={18} />
       </button>
 
       {/* Track */}
       <div
         ref={trackRef}
-        className="flex gap-6 overflow-x-auto scrollbar-hide pb-2"
+        className="flex-1 flex gap-6 overflow-x-auto scrollbar-hide pb-2"
         style={{ scrollSnapType: "x mandatory" }}
       >
         {items.map((item, i) => (
@@ -66,11 +87,7 @@ export default function PortfolioSlider({ items }: { items: PortfolioItem[] }) {
       </div>
 
       {/* Next */}
-      <button
-        onClick={() => scroll("right")}
-        aria-label="Berikutnya"
-        className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-5 z-10 w-10 h-10 rounded-full bg-white border border-brand-dark/10 card-shadow items-center justify-center text-brand-dark/40 hover:text-brand-dark hover:shadow-lg transition-all duration-200"
-      >
+      <button onClick={() => handleClick("right")} aria-label="Berikutnya" className={btnClass}>
         <ChevronRight size={18} />
       </button>
     </div>
