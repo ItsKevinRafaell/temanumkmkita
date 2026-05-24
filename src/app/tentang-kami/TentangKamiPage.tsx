@@ -168,11 +168,11 @@ function ManifestoStrip() {
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-brand-dark leading-tight"
+          className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight"
         >
           Kami tidak sekadar mengerjakan proyek.
           <br />
-          <span className="text-brand-dark/60">Kami bagian dari tim kamu.</span>
+          <span className="text-white/60">Kami bagian dari tim kamu.</span>
         </motion.p>
       </div>
     </section>
@@ -203,7 +203,7 @@ function MisiNilaiSection() {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
 
   return (
-    <section ref={ref} className="py-28">
+    <section ref={ref} className="py-16">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -256,7 +256,7 @@ function TimSection() {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.15 });
 
   return (
-    <section ref={ref} className="py-28">
+    <section ref={ref} className="py-16">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
