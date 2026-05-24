@@ -154,8 +154,8 @@ export default function LayananSection() {
           ))}
         </div>
 
-        {/* Horizontal snap scroll — tablet/mobile */}
-        <div className="lg:hidden flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 -mx-4 px-4 scrollbar-hide">
+        {/* Card grid — mobile/tablet */}
+        <div className="lg:hidden grid grid-cols-1 sm:grid-cols-2 gap-4">
           {services.map((service, i) => (
             <motion.div
               key={service.href}
@@ -163,7 +163,6 @@ export default function LayananSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.07, duration: 0.4 }}
-              className="snap-start flex-shrink-0 w-[280px]"
             >
               <TiltCard service={service} className="h-full" />
             </motion.div>

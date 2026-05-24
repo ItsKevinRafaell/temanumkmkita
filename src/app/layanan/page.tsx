@@ -60,12 +60,12 @@ export default function LayananPage() {
         {/* Services grid */}
         <section className="pb-24 bg-canvas">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex flex-wrap justify-center gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {allServices.map((service) => (
                 <Link
                   key={service.slug}
                   href={`/layanan/${service.slug}`}
-                  className="group bg-white rounded-2xl p-8 border border-brand-dark/8 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 shine-sweep w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]"
+                  className="group bg-white rounded-2xl p-8 border border-brand-dark/8 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 shine-sweep"
                 >
                   <div className="text-4xl mb-4">{service.icon}</div>
                   <h2 className="font-bold text-brand-dark text-xl mb-3 group-hover:text-accent transition-colors">

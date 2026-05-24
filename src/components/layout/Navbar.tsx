@@ -64,7 +64,7 @@ export default function Navbar() {
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
         scrolled
           ? "bg-canvas/85 backdrop-blur-md border-b border-brand-dark/8 shadow-sm"
-          : "bg-transparent"
+          : "bg-white/98 border-b border-brand-dark/6 md:bg-transparent md:border-transparent md:shadow-none"
       )}
     >
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

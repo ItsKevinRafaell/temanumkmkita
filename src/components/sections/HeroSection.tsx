@@ -9,8 +9,8 @@ export default function HeroSection() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
       {/* Organic blobs */}
-      <BlobDecoration position="top-right" size={480} opacity={0.25} shape={1} />
-      <BlobDecoration position="bottom-left" size={360} opacity={0.18} shape={2} />
+      <BlobDecoration position="top-right" size={480} opacity={0.13} shape={1} />
+      <BlobDecoration position="bottom-left" size={360} opacity={0.09} shape={2} />
 
       <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         {/* Badge */}
