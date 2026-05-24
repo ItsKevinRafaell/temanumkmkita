@@ -8,7 +8,7 @@ import ConfirmModal from "@/components/ui/ConfirmModal";
 import {
   PenLine, Trash2, Plus, LogOut, FileText,
   CheckCircle, Clock, ChevronLeft, ChevronRight,
-  ArrowUpDown, Star, Map,
+  ArrowUpDown, Star, Map as MapIcon,
 } from "lucide-react";
 
 function formatDate(iso: string | null) {
@@ -114,7 +114,7 @@ export default function AdminPostsPage() {
               href="/admin/content-map"
               className="flex items-center gap-2 border border-[#242423]/12 text-[#242423]/55 font-semibold px-3 py-2.5 rounded-xl text-sm hover:border-[#242423]/25 hover:text-[#242423] transition"
             >
-              <Map size={13} /> Content Map
+              <MapIcon size={13} /> Content Map
             </Link>
             <Link
               href="/admin/posts/new"

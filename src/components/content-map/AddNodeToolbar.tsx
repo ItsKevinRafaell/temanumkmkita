@@ -136,7 +136,7 @@ export default function AddNodeToolbar({ pillars, unassignedArticles, onRefresh 
                           checked={selectedArticles.has(a.id)}
                           onChange={e => {
                             const s = new Set(selectedArticles);
-                            e.target.checked ? s.add(a.id) : s.delete(a.id);
+                            if (e.target.checked) { s.add(a.id); } else { s.delete(a.id); }
                             setSelectedArticles(s);
                           }}
                           className="mt-0.5 accent-[#f5a700]"
