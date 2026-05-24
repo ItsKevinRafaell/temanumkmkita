@@ -738,7 +738,16 @@ function NotionEditor({
       <SortableContext items={blocks.map((b) => b.id)} strategy={verticalListSortingStrategy}>
         <div>
           {blocks.length === 0 && (
-            <p className="text-sm text-[#242423]/25 py-2 px-7">{placeholder}</p>
+            <div
+              className="py-2 px-7 cursor-text"
+              onClick={() => {
+                const newItem = newBlockFromType("p");
+                onBlocksChange([newItem]);
+                focusBlock(newItem.id);
+              }}
+            >
+              <p className="text-sm text-[#242423]/25 select-none">{placeholder}</p>
+            </div>
           )}
           {blocks.map((item) => (
             <SortableNotionBlock key={item.id} item={item} callbacks={callbacks} />
@@ -838,7 +847,10 @@ export default function PostEditor({ initial = {} }: PostEditorProps) {
     initial.published_at ? initial.published_at.slice(0, 10) : new Date().toISOString().slice(0, 10)
   );
   const [coverImage, setCoverImage] = useState(initial.cover_image ?? "");
-  const [blockItems, setBlockItems] = useState<BlockItem[]>(() => parseBlockItems(initial.content));
+  const [blockItems, setBlockItems] = useState<BlockItem[]>(() => {
+    const parsed = parseBlockItems(initial.content);
+    return parsed.length > 0 ? parsed : [newBlockFromType("p")];
+  });
   const [categories, setCategories] = useState<AdminCategory[]>([]);
   const [saving, setSaving] = useState(false);
   const [savingDraft, setSavingDraft] = useState(false);

@@ -7,3 +7,4 @@ cryptography
 python-dotenv
 pydantic>=2.0
 python-jose[cryptography]
+Pillow>=10.0
