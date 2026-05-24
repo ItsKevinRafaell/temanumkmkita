@@ -33,6 +33,8 @@ export default function ServiceHero({ service }: Props) {
           transition={{ duration: 0.5 }}
         >
           <div className="flex items-center gap-2 text-sm text-brand-dark/40 mb-6 justify-center">
+            <Link href="/" className="hover:text-brand-dark transition-colors">Beranda</Link>
+            <ChevronRight size={14} />
             <Link href="/layanan" className="hover:text-brand-dark transition-colors">Layanan</Link>
             <ChevronRight size={14} />
             <span className="text-brand-dark/70 font-medium">{service.title}</span>

@@ -187,6 +187,57 @@ export default function WebDevelopmentPage() {
           </div>
         </section>
 
+        {/* ── Portfolio Placeholder ──────────────────────────────────── */}
+        <section ref={portfolioRef} className="py-20">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={portfolioInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5 }}
+              className="mb-12"
+            >
+              <span className="text-accent font-bold text-sm uppercase tracking-wider block mb-3">
+                Portofolio
+              </span>
+              <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+                <h2 className="text-4xl font-extrabold text-brand-dark">
+                  Website yang sudah<br />
+                  <span className="text-accent">kami bangun</span>
+                </h2>
+                <span className="inline-flex items-center gap-2 bg-brand-dark/5 border border-brand-dark/8 px-4 py-2 rounded-full text-xs text-brand-dark/50 font-semibold flex-shrink-0">
+                  Portofolio lengkap segera hadir
+                </span>
+              </div>
+            </motion.div>
+
+            <div className="grid md:grid-cols-3 gap-6">
+              {portfolioItems.map((item, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 24 }}
+                  animate={portfolioInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ delay: i * 0.1, duration: 0.5 }}
+                  className="bg-white/80 backdrop-blur-sm border border-brand-dark/8 card-shadow rounded-2xl overflow-hidden group"
+                >
+                  {/* Image placeholder */}
+                  <div className={`h-44 ${item.accent} border-b border-brand-dark/6 flex items-center justify-center relative`}>
+                    <Globe size={36} className="text-brand-dark/15" />
+                    <div className="absolute top-3 right-3">
+                      <span className="bg-white/80 backdrop-blur-sm text-brand-dark/50 text-xs font-semibold px-2.5 py-1 rounded-full border border-brand-dark/8">
+                        {item.plan}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="p-5">
+                    <div className="text-xs text-accent font-bold uppercase tracking-wider mb-1">{item.category}</div>
+                    <div className="font-bold text-brand-dark">{item.name}</div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* ── Pricing Cards ─────────────────────────────────────────── */}
         <section ref={pricingRef} className="py-10 pb-20">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -251,57 +302,6 @@ export default function WebDevelopmentPage() {
                   >
                     {plan.cta}
                   </a>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ── Portfolio Placeholder ──────────────────────────────────── */}
-        <section ref={portfolioRef} className="py-20">
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={portfolioInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5 }}
-              className="mb-12"
-            >
-              <span className="text-accent font-bold text-sm uppercase tracking-wider block mb-3">
-                Portofolio
-              </span>
-              <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
-                <h2 className="text-4xl font-extrabold text-brand-dark">
-                  Website yang sudah<br />
-                  <span className="text-accent">kami bangun</span>
-                </h2>
-                <span className="inline-flex items-center gap-2 bg-brand-dark/5 border border-brand-dark/8 px-4 py-2 rounded-full text-xs text-brand-dark/50 font-semibold flex-shrink-0">
-                  Portofolio lengkap segera hadir
-                </span>
-              </div>
-            </motion.div>
-
-            <div className="grid md:grid-cols-3 gap-6">
-              {portfolioItems.map((item, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 24 }}
-                  animate={portfolioInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ delay: i * 0.1, duration: 0.5 }}
-                  className="bg-white/80 backdrop-blur-sm border border-brand-dark/8 card-shadow rounded-2xl overflow-hidden group"
-                >
-                  {/* Image placeholder */}
-                  <div className={`h-44 ${item.accent} border-b border-brand-dark/6 flex items-center justify-center relative`}>
-                    <Globe size={36} className="text-brand-dark/15" />
-                    <div className="absolute top-3 right-3">
-                      <span className="bg-white/80 backdrop-blur-sm text-brand-dark/50 text-xs font-semibold px-2.5 py-1 rounded-full border border-brand-dark/8">
-                        {item.plan}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="p-5">
-                    <div className="text-xs text-accent font-bold uppercase tracking-wider mb-1">{item.category}</div>
-                    <div className="font-bold text-brand-dark">{item.name}</div>
-                  </div>
                 </motion.div>
               ))}
             </div>

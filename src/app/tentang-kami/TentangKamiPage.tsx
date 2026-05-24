@@ -2,7 +2,8 @@
 
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { Users, BarChart2, Target } from "lucide-react";
+import { Users, BarChart2, Target, ChevronRight } from "lucide-react";
+import Link from "next/link";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import CTASection from "@/components/sections/CTASection";
@@ -28,6 +29,11 @@ function HeroSection() {
       <BlobDecoration position="bottom-left" size={380} opacity={0.15} shape={2} />
 
       <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="flex items-center justify-center gap-1.5 text-xs text-brand-dark/40 font-medium mb-8">
+          <Link href="/" className="hover:text-brand-dark transition-colors">Beranda</Link>
+          <ChevronRight size={12} />
+          <span className="text-brand-dark/70">Tentang Kami</span>
+        </div>
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}

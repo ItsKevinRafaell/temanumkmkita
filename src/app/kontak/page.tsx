@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { MessageCircle, Mail, AtSign, Clock, MapPin, CheckCircle, Send } from "lucide-react";
+import { MessageCircle, Mail, AtSign, Clock, MapPin, CheckCircle, Send, ChevronRight } from "lucide-react";
+import Link from "next/link";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import BlobDecoration from "@/components/ui/BlobDecoration";
@@ -90,6 +91,11 @@ export default function KontakPage() {
           <BlobDecoration position="top-right" size={380} opacity={0.18} shape={1} />
 
           <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center gap-1.5 text-xs text-brand-dark/40 font-medium mb-6">
+              <Link href="/" className="hover:text-brand-dark transition-colors">Beranda</Link>
+              <ChevronRight size={12} />
+              <span className="text-brand-dark/70">Kontak</span>
+            </div>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}

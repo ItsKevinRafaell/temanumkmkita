@@ -4,7 +4,7 @@ import { useState, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from "framer-motion";
-import { Globe, MapPin, Share2, Wrench, PenLine, ChevronDown, ShoppingBag } from "lucide-react";
+import { Globe, MapPin, Share2, Wrench, PenLine, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Logo from "@/components/ui/Logo";
 
@@ -15,16 +15,13 @@ const navLinks = [
   { label: "Kontak", href: "/kontak" },
 ];
 
-const produkLinks = [
-  { label: "Web Development (Bulanan)", href: "/produk/web-development-bulanan", icon: ShoppingBag },
-];
-
 const layananLinks = [
   { label: "Web Development", href: "/layanan/web-development", icon: Globe },
   { label: "SEO & Google Maps", href: "/layanan/seo-google-maps", icon: MapPin },
   { label: "Kelola Sosial Media", href: "/layanan/kelola-sosial-media", icon: Share2 },
   { label: "Maintenance Website", href: "/layanan/maintenance", icon: Wrench },
   { label: "Desain Logo", href: "/layanan/desain-logo", icon: PenLine },
+  { label: "Web Development (Bulanan)", href: "/layanan/web-development-bulanan", icon: Globe },
 ];
 
 const DARK_HERO_PAGES: string[] = [];
@@ -35,8 +32,6 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [layananOpen, setLayananOpen] = useState(false);
   const [layananMobileOpen, setLayananMobileOpen] = useState(false);
-  const [produkOpen, setProdukOpen] = useState(false);
-  const [produkMobileOpen, setProdukMobileOpen] = useState(false);
   const lastScrollY = useRef(0);
   const layananRef = useRef<HTMLDivElement>(null);
   const { scrollY } = useScroll();
@@ -184,64 +179,6 @@ export default function Navbar() {
               );
             })}
 
-            {/* Produk dropdown */}
-            <div
-              className="relative"
-              onMouseEnter={() => setProdukOpen(true)}
-              onMouseLeave={() => setProdukOpen(false)}
-            >
-              <button
-                className={cn(
-                  "nav-link-hover px-3 py-2 text-sm font-medium rounded-lg transition-colors flex items-center gap-1 relative",
-                  pathname.startsWith("/produk") ? activeLinkColor : linkColor
-                )}
-              >
-                Produk
-                <ChevronDown
-                  size={14}
-                  className={cn("transition-transform duration-200", produkOpen && "rotate-180")}
-                />
-                {pathname.startsWith("/produk") && (
-                  <motion.div
-                    layoutId="nav-indicator"
-                    className="absolute bottom-0 left-0 right-0 h-0.5 bg-accent rounded-full"
-                  />
-                )}
-              </button>
-
-              <AnimatePresence>
-                {produkOpen && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -8, scale: 0.97 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: -8, scale: 0.97 }}
-                    transition={{ duration: 0.15 }}
-                    className="absolute top-full left-0 mt-2 bg-canvas/95 backdrop-blur-md border border-brand-dark/8 rounded-2xl shadow-lg p-2 min-w-[240px] z-50"
-                  >
-                    {produkLinks.map((item) => {
-                      const Icon = item.icon;
-                      const active = pathname === item.href;
-                      return (
-                        <Link
-                          key={item.href}
-                          href={item.href}
-                          onClick={() => setProdukOpen(false)}
-                          className={cn(
-                            "flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors",
-                            active
-                              ? "bg-accent/10 text-brand-dark"
-                              : "text-brand-dark/60 hover:text-brand-dark hover:bg-accent/8"
-                          )}
-                        >
-                          <Icon size={15} className={active ? "text-accent" : "text-brand-dark/40"} />
-                          {item.label}
-                        </Link>
-                      );
-                    })}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
           </div>
 
           {/* CTA */}
@@ -345,43 +282,6 @@ export default function Navbar() {
                 {link.label}
               </Link>
             ))}
-
-            {/* Mobile Produk dropdown */}
-            <div>
-              <button
-                onClick={() => setProdukMobileOpen(!produkMobileOpen)}
-                className={cn(
-                  "w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium transition-colors",
-                  pathname.startsWith("/produk")
-                    ? "bg-accent/10 text-brand-dark"
-                    : "text-brand-dark/60 hover:text-brand-dark hover:bg-brand-dark/5"
-                )}
-              >
-                Produk
-                <ChevronDown
-                  size={14}
-                  className={cn("transition-transform duration-200", produkMobileOpen && "rotate-180")}
-                />
-              </button>
-              {produkMobileOpen && (
-                <div className="pl-4 mt-1 space-y-0.5">
-                  {produkLinks.map((item) => {
-                    const Icon = item.icon;
-                    return (
-                      <Link
-                        key={item.href}
-                        href={item.href}
-                        className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-brand-dark/60 hover:text-brand-dark hover:bg-brand-dark/5 transition-colors"
-                        onClick={() => { setMobileOpen(false); setProdukMobileOpen(false); }}
-                      >
-                        <Icon size={14} className="text-brand-dark/30" />
-                        {item.label}
-                      </Link>
-                    );
-                  })}
-                </div>
-              )}
-            </div>
 
             <div className="pt-2">
               <a

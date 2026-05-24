@@ -23,7 +23,7 @@ export default function WebDevelopmentBulananPage() {
             <div className="flex items-center justify-center gap-1.5 text-xs text-brand-dark/40 font-medium mb-10">
               <Link href="/" className="hover:text-brand-dark transition-colors">Beranda</Link>
               <ChevronRight size={12} />
-              <span className="text-brand-dark/70">Produk</span>
+              <Link href="/layanan/web-development" className="hover:text-brand-dark transition-colors">Layanan</Link>
               <ChevronRight size={12} />
               <span className="text-brand-dark/70">Web Development Bulanan</span>
             </div>
