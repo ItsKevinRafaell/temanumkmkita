@@ -16,17 +16,6 @@ function formatDate(iso: string | null) {
   return new Date(iso).toLocaleDateString("id-ID", { day: "numeric", month: "short", year: "numeric" });
 }
 
-function getMonthOptions() {
-  const opts: { value: string; label: string }[] = [];
-  const now = new Date();
-  for (let i = 0; i < 12; i++) {
-    const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
-    const value = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
-    const label = d.toLocaleDateString("id-ID", { month: "long", year: "numeric" });
-    opts.push({ value, label });
-  }
-  return opts;
-}
 
 export default function AdminPostsPage() {
   const router = useRouter();
@@ -88,8 +77,6 @@ export default function AdminPostsPage() {
     router.push("/admin/login");
   }
 
-  const monthOptions = getMonthOptions();
-
   return (
     <div className="min-h-screen bg-[#fcfaf7]">
       {/* ── Top bar ─────────────────────────────────────────────────── */}
@@ -146,16 +133,12 @@ export default function AdminPostsPage() {
           </select>
 
           {/* Month filter */}
-          <select
+          <input
+            type="month"
             value={monthFilter}
             onChange={(e) => setMonthFilter(e.target.value)}
             className="border border-[#242423]/12 rounded-lg px-3 py-1.5 text-xs text-[#242423] bg-white focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30"
-          >
-            <option value="">Semua bulan</option>
-            {monthOptions.map((o) => (
-              <option key={o.value} value={o.value}>{o.label}</option>
-            ))}
-          </select>
+          />
 
           {/* Sort toggle */}
           <button
