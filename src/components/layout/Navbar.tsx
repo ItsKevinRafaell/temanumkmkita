@@ -17,11 +17,11 @@ const navLinks = [
 
 const layananLinks = [
   { label: "Web Development", href: "/layanan/web-development", icon: Globe },
-  { label: "SEO & Google Maps", href: "/layanan/seo-google-maps", icon: MapPin },
-  { label: "Kelola Sosial Media", href: "/layanan/kelola-sosial-media", icon: Share2 },
-  { label: "Maintenance Website", href: "/layanan/maintenance", icon: Wrench },
-  { label: "Desain Logo", href: "/layanan/desain-logo", icon: PenLine },
   { label: "Web Development (Bulanan)", href: "/layanan/web-development-bulanan", icon: Globe },
+  { label: "SEO & Google Maps", href: "/layanan/seo-google-maps", icon: MapPin },
+  { label: "Maintenance Website", href: "/layanan/maintenance", icon: Wrench },
+  { label: "Kelola Sosial Media", href: "/layanan/kelola-sosial-media", icon: Share2 },
+  { label: "Desain Logo", href: "/layanan/desain-logo", icon: PenLine },
 ];
 
 const DARK_HERO_PAGES: string[] = [];
