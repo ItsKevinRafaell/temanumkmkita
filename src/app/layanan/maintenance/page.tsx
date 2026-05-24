@@ -4,105 +4,93 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import {
-  Check, X, ChevronRight, ChevronDown, MapPin, FileText,
-  BarChart2, Search, MessageCircle, Star, TrendingUp,
+  Check, X, ChevronRight, ChevronDown, Wrench,
+  Shield, RefreshCw, Mail, MapPin, Zap, MessageCircle, Star,
 } from "lucide-react";
 import Link from "next/link";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import BlobDecoration from "@/components/ui/BlobDecoration";
-import PortfolioSlider from "@/components/sections/PortfolioSlider";
-
-// ─── Data ─────────────────────────────────────────────────────────────────────
 
 const WA_BASE = "https://wa.me/6289501925395?text=";
 
 const plans = [
   {
     id: "starter",
-    name: "SEO Starter",
-    price: "1.000.000",
-    tagline: "Untuk bisnis lokal yang baru mulai optimasi Google Maps dan pencarian organik.",
+    name: "Maintenance Starter",
+    price: "350.000",
+    tagline: "Untuk bisnis yang butuh proteksi dasar agar website tidak down atau kena hack.",
     features: [
-      "Setup & Update Foto Google Business Profile",
-      "2 Artikel Lokal per Bulan",
-      "On-Page Optimization Dasar",
-      "Laporan Performa Ringkas",
+      "Backup Mingguan (retensi 1 bulan)",
+      "Update WordPress Otomatis",
+      "Malware Scan Rutin",
     ],
     cta: "Pilih Starter",
-    wa: WA_BASE + encodeURIComponent("Halo, saya tertarik dengan paket SEO Starter."),
+    wa: WA_BASE + encodeURIComponent("Halo, saya tertarik dengan paket Maintenance Starter."),
     featured: false,
   },
   {
     id: "pro",
-    name: "SEO Pro",
-    price: "2.500.000",
+    name: "Maintenance Pro",
+    price: "750.000",
     badge: "Paling Populer",
-    tagline: "Untuk bisnis yang ingin mendominasi pencarian lokal dengan strategi terukur.",
+    tagline: "Untuk bisnis yang butuh maintenance + kelola email dan Google Maps.",
     features: [
-      "Full Management Google Business Profile",
-      "6–8 Artikel Strategis per Bulan",
-      "Audit Semrush + Analisis Keyword Gap",
-      "Laporan Detail Trafik & Ranking",
+      "Semua Starter +",
+      "Setup & Troubleshoot Email Profesional (Titan Mail)",
+      "Update Informasi Bisnis Dasar",
+      "Manajemen Google Maps",
     ],
     cta: "Pilih Pro",
-    wa: WA_BASE + encodeURIComponent("Halo, saya tertarik dengan paket SEO Pro."),
+    wa: WA_BASE + encodeURIComponent("Halo, saya tertarik dengan paket Maintenance Pro."),
     featured: true,
   },
   {
     id: "expert",
-    name: "SEO Expert",
-    price: "4.500.000",
-    tagline: "Untuk bisnis yang ingin jadi referensi utama di industrinya — lokal maupun nasional.",
+    name: "Maintenance Expert",
+    price: "1.500.000",
+    tagline: "Untuk bisnis yang butuh tim teknis on-call — prioritas respons, keamanan penuh.",
     features: [
-      "Full GBP Management + Reply Review Pelanggan",
-      "10–12 Artikel Otoritas per Bulan",
-      "Competitor Gap Analysis + CRO (Konversi)",
-      "Full Insight & Strategi Bulanan",
+      "Semua Pro +",
+      "Priority Response (diutamakan)",
+      "Ganti Teks/Gambar (Maks. 3x/bulan)",
+      "Security Hardening",
     ],
     cta: "Pilih Expert",
-    wa: WA_BASE + encodeURIComponent("Halo, saya tertarik dengan paket SEO Expert."),
+    wa: WA_BASE + encodeURIComponent("Halo, saya tertarik dengan paket Maintenance Expert."),
     featured: false,
   },
 ];
 
 const tableRows = [
-  { feature: "Artikel per Bulan", icon: FileText, starter: "2", pro: "6–8", expert: "10–12" },
-  { feature: "Google Business Profile", icon: MapPin, starter: "Dasar", pro: "Full", expert: "Full +" },
-  { feature: "On-Page Optimization", icon: Search, starter: true, pro: true, expert: true },
-  { feature: "Laporan Bulanan", icon: BarChart2, starter: "Ringkas", pro: "Detail", expert: "Full" },
-  { feature: "Audit Semrush", icon: null, starter: false, pro: true, expert: true },
-  { feature: "Keyword Gap Analysis", icon: null, starter: false, pro: true, expert: true },
-  { feature: "Reply Review Pelanggan", icon: MessageCircle, starter: false, pro: false, expert: true },
-  { feature: "Competitor Analysis", icon: null, starter: false, pro: false, expert: true },
-  { feature: "CRO (Konversi)", icon: TrendingUp, starter: false, pro: false, expert: true },
+  { feature: "Backup Mingguan", icon: RefreshCw, starter: true, pro: true, expert: true },
+  { feature: "WordPress Update", icon: null, starter: true, pro: true, expert: true },
+  { feature: "Malware Scan", icon: Shield, starter: true, pro: true, expert: true },
+  { feature: "Email Pro (Titan Mail)", icon: Mail, starter: false, pro: true, expert: true },
+  { feature: "Update Info Bisnis", icon: null, starter: false, pro: true, expert: true },
+  { feature: "Manajemen Google Maps", icon: MapPin, starter: false, pro: true, expert: true },
+  { feature: "Priority Response", icon: Zap, starter: false, pro: false, expert: true },
+  { feature: "Ganti Teks/Gambar", icon: null, starter: false, pro: false, expert: "3x/bln" },
+  { feature: "Security Hardening", icon: Shield, starter: false, pro: false, expert: true },
 ];
 
 const notes = [
   {
-    icon: TrendingUp,
-    title: "Hasil SEO",
-    text: "Hasil SEO terlihat dalam 3–6 bulan pertama. Kami laporan setiap bulan — transparan, bisa Anda cek sendiri.",
+    icon: MessageCircle,
+    title: "Laporan Bulanan",
+    text: "Laporan bulanan dikirim via WhatsApp — mencakup status backup, update, dan kondisi website.",
   },
   {
     icon: Check,
     title: "Kontrak",
-    text: "Tidak ada kontrak jangka panjang. Bisa berhenti kapan saja dengan notifikasi 30 hari sebelumnya.",
+    text: "Tidak ada kontrak minimum — bisa mulai dan berhenti kapan saja.",
   },
   {
-    icon: BarChart2,
-    title: "Laporan",
-    text: "Setiap laporan mencakup data trafik organik, posisi keyword, dan rekomendasi bulan berikutnya.",
+    icon: Shield,
+    title: "Keamanan",
+    text: "Semua paket mencakup scan malware rutin dan backup otomatis untuk proteksi dasar.",
   },
 ];
-
-const portfolioItems = [
-  { name: "Kenaikan Traffic Organik", category: "SEO Organik", plan: "SEO Pro", accent: "bg-green-50 border-green-100" },
-  { name: "Optimasi Google Maps", category: "Google Business Profile", plan: "SEO Starter", accent: "bg-blue-50 border-blue-100" },
-  { name: "Ranking Keyword Lokal", category: "Local SEO", plan: "SEO Expert", accent: "bg-orange-50 border-orange-100" },
-];
-
-// ─── Sub-components ───────────────────────────────────────────────────────────
 
 function CellValue({ val }: { val: boolean | string }) {
   if (typeof val === "string") {
@@ -115,9 +103,7 @@ function CellValue({ val }: { val: boolean | string }) {
   );
 }
 
-// ─── Page ─────────────────────────────────────────────────────────────────────
-
-export default function SEOPage() {
+export default function MaintenancePage() {
   const [tableOpen, setTableOpen] = useState(false);
   const { ref: pricingRef, inView: pricingInView } = useInView({ triggerOnce: true, threshold: 0.1 });
   const { ref: ctaRef, inView: ctaInView } = useInView({ triggerOnce: true, threshold: 0.2 });
@@ -130,17 +116,14 @@ export default function SEOPage() {
         {/* ── Header ────────────────────────────────────────────────── */}
         <section className="relative pt-12 pb-10">
           <BlobDecoration position="top-right" size={340} opacity={0.16} shape={1} />
-
           <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            {/* Breadcrumb */}
             <div className="flex items-center gap-1.5 text-xs text-brand-dark/40 font-medium mb-6">
               <Link href="/" className="hover:text-brand-dark transition-colors">Beranda</Link>
               <ChevronRight size={12} />
-              <Link href="/layanan/seo-google-maps" className="hover:text-brand-dark transition-colors">Layanan</Link>
+              <Link href="/layanan/maintenance" className="hover:text-brand-dark transition-colors">Layanan</Link>
               <ChevronRight size={12} />
-              <span className="text-brand-dark/70">SEO & Google Maps</span>
+              <span className="text-brand-dark/70">Maintenance Website</span>
             </div>
-
             <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -149,19 +132,17 @@ export default function SEOPage() {
                 className="max-w-2xl"
               >
                 <div className="inline-flex items-center gap-2 bg-accent/10 border border-accent/30 px-4 py-1.5 rounded-full mb-5">
-                  <MapPin size={13} className="text-accent" />
-                  <span className="text-sm font-semibold text-brand-dark">SEO & Google Maps</span>
+                  <Wrench size={13} className="text-accent" />
+                  <span className="text-sm font-semibold text-brand-dark">Maintenance Website</span>
                 </div>
                 <h1 className="text-4xl sm:text-5xl font-extrabold text-brand-dark leading-tight mb-4">
-                  Bisnis Anda, di halaman<br />
-                  <span className="text-accent">pertama Google.</span>
+                  Website Anda tetap aman,<br />
+                  <span className="text-accent">cepat, dan berjalan.</span>
                 </h1>
                 <p className="text-brand-dark/60 text-lg">
-                  Bukan iklan — trafik organik yang datang terus meski Anda sedang tidur.
+                  Backup rutin, scan malware, dan update teknis — dikerjakan tanpa Anda harus minta.
                 </p>
               </motion.div>
-
-              {/* Retainer label */}
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -169,35 +150,14 @@ export default function SEOPage() {
                 className="flex flex-col items-start sm:items-end gap-1.5 self-start sm:self-auto flex-shrink-0"
               >
                 <div className="flex items-center bg-white/80 backdrop-blur-sm border border-brand-dark/8 rounded-xl px-4 py-2.5 gap-2">
-                  <TrendingUp size={13} className="text-accent" />
+                  <Wrench size={13} className="text-accent" />
                   <span className="text-sm font-bold text-brand-dark">Retainer Bulanan</span>
                 </div>
                 <p className="text-xs text-brand-dark/40 font-medium">
-                  Tanpa kontrak panjang · Bisa berhenti kapan saja
+                  Tanpa kontrak minimum · Mulai kapan saja
                 </p>
               </motion.div>
             </div>
-          </div>
-        </section>
-
-        {/* ── Portfolio Slider ──────────────────────────────────────── */}
-        <section className="py-20">
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10">
-              <div>
-                <span className="text-accent font-bold text-sm uppercase tracking-wider block mb-3">
-                  Portofolio
-                </span>
-                <h2 className="text-4xl font-extrabold text-brand-dark">
-                  Hasil nyata yang sudah<br />
-                  <span className="text-accent">kami capai</span>
-                </h2>
-              </div>
-              <span className="inline-flex items-center gap-2 bg-brand-dark/5 border border-brand-dark/8 px-4 py-2 rounded-full text-xs text-brand-dark/50 font-semibold flex-shrink-0">
-                Before & after segera hadir
-              </span>
-            </div>
-            <PortfolioSlider items={portfolioItems} />
           </div>
         </section>
 
@@ -225,21 +185,15 @@ export default function SEOPage() {
                       </span>
                     </div>
                   )}
-
                   <div>
-                    <div className="text-xs font-bold uppercase tracking-widest text-brand-dark/40 mb-1">
-                      {plan.name}
-                    </div>
+                    <div className="text-xs font-bold uppercase tracking-widest text-brand-dark/40 mb-1">{plan.name}</div>
                     <div className="flex items-baseline gap-1 mb-3">
                       <span className="text-xs text-brand-dark/50 font-medium">Rp</span>
                       <span className="text-3xl font-black text-brand-dark">{plan.price}</span>
                       <span className="text-brand-dark/40 text-sm">/bulan</span>
                     </div>
-                    <p className="text-brand-dark/60 text-sm leading-relaxed border-t border-brand-dark/6 pt-3">
-                      {plan.tagline}
-                    </p>
+                    <p className="text-brand-dark/60 text-sm leading-relaxed border-t border-brand-dark/6 pt-3">{plan.tagline}</p>
                   </div>
-
                   <ul className="space-y-2.5 flex-1">
                     {plan.features.map((f) => (
                       <li key={f} className="flex items-start gap-2.5">
@@ -248,7 +202,6 @@ export default function SEOPage() {
                       </li>
                     ))}
                   </ul>
-
                   <a
                     href={plan.wa}
                     target="_blank"
@@ -283,41 +236,22 @@ export default function SEOPage() {
                 <ChevronDown size={14} className={`transition-transform ${tableOpen ? "rotate-180" : ""}`} />
               </button>
             </div>
-
             <div className={`${tableOpen ? "block" : "hidden"} md:block`}>
               <div className="bg-white/80 backdrop-blur-sm border border-brand-dark/8 card-shadow rounded-2xl overflow-hidden">
                 <div className="grid grid-cols-4 border-b border-brand-dark/8 bg-brand-dark/2">
                   <div className="px-5 py-4 text-xs font-bold uppercase tracking-wider text-brand-dark/40">Fitur</div>
                   {["Starter", "Pro", "Expert"].map((h) => (
-                    <div
-                      key={h}
-                      className={`px-3 py-4 text-center text-sm font-extrabold ${
-                        h === "Pro" ? "text-accent border-l-2 border-l-accent/30" : "text-brand-dark border-l border-brand-dark/6"
-                      }`}
-                    >
-                      {h}
-                    </div>
+                    <div key={h} className={`px-3 py-4 text-center text-sm font-extrabold ${h === "Pro" ? "text-accent border-l-2 border-l-accent/30" : "text-brand-dark border-l border-brand-dark/6"}`}>{h}</div>
                   ))}
                 </div>
-
                 {tableRows.map((row, i) => (
-                  <div
-                    key={i}
-                    className={`grid grid-cols-4 border-b border-brand-dark/5 last:border-0 ${
-                      i % 2 === 0 ? "bg-transparent" : "bg-brand-dark/1"
-                    }`}
-                  >
+                  <div key={i} className={`grid grid-cols-4 border-b border-brand-dark/5 last:border-0 ${i % 2 === 0 ? "bg-transparent" : "bg-brand-dark/1"}`}>
                     <div className="px-5 py-3.5 text-sm text-brand-dark/70 font-medium flex items-center gap-2">
                       {row.icon && <row.icon size={13} className="text-brand-dark/30 flex-shrink-0" />}
                       {row.feature}
                     </div>
                     {(["starter", "pro", "expert"] as const).map((col) => (
-                      <div
-                        key={col}
-                        className={`px-3 py-3.5 text-center flex items-center justify-center ${
-                          col === "pro" ? "border-l-2 border-l-accent/30 bg-accent/3" : "border-l border-brand-dark/5"
-                        }`}
-                      >
+                      <div key={col} className={`px-3 py-3.5 text-center flex items-center justify-center ${col === "pro" ? "border-l-2 border-l-accent/30 bg-accent/3" : "border-l border-brand-dark/5"}`}>
                         <CellValue val={row[col] as boolean | string} />
                       </div>
                     ))}
@@ -360,13 +294,13 @@ export default function SEOPage() {
               transition={{ duration: 0.5 }}
             >
               <h2 className="text-3xl sm:text-4xl font-extrabold text-brand-dark mb-4">
-                Tidak yakin mulai dari<br />paket mana?
+                Website Anda layak<br />dijaga dengan benar.
               </h2>
               <p className="text-brand-dark/60 text-lg mb-8">
-                Ceritakan bisnis Anda, kami audit kehadiran digital Anda secara gratis.
+                Konsultasi gratis — kami cek kondisi website Anda dan rekomendasikan paket yang sesuai.
               </p>
               <a
-                href={WA_BASE + encodeURIComponent("Halo, saya ingin konsultasi pilihan paket SEO yang cocok untuk bisnis saya.")}
+                href={WA_BASE + encodeURIComponent("Halo, saya ingin konsultasi paket maintenance website untuk bisnis saya.")}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2.5 bg-accent text-white font-bold px-10 py-4 rounded-full text-lg hover:bg-accent/90 hover:scale-105 transition-all duration-200 shadow-xl shadow-accent/30"
