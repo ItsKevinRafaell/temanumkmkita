@@ -22,7 +22,7 @@ import {
   Heading1, Heading2, AlignLeft, List, ListOrdered,
   Quote, Zap, Image as ImageIcon, Minus, Plus, X,
   Loader2, Upload, Columns, Eye, HelpCircle, ListChecks,
-  ChevronDown,
+  ChevronDown, Settings, BarChart2,
 } from "lucide-react";
 import { checkSEO } from "@/lib/seo/checker";
 
@@ -1065,6 +1065,8 @@ export default function PostEditor({ initial = {} }: PostEditorProps) {
   const [metaDescription, setMetaDescription] = useState(initial.meta_description ?? "");
   const [focusKeyword, setFocusKeyword] = useState(initial.focus_keyword ?? "");
   const [seoOpen, setSeoOpen] = useState(false);
+  const [showSeo, setShowSeo] = useState(true);
+  const [showSettings, setShowSettings] = useState(true);
   const [blockItems, setBlockItems] = useState<BlockItem[]>(() => {
     const parsed = parseBlockItems(initial.content);
     return parsed.length > 0 ? parsed : [newBlockFromType("p")];
@@ -1155,7 +1157,32 @@ export default function PostEditor({ initial = {} }: PostEditorProps) {
           </Link>
           <span className="text-[#242423]/20">/</span>
           <span className="text-sm font-bold text-[#242423]">{isEdit ? "Edit Artikel" : "Artikel Baru"}</span>
+
+          {/* Panel toggles */}
+          <button
+            onClick={() => setShowSeo((v) => !v)}
+            title="Toggle SEO panel"
+            className={`flex items-center gap-1 px-2 py-1 rounded-md text-xs font-semibold transition ${
+              showSeo
+                ? "bg-[#f5a700]/10 text-[#f5a700]"
+                : "text-[#242423]/35 hover:text-[#242423]"
+            }`}
+          >
+            <BarChart2 size={12} /> SEO
+          </button>
+          <button
+            onClick={() => setShowSettings((v) => !v)}
+            title="Toggle Settings panel"
+            className={`flex items-center gap-1 px-2 py-1 rounded-md text-xs font-semibold transition ${
+              showSettings
+                ? "bg-[#242423]/8 text-[#242423]/70"
+                : "text-[#242423]/35 hover:text-[#242423]"
+            }`}
+          >
+            <Settings size={12} /> Pengaturan
+          </button>
         </div>
+
         <div className="flex items-center gap-2">
           {error && <span className="text-xs text-red-600 max-w-xs truncate">{error}</span>}
           {isEdit && initial.id && (
@@ -1186,9 +1213,102 @@ export default function PostEditor({ initial = {} }: PostEditorProps) {
         </div>
       </header>
 
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8 flex gap-6 items-start">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex gap-5 items-start">
 
-        {/* ── Main editor ─────────────────────────────────────────────── */}
+        {/* ── Left: SEO panel ─────────────────────────────────────────── */}
+        {showSeo && (
+          <div className="w-48 flex-shrink-0 sticky top-20 max-h-[calc(100vh-6rem)] overflow-y-auto pb-4 space-y-0">
+            <div className="bg-white border border-[#242423]/8 rounded-2xl p-4 space-y-3">
+              <ScoreRing score={seoResult.totalScore} grade={seoResult.grade} />
+
+              <div>
+                <label className="block text-xs font-semibold text-[#242423]/50 mb-1">Focus Keyword</label>
+                <input
+                  className="w-full border border-[#242423]/12 rounded-lg px-3 py-2 text-xs text-[#242423] bg-white focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30 focus:border-[#f5a700]"
+                  placeholder="kata kunci..."
+                  value={focusKeyword}
+                  onChange={(e) => setFocusKeyword(e.target.value)}
+                />
+              </div>
+
+              {/* Rules */}
+              {(() => {
+                const failing = seoResult.rules.filter((r) => r.status !== "pass");
+                const passCount = seoResult.rules.length - failing.length;
+                return (
+                  <div className="space-y-1">
+                    {failing.map((rule) => {
+                      const dot = rule.status === "improve" ? "bg-amber-400" : "bg-red-400";
+                      return (
+                        <div key={rule.id} className="flex items-center gap-2" title={rule.description}>
+                          <span className={`w-2 h-2 rounded-full flex-shrink-0 ${dot}`} />
+                          <span className="text-xs text-[#242423]/60 flex-1 leading-snug truncate">{rule.label}</span>
+                          <span className="text-[10px] text-[#242423]/30 font-mono flex-shrink-0">{rule.score}/{rule.maxScore}</span>
+                        </div>
+                      );
+                    })}
+                    {passCount > 0 && (
+                      <div className="flex items-center gap-2">
+                        <span className="w-2 h-2 rounded-full flex-shrink-0 bg-green-500" />
+                        <span className="text-[10px] text-[#242423]/35">{passCount} lainnya ok</span>
+                      </div>
+                    )}
+                  </div>
+                );
+              })()}
+
+              <button
+                onClick={() => setSeoOpen((v) => !v)}
+                className="flex items-center gap-1.5 text-xs font-semibold text-[#242423]/45 hover:text-[#242423] transition w-full"
+              >
+                <ChevronDown size={12} className={`transition-transform ${seoOpen ? "rotate-180" : ""}`} />
+                Advanced SEO
+              </button>
+
+              {seoOpen && (
+                <div className="space-y-3 pt-1">
+                  <div>
+                    <div className="flex items-center justify-between mb-1">
+                      <label className="text-xs font-semibold text-[#242423]/50">SEO Title</label>
+                      <span className={`text-[10px] font-mono ${seoTitle.length > 60 ? "text-red-500" : "text-[#242423]/30"}`}>
+                        {seoTitle.length}/60
+                      </span>
+                    </div>
+                    <input
+                      className="w-full border border-[#242423]/12 rounded-lg px-3 py-2 text-xs text-[#242423] bg-white focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30 focus:border-[#f5a700]"
+                      placeholder={title || "SEO title..."}
+                      value={seoTitle}
+                      onChange={(e) => setSeoTitle(e.target.value)}
+                    />
+                  </div>
+                  <div>
+                    <div className="flex items-center justify-between mb-1">
+                      <label className="text-xs font-semibold text-[#242423]/50">Meta Desc</label>
+                      <span className={`text-[10px] font-mono ${
+                        metaDescription.length >= 120 && metaDescription.length <= 160
+                          ? "text-green-600"
+                          : metaDescription.length > 180
+                          ? "text-red-500"
+                          : "text-[#242423]/30"
+                      }`}>
+                        {metaDescription.length}/160
+                      </span>
+                    </div>
+                    <textarea
+                      className="w-full border border-[#242423]/12 rounded-lg px-3 py-2 text-xs text-[#242423] bg-white focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30 focus:border-[#f5a700] resize-none"
+                      placeholder={excerpt || "Meta description..."}
+                      rows={3}
+                      value={metaDescription}
+                      onChange={(e) => setMetaDescription(e.target.value)}
+                    />
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* ── Center: Main editor ──────────────────────────────────────── */}
         <div className="flex-1 min-w-0 space-y-0">
 
           {/* Title */}
@@ -1245,172 +1365,86 @@ export default function PostEditor({ initial = {} }: PostEditorProps) {
           </div>
         </div>
 
-        {/* ── Sidebar ─────────────────────────────────────────────────── */}
-        <div className="w-64 flex-shrink-0 space-y-4 sticky top-20 max-h-[calc(100vh-6rem)] overflow-y-auto pb-4 pr-0.5">
+        {/* ── Right: Settings panel ────────────────────────────────────── */}
+        {showSettings && (
+          <div className="w-52 flex-shrink-0 sticky top-20 max-h-[calc(100vh-6rem)] overflow-y-auto pb-4 space-y-4 pr-0.5">
 
-          {/* Featured image */}
-          <div className="bg-white border border-[#242423]/8 rounded-2xl p-4">
-            <FeaturedImageUpload value={coverImage} onChange={setCoverImage} />
-          </div>
-
-          {/* Settings */}
-          <div className="bg-white border border-[#242423]/8 rounded-2xl p-4 space-y-3">
-            <p className="text-xs font-bold uppercase tracking-wider text-[#242423]/35">Pengaturan</p>
-
-            <div>
-              <label className="block text-xs font-semibold text-[#242423]/50 mb-1">Slug URL</label>
-              <input
-                className="w-full border border-[#242423]/12 rounded-lg px-3 py-2 text-xs text-[#242423] font-mono bg-white focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30 focus:border-[#f5a700]"
-                value={slug}
-                onChange={(e) => setSlug(slugify(e.target.value))}
-                placeholder="url-artikel"
-              />
+            {/* Featured image */}
+            <div className="bg-white border border-[#242423]/8 rounded-2xl p-4">
+              <FeaturedImageUpload value={coverImage} onChange={setCoverImage} />
             </div>
 
-            <div>
-              <label className="block text-xs font-semibold text-[#242423]/50 mb-1">Kategori</label>
-              <select
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-                className="w-full border border-[#242423]/12 rounded-lg px-3 py-2 text-xs text-[#242423] bg-white focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30"
-              >
-                <option value="">Pilih kategori</option>
-                {categories.map((c) => <option key={c.id} value={c.name}>{c.name}</option>)}
-              </select>
-            </div>
+            {/* Settings */}
+            <div className="bg-white border border-[#242423]/8 rounded-2xl p-4 space-y-3">
+              <p className="text-xs font-bold uppercase tracking-wider text-[#242423]/35">Pengaturan</p>
 
-            <div>
-              <label className="block text-xs font-semibold text-[#242423]/50 mb-1">Estimasi Baca (menit)</label>
-              <input
-                type="number"
-                min={1}
-                max={60}
-                value={readTime}
-                onChange={(e) => setReadTime(Number(e.target.value))}
-                className="w-full border border-[#242423]/12 rounded-lg px-3 py-2 text-xs text-[#242423] bg-white focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30"
-              />
-            </div>
-
-            <div>
-              <label className="block text-xs font-semibold text-[#242423]/50 mb-1">Tanggal Tayang</label>
-              <input
-                type="date"
-                value={publishedAt}
-                onChange={(e) => setPublishedAt(e.target.value)}
-                className="w-full border border-[#242423]/12 rounded-lg px-3 py-2 text-xs text-[#242423] bg-white focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30"
-              />
-            </div>
-
-            <label className="flex items-center gap-2 cursor-pointer">
-              <input
-                type="checkbox"
-                checked={featured}
-                onChange={(e) => setFeatured(e.target.checked)}
-                className="rounded accent-[#f5a700]"
-              />
-              <span className="text-xs font-semibold text-[#242423]/55">Featured artikel</span>
-            </label>
-          </div>
-
-          {/* SEO */}
-          <div className="bg-white border border-[#242423]/8 rounded-2xl p-4 space-y-3">
-            <ScoreRing score={seoResult.totalScore} grade={seoResult.grade} />
-
-            <div>
-              <label className="block text-xs font-semibold text-[#242423]/50 mb-1">Focus Keyword</label>
-              <input
-                className="w-full border border-[#242423]/12 rounded-lg px-3 py-2 text-xs text-[#242423] bg-white focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30 focus:border-[#f5a700]"
-                placeholder="kata kunci utama artikel"
-                value={focusKeyword}
-                onChange={(e) => setFocusKeyword(e.target.value)}
-              />
-            </div>
-
-            {/* Rules — only show fail/improve; pass collapsed into summary */}
-            {(() => {
-              const failing = seoResult.rules.filter((r) => r.status !== "pass");
-              const passCount = seoResult.rules.length - failing.length;
-              return (
-                <div className="space-y-1">
-                  {failing.map((rule) => {
-                    const dot = rule.status === "improve" ? "bg-amber-400" : "bg-red-400";
-                    return (
-                      <div key={rule.id} className="flex items-center gap-2" title={rule.description}>
-                        <span className={`w-2 h-2 rounded-full flex-shrink-0 ${dot}`} />
-                        <span className="text-xs text-[#242423]/60 flex-1 leading-snug truncate">{rule.label}</span>
-                        <span className="text-[10px] text-[#242423]/30 font-mono flex-shrink-0">{rule.score}/{rule.maxScore}</span>
-                      </div>
-                    );
-                  })}
-                  {passCount > 0 && (
-                    <div className="flex items-center gap-2">
-                      <span className="w-2 h-2 rounded-full flex-shrink-0 bg-green-500" />
-                      <span className="text-[10px] text-[#242423]/35">{passCount} lainnya ok</span>
-                    </div>
-                  )}
-                </div>
-              );
-            })()}
-
-            <button
-              onClick={() => setSeoOpen((v) => !v)}
-              className="flex items-center gap-1.5 text-xs font-semibold text-[#242423]/45 hover:text-[#242423] transition w-full"
-            >
-              <ChevronDown size={12} className={`transition-transform ${seoOpen ? "rotate-180" : ""}`} />
-              Advanced SEO
-            </button>
-
-            {seoOpen && (
-              <div className="space-y-3 pt-1">
-                <div>
-                  <div className="flex items-center justify-between mb-1">
-                    <label className="text-xs font-semibold text-[#242423]/50">SEO Title</label>
-                    <span className={`text-[10px] font-mono ${seoTitle.length > 60 ? "text-red-500" : "text-[#242423]/30"}`}>
-                      {seoTitle.length}/60
-                    </span>
-                  </div>
-                  <input
-                    className="w-full border border-[#242423]/12 rounded-lg px-3 py-2 text-xs text-[#242423] bg-white focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30 focus:border-[#f5a700]"
-                    placeholder={title || "SEO title..."}
-                    value={seoTitle}
-                    onChange={(e) => setSeoTitle(e.target.value)}
-                  />
-                </div>
-                <div>
-                  <div className="flex items-center justify-between mb-1">
-                    <label className="text-xs font-semibold text-[#242423]/50">Meta Description</label>
-                    <span className={`text-[10px] font-mono ${
-                      metaDescription.length >= 120 && metaDescription.length <= 160
-                        ? "text-green-600"
-                        : metaDescription.length > 180
-                        ? "text-red-500"
-                        : "text-[#242423]/30"
-                    }`}>
-                      {metaDescription.length}/160
-                    </span>
-                  </div>
-                  <textarea
-                    className="w-full border border-[#242423]/12 rounded-lg px-3 py-2 text-xs text-[#242423] bg-white focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30 focus:border-[#f5a700] resize-none"
-                    placeholder={excerpt || "Meta description..."}
-                    rows={3}
-                    value={metaDescription}
-                    onChange={(e) => setMetaDescription(e.target.value)}
-                  />
-                </div>
+              <div>
+                <label className="block text-xs font-semibold text-[#242423]/50 mb-1">Slug URL</label>
+                <input
+                  className="w-full border border-[#242423]/12 rounded-lg px-3 py-2 text-xs text-[#242423] font-mono bg-white focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30 focus:border-[#f5a700]"
+                  value={slug}
+                  onChange={(e) => setSlug(slugify(e.target.value))}
+                  placeholder="url-artikel"
+                />
               </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-[#242423]/50 mb-1">Kategori</label>
+                <select
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value)}
+                  className="w-full border border-[#242423]/12 rounded-lg px-3 py-2 text-xs text-[#242423] bg-white focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30"
+                >
+                  <option value="">Pilih kategori</option>
+                  {categories.map((c) => <option key={c.id} value={c.name}>{c.name}</option>)}
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-[#242423]/50 mb-1">Estimasi Baca (menit)</label>
+                <input
+                  type="number"
+                  min={1}
+                  max={60}
+                  value={readTime}
+                  onChange={(e) => setReadTime(Number(e.target.value))}
+                  className="w-full border border-[#242423]/12 rounded-lg px-3 py-2 text-xs text-[#242423] bg-white focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-[#242423]/50 mb-1">Tanggal Tayang</label>
+                <input
+                  type="date"
+                  value={publishedAt}
+                  onChange={(e) => setPublishedAt(e.target.value)}
+                  className="w-full border border-[#242423]/12 rounded-lg px-3 py-2 text-xs text-[#242423] bg-white focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30"
+                />
+              </div>
+
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={featured}
+                  onChange={(e) => setFeatured(e.target.checked)}
+                  className="rounded accent-[#f5a700]"
+                />
+                <span className="text-xs font-semibold text-[#242423]/55">Featured artikel</span>
+              </label>
+            </div>
+
+            {isEdit && (
+              <Link
+                href={`/blog/${initial.slug}`}
+                target="_blank"
+                className="flex items-center justify-center gap-2 w-full border border-[#242423]/12 text-[#242423]/50 text-xs font-semibold py-2.5 rounded-xl hover:border-[#f5a700] hover:text-[#f5a700] transition"
+              >
+                <Globe size={12} /> Lihat di website
+              </Link>
             )}
           </div>
+        )}
 
-          {isEdit && (
-            <Link
-              href={`/blog/${initial.slug}`}
-              target="_blank"
-              className="flex items-center justify-center gap-2 w-full border border-[#242423]/12 text-[#242423]/50 text-xs font-semibold py-2.5 rounded-xl hover:border-[#f5a700] hover:text-[#f5a700] transition"
-            >
-              <Globe size={12} /> Lihat di website
-            </Link>
-          )}
-        </div>
       </div>
     </div>
   );
