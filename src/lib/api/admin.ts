@@ -59,14 +59,22 @@ export interface ArticlePayload {
   focus_keyword?: string;
 }
 
-export async function adminListArticles(page = 1, per_page = 20) {
+export async function adminListArticles(page = 1, per_page = 20, opts?: {
+  status?: "draft" | "published";
+  month?: string;
+  sort?: "asc" | "desc";
+}) {
+  const p = new URLSearchParams({ page: String(page), per_page: String(per_page) });
+  if (opts?.status) p.set("status", opts.status);
+  if (opts?.month) p.set("month", opts.month);
+  if (opts?.sort) p.set("sort", opts.sort);
   return req<{
     items: AdminArticle[];
     total: number;
     page: number;
     per_page: number;
     pages: number;
-  }>(`/api/articles/admin/all?page=${page}&per_page=${per_page}`);
+  }>(`/api/articles/admin/all?${p.toString()}`);
 }
 
 export async function adminGetArticle(id: string): Promise<AdminArticle> {

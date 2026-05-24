@@ -1326,23 +1326,34 @@ export default function PostEditor({ initial = {} }: PostEditorProps) {
               />
             </div>
 
-            <div className="space-y-1.5">
-              {seoResult.rules.map((rule) => {
-                const dot = rule.status === "pass" ? "bg-green-500" : rule.status === "improve" ? "bg-amber-400" : "bg-red-400";
-                return (
-                  <div key={rule.id}>
-                    <div className="flex items-center gap-2">
-                      <span className={`w-2 h-2 rounded-full flex-shrink-0 ${dot}`} />
-                      <span className="text-xs text-[#242423]/60 flex-1">{rule.label}</span>
-                      <span className="text-[10px] text-[#242423]/30 font-mono">{rule.score}/{rule.maxScore}</span>
+            {/* Rules — only show fail/improve; pass collapsed into summary */}
+            {(() => {
+              const failing = seoResult.rules.filter((r) => r.status !== "pass");
+              const passCount = seoResult.rules.length - failing.length;
+              return (
+                <div className="space-y-1.5">
+                  {failing.map((rule) => {
+                    const dot = rule.status === "improve" ? "bg-amber-400" : "bg-red-400";
+                    return (
+                      <div key={rule.id}>
+                        <div className="flex items-center gap-2">
+                          <span className={`w-2 h-2 rounded-full flex-shrink-0 ${dot}`} />
+                          <span className="text-xs text-[#242423]/60 flex-1 leading-snug">{rule.label}</span>
+                          <span className="text-[10px] text-[#242423]/30 font-mono flex-shrink-0">{rule.score}/{rule.maxScore}</span>
+                        </div>
+                        <p className="text-[10px] text-[#242423]/40 pl-4 leading-snug mt-0.5">{rule.description}</p>
+                      </div>
+                    );
+                  })}
+                  {passCount > 0 && (
+                    <div className="flex items-center gap-2 pt-0.5">
+                      <span className="w-2 h-2 rounded-full flex-shrink-0 bg-green-500" />
+                      <span className="text-[10px] text-[#242423]/35">{passCount} lainnya ok</span>
                     </div>
-                    {rule.status !== "pass" && (
-                      <p className="text-[10px] text-[#242423]/40 pl-4 leading-snug">{rule.description}</p>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
+                  )}
+                </div>
+              );
+            })()}
 
             <button
               onClick={() => setSeoOpen((v) => !v)}

@@ -8,19 +8,24 @@ import ConfirmModal from "@/components/ui/ConfirmModal";
 import {
   PenLine, Trash2, Plus, LogOut, FileText,
   CheckCircle, Clock, ChevronLeft, ChevronRight,
+  ArrowUpDown, Star,
 } from "lucide-react";
-
-const categoryColors: Record<string, string> = {
-  Website: "bg-blue-50 text-blue-700",
-  SEO: "bg-green-50 text-green-700",
-  "Sosial Media": "bg-pink-50 text-pink-700",
-  Branding: "bg-purple-50 text-purple-700",
-  "Tips Bisnis": "bg-amber-50 text-amber-700",
-};
 
 function formatDate(iso: string | null) {
   if (!iso) return "—";
   return new Date(iso).toLocaleDateString("id-ID", { day: "numeric", month: "short", year: "numeric" });
+}
+
+function getMonthOptions() {
+  const opts: { value: string; label: string }[] = [];
+  const now = new Date();
+  for (let i = 0; i < 12; i++) {
+    const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+    const value = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
+    const label = d.toLocaleDateString("id-ID", { month: "long", year: "numeric" });
+    opts.push({ value, label });
+  }
+  return opts;
 }
 
 export default function AdminPostsPage() {
@@ -33,10 +38,19 @@ export default function AdminPostsPage() {
   const [deleting, setDeleting] = useState<string | null>(null);
   const [modal, setModal] = useState<{ id: string; title: string } | null>(null);
 
+  // Filters
+  const [statusFilter, setStatusFilter] = useState<"" | "draft" | "published">("");
+  const [monthFilter, setMonthFilter] = useState("");
+  const [sort, setSort] = useState<"desc" | "asc">("desc");
+
   const load = useCallback(async (p: number) => {
     setLoading(true);
     try {
-      const data = await adminListArticles(p, 15);
+      const data = await adminListArticles(p, 15, {
+        status: statusFilter || undefined,
+        month: monthFilter || undefined,
+        sort,
+      });
       setPosts(data.items);
       setTotal(data.total);
       setPages(data.pages);
@@ -45,8 +59,9 @@ export default function AdminPostsPage() {
     } finally {
       setLoading(false);
     }
-  }, [router]);
+  }, [router, statusFilter, monthFilter, sort]);
 
+  useEffect(() => { setPage(1); }, [statusFilter, monthFilter, sort]);
   useEffect(() => { load(page); }, [page, load]);
 
   async function handleDelete(id: string, title: string) {
@@ -72,6 +87,8 @@ export default function AdminPostsPage() {
     document.cookie = "admin_token=; path=/; max-age=0";
     router.push("/admin/login");
   }
+
+  const monthOptions = getMonthOptions();
 
   return (
     <div className="min-h-screen bg-[#fcfaf7]">
@@ -115,6 +132,51 @@ export default function AdminPostsPage() {
           </div>
         </div>
 
+        {/* Filters */}
+        <div className="flex flex-wrap items-center gap-2 mb-4">
+          {/* Status filter */}
+          <select
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value as typeof statusFilter)}
+            className="border border-[#242423]/12 rounded-lg px-3 py-1.5 text-xs text-[#242423] bg-white focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30"
+          >
+            <option value="">Semua status</option>
+            <option value="published">Tayang</option>
+            <option value="draft">Draft</option>
+          </select>
+
+          {/* Month filter */}
+          <select
+            value={monthFilter}
+            onChange={(e) => setMonthFilter(e.target.value)}
+            className="border border-[#242423]/12 rounded-lg px-3 py-1.5 text-xs text-[#242423] bg-white focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30"
+          >
+            <option value="">Semua bulan</option>
+            {monthOptions.map((o) => (
+              <option key={o.value} value={o.value}>{o.label}</option>
+            ))}
+          </select>
+
+          {/* Sort toggle */}
+          <button
+            onClick={() => setSort((s) => s === "desc" ? "asc" : "desc")}
+            className="flex items-center gap-1.5 border border-[#242423]/12 rounded-lg px-3 py-1.5 text-xs text-[#242423]/55 hover:text-[#242423] hover:border-[#242423]/25 transition"
+          >
+            <ArrowUpDown size={12} />
+            {sort === "desc" ? "Terbaru dulu" : "Terlama dulu"}
+          </button>
+
+          {/* Reset */}
+          {(statusFilter || monthFilter || sort !== "desc") && (
+            <button
+              onClick={() => { setStatusFilter(""); setMonthFilter(""); setSort("desc"); }}
+              className="text-xs text-[#242423]/40 hover:text-[#242423] underline transition"
+            >
+              Reset
+            </button>
+          )}
+        </div>
+
         {/* Table */}
         <div className="bg-white border border-[#242423]/8 rounded-2xl overflow-hidden shadow-sm">
           {loading ? (
@@ -127,8 +189,8 @@ export default function AdminPostsPage() {
                 <tr className="border-b border-[#242423]/6 bg-[#242423]/2">
                   <th className="text-left px-5 py-3 text-xs font-bold uppercase tracking-wider text-[#242423]/40">Judul</th>
                   <th className="text-left px-4 py-3 text-xs font-bold uppercase tracking-wider text-[#242423]/40 hidden sm:table-cell">Kategori</th>
-                  <th className="text-left px-4 py-3 text-xs font-bold uppercase tracking-wider text-[#242423]/40 hidden md:table-cell">Status</th>
-                  <th className="text-left px-4 py-3 text-xs font-bold uppercase tracking-wider text-[#242423]/40 hidden lg:table-cell">Tanggal</th>
+                  <th className="text-left px-4 py-3 text-xs font-bold uppercase tracking-wider text-[#242423]/40">Status</th>
+                  <th className="text-left px-4 py-3 text-xs font-bold uppercase tracking-wider text-[#242423]/40 hidden md:table-cell">Tanggal</th>
                   <th className="px-4 py-3 w-20" />
                 </tr>
               </thead>
@@ -141,19 +203,26 @@ export default function AdminPostsPage() {
                     }`}
                   >
                     <td className="px-5 py-3.5">
-                      <div className="font-semibold text-[#242423] leading-snug line-clamp-1">{post.title}</div>
-                      <div className="text-xs text-[#242423]/40 mt-0.5">{post.slug}</div>
+                      <div className="flex items-start gap-1.5">
+                        {post.featured && (
+                          <Star size={10} className="text-[#f5a700] fill-[#f5a700] mt-1 flex-shrink-0" />
+                        )}
+                        <div className="min-w-0">
+                          <div className="font-semibold text-[#242423] leading-snug line-clamp-1">{post.title}</div>
+                          <div className="text-xs text-[#242423]/40 mt-0.5">{post.slug}</div>
+                        </div>
+                      </div>
                     </td>
                     <td className="px-4 py-3.5 hidden sm:table-cell">
                       {post.category ? (
-                        <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${categoryColors[post.category] ?? "bg-gray-50 text-gray-600"}`}>
+                        <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-[#242423]/6 text-[#242423]/60">
                           {post.category}
                         </span>
                       ) : (
                         <span className="text-[#242423]/25">—</span>
                       )}
                     </td>
-                    <td className="px-4 py-3.5 hidden md:table-cell">
+                    <td className="px-4 py-3.5">
                       {post.status === "published" ? (
                         <span className="flex items-center gap-1 text-xs text-green-700 font-semibold">
                           <CheckCircle size={11} /> Tayang
@@ -164,7 +233,7 @@ export default function AdminPostsPage() {
                         </span>
                       )}
                     </td>
-                    <td className="px-4 py-3.5 text-xs text-[#242423]/45 hidden lg:table-cell">
+                    <td className="px-4 py-3.5 text-xs text-[#242423]/45 hidden md:table-cell">
                       {formatDate(post.published_at ?? post.created_at)}
                     </td>
                     <td className="px-4 py-3.5">
