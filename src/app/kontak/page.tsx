@@ -210,31 +210,18 @@ export default function KontakPage() {
                   </div>
                 </div>
 
-                {/* Location + Maps */}
-                <div className="bg-white/80 backdrop-blur-sm border border-brand-dark/8 card-shadow rounded-2xl overflow-hidden">
-                  <div className="flex items-start gap-3 px-5 py-4 border-b border-brand-dark/6">
-                    <div className="w-9 h-9 rounded-xl bg-accent/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <MapPin size={16} className="text-accent" />
-                    </div>
-                    <div>
-                      <div className="text-xs text-brand-dark/40 font-medium uppercase tracking-wider mb-0.5">Lokasi</div>
-                      <div className="text-sm font-semibold text-brand-dark leading-snug">
-                        Jl. Daksa Timur XIV No.6, Sepinggan<br />
-                        Balikpapan Selatan, Kota Balikpapan<br />
-                        <span className="text-brand-dark/50">Kalimantan Timur 76116</span>
-                      </div>
-                    </div>
+                {/* Location */}
+                <div className="flex items-start gap-3 px-5 py-4 bg-white/80 backdrop-blur-sm border border-brand-dark/8 card-shadow rounded-2xl">
+                  <div className="w-9 h-9 rounded-xl bg-accent/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <MapPin size={16} className="text-accent" />
                   </div>
-                  <div className="h-48">
-                    <iframe
-                      src="https://maps.google.com/maps?q=Jl.+Daksa+Timur+XIV+No.6+Sepinggan+Balikpapan+Selatan+Balikpapan+Kalimantan+Timur+76116&output=embed&hl=id"
-                      width="100%"
-                      height="100%"
-                      style={{ border: 0 }}
-                      allowFullScreen
-                      loading="lazy"
-                      referrerPolicy="no-referrer-when-downgrade"
-                    />
+                  <div>
+                    <div className="text-xs text-brand-dark/40 font-medium uppercase tracking-wider mb-0.5">Lokasi</div>
+                    <div className="text-sm font-semibold text-brand-dark leading-snug">
+                      Jl. Daksa Timur XIV No.6, Sepinggan<br />
+                      Balikpapan Selatan, Kota Balikpapan<br />
+                      <span className="text-brand-dark/50">Kalimantan Timur 76116</span>
+                    </div>
                   </div>
                 </div>
               </motion.div>
@@ -339,6 +326,23 @@ export default function KontakPage() {
                   </form>
                 </div>
               </motion.div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── Google Maps ────────────────────────────────────────── */}
+        <section className="pb-24">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="rounded-3xl overflow-hidden border border-brand-dark/8 card-shadow h-[420px]">
+              <iframe
+                src="https://maps.google.com/maps?q=Jl.+Daksa+Timur+XIV+No.6+Sepinggan+Balikpapan+Selatan+Balikpapan+Kalimantan+Timur+76116&output=embed&hl=id"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
             </div>
           </div>
         </section>
