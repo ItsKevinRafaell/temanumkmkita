@@ -355,6 +355,17 @@ function NotionBlock({
   function handleTextChange(value: string) {
     const slash = detectSlash(value);
     if (slash !== null) {
+      // Auto-execute on exact keyword match — no Enter needed
+      const exactCmd = SLASH_COMMANDS.find((c) =>
+        c.keywords.some((k) => k === slash.toLowerCase())
+      );
+      if (exactCmd) {
+        setSlashQuery(null);
+        const cleanText = value.replace(/\/[a-z0-9]*$/, "");
+        onUpdate(item.id, setBlockText(item.block, cleanText));
+        onInsertAfter(item.id, newBlockFromType(exactCmd.blockType, exactCmd.params));
+        return;
+      }
       setSlashQuery(slash);
     } else {
       if (slashQuery !== null) setSlashQuery(null);
