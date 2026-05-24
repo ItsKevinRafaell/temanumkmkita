@@ -1,16 +1,32 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import BlogCard from "@/components/blog/BlogCard";
 import BlobDecoration from "@/components/ui/BlobDecoration";
-import { ChevronRight, ChevronLeft, BookOpen } from "lucide-react";
-import { categories, getPostsByCategory, type Category } from "@/lib/data/blog";
+import { ChevronRight, ChevronLeft, BookOpen, Loader2 } from "lucide-react";
+import { categories, type Category, type BlogPost, type ContentBlock } from "@/lib/data/blog";
+import { fetchArticles, type Article } from "@/lib/api/blog";
 
 const PER_PAGE = 6;
+
+function articleToPost(a: Article): BlogPost {
+  let content: ContentBlock[] = [];
+  try { content = JSON.parse(a.content); } catch {}
+  return {
+    slug: a.slug,
+    title: a.title,
+    excerpt: a.excerpt ?? "",
+    category: a.category ?? "Umum",
+    date: a.published_at ?? a.created_at,
+    readTime: a.read_time,
+    featured: a.featured,
+    content,
+  };
+}
 
 function buildPages(total: number, current: number): (number | "...")[] {
   if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1);
@@ -25,10 +41,28 @@ function buildPages(total: number, current: number): (number | "...")[] {
 export default function BlogPage() {
   const [activeCategory, setActiveCategory] = useState<Category>("Semua");
   const [page, setPage] = useState(1);
+  const [posts, setPosts] = useState<BlogPost[]>([]);
+  const [totalPages, setTotalPages] = useState(1);
+  const [total, setTotal] = useState(0);
+  const [loading, setLoading] = useState(true);
 
-  const filtered = getPostsByCategory(activeCategory);
-  const totalPages = Math.ceil(filtered.length / PER_PAGE);
-  const shown = filtered.slice((page - 1) * PER_PAGE, page * PER_PAGE);
+  useEffect(() => {
+    let cancelled = false;
+    setLoading(true);
+    fetchArticles({ category: activeCategory === "Semua" ? undefined : activeCategory, page, per_page: PER_PAGE })
+      .then((data) => {
+        if (!cancelled) {
+          setPosts(data.items.map(articleToPost));
+          setTotalPages(data.pages);
+          setTotal(data.total);
+          setLoading(false);
+        }
+      })
+      .catch(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => { cancelled = true; };
+  }, [activeCategory, page]);
 
   function handleCategory(cat: Category) {
     setActiveCategory(cat);
@@ -99,7 +133,12 @@ export default function BlogPage() {
         {/* ── Post Grid ─────────────────────────────────────────────── */}
         <section className="pb-20">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            {shown.length === 0 ? (
+            {loading ? (
+              <div className="py-24 flex items-center justify-center gap-3 text-brand-dark/40">
+                <Loader2 size={20} className="animate-spin" />
+                <span className="text-sm font-medium">Memuat artikel...</span>
+              </div>
+            ) : posts.length === 0 ? (
               <div className="py-24 text-center text-brand-dark/40 font-medium">
                 Belum ada artikel di kategori ini.
               </div>
@@ -113,7 +152,7 @@ export default function BlogPage() {
                   transition={{ duration: 0.25 }}
                   className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
                 >
-                  {shown.map((post, i) => (
+                  {posts.map((post, i) => (
                     <motion.div
                       key={post.slug}
                       initial={{ opacity: 0, y: 20 }}
@@ -128,9 +167,8 @@ export default function BlogPage() {
             )}
 
             {/* ── Pagination ──────────────────────────────────────────── */}
-            {totalPages > 1 && (
+            {!loading && totalPages > 1 && (
               <div className="flex items-center justify-center gap-1.5 mt-12">
-                {/* Prev */}
                 <button
                   onClick={() => goPage(page - 1)}
                   disabled={page === 1}
@@ -160,7 +198,6 @@ export default function BlogPage() {
                   )
                 )}
 
-                {/* Next */}
                 <button
                   onClick={() => goPage(page + 1)}
                   disabled={page === totalPages}
@@ -172,10 +209,9 @@ export default function BlogPage() {
               </div>
             )}
 
-            {/* Post count info */}
-            {filtered.length > 0 && totalPages > 1 && (
+            {!loading && total > 0 && totalPages > 1 && (
               <p className="text-center text-xs text-brand-dark/35 font-medium mt-4">
-                Menampilkan {(page - 1) * PER_PAGE + 1}–{Math.min(page * PER_PAGE, filtered.length)} dari {filtered.length} artikel
+                Menampilkan {(page - 1) * PER_PAGE + 1}–{Math.min(page * PER_PAGE, total)} dari {total} artikel
               </p>
             )}
           </div>

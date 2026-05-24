@@ -149,6 +149,25 @@ function BlogContent({ blocks, postTitle }: { blocks: BlogPost["content"]; postT
       elements.push(<blockquote key={i}>{b.text}</blockquote>);
     } else if (b.type === "cta-inline") {
       elements.push(<InlineCTA key={i} postTitle={postTitle} />);
+    } else if (b.type === "image") {
+      elements.push(
+        <figure key={i} className="not-prose my-8">
+          <img
+            src={b.src}
+            alt={b.alt}
+            className="w-full rounded-2xl border border-brand-dark/8 object-cover"
+          />
+          {b.caption && (
+            <figcaption className="text-center text-xs text-brand-dark/40 mt-2">
+              {b.caption}
+            </figcaption>
+          )}
+        </figure>
+      );
+    } else if (b.type === "divider") {
+      elements.push(
+        <hr key={i} className="not-prose my-10 border-t-2 border-accent/20" />
+      );
     }
   }
 
@@ -170,7 +189,7 @@ function InlineCTA({ postTitle }: { postTitle: string }) {
         href={`${WA_BASE}${encodeURIComponent(`Halo, saya baca artikel "${postTitle}" dan ingin konsultasi layanan digital.`)}`}
         target="_blank"
         rel="noopener noreferrer"
-        className="flex-shrink-0 inline-flex items-center gap-2 bg-accent text-white font-bold px-5 py-3 rounded-xl text-sm hover:bg-accent/90 transition-colors duration-200"
+        className="flex-shrink-0 inline-flex items-center gap-2 bg-accent !text-white font-bold px-5 py-3 rounded-xl text-sm hover:bg-accent/90 transition-colors duration-200"
       >
         <MessageCircle size={14} />
         Konsultasi Gratis

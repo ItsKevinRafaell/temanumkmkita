@@ -41,6 +41,7 @@ export default function EditPostPage() {
         read_time: article.read_time,
         published_at: article.published_at ?? undefined,
         content: article.content,
+        cover_image: article.cover_image ?? "",
       }}
     />
   );

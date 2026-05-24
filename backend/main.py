@@ -1,8 +1,10 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+import os
 
 from database import engine, Base
-from routers import articles, categories, auth
+from routers import articles, categories, auth, uploads
 
 Base.metadata.create_all(bind=engine)
 
@@ -27,6 +29,12 @@ app.add_middleware(
 app.include_router(articles.router)
 app.include_router(categories.router)
 app.include_router(auth.router)
+app.include_router(uploads.router)
+
+# Serve uploaded images — fallback jika Apache tidak serve public/ langsung
+_uploads_dir = os.path.join(os.path.dirname(__file__), "public", "uploads")
+os.makedirs(_uploads_dir, exist_ok=True)
+app.mount("/uploads", StaticFiles(directory=_uploads_dir), name="uploads")
 
 
 @app.get("/")

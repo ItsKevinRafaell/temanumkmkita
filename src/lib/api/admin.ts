@@ -48,6 +48,7 @@ export interface ArticlePayload {
   slug: string;
   excerpt?: string;
   content: string;
+  cover_image?: string;
   category?: string;
   status: "draft" | "published";
   featured?: boolean;
@@ -81,12 +82,29 @@ export async function adminDeleteArticle(id: string): Promise<void> {
   await req(`/api/articles/${id}`, { method: "DELETE" });
 }
 
+export async function uploadImage(file: File): Promise<string> {
+  const formData = new FormData();
+  formData.append("file", file);
+  const res = await fetch(`${API_BASE}/api/uploads`, {
+    method: "POST",
+    headers: authHeaders(),
+    body: formData,
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({ detail: res.statusText }));
+    throw new Error(err.detail ?? "Upload gagal");
+  }
+  const data = await res.json();
+  return data.url as string;
+}
+
 export interface AdminArticle {
   id: string;
   title: string;
   slug: string;
   excerpt: string | null;
   content: string;
+  cover_image: string | null;
   category: string | null;
   status: string;
   featured: boolean;

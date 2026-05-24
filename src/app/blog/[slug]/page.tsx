@@ -6,7 +6,8 @@ import Footer from "@/components/layout/Footer";
 import BlobDecoration from "@/components/ui/BlobDecoration";
 import BlogDetailClient from "@/components/blog/BlogDetailClient";
 import BlogCard from "@/components/blog/BlogCard";
-import { allPosts, getPostBySlug, getRelatedPosts, extractHeadings } from "@/lib/data/blog";
+import { extractHeadings, type BlogPost, type ContentBlock } from "@/lib/data/blog";
+import { fetchArticleBySlug, fetchArticles, fetchAllSlugs, type Article } from "@/lib/api/blog";
 import { Calendar, Clock, ChevronRight, Tag } from "lucide-react";
 
 const SITE_URL = "https://temanumkmkita.com";
@@ -15,7 +16,7 @@ const categoryColors: Record<string, string> = {
   Website: "bg-blue-50 text-blue-700 border-blue-100",
   SEO: "bg-green-50 text-green-700 border-green-100",
   "Sosial Media": "bg-pink-50 text-pink-700 border-pink-100",
-  Branding: "bg-purple-50 text-purple-700 border-purple-100",
+  Branding: "bg-purple-50 text-purple-700 border-brand-100",
   "Tips Bisnis": "bg-amber-50 text-amber-700 border-amber-100",
 };
 
@@ -27,39 +28,83 @@ function formatDate(iso: string) {
   });
 }
 
+function articleToPost(a: Article): BlogPost {
+  let content: ContentBlock[] = [];
+  try { content = JSON.parse(a.content); } catch {}
+  return {
+    slug: a.slug,
+    title: a.title,
+    excerpt: a.excerpt ?? "",
+    category: a.category ?? "Umum",
+    date: a.published_at ?? a.created_at,
+    readTime: a.read_time,
+    featured: a.featured,
+    content,
+  };
+}
+
 export async function generateStaticParams() {
-  return allPosts.map((p) => ({ slug: p.slug }));
+  try {
+    const slugs = await fetchAllSlugs();
+    return slugs.map((slug) => ({ slug }));
+  } catch {
+    return [];
+  }
 }
 
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-  const post = getPostBySlug(params.slug);
-  if (!post) return {};
-  const url = `${SITE_URL}/blog/${post.slug}`;
-  return {
-    title: `${post.title} | Blog Teman UMKM Kita`,
-    description: post.excerpt,
-    openGraph: {
-      title: post.title,
-      description: post.excerpt,
-      url,
-      type: "article",
-      publishedTime: post.date,
-      tags: [post.category],
-    },
-    alternates: { canonical: url },
-  };
+  try {
+    const { slug } = await params;
+    const article = await fetchArticleBySlug(slug);
+    const url = `${SITE_URL}/blog/${article.slug}`;
+    return {
+      title: `${article.title} | Blog Teman UMKM Kita`,
+      description: article.excerpt ?? undefined,
+      openGraph: {
+        title: article.title,
+        description: article.excerpt ?? undefined,
+        url,
+        type: "article",
+        publishedTime: article.published_at ?? undefined,
+        tags: article.category ? [article.category] : [],
+      },
+      alternates: { canonical: url },
+    };
+  } catch {
+    return {};
+  }
 }
 
-export default function BlogDetailPage({ params }: { params: { slug: string } }) {
-  const post = getPostBySlug(params.slug);
-  if (!post) notFound();
+export default async function BlogDetailPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
 
-  const related = getRelatedPosts(post, 3);
+  let article: Article;
+  try {
+    article = await fetchArticleBySlug(slug);
+  } catch {
+    notFound();
+  }
+
+  const post = articleToPost(article);
   const headings = extractHeadings(post.content);
+
+  // Related posts — same category, exclude current
+  let related: BlogPost[] = [];
+  try {
+    const relData = await fetchArticles({ category: post.category, per_page: 4 });
+    related = relData.items
+      .filter((a) => a.slug !== slug)
+      .slice(0, 3)
+      .map(articleToPost);
+  } catch {}
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -70,11 +115,7 @@ export default function BlogDetailPage({ params }: { params: { slug: string } })
         description: post.excerpt,
         datePublished: post.date,
         author: { "@type": "Organization", name: "Teman UMKM Kita" },
-        publisher: {
-          "@type": "Organization",
-          name: "Teman UMKM Kita",
-          url: SITE_URL,
-        },
+        publisher: { "@type": "Organization", name: "Teman UMKM Kita", url: SITE_URL },
         url: `${SITE_URL}/blog/${post.slug}`,
       },
       {
@@ -103,7 +144,6 @@ export default function BlogDetailPage({ params }: { params: { slug: string } })
         <section className="relative pt-12 pb-8">
           <BlobDecoration position="top-right" size={300} opacity={0.12} shape={1} />
           <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            {/* Breadcrumb */}
             <div className="flex items-center gap-1.5 text-xs text-brand-dark/40 font-medium mb-6 flex-wrap">
               <Link href="/" className="hover:text-brand-dark transition-colors">Beranda</Link>
               <ChevronRight size={12} />
@@ -112,7 +152,6 @@ export default function BlogDetailPage({ params }: { params: { slug: string } })
               <span className="text-brand-dark/70 line-clamp-1">{post.title}</span>
             </div>
 
-            {/* Meta */}
             <div className="max-w-3xl">
               <span className={`inline-flex items-center gap-1.5 text-xs font-bold px-2.5 py-1 rounded-full border mb-4 ${colorClass}`}>
                 <Tag size={10} />
@@ -146,7 +185,7 @@ export default function BlogDetailPage({ params }: { params: { slug: string } })
           </div>
         </section>
 
-        {/* ── Related posts — desktop (below article, outside sidebar) ── */}
+        {/* ── Related posts ─────────────────────────────────────────── */}
         {related.length > 0 && (
           <section className="hidden lg:block pb-20">
             <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
