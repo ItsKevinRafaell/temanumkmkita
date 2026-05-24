@@ -129,7 +129,7 @@ export default function Navbar() {
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: -8, scale: 0.97 }}
                     transition={{ duration: 0.15 }}
-                    className="absolute top-full left-0 mt-2 bg-canvas/95 backdrop-blur-md border border-brand-dark/8 rounded-2xl shadow-lg p-2 min-w-[220px] z-50"
+                    className="absolute top-full left-0 mt-2 bg-white border border-brand-dark/10 rounded-2xl shadow-lg p-2 min-w-[220px] z-50"
                   >
                     {layananLinks.map((item) => {
                       const Icon = item.icon;
@@ -212,7 +212,7 @@ export default function Navbar() {
           <motion.div
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
-            className="md:hidden py-4 border-t border-brand-dark/8 space-y-1"
+            className="md:hidden py-4 border-t border-brand-dark/8 space-y-1 bg-white"
           >
             {navLinks.slice(0, 1).map((link) => (
               <Link

@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import { useEffect, useRef, useState } from "react";
 import { Users, BarChart2, Target, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import Navbar from "@/components/layout/Navbar";
@@ -24,12 +25,12 @@ const heroStats = [
 
 function HeroSection() {
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center pt-24 pb-20">
+    <section className="relative min-h-screen flex flex-col items-center justify-center pt-24 pb-16">
       <BlobDecoration position="top-right" size={500} opacity={0.2} shape={1} />
       <BlobDecoration position="bottom-left" size={380} opacity={0.15} shape={2} />
 
       <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <div className="flex items-center justify-center gap-1.5 text-xs text-brand-dark/40 font-medium mb-8">
+        <div className="flex items-center justify-center gap-1.5 text-xs text-brand-dark/40 font-medium mb-6">
           <Link href="/" className="hover:text-brand-dark transition-colors">Beranda</Link>
           <ChevronRight size={12} />
           <span className="text-brand-dark/70">Tentang Kami</span>
@@ -38,13 +39,13 @@ function HeroSection() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="inline-flex items-center gap-2 bg-accent/10 border border-accent/30 px-4 py-1.5 rounded-full mb-10"
+          className="inline-flex items-center gap-2 bg-accent/10 border border-accent/30 px-4 py-1.5 rounded-full mb-8"
         >
           <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
           <span className="text-sm font-semibold text-brand-dark">Kenali Kami</span>
         </motion.div>
 
-        <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold leading-tight mb-6">
+        <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold leading-tight mb-5">
           {heroWords1.map((word, i) => (
             <motion.span
               key={`a${i}`}
@@ -74,7 +75,7 @@ function HeroSection() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.1, duration: 0.5 }}
-          className="text-brand-dark/60 text-xl max-w-2xl mx-auto leading-relaxed mb-16"
+          className="text-brand-dark/60 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed mb-10"
         >
           Teman UMKM Kita hadir karena terlalu banyak bisnis lokal yang bagus
           tapi tidak terlihat online. Kami di sini untuk mengubah itu.
@@ -85,12 +86,12 @@ function HeroSection() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.3, duration: 0.5 }}
-          className="inline-flex items-center gap-0 divide-x divide-brand-dark/15 bg-white/60 backdrop-blur-sm border border-brand-dark/8 rounded-2xl overflow-hidden"
+          className="w-full max-w-lg mx-auto grid grid-cols-2 sm:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-brand-dark/10 bg-white/60 backdrop-blur-sm border border-brand-dark/8 rounded-2xl overflow-hidden"
         >
           {heroStats.map((s) => (
-            <div key={s.label} className="px-8 py-4 text-center">
+            <div key={s.label} className="px-4 py-5 text-center">
               <div className="text-2xl font-extrabold text-brand-dark tabular-nums">{s.value}</div>
-              <div className="text-xs text-brand-dark/50 font-medium mt-0.5 whitespace-nowrap">{s.label}</div>
+              <div className="text-xs text-brand-dark/50 font-medium mt-0.5">{s.label}</div>
             </div>
           ))}
         </motion.div>
@@ -256,6 +257,121 @@ function MisiNilaiSection() {
   );
 }
 
+// ─── Stats ────────────────────────────────────────────────────────────────────
+
+function useCountUp(target: number, active: boolean, duration = 1600) {
+  const [count, setCount] = useState(0);
+  const raf = useRef<number>(0);
+
+  useEffect(() => {
+    if (!active) return;
+    const start = performance.now();
+    function tick(now: number) {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const ease = 1 - Math.pow(1 - progress, 3);
+      setCount(Math.round(ease * target));
+      if (progress < 1) raf.current = requestAnimationFrame(tick);
+    }
+    raf.current = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf.current);
+  }, [active, target, duration]);
+
+  return count;
+}
+
+const statsData = [
+  { target: 2, suffix: "", label: "Klien Aktif" },
+  { target: 6, suffix: "", label: "Proyek Dikerjakan" },
+  { target: 5, suffix: "", label: "Layanan Tersedia" },
+  { target: 2025, suffix: "", label: "Tahun Mulai" },
+];
+
+function StatCell({ target, suffix, label, active }: { target: number; suffix: string; label: string; active: boolean }) {
+  const count = useCountUp(target, active, target === 2025 ? 1200 : 1600);
+  return (
+    <div className="bg-accent px-8 py-12 text-center">
+      <div className="text-5xl sm:text-6xl font-black text-brand-dark tabular-nums">
+        {count}{suffix}
+      </div>
+      <div className="text-xs uppercase tracking-widest text-brand-dark/60 font-semibold mt-2">{label}</div>
+    </div>
+  );
+}
+
+function StatsSection() {
+  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.3 });
+
+  return (
+    <section ref={ref} className="overflow-hidden">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-brand-dark/10">
+        {statsData.map((s) => (
+          <StatCell key={s.label} {...s} active={inView} />
+        ))}
+      </div>
+    </section>
+  );
+}
+
+// ─── Klien ────────────────────────────────────────────────────────────────────
+
+const klienData = [
+  {
+    services: ["SEO & Google Maps"],
+    desc: "Bisnis kuliner lokal yang ingin muncul di pencarian Google dan Google Maps area sekitar.",
+  },
+  {
+    services: ["Web Development", "Desain Logo", "Maintenance"],
+    desc: "Toko fashion UMKM yang membutuhkan website, identitas visual, dan pengelolaan berkala.",
+  },
+];
+
+function KlienSection() {
+  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
+
+  return (
+    <section ref={ref} className="py-16">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5 }}
+          className="mb-12"
+        >
+          <span className="text-accent font-bold text-sm uppercase tracking-wider block mb-3">Klien Kami</span>
+          <h2 className="text-4xl sm:text-5xl font-extrabold text-brand-dark">
+            Bisnis yang sudah<br />
+            <span className="text-accent">mempercayai kami</span>
+          </h2>
+        </motion.div>
+
+        <div className="grid md:grid-cols-2 gap-6">
+          {klienData.map((k, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 24 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: i * 0.1, duration: 0.5 }}
+              className="bg-white/80 backdrop-blur-sm border border-brand-dark/8 card-shadow rounded-2xl p-6"
+            >
+              <div className="flex items-center justify-between mb-4">
+                <span className="text-xs font-semibold text-brand-dark/40 uppercase tracking-wider">Layanan digunakan</span>
+                <span className="bg-green-100 text-green-700 text-xs font-semibold px-2.5 py-0.5 rounded-full">Aktif</span>
+              </div>
+              <div className="flex flex-wrap gap-2 mb-4">
+                {k.services.map((s) => (
+                  <span key={s} className="bg-accent/10 text-accent text-xs font-semibold px-3 py-1 rounded-full">{s}</span>
+                ))}
+              </div>
+              <p className="text-brand-dark/60 text-sm leading-relaxed">{k.desc}</p>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 // ─── Tim ──────────────────────────────────────────────────────────────────────
 
 function TimSection() {
@@ -349,6 +465,8 @@ export default function TentangKamiPage() {
         <CeritaSection />
         <ManifestoStrip />
         <MisiNilaiSection />
+        <StatsSection />
+        <KlienSection />
         <TimSection />
         <CTASection />
       </main>
