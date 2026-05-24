@@ -2,212 +2,354 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
+import { MessageCircle, Mail, AtSign, Clock, MapPin, CheckCircle, Send } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import BlobDecoration from "@/components/ui/BlobDecoration";
 
 const layananOptions = [
-  "Web Development",
+  "Website",
   "SEO & Google Maps",
-  "Kelola Sosial Media",
+  "Social Media",
+  "Branding / Desain Logo",
   "Maintenance Website",
-  "Desain Logo",
-  "Lainnya",
+  "Belum tahu",
 ];
+
+const contactItems = [
+  {
+    icon: MessageCircle,
+    label: "WhatsApp",
+    value: "+62 895-0192-5395",
+    href: "https://wa.me/6289501925395",
+    cta: "Hubungi",
+    ctaStyle: "bg-[#25D366] text-white",
+  },
+  {
+    icon: Mail,
+    label: "Email",
+    value: "sales@temanumkmkita.com",
+    href: "mailto:sales@temanumkmkita.com",
+    cta: null,
+  },
+  {
+    icon: AtSign,
+    label: "Instagram",
+    value: "@temanumkmkita",
+    href: "https://instagram.com/temanumkmkita",
+    cta: null,
+    muted: true,
+  },
+];
+
+const reassuranceItems = [
+  { text: "Konsultasi gratis, tanpa syarat" },
+  { text: "Proposal dalam 1×24 jam" },
+  { text: "Tidak ada tekanan untuk langsung deal" },
+];
+
+const inputClass =
+  "w-full px-4 py-3 rounded-xl border border-brand-dark/12 bg-white focus:outline-none focus:ring-2 focus:ring-accent/30 text-brand-dark placeholder:text-brand-dark/35 transition-all text-sm";
+
+const labelClass = "block text-sm font-semibold text-brand-dark mb-2";
 
 export default function KontakPage() {
   const [form, setForm] = useState({
     nama: "",
     wa: "",
+    email: "",
     layanan: "",
     pesan: "",
   });
 
+  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.2 });
+
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    const text = `Halo Teman UMKM Kita!%0A%0ANama: ${encodeURIComponent(form.nama)}%0ANo. WA: ${encodeURIComponent(form.wa)}%0ALayanan: ${encodeURIComponent(form.layanan)}%0A%0APesan:%0A${encodeURIComponent(form.pesan)}`;
-    window.open(`https://wa.me/6289501925395?text=${text}`, "_blank");
+    const lines = [
+      `Halo Teman UMKM Kita!`,
+      ``,
+      `Nama: ${form.nama}`,
+      `No. WA: ${form.wa}`,
+      form.email ? `Email: ${form.email}` : null,
+      form.layanan ? `Layanan: ${form.layanan}` : null,
+      ``,
+      `Pesan:`,
+      form.pesan || "—",
+    ]
+      .filter((l) => l !== null)
+      .join("\n");
+    window.open(`https://wa.me/6289501925395?text=${encodeURIComponent(lines)}`, "_blank");
   }
 
   return (
     <>
       <Navbar />
       <main className="pt-20">
-        {/* Hero */}
-        <section className="py-16 bg-canvas">
-          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+
+        {/* ── Header ─────────────────────────────────────────────── */}
+        <section className="relative py-16 overflow-hidden">
+          <BlobDecoration position="top-right" size={380} opacity={0.18} shape={1} />
+
+          <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
-              <span className="text-accent font-bold text-sm uppercase tracking-wider">Hubungi Kami</span>
-              <h1 className="text-4xl sm:text-5xl font-extrabold text-brand-dark mt-3 mb-4">
-                Mulai percakapan<br />
-                <span className="text-accent">bersama kami</span>
+              <div className="inline-flex items-center gap-2 bg-accent/10 border border-accent/30 px-4 py-1.5 rounded-full mb-6">
+                <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
+                <span className="text-sm font-semibold text-brand-dark">Hubungi Kami</span>
+              </div>
+              <h1 className="text-4xl sm:text-5xl font-extrabold text-brand-dark mb-4 leading-tight">
+                Ceritakan kebutuhan<br />
+                <span className="text-accent">bisnis Anda.</span>
               </h1>
-              <p className="text-brand-dark/60 text-lg">
-                Konsultasi gratis, tanpa tekanan. Ceritakan bisnismu dan kami bantu temukan solusinya.
+              <p className="text-brand-dark/60 text-lg max-w-xl">
+                Kami balas dalam 1×24 jam. Konsultasi pertama gratis, tanpa komitmen.
               </p>
             </motion.div>
           </div>
         </section>
 
-        {/* Form + Info */}
-        <section className="pb-24 bg-canvas">
+        {/* ── Main 2-col ─────────────────────────────────────────── */}
+        <section className="pb-20">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-              {/* Form */}
+            <div className="grid lg:grid-cols-5 gap-10 items-start">
+
+              {/* Left — info (2/5) */}
               <motion.div
-                initial={{ opacity: 0, x: -30 }}
+                initial={{ opacity: 0, x: -24 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.2, duration: 0.5 }}
-                className="bg-white rounded-2xl p-8 border border-brand-dark/8 shadow-sm"
+                transition={{ delay: 0.15, duration: 0.5 }}
+                className="lg:col-span-2 space-y-4"
               >
-                <h2 className="text-2xl font-bold text-brand-dark mb-6">Kirim Pesan</h2>
-                <form onSubmit={handleSubmit} className="space-y-5">
-                  <div>
-                    <label className="block text-sm font-semibold text-brand-dark mb-2">
-                      Nama Lengkap *
-                    </label>
-                    <input
-                      required
-                      type="text"
-                      placeholder="Nama kamu"
-                      value={form.nama}
-                      onChange={(e) => setForm({ ...form, nama: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl border border-brand-dark/15 bg-canvas focus:outline-none focus:ring-2 focus:ring-accent/40 text-brand-dark placeholder:text-brand-dark/40"
-                    />
+                {/* Response guarantee */}
+                <div className="bg-accent rounded-2xl p-6">
+                  <div className="text-4xl font-black text-brand-dark leading-none mb-1">1×24</div>
+                  <div className="text-brand-dark/70 font-semibold text-sm uppercase tracking-wider">
+                    Jam respons kami
                   </div>
-
-                  <div>
-                    <label className="block text-sm font-semibold text-brand-dark mb-2">
-                      No. WhatsApp *
-                    </label>
-                    <input
-                      required
-                      type="tel"
-                      placeholder="08xx-xxxx-xxxx"
-                      value={form.wa}
-                      onChange={(e) => setForm({ ...form, wa: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl border border-brand-dark/15 bg-canvas focus:outline-none focus:ring-2 focus:ring-accent/40 text-brand-dark placeholder:text-brand-dark/40"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-semibold text-brand-dark mb-2">
-                      Layanan yang Diminati *
-                    </label>
-                    <select
-                      required
-                      value={form.layanan}
-                      onChange={(e) => setForm({ ...form, layanan: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl border border-brand-dark/15 bg-canvas focus:outline-none focus:ring-2 focus:ring-accent/40 text-brand-dark"
-                    >
-                      <option value="" disabled>Pilih layanan</option>
-                      {layananOptions.map((opt) => (
-                        <option key={opt} value={opt}>{opt}</option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-semibold text-brand-dark mb-2">
-                      Ceritakan Bisnismu
-                    </label>
-                    <textarea
-                      rows={4}
-                      placeholder="Ceritakan sedikit tentang bisnis kamu dan apa yang ingin kamu capai..."
-                      value={form.pesan}
-                      onChange={(e) => setForm({ ...form, pesan: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl border border-brand-dark/15 bg-canvas focus:outline-none focus:ring-2 focus:ring-accent/40 text-brand-dark placeholder:text-brand-dark/40 resize-none"
-                    />
-                  </div>
-
-                  <button
-                    type="submit"
-                    className="w-full bg-accent text-white font-bold py-4 rounded-xl text-lg hover:bg-accent/90 hover:scale-[1.01] transition-all duration-200 shadow-lg shadow-accent/20"
-                  >
-                    Kirim via WhatsApp →
-                  </button>
-
-                  <p className="text-center text-brand-dark/40 text-xs">
-                    Kamu akan diarahkan ke WhatsApp. Respons biasanya dalam 1–2 jam kerja.
+                  <div className="w-8 h-0.5 bg-brand-dark/20 my-3" />
+                  <p className="text-brand-dark/70 text-sm leading-relaxed">
+                    Setiap pesan masuk kami baca dan balas. Tidak ada yang terlewat.
                   </p>
-                </form>
+                </div>
+
+                {/* Contact channels */}
+                <div className="bg-white/80 backdrop-blur-sm border border-brand-dark/8 card-shadow rounded-2xl overflow-hidden">
+                  {contactItems.map((item, i) => {
+                    const Icon = item.icon;
+                    return (
+                      <div
+                        key={i}
+                        className={`flex items-center gap-4 px-5 py-4 ${
+                          i < contactItems.length - 1 ? "border-b border-brand-dark/6" : ""
+                        } ${item.muted ? "opacity-50" : ""}`}
+                      >
+                        <div className="w-9 h-9 rounded-xl bg-accent/10 flex items-center justify-center flex-shrink-0">
+                          <Icon size={16} className="text-accent" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="text-xs text-brand-dark/40 font-medium uppercase tracking-wider mb-0.5">
+                            {item.label}
+                          </div>
+                          <div className="text-sm font-semibold text-brand-dark truncate">
+                            {item.href ? (
+                              <a
+                                href={item.href}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="hover:text-accent transition-colors"
+                              >
+                                {item.value}
+                              </a>
+                            ) : (
+                              item.value
+                            )}
+                          </div>
+                        </div>
+                        {item.cta && (
+                          <a
+                            href={item.href!}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={`text-xs font-bold px-3 py-1.5 rounded-lg flex-shrink-0 ${item.ctaStyle}`}
+                          >
+                            {item.cta}
+                          </a>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {/* Hours */}
+                <div className="bg-white/80 backdrop-blur-sm border border-brand-dark/8 card-shadow rounded-2xl p-5">
+                  <div className="flex items-center gap-2 mb-4">
+                    <Clock size={15} className="text-accent" />
+                    <span className="text-sm font-bold text-brand-dark uppercase tracking-wider">
+                      Jam Operasional
+                    </span>
+                  </div>
+                  <div className="space-y-2 text-sm">
+                    {[
+                      { day: "Senin – Jumat", time: "09.00 – 17.00 WIB" },
+                      { day: "Sabtu", time: "09.00 – 13.00 WIB" },
+                      { day: "Minggu", time: "Tutup" },
+                    ].map((r) => (
+                      <div key={r.day} className="flex justify-between">
+                        <span className="text-brand-dark/60">{r.day}</span>
+                        <span
+                          className={`font-semibold ${
+                            r.time === "Tutup" ? "text-brand-dark/30" : "text-brand-dark"
+                          }`}
+                        >
+                          {r.time}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Location */}
+                <div className="flex items-center gap-3 px-5 py-4 bg-white/80 backdrop-blur-sm border border-brand-dark/8 card-shadow rounded-2xl">
+                  <div className="w-9 h-9 rounded-xl bg-accent/10 flex items-center justify-center flex-shrink-0">
+                    <MapPin size={16} className="text-accent" />
+                  </div>
+                  <div>
+                    <div className="text-xs text-brand-dark/40 font-medium uppercase tracking-wider mb-0.5">Lokasi</div>
+                    <div className="text-sm font-semibold text-brand-dark">Surabaya, Jawa Timur — Indonesia</div>
+                  </div>
+                </div>
               </motion.div>
 
-              {/* Info kontak */}
+              {/* Right — form (3/5) */}
               <motion.div
-                initial={{ opacity: 0, x: 30 }}
+                initial={{ opacity: 0, x: 24 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.3, duration: 0.5 }}
-                className="space-y-6"
+                transition={{ delay: 0.25, duration: 0.5 }}
+                className="lg:col-span-3"
               >
-                <div>
-                  <h2 className="text-2xl font-bold text-brand-dark mb-6">Informasi Kontak</h2>
-                </div>
+                <div className="bg-white/80 backdrop-blur-sm border border-brand-dark/8 card-shadow rounded-3xl overflow-hidden">
+                  {/* Accent top bar */}
+                  <div className="h-1 bg-accent" />
 
-                <div className="bg-white rounded-2xl p-6 border border-brand-dark/8">
-                  <div className="text-2xl mb-3">📱</div>
-                  <h3 className="font-bold text-brand-dark mb-1">WhatsApp</h3>
-                  <p className="text-brand-dark/60 text-sm mb-3">
-                    Cara tercepat untuk menghubungi kami. Respons dalam jam kerja.
-                  </p>
-                  <a
-                    href="https://wa.me/6289501925395"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-accent font-bold hover:underline"
-                  >
-                    +62 895-0192-5395
-                  </a>
-                </div>
-
-                <div className="bg-white rounded-2xl p-6 border border-brand-dark/8">
-                  <div className="text-2xl mb-3">🌐</div>
-                  <h3 className="font-bold text-brand-dark mb-1">Website</h3>
-                  <p className="text-brand-dark/60 text-sm mb-3">
-                    Jelajahi layanan dan portofolio kami.
-                  </p>
-                  <a
-                    href="https://temanumkmkita.com"
-                    className="text-accent font-bold hover:underline"
-                  >
-                    temanumkmkita.com
-                  </a>
-                </div>
-
-                <div className="bg-white rounded-2xl p-6 border border-brand-dark/8">
-                  <div className="text-2xl mb-3">⏰</div>
-                  <h3 className="font-bold text-brand-dark mb-2">Jam Operasional</h3>
-                  <div className="space-y-1 text-sm">
-                    <div className="flex justify-between text-brand-dark/70">
-                      <span>Senin – Jumat</span>
-                      <span className="font-semibold text-brand-dark">08.00 – 17.00 WIB</span>
+                  <form onSubmit={handleSubmit} className="p-8 sm:p-10 space-y-5">
+                    <div>
+                      <h2 className="text-2xl font-extrabold text-brand-dark">Kirim Pesan</h2>
+                      <p className="text-brand-dark/50 text-sm mt-1">
+                        Isi form ini dan kami akan follow up via WhatsApp.
+                      </p>
                     </div>
-                    <div className="flex justify-between text-brand-dark/70">
-                      <span>Sabtu</span>
-                      <span className="font-semibold text-brand-dark">09.00 – 14.00 WIB</span>
-                    </div>
-                    <div className="flex justify-between text-brand-dark/70">
-                      <span>Minggu</span>
-                      <span className="font-semibold text-brand-dark/40">Tutup</span>
-                    </div>
-                  </div>
-                </div>
 
-                <div className="bg-accent/10 border border-accent/30 rounded-2xl p-6">
-                  <div className="text-2xl mb-3">🎁</div>
-                  <h3 className="font-bold text-brand-dark mb-2">Konsultasi Gratis</h3>
-                  <p className="text-brand-dark/70 text-sm">
-                    Sesi konsultasi pertama selalu gratis. Tidak ada tekanan, tidak ada kewajiban membeli.
-                    Kami di sini untuk bantu kamu menemukan solusi terbaik.
-                  </p>
+                    <div className="grid sm:grid-cols-2 gap-5">
+                      <div>
+                        <label className={labelClass}>Nama Lengkap *</label>
+                        <input
+                          required
+                          type="text"
+                          placeholder="Nama kamu"
+                          value={form.nama}
+                          onChange={(e) => setForm({ ...form, nama: e.target.value })}
+                          className={inputClass}
+                        />
+                      </div>
+                      <div>
+                        <label className={labelClass}>No. WhatsApp *</label>
+                        <input
+                          required
+                          type="tel"
+                          placeholder="08xx-xxxx-xxxx"
+                          value={form.wa}
+                          onChange={(e) => setForm({ ...form, wa: e.target.value })}
+                          className={inputClass}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid sm:grid-cols-2 gap-5">
+                      <div>
+                        <label className={labelClass}>
+                          Email <span className="text-brand-dark/30 font-normal">(opsional)</span>
+                        </label>
+                        <input
+                          type="email"
+                          placeholder="email@kamu.com"
+                          value={form.email}
+                          onChange={(e) => setForm({ ...form, email: e.target.value })}
+                          className={inputClass}
+                        />
+                      </div>
+                      <div>
+                        <label className={labelClass}>Layanan yang Diminati *</label>
+                        <select
+                          required
+                          value={form.layanan}
+                          onChange={(e) => setForm({ ...form, layanan: e.target.value })}
+                          className={inputClass}
+                        >
+                          <option value="" disabled>Pilih layanan</option>
+                          {layananOptions.map((opt) => (
+                            <option key={opt} value={opt}>{opt}</option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className={labelClass}>
+                        Pesan <span className="text-brand-dark/30 font-normal">(opsional)</span>
+                      </label>
+                      <textarea
+                        rows={4}
+                        placeholder='Contoh: "saya punya toko baju, mau buat website dan muncul di Google Maps..."'
+                        value={form.pesan}
+                        onChange={(e) => setForm({ ...form, pesan: e.target.value })}
+                        className={`${inputClass} resize-none`}
+                      />
+                    </div>
+
+                    <div className="pt-1">
+                      <button
+                        type="submit"
+                        className="w-full bg-accent text-white font-bold py-4 rounded-xl text-base hover:bg-accent/90 transition-all duration-200 shadow-lg shadow-accent/20 flex items-center justify-center gap-2"
+                      >
+                        <Send size={16} />
+                        Kirim Pesan
+                      </button>
+                      <p className="text-center text-brand-dark/35 text-xs mt-3">
+                        Kami tidak akan spam. Data Anda aman.
+                      </p>
+                    </div>
+                  </form>
                 </div>
               </motion.div>
             </div>
           </div>
         </section>
+
+        {/* ── Reassurance strip ──────────────────────────────────── */}
+        <section ref={ref} className="border-t border-b border-brand-dark/6 py-6">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-12">
+              {reassuranceItems.map((item, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={inView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ delay: i * 0.08, duration: 0.4 }}
+                  className="flex items-center gap-2.5"
+                >
+                  <CheckCircle size={16} className="text-accent flex-shrink-0" />
+                  <span className="text-brand-dark/60 text-sm font-medium">{item.text}</span>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
       </main>
       <Footer />
     </>
