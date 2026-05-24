@@ -69,11 +69,6 @@ function countWords(text: string): number {
   return text.trim().split(/\s+/).filter(Boolean).length;
 }
 
-function kwMatch(text: string, keyword: string): boolean {
-  if (!keyword.trim()) return false;
-  return text.toLowerCase().includes(keyword.toLowerCase().trim());
-}
-
 function hasBlockTypeLocal(blocks: ContentBlock[], type: ContentBlock["type"]): boolean {
   return blocks.some((b) => {
     if (b.type === type) return true;
