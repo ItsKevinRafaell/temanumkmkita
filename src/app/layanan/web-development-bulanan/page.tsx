@@ -21,14 +21,13 @@ const plans = [
   {
     id: "starter",
     name: "Web Starter",
-    price: "199.000",
-    tagline: "Coba hadir online dulu, tanpa komitmen panjang. Cocok untuk memulai.",
+    price: "120.000",
+    tagline: "Untuk bisnis yang baru pertama kali mau hadir online.",
     features: [
       "1 Halaman (Sales Focus)",
-      "Hosting aktif selama berlangganan",
+      "Domain & Hosting (Tahun ke-1)",
       "Tombol WhatsApp Chat",
-      "SSL (Keamanan HTTPS)",
-      "Mobile Friendly",
+      "SSL & Mobile Friendly",
     ],
     cta: "Pilih Starter",
     wa: WA_BASE + encodeURIComponent("Halo, saya tertarik dengan paket Web Starter Bulanan."),
@@ -37,14 +36,12 @@ const plans = [
   {
     id: "pro",
     name: "Web Pro",
-    price: "349.000",
+    price: "250.000",
     badge: "Paling Populer",
-    tagline: "Website lengkap beberapa halaman dengan visibilitas Google. Fleksibel.",
+    tagline: "Untuk bisnis yang butuh website lengkap dan mulai terlihat di Google.",
     features: [
-      "Semua fitur Starter",
       "Max. 5 Halaman",
-      "Embed Google Maps",
-      "SEO Dasar (meta, heading, sitemap)",
+      "Maps Embed + SEO Dasar",
       "Google Analytics",
     ],
     cta: "Pilih Pro",
@@ -54,14 +51,12 @@ const plans = [
   {
     id: "expert",
     name: "Web Expert",
-    price: "549.000",
-    tagline: "Skala penuh dengan blog dan performa optimal. Upgrade atau berhenti kapan saja.",
+    price: "375.000",
+    tagline: "Untuk bisnis yang serius membangun kehadiran digital skala penuh.",
     features: [
-      "Semua fitur Pro",
       "Max. 10 Halaman",
-      "Setup Email Profesional (Titan Mail)",
-      "Blog / Artikel System",
-      "Speed Optimization",
+      "Email Profesional (Titan Mail)",
+      "Blog System + Speed Optimization",
     ],
     cta: "Pilih Expert",
     wa: WA_BASE + encodeURIComponent("Halo, saya tertarik dengan paket Web Expert Bulanan."),
@@ -92,18 +87,8 @@ const portfolioItems = [
 const notes = [
   {
     icon: Globe,
-    title: "Hosting Bulanan",
-    text: "Hosting aktif selama berlangganan. Domain tetap milik kamu meskipun berlangganan berakhir.",
-  },
-  {
-    icon: Zap,
-    title: "Pengerjaan",
-    text: "Estimasi 5–10 hari kerja setelah brief diterima dan pembayaran bulan pertama terkonfirmasi.",
-  },
-  {
-    icon: Check,
-    title: "Fleksibilitas",
-    text: "Berhenti atau jeda kapan saja dengan notifikasi 30 hari sebelumnya. Tanpa penalti.",
+    title: "Domain & Hosting",
+    text: "Domain & Hosting termasuk tahun pertama. Pembayaran bulanan — bisa berhenti kapan saja.",
   },
 ];
 
@@ -158,11 +143,11 @@ export default function WebDevelopmentBulananPage() {
                   <span className="text-sm font-semibold text-brand-dark">Web Development · Bulanan</span>
                 </div>
                 <h1 className="text-4xl sm:text-5xl font-extrabold text-brand-dark leading-tight mb-4">
-                  Fleksibel, mulai kapan saja,<br />
-                  <span className="text-accent">berhenti kapan saja.</span>
+                  Website profesional tanpa<br />
+                  <span className="text-accent">bayar besar di awal.</span>
                 </h1>
                 <p className="text-brand-dark/60 text-lg">
-                  Tidak ada kontrak panjang. Bayar per bulan, upgrade atau turun paket sesuai kebutuhan.
+                  Mulai dari Rp 120.000/bulan. Tidak ada biaya setup, tidak ada kontrak tahunan yang menguras modal.
                 </p>
               </motion.div>
 
@@ -171,17 +156,22 @@ export default function WebDevelopmentBulananPage() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3, duration: 0.4 }}
-                className="flex items-center bg-white/80 backdrop-blur-sm border border-brand-dark/8 rounded-xl p-1 self-start sm:self-auto flex-shrink-0"
+                className="flex flex-col items-start sm:items-end gap-1.5 self-start sm:self-auto flex-shrink-0"
               >
-                <Link
-                  href="/layanan/web-development"
-                  className="px-4 py-2 rounded-lg text-brand-dark/50 text-sm font-semibold hover:text-brand-dark transition-colors"
-                >
-                  Tahunan
-                </Link>
-                <span className="px-4 py-2 rounded-lg bg-accent text-white text-sm font-bold">
-                  Bulanan
-                </span>
+                <div className="flex items-center bg-white/80 backdrop-blur-sm border border-brand-dark/8 rounded-xl p-1">
+                  <Link
+                    href="/layanan/web-development"
+                    className="px-4 py-2 rounded-lg text-brand-dark/50 text-sm font-semibold hover:text-brand-dark transition-colors"
+                  >
+                    Tahunan
+                  </Link>
+                  <span className="px-4 py-2 rounded-lg bg-accent text-white text-sm font-bold">
+                    Bulanan
+                  </span>
+                </div>
+                <p className="text-xs text-brand-dark/40 font-medium">
+                  Hemat hingga 20% dengan paket tahunan.
+                </p>
               </motion.div>
             </div>
           </div>
@@ -340,7 +330,7 @@ export default function WebDevelopmentBulananPage() {
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="bg-amber-50 border border-amber-200 rounded-2xl p-6">
               <div className="text-xs font-bold uppercase tracking-wider text-amber-700 mb-4">Catatan Penting</div>
-              <div className="grid sm:grid-cols-3 gap-5">
+              <div className="max-w-lg">
                 {notes.map((n, i) => {
                   const Icon = n.icon;
                   return (
