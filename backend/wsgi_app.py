@@ -33,7 +33,9 @@ def application(environ, start_response):
         if environ.get(key):
             scope['headers'].append((key.lower().replace('_', '-').encode(), environ[key].encode()))
 
-    body = environ.get('wsgi.input', io.BytesIO()).read()
+    content_length = int(environ.get('CONTENT_LENGTH') or 0)
+    wsgi_input = environ.get('wsgi.input', io.BytesIO())
+    body = wsgi_input.read(content_length) if content_length > 0 else b''
     result = {'status': '500 Internal Server Error', 'headers': [], 'body': []}
 
     async def run():
