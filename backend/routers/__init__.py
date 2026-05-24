@@ -1,3 +1,3 @@
-from . import articles, categories, auth, uploads
+from . import articles, categories, auth, uploads, pillars, topics
 
-__all__ = ["articles", "categories", "auth", "uploads"]
+__all__ = ["articles", "categories", "auth", "uploads", "pillars", "topics"]

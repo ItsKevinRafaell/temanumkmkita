@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Text, Integer, Boolean
+from sqlalchemy import Column, String, Text, Integer, Boolean, Float, ForeignKey
 from database import Base
 
 
@@ -39,3 +39,33 @@ class Article(Base):
     seo_title = Column(String(500), nullable=True)
     meta_description = Column(Text, nullable=True)
     focus_keyword = Column(String(255), nullable=True)
+    pillar_id = Column(String(36), nullable=True)
+
+
+class ContentPillar(Base):
+    __tablename__ = "content_pillars"
+
+    id            = Column(String(36), primary_key=True)
+    niche         = Column(String(255), nullable=False)
+    name          = Column(String(500), nullable=False)
+    description   = Column(Text, nullable=True)
+    focus_keyword = Column(String(255), nullable=True)
+    position_x    = Column(Float, default=0)
+    position_y    = Column(Float, default=0)
+    created_at    = Column(Text, nullable=False)
+
+
+class ContentTopic(Base):
+    __tablename__ = "content_topics"
+
+    id            = Column(String(36), primary_key=True)
+    pillar_id     = Column(String(36), ForeignKey("content_pillars.id"), nullable=True)
+    title         = Column(String(500), nullable=False)
+    focus_keyword = Column(String(255), nullable=True)
+    search_volume = Column(Integer, nullable=True)
+    difficulty    = Column(Integer, nullable=True)
+    notes         = Column(Text, nullable=True)
+    status        = Column(String(50), default="planned")
+    position_x    = Column(Float, default=0)
+    position_y    = Column(Float, default=0)
+    created_at    = Column(Text, nullable=False)

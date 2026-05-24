@@ -57,6 +57,7 @@ export interface ArticlePayload {
   seo_title?: string;
   meta_description?: string;
   focus_keyword?: string;
+  pillar_id?: string | null;
 }
 
 export async function adminListArticles(page = 1, per_page = 20, opts?: {
@@ -150,4 +151,5 @@ export interface AdminArticle {
   seo_title: string | null;
   meta_description: string | null;
   focus_keyword: string | null;
+  pillar_id: string | null;
 }

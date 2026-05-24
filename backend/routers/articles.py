@@ -36,7 +36,7 @@ def list_articles(
 @router.get("/admin/all", response_model=PaginatedArticles, dependencies=[Depends(require_auth)])
 def list_all_articles(
     page: int = Query(1, ge=1),
-    per_page: int = Query(20, ge=1, le=100),
+    per_page: int = Query(20, ge=1, le=500),
     status: Optional[str] = Query(None),
     month: Optional[str] = Query(None),  # YYYY-MM
     sort: str = Query("desc"),

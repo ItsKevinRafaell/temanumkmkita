@@ -9,6 +9,9 @@ interface ConfirmModalProps {
   message: string;
   confirmLabel?: string;
   danger?: boolean;
+  inputLabel?: string;
+  inputValue?: string;
+  onInputChange?: (v: string) => void;
   onConfirm: () => void;
   onCancel: () => void;
 }
@@ -19,6 +22,9 @@ export default function ConfirmModal({
   message,
   confirmLabel = "Hapus",
   danger = true,
+  inputLabel,
+  inputValue,
+  onInputChange,
   onConfirm,
   onCancel,
 }: ConfirmModalProps) {
@@ -64,6 +70,19 @@ export default function ConfirmModal({
             <p className="text-sm text-[#242423]/55 mt-1 leading-relaxed">{message}</p>
           </div>
         </div>
+
+        {/* Optional input */}
+        {inputLabel !== undefined && (
+          <div className="mb-2">
+            <label className="block text-xs font-bold text-[#242423]/50 uppercase tracking-wider mb-1">{inputLabel}</label>
+            <input
+              autoFocus
+              value={inputValue ?? ""}
+              onChange={(e) => onInputChange?.(e.target.value)}
+              className="w-full border border-[#242423]/12 rounded-lg px-3 py-2 text-sm text-[#242423] focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30"
+            />
+          </div>
+        )}
 
         {/* Actions */}
         <div className="flex gap-2.5 justify-end mt-6">
