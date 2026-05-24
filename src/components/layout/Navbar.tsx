@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from "framer-motion";
@@ -49,15 +49,6 @@ export default function Navbar() {
     lastScrollY.current = latest;
   });
 
-  useEffect(() => {
-    function handleClickOutside(e: MouseEvent) {
-      if (layananRef.current && !layananRef.current.contains(e.target as Node)) {
-        setLayananOpen(false);
-      }
-    }
-    if (layananOpen) document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [layananOpen]);
 
   const linkColor = isDarkHero
     ? "text-white/60 hover:text-white"
@@ -106,9 +97,13 @@ export default function Navbar() {
             })}
 
             {/* Layanan dropdown */}
-            <div ref={layananRef} className="relative">
+            <div
+              ref={layananRef}
+              className="relative"
+              onMouseEnter={() => setLayananOpen(true)}
+              onMouseLeave={() => setLayananOpen(false)}
+            >
               <button
-                onClick={() => setLayananOpen(!layananOpen)}
                 className={cn(
                   "nav-link-hover px-3 py-2 text-sm font-medium rounded-lg transition-colors flex items-center gap-1 relative",
                   pathname.startsWith("/layanan") ? activeLinkColor : linkColor
