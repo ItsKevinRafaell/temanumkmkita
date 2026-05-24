@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { useInView } from "react-intersection-observer";
 import { MessageCircle, Mail, AtSign, Clock, MapPin, CheckCircle, Send } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
@@ -44,9 +43,9 @@ const contactItems = [
 ];
 
 const reassuranceItems = [
-  { text: "Konsultasi gratis, tanpa syarat" },
-  { text: "Proposal dalam 1×24 jam" },
-  { text: "Tidak ada tekanan untuk langsung deal" },
+  "Konsultasi gratis, tanpa syarat",
+  "Proposal dalam 1×24 jam",
+  "Tidak ada tekanan untuk langsung deal",
 ];
 
 const inputClass =
@@ -62,8 +61,6 @@ export default function KontakPage() {
     layanan: "",
     pesan: "",
   });
-
-  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.2 });
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -89,7 +86,7 @@ export default function KontakPage() {
       <main className="pt-20">
 
         {/* ── Header ─────────────────────────────────────────────── */}
-        <section className="relative py-16 overflow-hidden">
+        <section className="relative py-16">
           <BlobDecoration position="top-right" size={380} opacity={0.18} shape={1} />
 
           <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -106,15 +103,31 @@ export default function KontakPage() {
                 Ceritakan kebutuhan<br />
                 <span className="text-accent">bisnis Anda.</span>
               </h1>
-              <p className="text-brand-dark/60 text-lg max-w-xl">
+              <p className="text-brand-dark/60 text-lg max-w-xl mb-6">
                 Kami balas dalam 1×24 jam. Konsultasi pertama gratis, tanpa komitmen.
               </p>
+
+              {/* Reassurance chips */}
+              <div className="flex flex-wrap gap-3">
+                {reassuranceItems.map((item, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4 + i * 0.08, duration: 0.4 }}
+                    className="flex items-center gap-2 bg-white/70 backdrop-blur-sm border border-brand-dark/8 px-4 py-2 rounded-full"
+                  >
+                    <CheckCircle size={13} className="text-accent flex-shrink-0" />
+                    <span className="text-brand-dark/70 text-sm font-medium">{item}</span>
+                  </motion.div>
+                ))}
+              </div>
             </motion.div>
           </div>
         </section>
 
         {/* ── Main 2-col ─────────────────────────────────────────── */}
-        <section className="pb-20">
+        <section className="pb-24">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid lg:grid-cols-5 gap-10 items-start">
 
@@ -125,18 +138,6 @@ export default function KontakPage() {
                 transition={{ delay: 0.15, duration: 0.5 }}
                 className="lg:col-span-2 space-y-4"
               >
-                {/* Response guarantee */}
-                <div className="bg-accent rounded-2xl p-6">
-                  <div className="text-4xl font-black text-brand-dark leading-none mb-1">1×24</div>
-                  <div className="text-brand-dark/70 font-semibold text-sm uppercase tracking-wider">
-                    Jam respons kami
-                  </div>
-                  <div className="w-8 h-0.5 bg-brand-dark/20 my-3" />
-                  <p className="text-brand-dark/70 text-sm leading-relaxed">
-                    Setiap pesan masuk kami baca dan balas. Tidak ada yang terlewat.
-                  </p>
-                </div>
-
                 {/* Contact channels */}
                 <div className="bg-white/80 backdrop-blur-sm border border-brand-dark/8 card-shadow rounded-2xl overflow-hidden">
                   {contactItems.map((item, i) => {
@@ -201,11 +202,7 @@ export default function KontakPage() {
                     ].map((r) => (
                       <div key={r.day} className="flex justify-between">
                         <span className="text-brand-dark/60">{r.day}</span>
-                        <span
-                          className={`font-semibold ${
-                            r.time === "Tutup" ? "text-brand-dark/30" : "text-brand-dark"
-                          }`}
-                        >
+                        <span className={`font-semibold ${r.time === "Tutup" ? "text-brand-dark/30" : "text-brand-dark"}`}>
                           {r.time}
                         </span>
                       </div>
@@ -213,14 +210,31 @@ export default function KontakPage() {
                   </div>
                 </div>
 
-                {/* Location */}
-                <div className="flex items-center gap-3 px-5 py-4 bg-white/80 backdrop-blur-sm border border-brand-dark/8 card-shadow rounded-2xl">
-                  <div className="w-9 h-9 rounded-xl bg-accent/10 flex items-center justify-center flex-shrink-0">
-                    <MapPin size={16} className="text-accent" />
+                {/* Location + Maps */}
+                <div className="bg-white/80 backdrop-blur-sm border border-brand-dark/8 card-shadow rounded-2xl overflow-hidden">
+                  <div className="flex items-start gap-3 px-5 py-4 border-b border-brand-dark/6">
+                    <div className="w-9 h-9 rounded-xl bg-accent/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <MapPin size={16} className="text-accent" />
+                    </div>
+                    <div>
+                      <div className="text-xs text-brand-dark/40 font-medium uppercase tracking-wider mb-0.5">Lokasi</div>
+                      <div className="text-sm font-semibold text-brand-dark leading-snug">
+                        Jl. Daksa Timur XIV No.6, Sepinggan<br />
+                        Balikpapan Selatan, Kota Balikpapan<br />
+                        <span className="text-brand-dark/50">Kalimantan Timur 76116</span>
+                      </div>
+                    </div>
                   </div>
-                  <div>
-                    <div className="text-xs text-brand-dark/40 font-medium uppercase tracking-wider mb-0.5">Lokasi</div>
-                    <div className="text-sm font-semibold text-brand-dark">Surabaya, Jawa Timur — Indonesia</div>
+                  <div className="h-48">
+                    <iframe
+                      src="https://maps.google.com/maps?q=Jl.+Daksa+Timur+XIV+No.6+Sepinggan+Balikpapan+Selatan+Balikpapan+Kalimantan+Timur+76116&output=embed&hl=id"
+                      width="100%"
+                      height="100%"
+                      style={{ border: 0 }}
+                      allowFullScreen
+                      loading="lazy"
+                      referrerPolicy="no-referrer-when-downgrade"
+                    />
                   </div>
                 </div>
               </motion.div>
@@ -233,7 +247,6 @@ export default function KontakPage() {
                 className="lg:col-span-3"
               >
                 <div className="bg-white/80 backdrop-blur-sm border border-brand-dark/8 card-shadow rounded-3xl overflow-hidden">
-                  {/* Accent top bar */}
                   <div className="h-1 bg-accent" />
 
                   <form onSubmit={handleSubmit} className="p-8 sm:p-10 space-y-5">
@@ -326,26 +339,6 @@ export default function KontakPage() {
                   </form>
                 </div>
               </motion.div>
-            </div>
-          </div>
-        </section>
-
-        {/* ── Reassurance strip ──────────────────────────────────── */}
-        <section ref={ref} className="border-t border-b border-brand-dark/6 py-6">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-12">
-              {reassuranceItems.map((item, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={inView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ delay: i * 0.08, duration: 0.4 }}
-                  className="flex items-center gap-2.5"
-                >
-                  <CheckCircle size={16} className="text-accent flex-shrink-0" />
-                  <span className="text-brand-dark/60 text-sm font-medium">{item.text}</span>
-                </motion.div>
-              ))}
             </div>
           </div>
         </section>
