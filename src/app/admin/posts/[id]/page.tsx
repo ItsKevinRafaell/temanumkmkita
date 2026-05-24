@@ -42,6 +42,9 @@ export default function EditPostPage() {
         published_at: article.published_at ?? undefined,
         content: article.content,
         cover_image: article.cover_image ?? "",
+        seo_title: article.seo_title ?? undefined,
+        meta_description: article.meta_description ?? undefined,
+        focus_keyword: article.focus_keyword ?? undefined,
       }}
     />
   );

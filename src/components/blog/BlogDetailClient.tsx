@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import TableOfContents from "@/components/blog/TableOfContents";
 import BlogCard from "@/components/blog/BlogCard";
 import type { BlogPost } from "@/lib/data/blog";
-import { MessageCircle } from "lucide-react";
+import { MessageCircle, ChevronRight } from "lucide-react";
 
 const WA_BASE = "https://wa.me/6289501925395?text=";
 
@@ -25,22 +25,32 @@ export default function BlogDetailClient({ post, related, headings }: Props) {
       {/* ── Article body (70%) ──────────────────────────────────────── */}
       <article className="min-w-0 flex-1">
 
-        {/* Featured image placeholder */}
-        <div
-          className={`w-full h-64 sm:h-80 rounded-2xl mb-8 flex items-center justify-center border border-brand-dark/8 ${
-            {
-              Website: "bg-blue-50",
-              SEO: "bg-green-50",
-              "Sosial Media": "bg-pink-50",
-              Branding: "bg-purple-50",
-              "Tips Bisnis": "bg-amber-50",
-            }[post.category] ?? "bg-brand-dark/5"
-          }`}
-        >
-          <span className="text-6xl font-black text-brand-dark/10 uppercase tracking-widest select-none">
-            {post.category.slice(0, 3)}
-          </span>
-        </div>
+        {/* Featured image */}
+        {post.cover_image ? (
+          <div className="w-full h-64 sm:h-80 rounded-2xl mb-8 overflow-hidden border border-brand-dark/8">
+            <img
+              src={post.cover_image}
+              alt={post.title}
+              className="w-full h-full object-cover"
+            />
+          </div>
+        ) : (
+          <div
+            className={`w-full h-64 sm:h-80 rounded-2xl mb-8 flex items-center justify-center border border-brand-dark/8 ${
+              {
+                Website: "bg-blue-50",
+                SEO: "bg-green-50",
+                "Sosial Media": "bg-pink-50",
+                Branding: "bg-purple-50",
+                "Tips Bisnis": "bg-amber-50",
+              }[post.category] ?? "bg-brand-dark/5"
+            }`}
+          >
+            <span className="text-6xl font-black text-brand-dark/10 uppercase tracking-widest select-none">
+              {post.category.slice(0, 3)}
+            </span>
+          </div>
+        )}
 
         {/* Prose */}
         <div className="blog-prose">
@@ -179,6 +189,42 @@ function BlogContent({ blocks, postTitle }: { blocks: BlogPost["content"]; postT
               <BlogContent blocks={col} postTitle={postTitle} />
             </div>
           ))}
+        </div>
+      );
+    } else if (b.type === "faq") {
+      elements.push(
+        <div key={i} className="not-prose my-8">
+          <h3 className="text-base font-extrabold text-brand-dark mb-3">Pertanyaan Umum</h3>
+          <div className="space-y-2">
+            {b.items.map((item, j) => (
+              <details key={j} className="group border border-brand-dark/10 rounded-xl overflow-hidden">
+                <summary className="flex items-center justify-between px-4 py-3 cursor-pointer font-semibold text-sm text-brand-dark select-none list-none">
+                  {item.question}
+                  <ChevronRight size={14} className="flex-shrink-0 text-brand-dark/40 group-open:rotate-90 transition-transform" />
+                </summary>
+                <p className="px-4 pb-4 text-sm text-brand-dark/65 leading-relaxed">{item.answer}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      );
+    } else if (b.type === "howto") {
+      elements.push(
+        <div key={i} className="not-prose my-8">
+          <ol className="space-y-4">
+            {b.steps.map((step, j) => (
+              <li key={j} className="flex gap-4">
+                <span className="w-7 h-7 rounded-full bg-accent flex items-center justify-center text-white text-xs font-bold flex-shrink-0 mt-0.5">{j + 1}</span>
+                <div className="flex-1">
+                  <p className="font-bold text-sm text-brand-dark">{step.name}</p>
+                  <p className="text-sm text-brand-dark/65 mt-0.5 leading-relaxed">{step.text}</p>
+                  {step.image && (
+                    <img src={step.image} alt={step.name} className="mt-2 w-full rounded-xl border border-brand-dark/8 object-cover max-h-48" />
+                  )}
+                </div>
+              </li>
+            ))}
+          </ol>
         </div>
       );
     }

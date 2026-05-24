@@ -7,6 +7,7 @@ import {
   fetchCategories, createCategory, updateCategory, deleteCategory,
   type AdminCategory,
 } from "@/lib/api/admin";
+import ConfirmModal from "@/components/ui/ConfirmModal";
 import { FileText, Plus, Pencil, Trash2, Check, X, ChevronLeft, Loader2 } from "lucide-react";
 
 function slugify(text: string): string {
@@ -25,6 +26,7 @@ export default function CategoriesPage() {
   const [newSlug, setNewSlug] = useState("");
   const [adding, setAdding] = useState(false);
   const [error, setError] = useState("");
+  const [deleteTarget, setDeleteTarget] = useState<AdminCategory | null>(null);
 
   async function load() {
     try {
@@ -77,9 +79,14 @@ export default function CategoriesPage() {
   }
 
   async function handleDelete(cat: AdminCategory) {
-    if (!confirm(`Hapus kategori "${cat.name}"?`)) return;
+    setDeleteTarget(cat);
+  }
+
+  async function confirmDelete() {
+    if (!deleteTarget) return;
+    setDeleteTarget(null);
     try {
-      await deleteCategory(cat.id);
+      await deleteCategory(deleteTarget.id);
       await load();
     } catch (err: unknown) {
       alert(err instanceof Error ? err.message : "Gagal menghapus");
@@ -236,6 +243,15 @@ export default function CategoriesPage() {
           </div>
         </div>
       </main>
+
+      <ConfirmModal
+        open={deleteTarget !== null}
+        title="Hapus Kategori"
+        message={deleteTarget ? `Kategori "${deleteTarget.name}" akan dihapus permanen.` : ""}
+        confirmLabel="Hapus"
+        onConfirm={confirmDelete}
+        onCancel={() => setDeleteTarget(null)}
+      />
     </div>
   );
 }

@@ -25,6 +25,10 @@ class ArticleBase(BaseModel):
     featured: Optional[bool] = False
     read_time: Optional[int] = 5
     published_at: Optional[str] = None
+    seo_title: Optional[str] = None
+    meta_description: Optional[str] = None
+    focus_keyword: Optional[str] = None
+    pillar_id: Optional[str] = None
 
 
 class ArticleCreate(ArticleBase):
@@ -43,6 +47,10 @@ class ArticleUpdate(BaseModel):
     featured: Optional[bool] = None
     read_time: Optional[int] = None
     published_at: Optional[str] = None
+    seo_title: Optional[str] = None
+    meta_description: Optional[str] = None
+    focus_keyword: Optional[str] = None
+    pillar_id: Optional[str] = None
 
 
 class ArticleOut(ArticleBase):
@@ -74,6 +82,74 @@ class TokenOut(BaseModel):
 class UserOut(BaseModel):
     id: str
     username: str
+    created_at: str
+
+    model_config = {"from_attributes": True}
+
+
+# ── Content Pillars ────────────────────────────────────────────────────────────
+
+class PillarBase(BaseModel):
+    niche: str
+    name: str
+    description: Optional[str] = None
+    focus_keyword: Optional[str] = None
+
+
+class PillarCreate(PillarBase):
+    pass
+
+
+class PillarUpdate(BaseModel):
+    niche: Optional[str] = None
+    name: Optional[str] = None
+    description: Optional[str] = None
+    focus_keyword: Optional[str] = None
+    position_x: Optional[float] = None
+    position_y: Optional[float] = None
+
+
+class PillarOut(PillarBase):
+    id: str
+    position_x: float
+    position_y: float
+    created_at: str
+
+    model_config = {"from_attributes": True}
+
+
+# ── Content Topics ─────────────────────────────────────────────────────────────
+
+class TopicBase(BaseModel):
+    pillar_id: Optional[str] = None
+    title: str
+    focus_keyword: Optional[str] = None
+    search_volume: Optional[int] = None
+    difficulty: Optional[int] = None
+    notes: Optional[str] = None
+    status: str = "planned"
+
+
+class TopicCreate(TopicBase):
+    pass
+
+
+class TopicUpdate(BaseModel):
+    pillar_id: Optional[str] = None
+    title: Optional[str] = None
+    focus_keyword: Optional[str] = None
+    search_volume: Optional[int] = None
+    difficulty: Optional[int] = None
+    notes: Optional[str] = None
+    status: Optional[str] = None
+    position_x: Optional[float] = None
+    position_y: Optional[float] = None
+
+
+class TopicOut(TopicBase):
+    id: str
+    position_x: float
+    position_y: float
     created_at: str
 
     model_config = {"from_attributes": True}

@@ -15,6 +15,9 @@ export interface Article {
   published_at: string | null;
   created_at: string;
   updated_at: string | null;
+  seo_title: string | null;
+  meta_description: string | null;
+  focus_keyword: string | null;
 }
 
 export interface PaginatedArticles {

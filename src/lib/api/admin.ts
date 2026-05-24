@@ -54,16 +54,28 @@ export interface ArticlePayload {
   featured?: boolean;
   read_time?: number;
   published_at?: string;
+  seo_title?: string;
+  meta_description?: string;
+  focus_keyword?: string;
+  pillar_id?: string | null;
 }
 
-export async function adminListArticles(page = 1, per_page = 20) {
+export async function adminListArticles(page = 1, per_page = 20, opts?: {
+  status?: "draft" | "published";
+  month?: string;
+  sort?: "asc" | "desc";
+}) {
+  const p = new URLSearchParams({ page: String(page), per_page: String(per_page) });
+  if (opts?.status) p.set("status", opts.status);
+  if (opts?.month) p.set("month", opts.month);
+  if (opts?.sort) p.set("sort", opts.sort);
   return req<{
     items: AdminArticle[];
     total: number;
     page: number;
     per_page: number;
     pages: number;
-  }>(`/api/articles/admin/all?page=${page}&per_page=${per_page}`);
+  }>(`/api/articles/admin/all?${p.toString()}`);
 }
 
 export async function adminGetArticle(id: string): Promise<AdminArticle> {
@@ -136,4 +148,8 @@ export interface AdminArticle {
   published_at: string | null;
   created_at: string;
   updated_at: string | null;
+  seo_title: string | null;
+  meta_description: string | null;
+  focus_keyword: string | null;
+  pillar_id: string | null;
 }

@@ -36,14 +36,22 @@ def list_articles(
 @router.get("/admin/all", response_model=PaginatedArticles, dependencies=[Depends(require_auth)])
 def list_all_articles(
     page: int = Query(1, ge=1),
-    per_page: int = Query(20, ge=1, le=100),
+    per_page: int = Query(20, ge=1, le=500),
+    status: Optional[str] = Query(None),
+    month: Optional[str] = Query(None),  # YYYY-MM
+    sort: str = Query("desc"),
     db: Session = Depends(get_db),
 ):
     """Admin: list all articles including drafts."""
     q = db.query(Article)
+    if status and status in ("draft", "published"):
+        q = q.filter(Article.status == status)
+    if month:
+        q = q.filter(Article.created_at.like(f"{month}%"))
     total = q.count()
     pages = max(1, math.ceil(total / per_page))
-    items = q.order_by(Article.created_at.desc()).offset((page - 1) * per_page).limit(per_page).all()
+    order = Article.created_at.asc() if sort == "asc" else Article.created_at.desc()
+    items = q.order_by(order).offset((page - 1) * per_page).limit(per_page).all()
     return {"items": items, "total": total, "page": page, "per_page": per_page, "pages": pages}
 
 

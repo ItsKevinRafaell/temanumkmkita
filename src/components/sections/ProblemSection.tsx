@@ -30,7 +30,7 @@ const problems: {
   },
 ];
 
-function ProblemRow({
+function TimelineItem({
   problem,
   index,
   inView,
@@ -39,46 +39,93 @@ function ProblemRow({
   index: number;
   inView: boolean;
 }) {
-  const isEven = index % 2 === 0;
+  const isLeft = index % 2 === 0;
   const { Icon } = problem;
 
-  const visualSide = (
+  const card = (
     <motion.div
-      initial={{ opacity: 0, x: isEven ? -40 : 40 }}
+      initial={{ opacity: 0, x: isLeft ? -30 : 30 }}
       animate={inView ? { opacity: 1, x: 0 } : {}}
-      transition={{ delay: index * 0.15 + 0.1, duration: 0.6, ease: "easeOut" }}
-      className="flex items-center justify-center"
+      transition={{ delay: index * 0.18 + 0.1, duration: 0.55, ease: "easeOut" }}
+      className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-brand-dark/8 card-shadow"
     >
-      <div className="relative">
-        <div className="w-32 h-32 rounded-3xl bg-accent/10 flex items-center justify-center">
-          <Icon size={52} className="text-accent" strokeWidth={1.5} />
-        </div>
-        <div className="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-accent/20 blur-sm" />
-        <div className="absolute -bottom-4 -left-4 w-12 h-12 rounded-full bg-accent/10 blur-md" />
-      </div>
+      <span className="text-accent font-bold text-xs uppercase tracking-widest">Masalah {index + 1}</span>
+      <h3 className="text-xl sm:text-2xl font-extrabold text-brand-dark mt-2 mb-3 leading-tight">
+        {problem.title}
+      </h3>
+      <p className="text-brand-dark/55 text-sm leading-relaxed">{problem.detail}</p>
     </motion.div>
   );
 
-  const textSide = (
+  const dot = (
     <motion.div
-      initial={{ opacity: 0, x: isEven ? 40 : -40 }}
-      animate={inView ? { opacity: 1, x: 0 } : {}}
-      transition={{ delay: index * 0.15, duration: 0.6, ease: "easeOut" }}
+      initial={{ scale: 0, opacity: 0 }}
+      animate={inView ? { scale: 1, opacity: 1 } : {}}
+      transition={{ delay: index * 0.18, duration: 0.35, ease: "backOut" }}
+      className="flex flex-col items-center gap-2 relative z-10"
     >
-      <span className="text-accent font-bold text-xs uppercase tracking-widest">Masalah {index + 1}</span>
-      <h3 className="text-2xl sm:text-3xl font-extrabold text-brand-dark mt-2 mb-3 leading-tight">
-        {problem.title}
-      </h3>
-      <p className="text-brand-dark/50 text-lg leading-relaxed mb-4">{problem.desc}</p>
-      <p className="text-brand-dark/60 text-sm leading-relaxed">{problem.detail}</p>
+      <div className="w-12 h-12 rounded-full bg-white border-2 border-accent/40 flex items-center justify-center shadow-md flex-shrink-0">
+        <Icon size={20} className="text-accent" strokeWidth={1.8} />
+      </div>
+      {index === 0 && (
+        <motion.div
+          initial={{ opacity: 0, y: -4 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ delay: 0.5, duration: 0.4 }}
+          className="bg-accent text-white text-[10px] font-bold px-2.5 py-1 rounded-full whitespace-nowrap shadow-sm"
+        >
+          📍 Kalian di sini
+        </motion.div>
+      )}
     </motion.div>
   );
 
   return (
-    <div className={`flex flex-col ${isEven ? "md:flex-row" : "md:flex-row-reverse"} items-center gap-10 md:gap-16 py-12`}>
-      <div className="w-full md:w-2/5 flex justify-center">{visualSide}</div>
-      <div className="w-full md:w-3/5">{textSide}</div>
-    </div>
+    <>
+      {/* ── Desktop: timeline left/right ─────────── */}
+      <div className="hidden md:flex items-start gap-0 mb-14 last:mb-0">
+        {/* Left 45% */}
+        <div className="w-[45%] flex justify-end pr-8 pt-1">
+          {isLeft && card}
+        </div>
+      <div className="w-[10%] flex justify-center">
+          {dot}
+        </div>
+        {/* Right 45% */}
+        <div className="w-[45%] pl-8 pt-1">
+          {!isLeft && card}
+        </div>
+      </div>
+
+      {/* ── Mobile: left-side vertical timeline ──── */}
+      <motion.div
+        className="md:hidden flex gap-4 mb-8 last:mb-0"
+        initial={{ opacity: 0, y: 20 }}
+        animate={inView ? { opacity: 1, y: 0 } : {}}
+        transition={{ delay: index * 0.15 + 0.1, duration: 0.5 }}
+      >
+        <div className="flex flex-col items-center pt-0.5">
+          <div className="w-10 h-10 rounded-full bg-white border-2 border-accent/40 flex items-center justify-center shadow-sm flex-shrink-0 z-10">
+            <Icon size={16} className="text-accent" strokeWidth={1.8} />
+          </div>
+          {index < problems.length - 1 && (
+            <div className="w-0.5 flex-1 mt-2 mb-0 bg-accent/25 min-h-[48px]" />
+          )}
+        </div>
+        <div className="flex-1 pb-2">
+          {index === 0 && (
+            <div className="mb-2">
+              <span className="inline-flex bg-accent text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
+                📍 Kalian di sini
+              </span>
+            </div>
+          )}
+          <span className="text-accent font-bold text-xs uppercase tracking-widest">Masalah {index + 1}</span>
+          <h3 className="text-xl font-extrabold text-brand-dark mt-1 mb-2 leading-tight">{problem.title}</h3>
+          <p className="text-brand-dark/55 text-sm leading-relaxed">{problem.detail}</p>
+        </div>
+      </motion.div>
+    </>
   );
 }
 
@@ -86,13 +133,13 @@ export default function ProblemSection() {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.05 });
 
   return (
-    <section ref={ref} className="py-24 bg-transparent relative overflow-hidden">
+    <section ref={ref} className="py-20 bg-transparent relative overflow-hidden">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-4"
+          className="text-center mb-16"
         >
           <span className="text-accent font-bold text-sm uppercase tracking-wider">Masalah yang Kami Pahami</span>
           <h2 className="text-4xl sm:text-5xl font-extrabold text-brand-dark mt-3 leading-tight">
@@ -104,9 +151,16 @@ export default function ProblemSection() {
           </p>
         </motion.div>
 
-        <div className="divide-y divide-brand-dark/5">
+        {/* Timeline wrapper */}
+        <div className="relative">
+          {/* Vertical center line (desktop only) */}
+          <div
+            className="hidden md:block absolute left-1/2 top-6 bottom-6 -translate-x-1/2"
+            style={{ width: "2px", background: "rgba(36,36,35,0.1)" }}
+          />
+
           {problems.map((p, i) => (
-            <ProblemRow key={i} problem={p} index={i} inView={inView} />
+            <TimelineItem key={i} problem={p} index={i} inView={inView} />
           ))}
         </div>
       </div>
