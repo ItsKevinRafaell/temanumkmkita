@@ -217,3 +217,17 @@ class SiteSettingsUpdate(BaseModel):
     twitter_url: Optional[str] = None
     address: Optional[str] = None
     phone: Optional[str] = None
+
+
+# ── Integration Token ──────────────────────────────────────────────────────────
+
+class IntegrationTokenOut(BaseModel):
+    id: str
+    created_at: str
+    token_prefix: str  # first 8 chars of plain token for display
+
+    model_config = {"from_attributes": True}
+
+
+class IntegrationTokenCreate(BaseModel):
+    pass  # no input needed

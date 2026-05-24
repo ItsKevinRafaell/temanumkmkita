@@ -1,3 +1,4 @@
+import uuid
 from sqlalchemy import Column, String, Text, Integer, Boolean, Float, ForeignKey
 from database import Base
 
@@ -97,4 +98,12 @@ class Author(Base):
     bio         = Column(Text, nullable=True)
     photo_url   = Column(String(500), nullable=True)
     linkedin_url = Column(String(500), nullable=True)
+    created_at  = Column(String(255), nullable=False)
+
+
+class IntegrationToken(Base):
+    __tablename__ = "integration_tokens"
+
+    id          = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    token_hash  = Column(String(64), unique=True, nullable=False)  # SHA-256 hex
     created_at  = Column(String(255), nullable=False)

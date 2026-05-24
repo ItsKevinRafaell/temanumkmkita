@@ -1,16 +1,42 @@
 import uuid
 import math
+import hashlib
 from datetime import datetime, timezone
 from typing import Optional
-from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi import APIRouter, Depends, HTTPException, Query, Security
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from sqlalchemy.orm import Session
 
 from database import get_db
-from models import Article, Author
+from models import Article, Author, IntegrationToken
 from schemas import ArticleCreate, ArticleOut, ArticleUpdate, PaginatedArticles
-from auth import require_auth
+from auth import require_auth, decode_token
 
 router = APIRouter(prefix="/api/articles", tags=["articles"])
+
+_bearer = HTTPBearer()
+
+
+def require_auth_or_token(
+    credentials: HTTPAuthorizationCredentials = Security(_bearer),
+    db: Session = Depends(get_db),
+) -> str:
+    """Accept either a valid JWT Bearer token or a valid integration token."""
+    bearer = credentials.credentials
+
+    # 1. Try JWT first
+    try:
+        return decode_token(bearer)
+    except HTTPException:
+        pass
+
+    # 2. Try integration token
+    token_hash = hashlib.sha256(bearer.encode()).hexdigest()
+    row = db.query(IntegrationToken).filter(IntegrationToken.token_hash == token_hash).first()
+    if row:
+        return "integration"
+
+    raise HTTPException(status_code=401, detail="Invalid or expired token")
 
 
 def now_iso() -> str:
@@ -81,7 +107,7 @@ def get_article_by_id(article_id: str, db: Session = Depends(get_db)):
     return article
 
 
-@router.post("", response_model=ArticleOut, dependencies=[Depends(require_auth)])
+@router.post("", response_model=ArticleOut, dependencies=[Depends(require_auth_or_token)])
 def create_article(data: ArticleCreate, db: Session = Depends(get_db)):
     existing = db.query(Article).filter(Article.slug == data.slug).first()
     if existing:

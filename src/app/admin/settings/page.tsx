@@ -2,8 +2,16 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Save, ChevronLeft, Loader2, Link2 } from "lucide-react";
-import { fetchAdminSettings, updateSettings, type SiteSettings } from "@/lib/api/admin";
+import { Save, ChevronLeft, Loader2, Link2, Copy, Check, KeyRound, Trash2 } from "lucide-react";
+import {
+  fetchAdminSettings,
+  updateSettings,
+  fetchIntegrationToken,
+  generateIntegrationToken,
+  revokeIntegrationToken,
+  type SiteSettings,
+  type IntegrationTokenInfo,
+} from "@/lib/api/admin";
 
 const FIELDS: {
   key: keyof Omit<SiteSettings, "id" | "updated_at">;
@@ -28,6 +36,13 @@ export default function SettingsPage() {
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState("");
 
+  // Integration token state
+  const [tokenInfo, setTokenInfo] = useState<IntegrationTokenInfo | null>(null);
+  const [integrationToken, setIntegrationToken] = useState<string | null>(null);
+  const [generatingToken, setGeneratingToken] = useState(false);
+  const [tokenError, setTokenError] = useState("");
+  const [copied, setCopied] = useState(false);
+
   useEffect(() => {
     fetchAdminSettings()
       .then((s) => {
@@ -44,6 +59,10 @@ export default function SettingsPage() {
       })
       .catch(() => setError("Gagal memuat pengaturan"))
       .finally(() => setLoading(false));
+
+    fetchIntegrationToken()
+      .then((info) => setTokenInfo(info))
+      .catch(() => {/* silently ignore — token section will show empty state */});
   }, []);
 
   async function handleSave() {
@@ -64,6 +83,41 @@ export default function SettingsPage() {
     } finally {
       setSaving(false);
     }
+  }
+
+  async function handleGenerateToken() {
+    setGeneratingToken(true);
+    setTokenError("");
+    setIntegrationToken(null);
+    try {
+      const result = await generateIntegrationToken();
+      setIntegrationToken(result.token);
+      setTokenInfo({ id: result.id, created_at: result.created_at, token_prefix: result.token_prefix });
+    } catch (err) {
+      setTokenError(err instanceof Error ? err.message : "Gagal membuat token");
+    } finally {
+      setGeneratingToken(false);
+    }
+  }
+
+  async function handleRevokeToken() {
+    if (!confirm("Yakin ingin menghapus token integrasi? Semua sistem yang menggunakan token ini tidak akan bisa publish artikel.")) return;
+    setTokenError("");
+    try {
+      await revokeIntegrationToken();
+      setTokenInfo(null);
+      setIntegrationToken(null);
+    } catch (err) {
+      setTokenError(err instanceof Error ? err.message : "Gagal menghapus token");
+    }
+  }
+
+  function handleCopyToken() {
+    if (!integrationToken) return;
+    navigator.clipboard.writeText(integrationToken).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
   }
 
   return (
@@ -136,6 +190,79 @@ export default function SettingsPage() {
                   </div>
                 ))}
               </div>
+            </div>
+
+            {/* Integration Token */}
+            <div className="bg-white border border-[#242423]/8 rounded-2xl p-6">
+              <div className="flex items-center gap-2 mb-1">
+                <KeyRound size={14} className="text-[#242423]/40" />
+                <p className="text-xs font-bold uppercase tracking-wider text-[#242423]/40">Integrasi API</p>
+              </div>
+              <p className="text-xs text-[#242423]/50 mb-4">Token untuk menghubungkan Kantorteman dengan CMS ini.</p>
+
+              {tokenError && (
+                <p className="text-xs text-red-600 mb-3">{tokenError}</p>
+              )}
+
+              {tokenInfo ? (
+                <div className="space-y-3">
+                  <div className="bg-[#fcfaf7] border border-[#242423]/8 rounded-lg px-3 py-2 text-xs text-[#242423]/60">
+                    <span className="font-semibold text-[#242423]/70">Token aktif</span> sejak{" "}
+                    {new Date(tokenInfo.created_at).toLocaleDateString("id-ID", { year: "numeric", month: "long", day: "numeric" })},{" "}
+                    prefix: <code className="font-mono">{tokenInfo.token_prefix}...</code>
+                  </div>
+
+                  {integrationToken && (
+                    <div className="space-y-1.5">
+                      <p className="text-xs font-semibold text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">
+                        Simpan token ini sekarang. Tidak bisa dilihat lagi.
+                      </p>
+                      <div className="flex gap-2">
+                        <input
+                          type="text"
+                          readOnly
+                          value={integrationToken}
+                          className="flex-1 font-mono text-xs border border-[#242423]/12 rounded-lg px-3 py-2 bg-[#fcfaf7] text-[#242423] select-all"
+                        />
+                        <button
+                          onClick={handleCopyToken}
+                          className="flex items-center gap-1.5 border border-[#242423]/12 rounded-lg px-3 py-2 text-xs font-semibold text-[#242423]/60 hover:bg-[#242423]/5 transition"
+                        >
+                          {copied ? <Check size={13} className="text-green-600" /> : <Copy size={13} />}
+                          {copied ? "Tersalin" : "Salin"}
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="flex gap-2">
+                    <button
+                      onClick={handleGenerateToken}
+                      disabled={generatingToken}
+                      className="flex items-center gap-1.5 border border-[#242423]/12 rounded-lg px-3 py-1.5 text-xs font-semibold text-[#242423]/60 hover:bg-[#242423]/5 disabled:opacity-50 transition"
+                    >
+                      {generatingToken ? <Loader2 size={12} className="animate-spin" /> : <KeyRound size={12} />}
+                      Generate ulang
+                    </button>
+                    <button
+                      onClick={handleRevokeToken}
+                      className="flex items-center gap-1.5 border border-red-200 rounded-lg px-3 py-1.5 text-xs font-semibold text-red-600 hover:bg-red-50 transition"
+                    >
+                      <Trash2 size={12} />
+                      Revoke
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <button
+                  onClick={handleGenerateToken}
+                  disabled={generatingToken}
+                  className="flex items-center gap-1.5 bg-[#242423] text-white font-bold px-4 py-1.5 rounded-lg text-sm hover:bg-[#242423]/85 disabled:opacity-60 transition"
+                >
+                  {generatingToken ? <Loader2 size={13} className="animate-spin" /> : <KeyRound size={13} />}
+                  {generatingToken ? "Membuat token..." : "Generate Token"}
+                </button>
+              )}
             </div>
 
             <p className="text-xs text-[#242423]/40 text-center">

@@ -5,6 +5,7 @@ import os
 
 from database import engine, Base
 from routers import articles, categories, auth, uploads, pillars, topics, settings, authors
+from routers import integration
 
 Base.metadata.create_all(bind=engine)
 
@@ -34,6 +35,7 @@ app.include_router(pillars.router)
 app.include_router(topics.router)
 app.include_router(settings.router)
 app.include_router(authors.router)
+app.include_router(integration.router)
 
 # Serve uploaded images — fallback jika Apache tidak serve public/ langsung
 _uploads_dir = os.path.join(os.path.dirname(__file__), "public", "uploads")

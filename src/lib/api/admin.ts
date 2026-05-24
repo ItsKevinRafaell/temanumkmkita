@@ -212,3 +212,23 @@ export async function updateAuthor(id: string, data: Partial<Omit<Author, "id" |
 export async function deleteAuthor(id: string): Promise<void> {
   await req(`/api/authors/${id}`, { method: "DELETE" });
 }
+
+/* ── Integration Token ────────────────────────────────────────────────────── */
+
+export interface IntegrationTokenInfo {
+  id: string;
+  created_at: string;
+  token_prefix: string;
+}
+
+export async function fetchIntegrationToken(): Promise<IntegrationTokenInfo | null> {
+  return req<IntegrationTokenInfo | null>("/api/integration/token");
+}
+
+export async function generateIntegrationToken(): Promise<IntegrationTokenInfo & { token: string }> {
+  return req<IntegrationTokenInfo & { token: string }>("/api/integration/token", { method: "POST" });
+}
+
+export async function revokeIntegrationToken(): Promise<void> {
+  await req("/api/integration/token", { method: "DELETE" });
+}
