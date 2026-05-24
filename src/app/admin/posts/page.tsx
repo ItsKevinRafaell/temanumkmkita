@@ -92,12 +92,20 @@ export default function AdminPostsPage() {
             <h1 className="text-xl font-extrabold text-[#242423]">Artikel</h1>
             <p className="text-xs text-[#242423]/45 mt-0.5">{total} total artikel</p>
           </div>
-          <Link
-            href="/admin/posts/new"
-            className="flex items-center gap-2 bg-[#f5a700] text-white font-bold px-4 py-2.5 rounded-xl text-sm hover:bg-[#f5a700]/90 transition"
-          >
-            <Plus size={14} /> Artikel Baru
-          </Link>
+          <div className="flex items-center gap-2">
+            <Link
+              href="/admin/categories"
+              className="flex items-center gap-2 border border-[#242423]/12 text-[#242423]/55 font-semibold px-3 py-2.5 rounded-xl text-sm hover:border-[#242423]/25 hover:text-[#242423] transition"
+            >
+              Kategori
+            </Link>
+            <Link
+              href="/admin/posts/new"
+              className="flex items-center gap-2 bg-[#f5a700] text-white font-bold px-4 py-2.5 rounded-xl text-sm hover:bg-[#f5a700]/90 transition"
+            >
+              <Plus size={14} /> Artikel Baru
+            </Link>
+          </div>
         </div>
 
         {/* Table */}

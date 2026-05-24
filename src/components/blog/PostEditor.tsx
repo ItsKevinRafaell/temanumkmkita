@@ -1,30 +1,27 @@
 "use client";
 
-import { useState, useRef, useEffect, useCallback } from "react";
+import {
+  useState, useRef, useEffect, useCallback,
+} from "react";
 import { useRouter } from "next/navigation";
 import {
-  DndContext,
-  DragEndEvent,
-  PointerSensor,
-  useSensor,
-  useSensors,
-  closestCenter,
+  DndContext, DragEndEvent, PointerSensor, useSensor, useSensors, closestCenter,
 } from "@dnd-kit/core";
 import {
-  SortableContext,
-  verticalListSortingStrategy,
-  useSortable,
-  arrayMove,
+  SortableContext, verticalListSortingStrategy, useSortable, arrayMove,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { adminCreateArticle, adminUpdateArticle, uploadImage, type ArticlePayload } from "@/lib/api/admin";
+import {
+  adminCreateArticle, adminUpdateArticle, uploadImage, fetchCategories,
+  type ArticlePayload, type AdminCategory,
+} from "@/lib/api/admin";
 import { type ContentBlock } from "@/lib/data/blog";
 import Link from "next/link";
 import {
   ChevronLeft, Save, Globe, GripVertical, Trash2,
   Heading1, Heading2, AlignLeft, List, ListOrdered,
   Quote, Zap, Image as ImageIcon, Minus, Plus, X,
-  Loader2, Upload,
+  Loader2, Upload, Columns, Eye,
 } from "lucide-react";
 
 /* ── Types ────────────────────────────────────────────────────────────────── */
@@ -33,30 +30,6 @@ interface BlockItem {
   id: string;
   block: ContentBlock;
 }
-
-const CATEGORIES = ["Website", "SEO", "Sosial Media", "Branding", "Tips Bisnis"];
-
-/* ── Slash commands ───────────────────────────────────────────────────────── */
-
-interface SlashCommand {
-  keywords: string[];
-  label: string;
-  desc: string;
-  blockType: ContentBlock["type"];
-  icon: React.ReactNode;
-}
-
-const SLASH_COMMANDS: SlashCommand[] = [
-  { keywords: ["h2", "heading"], label: "Heading H2", desc: "/h2", blockType: "h2", icon: <Heading1 size={13} /> },
-  { keywords: ["h3", "subheading", "subjudul"], label: "Heading H3", desc: "/h3", blockType: "h3", icon: <Heading2 size={13} /> },
-  { keywords: ["p", "paragraf", "teks"], label: "Paragraf", desc: "/p", blockType: "p", icon: <AlignLeft size={13} /> },
-  { keywords: ["gambar", "image", "foto"], label: "Gambar", desc: "/gambar", blockType: "image", icon: <ImageIcon size={13} /> },
-  { keywords: ["quote", "kutipan", "blockquote"], label: "Kutipan", desc: "/quote", blockType: "blockquote", icon: <Quote size={13} /> },
-  { keywords: ["ul", "list", "bullet"], label: "Bullet List", desc: "/ul", blockType: "ul", icon: <List size={13} /> },
-  { keywords: ["ol", "numbered", "nomor"], label: "Numbered List", desc: "/ol", blockType: "ol", icon: <ListOrdered size={13} /> },
-  { keywords: ["cta", "banner", "tombol"], label: "CTA Banner", desc: "/cta", blockType: "cta-inline", icon: <Zap size={13} /> },
-  { keywords: ["divider", "garis", "hr", "pemisah"], label: "Garis Pemisah", desc: "/divider", blockType: "divider", icon: <Minus size={13} /> },
-];
 
 /* ── Helpers ──────────────────────────────────────────────────────────────── */
 
@@ -67,15 +40,40 @@ function slugify(text: string): string {
   return text.toLowerCase().replace(/[^a-z0-9\s-]/g, "").trim().replace(/\s+/g, "-");
 }
 
-function newBlockItem(type: ContentBlock["type"]): BlockItem {
+function getBlockText(block: ContentBlock): string | null {
+  if (block.type === "h2" || block.type === "h3" || block.type === "p" || block.type === "blockquote") {
+    return block.text;
+  }
+  return null;
+}
+
+function setBlockText(block: ContentBlock, text: string): ContentBlock {
+  if (block.type === "h2" || block.type === "h3") return { ...block, text, id: slugify(text) || block.id };
+  if (block.type === "p" || block.type === "blockquote") return { ...block, text };
+  return block;
+}
+
+function newBlockFromType(type: ContentBlock["type"], params?: Record<string, unknown>): BlockItem {
+  const id = genId();
   let block: ContentBlock;
-  if (type === "h2" || type === "h3") block = { type, id: `h-${Date.now()}`, text: "" };
-  else if (type === "p" || type === "blockquote") block = { type, text: "" };
-  else if (type === "ul" || type === "ol") block = { type, items: [""] };
-  else if (type === "image") block = { type, src: "", alt: "", caption: "" };
-  else if (type === "divider") block = { type: "divider" };
-  else block = { type: "cta-inline" };
-  return { id: genId(), block };
+  switch (type) {
+    case "h2": block = { type, id: `h-${Date.now()}`, text: "" }; break;
+    case "h3": block = { type, id: `h-${Date.now()}`, text: "" }; break;
+    case "p": block = { type, text: "" }; break;
+    case "blockquote": block = { type, text: "" }; break;
+    case "ul": block = { type, items: [""] }; break;
+    case "ol": block = { type, items: [""] }; break;
+    case "image": block = { type, src: "", alt: "", caption: "" }; break;
+    case "divider": block = { type: "divider" }; break;
+    case "cta-inline": block = { type: "cta-inline" }; break;
+    case "columns": {
+      const count = (params?.count as 2 | 3) ?? 2;
+      block = { type: "columns", count, columns: Array.from({ length: count }, () => []) };
+      break;
+    }
+    default: block = { type: "p", text: "" };
+  }
+  return { id, block };
 }
 
 function parseBlockItems(raw?: string): BlockItem[] {
@@ -86,16 +84,35 @@ function parseBlockItems(raw?: string): BlockItem[] {
   } catch { return []; }
 }
 
-const blockLabels: Partial<Record<ContentBlock["type"], string>> = {
-  h2: "Heading H2", h3: "Heading H3", p: "Paragraf",
-  ul: "Bullet List", ol: "Numbered List", blockquote: "Kutipan",
-  "cta-inline": "CTA Banner", image: "Gambar", divider: "Garis Pemisah",
-};
-const blockIcons: Partial<Record<ContentBlock["type"], React.ReactNode>> = {
-  h2: <Heading1 size={11} />, h3: <Heading2 size={11} />, p: <AlignLeft size={11} />,
-  ul: <List size={11} />, ol: <ListOrdered size={11} />, blockquote: <Quote size={11} />,
-  "cta-inline": <Zap size={11} />, image: <ImageIcon size={11} />, divider: <Minus size={11} />,
-};
+function detectSlash(value: string): string | null {
+  const m = value.match(/\/([a-z0-9]*)$/);
+  return m ? m[1] : null;
+}
+
+/* ── Slash commands ───────────────────────────────────────────────────────── */
+
+interface SlashCommand {
+  keywords: string[];
+  label: string;
+  desc: string;
+  blockType: ContentBlock["type"];
+  params?: Record<string, unknown>;
+  icon: React.ReactNode;
+}
+
+const SLASH_COMMANDS: SlashCommand[] = [
+  { keywords: ["h2", "heading", "judul"], label: "Heading H2", desc: "/h2", blockType: "h2", icon: <Heading1 size={13} /> },
+  { keywords: ["h3", "subheading", "subjudul"], label: "Heading H3", desc: "/h3", blockType: "h3", icon: <Heading2 size={13} /> },
+  { keywords: ["p", "paragraf", "teks"], label: "Paragraf", desc: "/p", blockType: "p", icon: <AlignLeft size={13} /> },
+  { keywords: ["gambar", "image", "foto"], label: "Gambar", desc: "/gambar", blockType: "image", icon: <ImageIcon size={13} /> },
+  { keywords: ["quote", "kutipan", "blockquote"], label: "Kutipan", desc: "/quote", blockType: "blockquote", icon: <Quote size={13} /> },
+  { keywords: ["ul", "list", "bullet"], label: "Bullet List", desc: "/ul", blockType: "ul", icon: <List size={13} /> },
+  { keywords: ["ol", "numbered", "nomor"], label: "Numbered List", desc: "/ol", blockType: "ol", icon: <ListOrdered size={13} /> },
+  { keywords: ["cta", "banner", "tombol"], label: "CTA Banner", desc: "/cta", blockType: "cta-inline", icon: <Zap size={13} /> },
+  { keywords: ["divider", "garis", "hr", "pemisah"], label: "Garis Pemisah", desc: "/divider", blockType: "divider", icon: <Minus size={13} /> },
+  { keywords: ["2col", "dua", "kolom"], label: "2 Kolom", desc: "/2col", blockType: "columns", params: { count: 2 }, icon: <Columns size={13} /> },
+  { keywords: ["3col", "tiga", "three"], label: "3 Kolom", desc: "/3col", blockType: "columns", params: { count: 3 }, icon: <Columns size={13} /> },
+];
 
 /* ── Slash menu ───────────────────────────────────────────────────────────── */
 
@@ -103,7 +120,7 @@ function SlashMenu({
   query, onSelect, onClose,
 }: {
   query: string;
-  onSelect: (type: ContentBlock["type"]) => void;
+  onSelect: (cmd: SlashCommand) => void;
   onClose: () => void;
 }) {
   const q = query.toLowerCase();
@@ -116,13 +133,14 @@ function SlashMenu({
 
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
+      if (!filtered.length) return;
       if (e.key === "ArrowDown") { e.preventDefault(); setActive((a) => Math.min(a + 1, filtered.length - 1)); }
       if (e.key === "ArrowUp") { e.preventDefault(); setActive((a) => Math.max(a - 1, 0)); }
-      if (e.key === "Enter" && filtered[active]) { e.preventDefault(); onSelect(filtered[active].blockType); }
+      if (e.key === "Enter" && filtered[active]) { e.preventDefault(); onSelect(filtered[active]); }
       if (e.key === "Escape") { e.preventDefault(); onClose(); }
     }
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    window.addEventListener("keydown", onKey, true);
+    return () => window.removeEventListener("keydown", onKey, true);
   }, [filtered, active, onSelect, onClose]);
 
   if (filtered.length === 0) return null;
@@ -131,8 +149,8 @@ function SlashMenu({
     <div className="absolute left-0 top-full mt-1 z-50 bg-white border border-[#242423]/12 rounded-xl shadow-xl p-1 min-w-[220px]">
       {filtered.map((cmd, i) => (
         <button
-          key={cmd.blockType + cmd.keywords[0]}
-          onMouseDown={(e) => { e.preventDefault(); onSelect(cmd.blockType); }}
+          key={`${cmd.blockType}-${cmd.desc}`}
+          onMouseDown={(e) => { e.preventDefault(); onSelect(cmd); }}
           className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-left ${
             i === active ? "bg-[#f5a700]/10 text-[#242423]" : "text-[#242423]/60 hover:bg-[#242423]/5"
           }`}
@@ -144,6 +162,20 @@ function SlashMenu({
       ))}
     </div>
   );
+}
+
+/* ── Auto-resize helper ───────────────────────────────────────────────────── */
+
+function autoResize(el: HTMLTextAreaElement) {
+  el.style.height = "auto";
+  el.style.height = `${el.scrollHeight}px`;
+}
+
+function makeTextareaRef(id: string, registerRef: NotionBlockCallbacks["registerRef"]) {
+  return (el: HTMLTextAreaElement | null) => {
+    if (el) autoResize(el);
+    registerRef(id, el);
+  };
 }
 
 /* ── Image block editor ───────────────────────────────────────────────────── */
@@ -173,7 +205,7 @@ function ImageBlockEditor({
     <div className="space-y-2">
       {block.src ? (
         <div className="relative">
-          <img src={block.src} alt={block.alt} className="w-full rounded-lg object-cover max-h-64 border border-[#242423]/8" />
+          <img src={block.src} alt={block.alt} className="w-full rounded-lg object-cover max-h-72 border border-[#242423]/8" />
           <button
             onClick={() => onChange({ ...block, src: "" })}
             className="absolute top-2 right-2 w-7 h-7 bg-white border border-[#242423]/12 rounded-full flex items-center justify-center hover:bg-red-50 hover:border-red-200 transition"
@@ -197,11 +229,11 @@ function ImageBlockEditor({
         type="file"
         accept="image/jpeg,image/png,image/webp"
         className="hidden"
-        onChange={(e) => { const f = e.target.files?.[0]; if (f) handleFile(f); }}
+        onChange={(e) => { const f = e.target.files?.[0]; if (f) handleFile(f); e.target.value = ""; }}
       />
       <input
         className="w-full border border-[#242423]/12 rounded-lg px-3 py-1.5 text-xs text-[#242423] bg-white focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30 focus:border-[#f5a700]"
-        placeholder="Alt text (deskripsi gambar untuk SEO & aksesibilitas)..."
+        placeholder="Alt text (SEO & aksesibilitas)..."
         value={block.alt}
         onChange={(e) => onChange({ ...block, alt: e.target.value })}
       />
@@ -215,119 +247,258 @@ function ImageBlockEditor({
   );
 }
 
-/* ── Block editor ─────────────────────────────────────────────────────────── */
+/* ── NotionBlock ──────────────────────────────────────────────────────────── */
 
-function BlockEditor({
-  block, onChange, onTransform,
+interface NotionBlockCallbacks {
+  onUpdate: (id: string, block: ContentBlock) => void;
+  onDelete: (id: string) => void;
+  onInsertAfter: (afterId: string, item: BlockItem) => void;
+  onMergeWithPrev: (id: string, textToAppend: string) => void;
+  onFocusPrev: (id: string) => void;
+  onFocusNext: (id: string) => void;
+  registerRef: (id: string, el: HTMLTextAreaElement | HTMLInputElement | null) => void;
+  level: number;
+}
+
+function NotionBlock({
+  item, callbacks,
 }: {
-  block: ContentBlock;
-  onChange: (b: ContentBlock) => void;
-  onTransform: (type: ContentBlock["type"]) => void;
+  item: BlockItem;
+  callbacks: NotionBlockCallbacks;
 }) {
+  const { onUpdate, onDelete, onInsertAfter, onMergeWithPrev, onFocusPrev, onFocusNext, registerRef, level } = callbacks;
   const [slashQuery, setSlashQuery] = useState<string | null>(null);
 
-  function handleTextChange(value: string) {
-    if (value.startsWith("/")) {
-      setSlashQuery(value.slice(1));
-    } else {
-      setSlashQuery(null);
-      if (block.type === "p" || block.type === "blockquote") onChange({ ...block, text: value });
-    }
-  }
+  const textValue = getBlockText(item.block) ?? "";
 
-  function handleHeadingChange(value: string) {
-    if (value.startsWith("/")) {
-      setSlashQuery(value.slice(1));
-    } else {
-      setSlashQuery(null);
-      if (block.type === "h2" || block.type === "h3") {
-        onChange({ ...block, text: value, id: slugify(value) || block.id });
-      }
-    }
-  }
-
-  function handleSlashSelect(type: ContentBlock["type"]) {
+  const handleSlashSelect = useCallback((cmd: SlashCommand) => {
     setSlashQuery(null);
-    onTransform(type);
+    // Remove /query from current block text
+    const currentText = getBlockText(item.block) ?? "";
+    const cleanText = currentText.replace(/\/[a-z0-9]*$/, "");
+    onUpdate(item.id, setBlockText(item.block, cleanText));
+    // Insert new block below
+    const newBlock = newBlockFromType(cmd.blockType, cmd.params);
+    onInsertAfter(item.id, newBlock);
+  }, [item, onUpdate, onInsertAfter]);
+
+  const handleSlashClose = useCallback(() => {
+    setSlashQuery(null);
+    // Remove /query from text
+    const currentText = getBlockText(item.block) ?? "";
+    const cleanText = currentText.replace(/\/[a-z0-9]*$/, "");
+    onUpdate(item.id, setBlockText(item.block, cleanText));
+  }, [item, onUpdate]);
+
+  function handleTextareaKeyDown(e: React.KeyboardEvent<HTMLTextAreaElement>) {
+    const el = e.currentTarget;
+    const value = el.value;
+    const selStart = el.selectionStart ?? value.length;
+    const selEnd = el.selectionEnd ?? value.length;
+
+    if (e.key === "Enter" && !e.shiftKey) {
+      if (slashQuery !== null) return; // slash menu will handle Enter
+      e.preventDefault();
+      const before = value.slice(0, selStart);
+      const after = value.slice(selEnd);
+      onUpdate(item.id, setBlockText(item.block, before));
+      const newItem = newBlockFromType("p");
+      if (after) (newItem.block as { text: string }).text = after;
+      onInsertAfter(item.id, newItem);
+    } else if (e.key === "Backspace" && selStart === 0 && selEnd === 0) {
+      e.preventDefault();
+      if (value === "") {
+        onDelete(item.id);
+      } else {
+        onMergeWithPrev(item.id, value);
+      }
+    } else if (e.key === "ArrowUp" && selStart === 0) {
+      e.preventDefault();
+      onFocusPrev(item.id);
+    } else if (e.key === "ArrowDown" && selStart === value.length) {
+      e.preventDefault();
+      onFocusNext(item.id);
+    }
   }
 
-  if (block.type === "h2" || block.type === "h3") {
+  function handleInputKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
+    const el = e.currentTarget;
+    const value = el.value;
+    const selStart = el.selectionStart ?? value.length;
+    const selEnd = el.selectionEnd ?? value.length;
+
+    if (e.key === "Enter" && !e.shiftKey) {
+      if (slashQuery !== null) return;
+      e.preventDefault();
+      const before = value.slice(0, selStart);
+      const after = value.slice(selEnd);
+      onUpdate(item.id, setBlockText(item.block, before));
+      const newItem = newBlockFromType("p");
+      if (after) (newItem.block as { text: string }).text = after;
+      onInsertAfter(item.id, newItem);
+    } else if (e.key === "Backspace" && selStart === 0 && selEnd === 0) {
+      e.preventDefault();
+      if (value === "") {
+        onDelete(item.id);
+      } else {
+        onMergeWithPrev(item.id, value);
+      }
+    } else if (e.key === "ArrowUp" && selStart === 0) {
+      e.preventDefault();
+      onFocusPrev(item.id);
+    } else if (e.key === "ArrowDown" && selStart === value.length) {
+      e.preventDefault();
+      onFocusNext(item.id);
+    }
+  }
+
+  function handleTextChange(value: string) {
+    const slash = detectSlash(value);
+    if (slash !== null) {
+      setSlashQuery(slash);
+    } else {
+      if (slashQuery !== null) setSlashQuery(null);
+      onUpdate(item.id, setBlockText(item.block, value));
+    }
+  }
+
+  const displayValue = slashQuery !== null
+    ? (getBlockText(item.block) ?? "").replace(/\/[a-z0-9]*$/, "") + "/" + slashQuery
+    : textValue;
+
+  /* Render by block type */
+
+  if (item.block.type === "h2") {
     return (
-      <div className="relative space-y-1">
+      <div className="relative">
         <input
-          className="w-full border border-[#242423]/12 rounded-lg px-3 py-2 text-sm font-bold text-[#242423] bg-white focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30 focus:border-[#f5a700]"
-          placeholder={`${block.type === "h2" ? "Judul H2" : "Subjudul H3"}... (ketik / untuk ubah tipe)`}
-          value={slashQuery !== null ? "/" + slashQuery : block.text}
-          onChange={(e) => handleHeadingChange(e.target.value)}
+          ref={(el) => registerRef(item.id, el)}
+          className="w-full outline-none text-2xl font-bold text-[#242423] placeholder:text-[#242423]/20 bg-transparent py-0.5"
+          placeholder="Heading H2..."
+          value={displayValue}
+          onChange={(e) => handleTextChange(e.target.value)}
+          onKeyDown={handleInputKeyDown}
         />
-        {block.text && <p className="text-xs text-[#242423]/30">ID: <code className="bg-[#242423]/5 px-1 rounded">{block.id}</code></p>}
+        {item.block.text && (
+          <p className="text-xs text-[#242423]/25 mt-0.5">ID: <code className="font-mono">{item.block.id}</code></p>
+        )}
         {slashQuery !== null && (
-          <SlashMenu query={slashQuery} onSelect={handleSlashSelect} onClose={() => setSlashQuery(null)} />
+          <SlashMenu query={slashQuery} onSelect={handleSlashSelect} onClose={handleSlashClose} />
         )}
       </div>
     );
   }
 
-  if (block.type === "p" || block.type === "blockquote") {
+  if (item.block.type === "h3") {
+    return (
+      <div className="relative">
+        <input
+          ref={(el) => registerRef(item.id, el)}
+          className="w-full outline-none text-lg font-bold text-[#242423] placeholder:text-[#242423]/20 bg-transparent py-0.5"
+          placeholder="Heading H3..."
+          value={displayValue}
+          onChange={(e) => handleTextChange(e.target.value)}
+          onKeyDown={handleInputKeyDown}
+        />
+        {item.block.text && (
+          <p className="text-xs text-[#242423]/25 mt-0.5">ID: <code className="font-mono">{item.block.id}</code></p>
+        )}
+        {slashQuery !== null && (
+          <SlashMenu query={slashQuery} onSelect={handleSlashSelect} onClose={handleSlashClose} />
+        )}
+      </div>
+    );
+  }
+
+  if (item.block.type === "p") {
     return (
       <div className="relative">
         <textarea
-          className="w-full border border-[#242423]/12 rounded-lg px-3 py-2 text-sm text-[#242423] bg-white focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30 focus:border-[#f5a700] resize-none"
-          placeholder={`${block.type === "blockquote" ? "Teks kutipan" : "Isi paragraf"}... (ketik / untuk ubah tipe)`}
-          rows={3}
-          value={slashQuery !== null ? "/" + slashQuery : block.text}
-          onChange={(e) => handleTextChange(e.target.value)}
+          ref={makeTextareaRef(item.id, registerRef)}
+          className="w-full outline-none text-sm text-[#242423] placeholder:text-[#242423]/25 bg-transparent resize-none leading-relaxed"
+          placeholder={'Ketik teks... atau ketik "/" untuk insert blok baru'}
+          rows={1}
+          value={displayValue}
+          onChange={(e) => { autoResize(e.currentTarget); handleTextChange(e.target.value); }}
+          onKeyDown={handleTextareaKeyDown}
         />
         {slashQuery !== null && (
-          <SlashMenu query={slashQuery} onSelect={handleSlashSelect} onClose={() => setSlashQuery(null)} />
+          <SlashMenu query={slashQuery} onSelect={handleSlashSelect} onClose={handleSlashClose} />
         )}
       </div>
     );
   }
 
-  if (block.type === "ul" || block.type === "ol") {
+  if (item.block.type === "blockquote") {
     return (
-      <div className="space-y-1.5">
-        {block.items.map((item, i) => (
+      <div className="relative border-l-4 border-[#f5a700]/50 pl-3">
+        <textarea
+          ref={makeTextareaRef(item.id, registerRef)}
+          className="w-full outline-none text-sm text-[#242423]/70 italic placeholder:text-[#242423]/25 bg-transparent resize-none leading-relaxed"
+          placeholder="Teks kutipan..."
+          rows={1}
+          value={displayValue}
+          onChange={(e) => { autoResize(e.currentTarget); handleTextChange(e.target.value); }}
+          onKeyDown={handleTextareaKeyDown}
+        />
+        {slashQuery !== null && (
+          <SlashMenu query={slashQuery} onSelect={handleSlashSelect} onClose={handleSlashClose} />
+        )}
+      </div>
+    );
+  }
+
+  if (item.block.type === "ul" || item.block.type === "ol") {
+    const listBlock = item.block;
+    return (
+      <div className="space-y-1">
+        {listBlock.items.map((itm, i) => (
           <div key={i} className="flex items-center gap-2">
-            <span className="text-xs text-[#242423]/30 w-5 text-right flex-shrink-0">{block.type === "ul" ? "•" : `${i + 1}.`}</span>
+            <span className="text-xs text-[#242423]/40 w-5 text-right flex-shrink-0 mt-0.5">
+              {listBlock.type === "ul" ? "•" : `${i + 1}.`}
+            </span>
             <input
-              className="flex-1 border border-[#242423]/12 rounded-lg px-3 py-1.5 text-sm text-[#242423] bg-white focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30 focus:border-[#f5a700]"
-              value={item}
+              className="flex-1 outline-none text-sm text-[#242423] placeholder:text-[#242423]/25 bg-transparent"
               placeholder="Item..."
+              value={itm}
               onChange={(e) => {
-                const items = [...block.items];
+                const items = [...listBlock.items];
                 items[i] = e.target.value;
-                onChange({ ...block, items });
+                onUpdate(item.id, { ...listBlock, items });
               }}
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   e.preventDefault();
-                  const items = [...block.items];
+                  const items = [...listBlock.items];
                   items.splice(i + 1, 0, "");
-                  onChange({ ...block, items });
+                  onUpdate(item.id, { ...listBlock, items });
+                  // focus next item — needs a timeout
+                  setTimeout(() => {
+                    const inputs = document.querySelectorAll<HTMLInputElement>(`[data-list-item="${item.id}"]`);
+                    inputs[i + 1]?.focus();
+                  }, 0);
                 }
-                if (e.key === "Backspace" && item === "" && block.items.length > 1) {
+                if (e.key === "Backspace" && itm === "") {
                   e.preventDefault();
-                  const items = block.items.filter((_, j) => j !== i);
-                  onChange({ ...block, items });
+                  if (listBlock.items.length === 1) {
+                    onDelete(item.id);
+                  } else {
+                    const items = listBlock.items.filter((_, j) => j !== i);
+                    onUpdate(item.id, { ...listBlock, items });
+
+                  }
                 }
               }}
+              data-list-item={item.id}
             />
-            <button
-              onClick={() => {
-                const items = block.items.filter((_, j) => j !== i);
-                onChange({ ...block, items: items.length ? items : [""] });
-              }}
-              className="w-7 h-7 flex items-center justify-center text-[#242423]/25 hover:text-red-400 transition"
-            >
-              <X size={11} />
-            </button>
           </div>
         ))}
         <button
-          onClick={() => onChange({ ...block, items: [...block.items, ""] })}
-          className="flex items-center gap-1 text-xs text-[#f5a700] font-semibold hover:underline mt-1"
+          onMouseDown={(e) => {
+            e.preventDefault();
+            onUpdate(item.id, { ...listBlock, items: [...listBlock.items, ""] });
+          }}
+          className="ml-7 text-xs text-[#f5a700] font-semibold hover:underline flex items-center gap-1"
         >
           <Plus size={10} /> Tambah item
         </button>
@@ -335,11 +506,11 @@ function BlockEditor({
     );
   }
 
-  if (block.type === "image") {
-    return <ImageBlockEditor block={block} onChange={onChange} />;
+  if (item.block.type === "image") {
+    return <ImageBlockEditor block={item.block} onChange={(b) => onUpdate(item.id, b)} />;
   }
 
-  if (block.type === "cta-inline") {
+  if (item.block.type === "cta-inline") {
     return (
       <div className="bg-[#f5a700]/8 border border-[#f5a700]/25 rounded-lg px-4 py-3 text-xs text-[#242423]/55 font-medium">
         CTA Banner — otomatis tampil saat artikel dibuka.
@@ -347,28 +518,77 @@ function BlockEditor({
     );
   }
 
-  if (block.type === "divider") {
+  if (item.block.type === "divider") {
     return (
-      <div className="flex items-center gap-3 py-1">
-        <div className="flex-1 h-px bg-[#242423]/12" />
-        <span className="text-xs text-[#242423]/30">Garis pemisah</span>
-        <div className="flex-1 h-px bg-[#242423]/12" />
+      <div className="flex items-center gap-3 py-2">
+        <div className="flex-1 h-px bg-[#242423]/15" />
+        <span className="text-xs text-[#242423]/30">divider</span>
+        <div className="flex-1 h-px bg-[#242423]/15" />
       </div>
+    );
+  }
+
+  if (item.block.type === "columns") {
+    const colBlock = item.block;
+    return (
+      <ColumnsBlockEditor
+        block={colBlock}
+        onChange={(b) => onUpdate(item.id, b)}
+        level={level}
+      />
     );
   }
 
   return null;
 }
 
-/* ── Sortable block item ──────────────────────────────────────────────────── */
+/* ── Columns block editor ─────────────────────────────────────────────────── */
 
-function SortableBlockItem({
-  item, onUpdate, onRemove, onTransform,
+function ColumnsBlockEditor({
+  block, onChange, level,
+}: {
+  block: Extract<ContentBlock, { type: "columns" }>;
+  onChange: (b: ContentBlock) => void;
+  level: number;
+}) {
+  const [colItems, setColItems] = useState<BlockItem[][]>(() =>
+    block.columns.map((col) => col.map((b) => ({ id: genId(), block: b })))
+  );
+
+  function updateCol(colIdx: number, newItems: BlockItem[]) {
+    const next = colItems.map((col, i) => i === colIdx ? newItems : col);
+    setColItems(next);
+    onChange({ ...block, columns: next.map((col) => col.map((item) => item.block)) });
+  }
+
+  const gridClass = block.count === 3 ? "grid-cols-3" : "grid-cols-2";
+
+  return (
+    <div className={`grid ${gridClass} gap-3`}>
+      {colItems.map((col, ci) => (
+        <div key={ci} className="border border-[#242423]/10 rounded-xl p-3 bg-[#242423]/1 min-h-[80px]">
+          <p className="text-[10px] font-bold uppercase tracking-wider text-[#242423]/25 mb-2">
+            Kolom {ci + 1}
+          </p>
+          <NotionEditor
+            blocks={col}
+            onBlocksChange={(newItems) => updateCol(ci, newItems)}
+            level={level + 1}
+            placeholder="Ketik di sini..."
+          />
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/* ── Sortable block wrapper ───────────────────────────────────────────────── */
+
+function SortableNotionBlock({
+  item, callbacks,
 }: {
   item: BlockItem;
-  onUpdate: (id: string, block: ContentBlock) => void;
-  onRemove: (id: string) => void;
-  onTransform: (id: string, type: ContentBlock["type"]) => void;
+  callbacks: NotionBlockCallbacks;
 }) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: item.id });
   const style = {
@@ -377,63 +597,155 @@ function SortableBlockItem({
     opacity: isDragging ? 0.4 : 1,
   };
 
-  return (
-    <div ref={setNodeRef} style={style} className="group border border-[#242423]/8 rounded-xl bg-[#fcfaf7] overflow-visible">
-      <div className="flex items-start gap-0">
-        {/* Drag handle */}
-        <button
-          {...attributes}
-          {...listeners}
-          className="flex-shrink-0 mt-3 ml-2 p-1.5 text-[#242423]/20 hover:text-[#242423]/50 cursor-grab active:cursor-grabbing transition touch-none"
-        >
-          <GripVertical size={14} />
-        </button>
+  const isNonText = item.block.type === "image" || item.block.type === "columns" ||
+    item.block.type === "cta-inline" || item.block.type === "divider" ||
+    item.block.type === "ul" || item.block.type === "ol";
 
-        {/* Block content */}
-        <div className="flex-1 min-w-0 p-3">
-          {/* Block type label + delete */}
-          <div className="flex items-center justify-between mb-2">
-            <span className="flex items-center gap-1.5 text-xs font-semibold text-[#242423]/40">
-              {blockIcons[item.block.type]}
-              {blockLabels[item.block.type]}
-            </span>
-            <button
-              onClick={() => onRemove(item.id)}
-              className="w-6 h-6 flex items-center justify-center text-[#242423]/25 hover:text-red-400 opacity-0 group-hover:opacity-100 transition"
-            >
-              <Trash2 size={11} />
-            </button>
-          </div>
-          <BlockEditor
-            block={item.block}
-            onChange={(b) => onUpdate(item.id, b)}
-            onTransform={(type) => onTransform(item.id, type)}
-          />
-        </div>
+  return (
+    <div ref={setNodeRef} style={style} className="group relative flex items-start gap-1 px-1 py-0.5 rounded-lg hover:bg-[#242423]/3 transition-colors">
+      {/* Drag handle */}
+      <button
+        {...attributes}
+        {...listeners}
+        tabIndex={-1}
+        className="flex-shrink-0 mt-1 p-1 opacity-0 group-hover:opacity-100 text-[#242423]/30 hover:text-[#242423]/60 cursor-grab active:cursor-grabbing transition touch-none rounded"
+      >
+        <GripVertical size={13} />
+      </button>
+
+      {/* Block content */}
+      <div className={`flex-1 min-w-0 ${isNonText ? "py-1" : ""}`}>
+        <NotionBlock item={item} callbacks={callbacks} />
       </div>
+
+      {/* Delete */}
+      <button
+        tabIndex={-1}
+        onMouseDown={(e) => { e.preventDefault(); callbacks.onDelete(item.id); }}
+        className="flex-shrink-0 mt-1 p-1 opacity-0 group-hover:opacity-100 text-[#242423]/25 hover:text-red-500 transition rounded"
+      >
+        <Trash2 size={13} />
+      </button>
     </div>
   );
 }
 
-/* ── Quick-add bar ────────────────────────────────────────────────────────── */
+/* ── NotionEditor ─────────────────────────────────────────────────────────── */
 
-function QuickAddBar({ onAdd }: { onAdd: (type: ContentBlock["type"]) => void }) {
+function NotionEditor({
+  blocks,
+  onBlocksChange,
+  level = 0,
+  placeholder = 'Ketik teks... atau ketik "/" untuk insert blok',
+}: {
+  blocks: BlockItem[];
+  onBlocksChange: (blocks: BlockItem[]) => void;
+  level?: number;
+  placeholder?: string;
+}) {
+  const blockRefs = useRef<Map<string, HTMLTextAreaElement | HTMLInputElement>>(new Map());
+
+  function focusBlock(id: string, pos?: number) {
+    setTimeout(() => {
+      const el = blockRefs.current.get(id);
+      if (!el) return;
+      el.focus();
+      if (pos !== undefined && "setSelectionRange" in el) {
+        (el as HTMLTextAreaElement).setSelectionRange(pos, pos);
+      }
+    }, 0);
+  }
+
+  const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 5 } }));
+
+  function handleDragEnd(event: DragEndEvent) {
+    const { active, over } = event;
+    if (over && active.id !== over.id) {
+      const oldIdx = blocks.findIndex((b) => b.id === active.id);
+      const newIdx = blocks.findIndex((b) => b.id === over.id);
+      onBlocksChange(arrayMove(blocks, oldIdx, newIdx));
+    }
+  }
+
+  const insertAfter = useCallback((afterId: string, newItem: BlockItem) => {
+    onBlocksChange((() => {
+      const idx = blocks.findIndex((b) => b.id === afterId);
+      const next = [...blocks];
+      next.splice(idx + 1, 0, newItem);
+      return next;
+    })());
+    focusBlock(newItem.id);
+  }, [blocks, onBlocksChange]);
+
+  const deleteBlock = useCallback((id: string) => {
+    const idx = blocks.findIndex((b) => b.id === id);
+    const prevId = idx > 0 ? blocks[idx - 1].id : null;
+    const prevText = idx > 0 ? getBlockText(blocks[idx - 1].block) : null;
+    onBlocksChange(blocks.filter((b) => b.id !== id));
+    if (prevId) focusBlock(prevId, prevText?.length);
+  }, [blocks, onBlocksChange]);
+
+  const mergeWithPrev = useCallback((id: string, textToAppend: string) => {
+    const idx = blocks.findIndex((b) => b.id === id);
+    if (idx <= 0) return;
+    const prev = blocks[idx - 1];
+    const prevText = getBlockText(prev.block);
+    if (prevText === null) return;
+    const mergePos = prevText.length;
+    onBlocksChange(
+      blocks
+        .map((b) => b.id === prev.id ? { ...b, block: setBlockText(prev.block, prevText + textToAppend) } : b)
+        .filter((b) => b.id !== id)
+    );
+    focusBlock(prev.id, mergePos);
+  }, [blocks, onBlocksChange]);
+
+  const updateBlock = useCallback((id: string, block: ContentBlock) => {
+    onBlocksChange(blocks.map((b) => b.id === id ? { ...b, block } : b));
+  }, [blocks, onBlocksChange]);
+
+  const focusPrev = useCallback((id: string) => {
+    const i = blocks.findIndex((b) => b.id === id);
+    if (i > 0) {
+      const prev = blocks[i - 1];
+      focusBlock(prev.id, getBlockText(prev.block)?.length);
+    }
+  }, [blocks]);
+
+  const focusNext = useCallback((id: string) => {
+    const i = blocks.findIndex((b) => b.id === id);
+    if (i < blocks.length - 1) focusBlock(blocks[i + 1].id, 0);
+  }, [blocks]);
+
+  const registerRef = useCallback((id: string, el: HTMLTextAreaElement | HTMLInputElement | null) => {
+    if (el) blockRefs.current.set(id, el);
+    else blockRefs.current.delete(id);
+  }, []);
+
+  const callbacks: NotionBlockCallbacks = {
+    onUpdate: updateBlock,
+    onDelete: deleteBlock,
+    onInsertAfter: insertAfter,
+    onMergeWithPrev: mergeWithPrev,
+    onFocusPrev: focusPrev,
+    onFocusNext: focusNext,
+    registerRef,
+    level,
+  };
+
   return (
-    <div className="pt-3 border-t border-[#242423]/6">
-      <p className="text-xs text-[#242423]/35 font-medium mb-2">Tambah blok:</p>
-      <div className="flex flex-wrap gap-1.5">
-        {SLASH_COMMANDS.map((cmd) => (
-          <button
-            key={cmd.keywords[0]}
-            onClick={() => onAdd(cmd.blockType)}
-            className="flex items-center gap-1.5 text-xs font-medium border border-[#242423]/10 text-[#242423]/50 px-2.5 py-1.5 rounded-lg hover:border-[#f5a700]/50 hover:text-[#f5a700] hover:bg-[#f5a700]/5 transition"
-          >
-            <span className="text-[#242423]/35">{cmd.icon}</span>
-            {cmd.label}
-          </button>
-        ))}
-      </div>
-    </div>
+    <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+      <SortableContext items={blocks.map((b) => b.id)} strategy={verticalListSortingStrategy}>
+        <div>
+          {blocks.length === 0 && (
+            <p className="text-sm text-[#242423]/25 py-2 px-7">{placeholder}</p>
+          )}
+          {blocks.map((item) => (
+            <SortableNotionBlock key={item.id} item={item} callbacks={callbacks} />
+          ))}
+        </div>
+      </SortableContext>
+    </DndContext>
   );
 }
 
@@ -488,7 +800,7 @@ function FeaturedImageUpload({
         type="file"
         accept="image/jpeg,image/png,image/webp"
         className="hidden"
-        onChange={(e) => { const f = e.target.files?.[0]; if (f) handleFile(f); }}
+        onChange={(e) => { const f = e.target.files?.[0]; if (f) handleFile(f); e.target.value = ""; }}
       />
     </div>
   );
@@ -514,7 +826,6 @@ interface PostEditorProps {
 
 export default function PostEditor({ initial = {} }: PostEditorProps) {
   const router = useRouter();
-  const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 5 } }));
 
   const [title, setTitle] = useState(initial.title ?? "");
   const [slug, setSlug] = useState(initial.slug ?? "");
@@ -528,79 +839,64 @@ export default function PostEditor({ initial = {} }: PostEditorProps) {
   );
   const [coverImage, setCoverImage] = useState(initial.cover_image ?? "");
   const [blockItems, setBlockItems] = useState<BlockItem[]>(() => parseBlockItems(initial.content));
+  const [categories, setCategories] = useState<AdminCategory[]>([]);
   const [saving, setSaving] = useState(false);
+  const [savingDraft, setSavingDraft] = useState(false);
   const [error, setError] = useState("");
 
   const isEdit = Boolean(initial.id);
 
-  /* ── Block operations ─────────────────────────────────────────────────── */
-
-  const updateBlock = useCallback((id: string, block: ContentBlock) => {
-    setBlockItems((prev) => prev.map((item) => item.id === id ? { ...item, block } : item));
+  useEffect(() => {
+    fetchCategories().then(setCategories).catch(() => {});
   }, []);
 
-  const removeBlock = useCallback((id: string) => {
-    setBlockItems((prev) => prev.filter((item) => item.id !== id));
-  }, []);
+  /* ── Quick-add handler ──────────────────────────────────────────────────── */
 
-  const transformBlock = useCallback((id: string, type: ContentBlock["type"]) => {
-    setBlockItems((prev) => prev.map((item) => {
-      if (item.id !== id) return item;
-      return newBlockItem(type);
-    }));
-  }, []);
-
-  const addBlock = useCallback((type: ContentBlock["type"]) => {
-    setBlockItems((prev) => [...prev, newBlockItem(type)]);
-  }, []);
-
-  function handleDragEnd(event: DragEndEvent) {
-    const { active, over } = event;
-    if (over && active.id !== over.id) {
-      setBlockItems((prev) => {
-        const oldIdx = prev.findIndex((i) => i.id === active.id);
-        const newIdx = prev.findIndex((i) => i.id === over.id);
-        return arrayMove(prev, oldIdx, newIdx);
-      });
-    }
+  function addBlock(type: ContentBlock["type"], params?: Record<string, unknown>) {
+    setBlockItems((prev) => [...prev, newBlockFromType(type, params)]);
   }
 
   /* ── Save ─────────────────────────────────────────────────────────────── */
 
-  async function handleSave() {
+  async function handleSave(overrideStatus?: "draft" | "published") {
     if (!title.trim() || !slug.trim()) {
       setError("Judul dan slug wajib diisi.");
       return;
     }
-    setSaving(true);
+    const finalStatus = overrideStatus ?? status;
+    if (overrideStatus === "draft") setSavingDraft(true);
+    else setSaving(true);
     setError("");
     try {
-      const payload: ArticlePayload & { cover_image?: string } = {
+      const payload: ArticlePayload = {
         title,
         slug,
         excerpt: excerpt || undefined,
         content: JSON.stringify(blockItems.map((i) => i.block)),
         category: category || undefined,
-        status,
+        status: finalStatus,
         featured,
         read_time: readTime,
-        published_at: status === "published" ? new Date(publishedAt).toISOString() : undefined,
+        published_at: finalStatus === "published" ? new Date(publishedAt).toISOString() : undefined,
         cover_image: coverImage || undefined,
       };
       if (isEdit && initial.id) {
         await adminUpdateArticle(initial.id, payload);
       } else {
-        await adminCreateArticle(payload);
+        const created = await adminCreateArticle(payload);
+        router.push(`/admin/posts/${created.id}`);
+        return;
       }
-      router.push("/admin/posts");
+      setError("");
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "Gagal menyimpan");
     } finally {
       setSaving(false);
+      setSavingDraft(false);
     }
   }
 
-  /* ── Render ───────────────────────────────────────────────────────────── */
+  /* ── Render ─────────────────────────────────────────────────────────────── */
 
   return (
     <div className="min-h-screen bg-[#fcfaf7]">
@@ -618,6 +914,15 @@ export default function PostEditor({ initial = {} }: PostEditorProps) {
         </div>
         <div className="flex items-center gap-2">
           {error && <span className="text-xs text-red-600 max-w-xs truncate">{error}</span>}
+          {isEdit && initial.id && (
+            <Link
+              href={`/preview/${initial.id}`}
+              target="_blank"
+              className="flex items-center gap-1.5 border border-[#242423]/12 text-[#242423]/55 font-semibold px-3 py-1.5 rounded-lg text-xs hover:border-[#242423]/25 hover:text-[#242423] transition"
+            >
+              <Eye size={12} /> Preview
+            </Link>
+          )}
           <select
             value={status}
             onChange={(e) => setStatus(e.target.value as "draft" | "published")}
@@ -627,8 +932,8 @@ export default function PostEditor({ initial = {} }: PostEditorProps) {
             <option value="published">Tayang</option>
           </select>
           <button
-            onClick={handleSave}
-            disabled={saving}
+            onClick={() => handleSave()}
+            disabled={saving || savingDraft}
             className="flex items-center gap-1.5 bg-[#f5a700] text-white font-bold px-4 py-1.5 rounded-lg text-sm hover:bg-[#f5a700]/90 disabled:opacity-60 transition"
           >
             {saving ? <Loader2 size={13} className="animate-spin" /> : <Save size={13} />}
@@ -640,14 +945,13 @@ export default function PostEditor({ initial = {} }: PostEditorProps) {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8 flex gap-6 items-start">
 
         {/* ── Main editor ─────────────────────────────────────────────── */}
-        <div className="flex-1 min-w-0 space-y-5">
+        <div className="flex-1 min-w-0 space-y-0">
 
           {/* Title */}
-          <div>
-            <label className="block text-xs font-semibold text-[#242423]/50 mb-1.5">Judul Artikel</label>
+          <div className="mb-2">
             <input
-              className="w-full border border-[#242423]/15 rounded-xl px-4 py-3 text-xl font-bold text-[#242423] bg-white focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30 focus:border-[#f5a700] transition placeholder:font-normal placeholder:text-[#242423]/25"
-              placeholder="Tulis judul artikel..."
+              className="w-full outline-none text-3xl font-extrabold text-[#242423] placeholder:text-[#242423]/20 bg-transparent py-1"
+              placeholder="Judul artikel..."
               value={title}
               onChange={(e) => {
                 setTitle(e.target.value);
@@ -657,49 +961,43 @@ export default function PostEditor({ initial = {} }: PostEditorProps) {
           </div>
 
           {/* Excerpt */}
-          <div>
-            <label className="block text-xs font-semibold text-[#242423]/50 mb-1.5">Excerpt</label>
+          <div className="mb-4">
             <textarea
-              className="w-full border border-[#242423]/15 rounded-xl px-4 py-2.5 text-sm text-[#242423] bg-white focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30 focus:border-[#f5a700] resize-none transition placeholder:text-[#242423]/25"
-              placeholder="Deskripsi singkat artikel (tampil di listing blog dan SEO)..."
+              className="w-full outline-none text-base text-[#242423]/60 placeholder:text-[#242423]/25 bg-transparent resize-none leading-relaxed"
+              placeholder="Deskripsi singkat artikel (excerpt)..."
               rows={2}
               value={excerpt}
               onChange={(e) => setExcerpt(e.target.value)}
             />
           </div>
 
-          {/* Blocks */}
-          <div className="bg-white border border-[#242423]/8 rounded-2xl p-5">
-            <p className="text-xs font-bold uppercase tracking-wider text-[#242423]/35 mb-4">
-              Konten Artikel
-              <span className="ml-2 text-[#242423]/25 font-normal normal-case tracking-normal">
-                — ketik <code className="bg-[#242423]/5 px-1 rounded">/</code> untuk ubah tipe blok
-              </span>
-            </p>
+          {/* Divider */}
+          <div className="border-t border-[#242423]/8 mb-4" />
 
-            {blockItems.length === 0 && (
-              <p className="text-sm text-[#242423]/30 text-center py-8">
-                Belum ada konten. Tambahkan blok atau ketik <code className="bg-[#242423]/5 px-1.5 rounded">/h2</code> untuk mulai.
-              </p>
-            )}
+          {/* Notion editor */}
+          <div className="min-h-[300px]">
+            <NotionEditor
+              blocks={blockItems}
+              onBlocksChange={setBlockItems}
+              level={0}
+            />
+          </div>
 
-            <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-              <SortableContext items={blockItems.map((i) => i.id)} strategy={verticalListSortingStrategy}>
-                <div className="space-y-2">
-                  {blockItems.map((item) => (
-                    <SortableBlockItem
-                      key={item.id}
-                      item={item}
-                      onUpdate={updateBlock}
-                      onRemove={removeBlock}
-                      onTransform={transformBlock}
-                    />
-                  ))}
-                </div>
-              </SortableContext>
-            </DndContext>
-
-            <QuickAddBar onAdd={addBlock} />
+          {/* Quick add bar */}
+          <div className="mt-4 pt-4 border-t border-[#242423]/8">
+            <p className="text-xs text-[#242423]/30 font-medium mb-2 px-7">Tambah blok:</p>
+            <div className="flex flex-wrap gap-1.5 px-7">
+              {SLASH_COMMANDS.map((cmd) => (
+                <button
+                  key={cmd.desc}
+                  onClick={() => addBlock(cmd.blockType, cmd.params)}
+                  className="flex items-center gap-1.5 text-xs font-medium border border-[#242423]/10 text-[#242423]/45 px-2.5 py-1.5 rounded-lg hover:border-[#f5a700]/50 hover:text-[#f5a700] hover:bg-[#f5a700]/5 transition"
+                >
+                  <span className="text-[#242423]/30">{cmd.icon}</span>
+                  {cmd.label}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
 
@@ -733,7 +1031,7 @@ export default function PostEditor({ initial = {} }: PostEditorProps) {
                 className="w-full border border-[#242423]/12 rounded-lg px-3 py-2 text-xs text-[#242423] bg-white focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30"
               >
                 <option value="">Pilih kategori</option>
-                {CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
+                {categories.map((c) => <option key={c.id} value={c.name}>{c.name}</option>)}
               </select>
             </div>
 

@@ -7,7 +7,8 @@ export type ContentBlock =
   | { type: "blockquote"; text: string }
   | { type: "cta-inline" }
   | { type: "image"; src: string; alt: string; caption?: string }
-  | { type: "divider" };
+  | { type: "divider" }
+  | { type: "columns"; count: 2 | 3; columns: ContentBlock[][] };
 
 export interface BlogPost {
   slug: string;

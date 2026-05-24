@@ -168,6 +168,19 @@ function BlogContent({ blocks, postTitle }: { blocks: BlogPost["content"]; postT
       elements.push(
         <hr key={i} className="not-prose my-10 border-t-2 border-accent/20" />
       );
+    } else if (b.type === "columns") {
+      elements.push(
+        <div
+          key={i}
+          className={`not-prose my-6 grid gap-4 ${b.count === 3 ? "grid-cols-1 sm:grid-cols-3" : "grid-cols-1 sm:grid-cols-2"}`}
+        >
+          {b.columns.map((col, ci) => (
+            <div key={ci} className="blog-prose">
+              <BlogContent blocks={col} postTitle={postTitle} />
+            </div>
+          ))}
+        </div>
+      );
     }
   }
 

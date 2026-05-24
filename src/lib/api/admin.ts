@@ -82,6 +82,30 @@ export async function adminDeleteArticle(id: string): Promise<void> {
   await req(`/api/articles/${id}`, { method: "DELETE" });
 }
 
+/* ── Categories ───────────────────────────────────────────────────────────── */
+
+export interface AdminCategory {
+  id: string;
+  name: string;
+  slug: string;
+}
+
+export async function fetchCategories(): Promise<AdminCategory[]> {
+  return req<AdminCategory[]>("/api/categories");
+}
+
+export async function createCategory(data: { name: string; slug: string }): Promise<AdminCategory> {
+  return req<AdminCategory>("/api/categories", { method: "POST", body: JSON.stringify(data) });
+}
+
+export async function updateCategory(id: string, data: Partial<{ name: string; slug: string }>): Promise<AdminCategory> {
+  return req<AdminCategory>(`/api/categories/${id}`, { method: "PUT", body: JSON.stringify(data) });
+}
+
+export async function deleteCategory(id: string): Promise<void> {
+  await req(`/api/categories/${id}`, { method: "DELETE" });
+}
+
 export async function uploadImage(file: File): Promise<string> {
   const formData = new FormData();
   formData.append("file", file);
