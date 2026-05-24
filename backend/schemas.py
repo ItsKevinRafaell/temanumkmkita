@@ -25,6 +25,9 @@ class ArticleBase(BaseModel):
     featured: Optional[bool] = False
     read_time: Optional[int] = 5
     published_at: Optional[str] = None
+    seo_title: Optional[str] = None
+    meta_description: Optional[str] = None
+    focus_keyword: Optional[str] = None
 
 
 class ArticleCreate(ArticleBase):
@@ -43,6 +46,9 @@ class ArticleUpdate(BaseModel):
     featured: Optional[bool] = None
     read_time: Optional[int] = None
     published_at: Optional[str] = None
+    seo_title: Optional[str] = None
+    meta_description: Optional[str] = None
+    focus_keyword: Optional[str] = None
 
 
 class ArticleOut(ArticleBase):

@@ -8,7 +8,9 @@ export type ContentBlock =
   | { type: "cta-inline" }
   | { type: "image"; src: string; alt: string; caption?: string }
   | { type: "divider" }
-  | { type: "columns"; count: 2 | 3; columns: ContentBlock[][] };
+  | { type: "columns"; count: 2 | 3; columns: ContentBlock[][] }
+  | { type: "faq"; items: { question: string; answer: string }[] }
+  | { type: "howto"; steps: { name: string; text: string; image?: string }[] };
 
 export interface BlogPost {
   slug: string;
@@ -18,7 +20,16 @@ export interface BlogPost {
   date: string;
   readTime: number;
   featured?: boolean;
+  cover_image?: string;
   content: ContentBlock[];
+}
+
+export function hasBlockType(content: ContentBlock[], type: ContentBlock["type"]): boolean {
+  return content.some((b) => {
+    if (b.type === type) return true;
+    if (b.type === "columns") return b.columns.some((col) => hasBlockType(col, type));
+    return false;
+  });
 }
 
 export const categories = [

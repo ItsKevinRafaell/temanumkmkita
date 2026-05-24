@@ -54,6 +54,9 @@ export interface ArticlePayload {
   featured?: boolean;
   read_time?: number;
   published_at?: string;
+  seo_title?: string;
+  meta_description?: string;
+  focus_keyword?: string;
 }
 
 export async function adminListArticles(page = 1, per_page = 20) {
@@ -136,4 +139,7 @@ export interface AdminArticle {
   published_at: string | null;
   created_at: string;
   updated_at: string | null;
+  seo_title: string | null;
+  meta_description: string | null;
+  focus_keyword: string | null;
 }

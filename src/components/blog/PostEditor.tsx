@@ -1,7 +1,7 @@
 "use client";
 
 import {
-  useState, useRef, useEffect, useCallback,
+  useState, useRef, useEffect, useCallback, useMemo,
 } from "react";
 import { useRouter } from "next/navigation";
 import {
@@ -21,8 +21,10 @@ import {
   ChevronLeft, Save, Globe, GripVertical, Trash2,
   Heading1, Heading2, AlignLeft, List, ListOrdered,
   Quote, Zap, Image as ImageIcon, Minus, Plus, X,
-  Loader2, Upload, Columns, Eye,
+  Loader2, Upload, Columns, Eye, HelpCircle, ListChecks,
+  ChevronDown,
 } from "lucide-react";
+import { checkSEO } from "@/lib/seo/checker";
 
 /* ── Types ────────────────────────────────────────────────────────────────── */
 
@@ -71,6 +73,8 @@ function newBlockFromType(type: ContentBlock["type"], params?: Record<string, un
       block = { type: "columns", count, columns: Array.from({ length: count }, () => []) };
       break;
     }
+    case "faq": block = { type: "faq", items: [{ question: "", answer: "" }] }; break;
+    case "howto": block = { type: "howto", steps: [{ name: "", text: "" }] }; break;
     default: block = { type: "p", text: "" };
   }
   return { id, block };
@@ -112,6 +116,8 @@ const SLASH_COMMANDS: SlashCommand[] = [
   { keywords: ["divider", "garis", "hr", "pemisah"], label: "Garis Pemisah", desc: "/divider", blockType: "divider", icon: <Minus size={13} /> },
   { keywords: ["2col", "dua", "kolom"], label: "2 Kolom", desc: "/2col", blockType: "columns", params: { count: 2 }, icon: <Columns size={13} /> },
   { keywords: ["3col", "tiga", "three"], label: "3 Kolom", desc: "/3col", blockType: "columns", params: { count: 3 }, icon: <Columns size={13} /> },
+  { keywords: ["faq", "pertanyaan", "qanda"], label: "FAQ", desc: "/faq", blockType: "faq", icon: <HelpCircle size={13} /> },
+  { keywords: ["howto", "cara", "langkah", "tutorial"], label: "How To", desc: "/howto", blockType: "howto", icon: <ListChecks size={13} /> },
 ];
 
 /* ── Slash menu ───────────────────────────────────────────────────────────── */
@@ -243,6 +249,160 @@ function ImageBlockEditor({
         value={block.caption ?? ""}
         onChange={(e) => onChange({ ...block, caption: e.target.value })}
       />
+    </div>
+  );
+}
+
+/* ── FAQ block editor ─────────────────────────────────────────────────────── */
+
+function FaqBlockEditor({
+  block, onChange,
+}: {
+  block: Extract<ContentBlock, { type: "faq" }>;
+  onChange: (b: ContentBlock) => void;
+}) {
+  function updateItem(i: number, key: "question" | "answer", val: string) {
+    const items = block.items.map((item, j) => j === i ? { ...item, [key]: val } : item);
+    onChange({ ...block, items });
+  }
+  function addItem() {
+    onChange({ ...block, items: [...block.items, { question: "", answer: "" }] });
+  }
+  function removeItem(i: number) {
+    const items = block.items.filter((_, j) => j !== i);
+    onChange({ ...block, items: items.length > 0 ? items : [{ question: "", answer: "" }] });
+  }
+
+  return (
+    <div className="space-y-3">
+      <p className="text-xs font-bold uppercase tracking-wider text-[#242423]/35">FAQ Block</p>
+      {block.items.map((item, i) => (
+        <div key={i} className="border border-[#242423]/10 rounded-xl p-3 space-y-2 bg-[#242423]/1">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-semibold text-[#242423]/40">Q{i + 1}</span>
+            {block.items.length > 1 && (
+              <button onClick={() => removeItem(i)} className="text-[#242423]/30 hover:text-red-500 transition">
+                <X size={11} />
+              </button>
+            )}
+          </div>
+          <input
+            className="w-full outline-none text-sm font-semibold text-[#242423] placeholder:text-[#242423]/25 bg-transparent border-b border-[#242423]/10 pb-1"
+            placeholder="Pertanyaan..."
+            value={item.question}
+            onChange={(e) => updateItem(i, "question", e.target.value)}
+          />
+          <textarea
+            className="w-full outline-none text-sm text-[#242423]/70 placeholder:text-[#242423]/25 bg-transparent resize-none"
+            placeholder="Jawaban..."
+            rows={2}
+            value={item.answer}
+            onChange={(e) => { autoResize(e.currentTarget); updateItem(i, "answer", e.target.value); }}
+          />
+        </div>
+      ))}
+      <button
+        onMouseDown={(e) => { e.preventDefault(); addItem(); }}
+        className="flex items-center gap-1.5 text-xs font-semibold text-[#f5a700] hover:underline"
+      >
+        <Plus size={11} /> Tambah pertanyaan
+      </button>
+    </div>
+  );
+}
+
+/* ── HowTo block editor ───────────────────────────────────────────────────── */
+
+function HowToBlockEditor({
+  block, onChange,
+}: {
+  block: Extract<ContentBlock, { type: "howto" }>;
+  onChange: (b: ContentBlock) => void;
+}) {
+  const [uploading, setUploading] = useState<number | null>(null);
+  const fileRefs = useRef<(HTMLInputElement | null)[]>([]);
+
+  function updateStep(i: number, key: "name" | "text" | "image", val: string) {
+    const steps = block.steps.map((s, j) => j === i ? { ...s, [key]: val } : s);
+    onChange({ ...block, steps });
+  }
+  function addStep() {
+    onChange({ ...block, steps: [...block.steps, { name: "", text: "" }] });
+  }
+  function removeStep(i: number) {
+    const steps = block.steps.filter((_, j) => j !== i);
+    onChange({ ...block, steps: steps.length > 0 ? steps : [{ name: "", text: "" }] });
+  }
+  async function handleFile(i: number, file: File) {
+    setUploading(i);
+    try {
+      const url = await uploadImage(file);
+      updateStep(i, "image", url);
+    } catch (err) {
+      alert(err instanceof Error ? err.message : "Upload gagal");
+    } finally {
+      setUploading(null);
+    }
+  }
+
+  return (
+    <div className="space-y-3">
+      <p className="text-xs font-bold uppercase tracking-wider text-[#242423]/35">How To Block</p>
+      {block.steps.map((step, i) => (
+        <div key={i} className="border border-[#242423]/10 rounded-xl p-3 space-y-2 bg-[#242423]/1">
+          <div className="flex items-center justify-between">
+            <span className="w-5 h-5 rounded-full bg-[#f5a700] flex items-center justify-center text-white text-[10px] font-bold flex-shrink-0">{i + 1}</span>
+            {block.steps.length > 1 && (
+              <button onClick={() => removeStep(i)} className="text-[#242423]/30 hover:text-red-500 transition">
+                <X size={11} />
+              </button>
+            )}
+          </div>
+          <input
+            className="w-full outline-none text-sm font-semibold text-[#242423] placeholder:text-[#242423]/25 bg-transparent border-b border-[#242423]/10 pb-1"
+            placeholder="Nama langkah..."
+            value={step.name}
+            onChange={(e) => updateStep(i, "name", e.target.value)}
+          />
+          <textarea
+            className="w-full outline-none text-sm text-[#242423]/70 placeholder:text-[#242423]/25 bg-transparent resize-none"
+            placeholder="Penjelasan langkah..."
+            rows={2}
+            value={step.text}
+            onChange={(e) => { autoResize(e.currentTarget); updateStep(i, "text", e.target.value); }}
+          />
+          {step.image ? (
+            <div className="relative">
+              <img src={step.image} alt={step.name} className="w-full rounded-lg object-cover max-h-32 border border-[#242423]/8" />
+              <button onClick={() => updateStep(i, "image", "")} className="absolute top-1 right-1 w-6 h-6 bg-white border border-[#242423]/12 rounded-full flex items-center justify-center hover:bg-red-50 transition">
+                <X size={10} className="text-[#242423]/50" />
+              </button>
+            </div>
+          ) : (
+            <button
+              onClick={() => fileRefs.current[i]?.click()}
+              disabled={uploading === i}
+              className="w-full border border-dashed border-[#242423]/12 rounded-lg py-2 text-xs text-[#242423]/35 hover:border-[#f5a700]/40 hover:text-[#f5a700] transition flex items-center justify-center gap-1.5"
+            >
+              {uploading === i ? <Loader2 size={11} className="animate-spin" /> : <Upload size={11} />}
+              {uploading === i ? "Uploading..." : "Gambar opsional"}
+            </button>
+          )}
+          <input
+            ref={(el) => { fileRefs.current[i] = el; }}
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+            className="hidden"
+            onChange={(e) => { const f = e.target.files?.[0]; if (f) handleFile(i, f); e.target.value = ""; }}
+          />
+        </div>
+      ))}
+      <button
+        onMouseDown={(e) => { e.preventDefault(); addStep(); }}
+        className="flex items-center gap-1.5 text-xs font-semibold text-[#f5a700] hover:underline"
+      >
+        <Plus size={11} /> Tambah langkah
+      </button>
     </div>
   );
 }
@@ -550,6 +710,14 @@ function NotionBlock({
     );
   }
 
+  if (item.block.type === "faq") {
+    return <FaqBlockEditor block={item.block} onChange={(b) => onUpdate(item.id, b)} />;
+  }
+
+  if (item.block.type === "howto") {
+    return <HowToBlockEditor block={item.block} onChange={(b) => onUpdate(item.id, b)} />;
+  }
+
   return null;
 }
 
@@ -610,7 +778,8 @@ function SortableNotionBlock({
 
   const isNonText = item.block.type === "image" || item.block.type === "columns" ||
     item.block.type === "cta-inline" || item.block.type === "divider" ||
-    item.block.type === "ul" || item.block.type === "ol";
+    item.block.type === "ul" || item.block.type === "ol" ||
+    item.block.type === "faq" || item.block.type === "howto";
 
   return (
     <div ref={setNodeRef} style={style} className="group relative flex items-start gap-1 px-1 py-0.5 rounded-lg hover:bg-[#242423]/3 transition-colors">
@@ -769,6 +938,37 @@ function NotionEditor({
   );
 }
 
+/* ── SEO Score Ring ───────────────────────────────────────────────────────── */
+
+function ScoreRing({ score, grade }: { score: number; grade: string }) {
+  const r = 20;
+  const circ = 2 * Math.PI * r;
+  const offset = circ - (score / 100) * circ;
+  const color = score >= 85 ? "#16a34a" : score >= 50 ? "#f5a700" : "#ef4444";
+
+  return (
+    <div className="flex items-center gap-3">
+      <svg width="52" height="52" viewBox="0 0 52 52">
+        <circle cx="26" cy="26" r={r} fill="none" stroke="#e5e7eb" strokeWidth="6" />
+        <circle
+          cx="26" cy="26" r={r} fill="none"
+          stroke={color} strokeWidth="6"
+          strokeDasharray={circ}
+          strokeDashoffset={offset}
+          strokeLinecap="round"
+          transform="rotate(-90 26 26)"
+          style={{ transition: "stroke-dashoffset 0.5s ease" }}
+        />
+        <text x="26" y="30" textAnchor="middle" fontSize="11" fontWeight="700" fill="#242423">{score}</text>
+      </svg>
+      <div>
+        <div className="text-lg font-extrabold" style={{ color }}>{grade}</div>
+        <div className="text-[10px] text-[#242423]/40 font-medium">SEO Score</div>
+      </div>
+    </div>
+  );
+}
+
 /* ── Featured image upload ────────────────────────────────────────────────── */
 
 function FeaturedImageUpload({
@@ -841,6 +1041,9 @@ interface PostEditorProps {
     published_at?: string;
     content?: string;
     cover_image?: string;
+    seo_title?: string;
+    meta_description?: string;
+    focus_keyword?: string;
   };
 }
 
@@ -858,6 +1061,10 @@ export default function PostEditor({ initial = {} }: PostEditorProps) {
     initial.published_at ? initial.published_at.slice(0, 10) : new Date().toISOString().slice(0, 10)
   );
   const [coverImage, setCoverImage] = useState(initial.cover_image ?? "");
+  const [seoTitle, setSeoTitle] = useState(initial.seo_title ?? "");
+  const [metaDescription, setMetaDescription] = useState(initial.meta_description ?? "");
+  const [focusKeyword, setFocusKeyword] = useState(initial.focus_keyword ?? "");
+  const [seoOpen, setSeoOpen] = useState(false);
   const [blockItems, setBlockItems] = useState<BlockItem[]>(() => {
     const parsed = parseBlockItems(initial.content);
     return parsed.length > 0 ? parsed : [newBlockFromType("p")];
@@ -872,6 +1079,17 @@ export default function PostEditor({ initial = {} }: PostEditorProps) {
   useEffect(() => {
     fetchCategories().then(setCategories).catch(() => {});
   }, []);
+
+  const seoResult = useMemo(() => checkSEO({
+    title,
+    seoTitle,
+    metaDescription,
+    focusKeyword,
+    slug,
+    excerpt,
+    coverImage,
+    blocks: blockItems.map((i) => i.block),
+  }), [title, seoTitle, metaDescription, focusKeyword, slug, excerpt, coverImage, blockItems]);
 
   /* ── Quick-add handler ──────────────────────────────────────────────────── */
 
@@ -902,6 +1120,9 @@ export default function PostEditor({ initial = {} }: PostEditorProps) {
         read_time: readTime,
         published_at: finalStatus === "published" ? new Date(publishedAt).toISOString() : undefined,
         cover_image: coverImage || undefined,
+        seo_title: seoTitle || undefined,
+        meta_description: metaDescription || undefined,
+        focus_keyword: focusKeyword || undefined,
       };
       if (isEdit && initial.id) {
         await adminUpdateArticle(initial.id, payload);
@@ -1089,6 +1310,87 @@ export default function PostEditor({ initial = {} }: PostEditorProps) {
               />
               <span className="text-xs font-semibold text-[#242423]/55">Featured artikel</span>
             </label>
+          </div>
+
+          {/* SEO */}
+          <div className="bg-white border border-[#242423]/8 rounded-2xl p-4 space-y-3">
+            <ScoreRing score={seoResult.totalScore} grade={seoResult.grade} />
+
+            <div>
+              <label className="block text-xs font-semibold text-[#242423]/50 mb-1">Focus Keyword</label>
+              <input
+                className="w-full border border-[#242423]/12 rounded-lg px-3 py-2 text-xs text-[#242423] bg-white focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30 focus:border-[#f5a700]"
+                placeholder="kata kunci utama artikel"
+                value={focusKeyword}
+                onChange={(e) => setFocusKeyword(e.target.value)}
+              />
+            </div>
+
+            <div className="space-y-1.5">
+              {seoResult.rules.map((rule) => {
+                const dot = rule.status === "pass" ? "bg-green-500" : rule.status === "improve" ? "bg-amber-400" : "bg-red-400";
+                return (
+                  <div key={rule.id}>
+                    <div className="flex items-center gap-2">
+                      <span className={`w-2 h-2 rounded-full flex-shrink-0 ${dot}`} />
+                      <span className="text-xs text-[#242423]/60 flex-1">{rule.label}</span>
+                      <span className="text-[10px] text-[#242423]/30 font-mono">{rule.score}/{rule.maxScore}</span>
+                    </div>
+                    {rule.status !== "pass" && (
+                      <p className="text-[10px] text-[#242423]/40 pl-4 leading-snug">{rule.description}</p>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+
+            <button
+              onClick={() => setSeoOpen((v) => !v)}
+              className="flex items-center gap-1.5 text-xs font-semibold text-[#242423]/45 hover:text-[#242423] transition w-full"
+            >
+              <ChevronDown size={12} className={`transition-transform ${seoOpen ? "rotate-180" : ""}`} />
+              Advanced SEO
+            </button>
+
+            {seoOpen && (
+              <div className="space-y-3 pt-1">
+                <div>
+                  <div className="flex items-center justify-between mb-1">
+                    <label className="text-xs font-semibold text-[#242423]/50">SEO Title</label>
+                    <span className={`text-[10px] font-mono ${seoTitle.length > 60 ? "text-red-500" : "text-[#242423]/30"}`}>
+                      {seoTitle.length}/60
+                    </span>
+                  </div>
+                  <input
+                    className="w-full border border-[#242423]/12 rounded-lg px-3 py-2 text-xs text-[#242423] bg-white focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30 focus:border-[#f5a700]"
+                    placeholder={title || "SEO title..."}
+                    value={seoTitle}
+                    onChange={(e) => setSeoTitle(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <div className="flex items-center justify-between mb-1">
+                    <label className="text-xs font-semibold text-[#242423]/50">Meta Description</label>
+                    <span className={`text-[10px] font-mono ${
+                      metaDescription.length >= 120 && metaDescription.length <= 160
+                        ? "text-green-600"
+                        : metaDescription.length > 180
+                        ? "text-red-500"
+                        : "text-[#242423]/30"
+                    }`}>
+                      {metaDescription.length}/160
+                    </span>
+                  </div>
+                  <textarea
+                    className="w-full border border-[#242423]/12 rounded-lg px-3 py-2 text-xs text-[#242423] bg-white focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30 focus:border-[#f5a700] resize-none"
+                    placeholder={excerpt || "Meta description..."}
+                    rows={3}
+                    value={metaDescription}
+                    onChange={(e) => setMetaDescription(e.target.value)}
+                  />
+                </div>
+              </div>
+            )}
           </div>
 
           {isEdit && (

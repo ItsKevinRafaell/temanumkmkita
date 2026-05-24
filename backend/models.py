@@ -36,3 +36,6 @@ class Article(Base):
     published_at = Column(String(255), nullable=True)
     created_at = Column(String(255), nullable=False)
     updated_at = Column(String(255), nullable=True)
+    seo_title = Column(String(500), nullable=True)
+    meta_description = Column(Text, nullable=True)
+    focus_keyword = Column(String(255), nullable=True)

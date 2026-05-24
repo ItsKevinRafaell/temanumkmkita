@@ -6,7 +6,7 @@ import Footer from "@/components/layout/Footer";
 import BlobDecoration from "@/components/ui/BlobDecoration";
 import BlogDetailClient from "@/components/blog/BlogDetailClient";
 import BlogCard from "@/components/blog/BlogCard";
-import { extractHeadings, type BlogPost, type ContentBlock } from "@/lib/data/blog";
+import { extractHeadings, hasBlockType, type BlogPost, type ContentBlock } from "@/lib/data/blog";
 import { fetchArticleBySlug, fetchArticles, fetchAllSlugs, type Article } from "@/lib/api/blog";
 import { Calendar, Clock, ChevronRight, Tag } from "lucide-react";
 
@@ -39,6 +39,7 @@ function articleToPost(a: Article): BlogPost {
     date: a.published_at ?? a.created_at,
     readTime: a.read_time,
     featured: a.featured,
+    cover_image: a.cover_image ?? undefined,
     content,
   };
 }
@@ -61,16 +62,28 @@ export async function generateMetadata({
     const { slug } = await params;
     const article = await fetchArticleBySlug(slug);
     const url = `${SITE_URL}/blog/${article.slug}`;
+    const metaTitle = article.seo_title ?? `${article.title} | Blog Teman UMKM Kita`;
+    const metaDesc = article.meta_description ?? article.excerpt ?? undefined;
+    const ogImages = article.cover_image
+      ? [{ url: article.cover_image, width: 1200, height: 630 }]
+      : undefined;
     return {
-      title: `${article.title} | Blog Teman UMKM Kita`,
-      description: article.excerpt ?? undefined,
+      title: metaTitle,
+      description: metaDesc,
       openGraph: {
-        title: article.title,
-        description: article.excerpt ?? undefined,
+        title: article.seo_title ?? article.title,
+        description: metaDesc,
         url,
         type: "article",
         publishedTime: article.published_at ?? undefined,
         tags: article.category ? [article.category] : [],
+        images: ogImages,
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: metaTitle,
+        description: metaDesc,
+        images: ogImages ? [ogImages[0].url] : undefined,
       },
       alternates: { canonical: url },
     };
@@ -106,27 +119,59 @@ export default async function BlogDetailPage({
       .map(articleToPost);
   } catch {}
 
+  const jsonLdGraph: object[] = [
+    {
+      "@type": "Article",
+      headline: post.title,
+      description: post.excerpt,
+      datePublished: post.date,
+      ...(post.cover_image ? { image: post.cover_image } : {}),
+      author: { "@type": "Organization", name: "Teman UMKM Kita" },
+      publisher: { "@type": "Organization", name: "Teman UMKM Kita", url: SITE_URL },
+      url: `${SITE_URL}/blog/${post.slug}`,
+    },
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Beranda", item: SITE_URL },
+        { "@type": "ListItem", position: 2, name: "Blog", item: `${SITE_URL}/blog` },
+        { "@type": "ListItem", position: 3, name: post.title, item: `${SITE_URL}/blog/${post.slug}` },
+      ],
+    },
+  ];
+
+  if (hasBlockType(post.content, "faq")) {
+    const faqBlocks = post.content.filter((b) => b.type === "faq") as Extract<ContentBlock, { type: "faq" }>[];
+    const mainEntity = faqBlocks.flatMap((b) =>
+      b.items.map((item) => ({
+        "@type": "Question",
+        name: item.question,
+        acceptedAnswer: { "@type": "Answer", text: item.answer },
+      }))
+    );
+    jsonLdGraph.push({ "@type": "FAQPage", mainEntity });
+  }
+
+  if (hasBlockType(post.content, "howto")) {
+    const howtoBlocks = post.content.filter((b) => b.type === "howto") as Extract<ContentBlock, { type: "howto" }>[];
+    for (const hb of howtoBlocks) {
+      jsonLdGraph.push({
+        "@type": "HowTo",
+        name: post.title,
+        step: hb.steps.map((s, i) => ({
+          "@type": "HowToStep",
+          position: i + 1,
+          name: s.name,
+          text: s.text,
+          ...(s.image ? { image: s.image } : {}),
+        })),
+      });
+    }
+  }
+
   const jsonLd = {
     "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Article",
-        headline: post.title,
-        description: post.excerpt,
-        datePublished: post.date,
-        author: { "@type": "Organization", name: "Teman UMKM Kita" },
-        publisher: { "@type": "Organization", name: "Teman UMKM Kita", url: SITE_URL },
-        url: `${SITE_URL}/blog/${post.slug}`,
-      },
-      {
-        "@type": "BreadcrumbList",
-        itemListElement: [
-          { "@type": "ListItem", position: 1, name: "Beranda", item: SITE_URL },
-          { "@type": "ListItem", position: 2, name: "Blog", item: `${SITE_URL}/blog` },
-          { "@type": "ListItem", position: 3, name: post.title, item: `${SITE_URL}/blog/${post.slug}` },
-        ],
-      },
-    ],
+    "@graph": jsonLdGraph,
   };
 
   const colorClass = categoryColors[post.category] ?? "bg-brand-dark/5 text-brand-dark/60 border-brand-dark/10";
