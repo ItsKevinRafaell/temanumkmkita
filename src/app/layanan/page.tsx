@@ -7,7 +7,10 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Layanan — Teman UMKM Kita",
   description: "Web development, SEO, kelola sosial media, maintenance website, dan desain logo untuk UMKM Indonesia.",
+  alternates: { canonical: "https://temanumkmkita.com/layanan" },
 };
+
+const SITE_URL = "https://temanumkmkita.com";
 
 const allServices = [
   ...servicesData,
@@ -37,9 +40,22 @@ const allServices = [
   },
 ];
 
+const serviceJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": allServices.map((s) => ({
+    "@type": "Service",
+    name: s.title,
+    description: s.hook,
+    url: `${SITE_URL}/layanan/${s.slug}`,
+    provider: { "@type": "LocalBusiness", name: "Teman UMKM Kita", url: SITE_URL },
+    areaServed: "ID",
+  })),
+};
+
 export default function LayananPage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }} />
       <Navbar />
       <main className="pt-20">
         {/* Hero */}

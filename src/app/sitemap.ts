@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { fetchArticles } from "@/lib/api/blog";
+import { fetchArticles, fetchAllAuthorSlugs } from "@/lib/api/blog";
 
 export const revalidate = 3600;
 
@@ -11,10 +11,12 @@ const STATIC_PAGES = [
   { url: `${SITE_URL}/layanan`, priority: 0.8, changeFrequency: "monthly" },
   { url: `${SITE_URL}/tentang-kami`, priority: 0.7, changeFrequency: "monthly" },
   { url: `${SITE_URL}/kontak`, priority: 0.7, changeFrequency: "monthly" },
-  { url: `${SITE_URL}/layanan/website`, priority: 0.75, changeFrequency: "monthly" },
-  { url: `${SITE_URL}/layanan/seo`, priority: 0.75, changeFrequency: "monthly" },
-  { url: `${SITE_URL}/layanan/sosial-media`, priority: 0.75, changeFrequency: "monthly" },
-  { url: `${SITE_URL}/layanan/branding`, priority: 0.75, changeFrequency: "monthly" },
+  { url: `${SITE_URL}/layanan/web-development`, priority: 0.8, changeFrequency: "monthly" },
+  { url: `${SITE_URL}/layanan/web-development-bulanan`, priority: 0.75, changeFrequency: "monthly" },
+  { url: `${SITE_URL}/layanan/seo-google-maps`, priority: 0.8, changeFrequency: "monthly" },
+  { url: `${SITE_URL}/layanan/kelola-sosial-media`, priority: 0.75, changeFrequency: "monthly" },
+  { url: `${SITE_URL}/layanan/desain-logo`, priority: 0.7, changeFrequency: "monthly" },
+  { url: `${SITE_URL}/layanan/maintenance`, priority: 0.7, changeFrequency: "monthly" },
 ] as const;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -36,5 +38,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }));
   } catch {}
 
-  return [...staticEntries, ...articleEntries];
+  let authorEntries: MetadataRoute.Sitemap = [];
+  try {
+    const slugs = await fetchAllAuthorSlugs();
+    authorEntries = slugs.map((slug) => ({
+      url: `${SITE_URL}/blog/author/${slug}`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+    }));
+  } catch {}
+
+  return [...staticEntries, ...articleEntries, ...authorEntries];
 }

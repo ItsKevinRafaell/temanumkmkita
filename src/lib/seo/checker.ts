@@ -9,6 +9,7 @@ export interface SEOInput {
   excerpt: string;
   coverImage: string;
   blocks: ContentBlock[];
+  hasAuthor?: boolean;
 }
 
 export type RuleStatus = "pass" | "improve" | "fail";
@@ -43,6 +44,12 @@ function extractTextFromBlocks(blocks: ContentBlock[]): string {
       for (const step of b.steps) {
         parts.push(step.name, step.text);
       }
+    } else if (b.type === "key-takeaway") {
+      parts.push(...b.items);
+    } else if (b.type === "source") {
+      parts.push(...b.items.map((s) => s.label));
+    } else if (b.type === "expert-quote") {
+      parts.push(b.quote, b.author_name, b.author_title);
     } else if (b.type === "columns") {
       for (const col of b.columns) {
         parts.push(extractTextFromBlocks(col));
@@ -86,7 +93,7 @@ function gradeFromScore(score: number): "A" | "B" | "C" | "D" | "F" {
 }
 
 export function checkSEO(input: SEOInput): SEOResult {
-  const { title, seoTitle, metaDescription, focusKeyword, slug, excerpt, coverImage, blocks } = input;
+  const { title, seoTitle, metaDescription, focusKeyword, slug, excerpt, coverImage, blocks, hasAuthor } = input;
   const kw = focusKeyword.trim().toLowerCase();
   const effectiveTitle = (seoTitle || title).toLowerCase();
   const effectiveMeta = (metaDescription || excerpt).toLowerCase();
@@ -297,6 +304,61 @@ export function checkSEO(input: SEOInput): SEOResult {
       score: pass ? 5 : 0,
       maxScore: 5,
     });
+  }
+
+  // has-author (8)
+  {
+    rules.push({
+      id: "has-author",
+      label: "Ada penulis (E-E-A-T)",
+      description: "Pilih penulis untuk artikel ini — penting untuk sinyal E-E-A-T Google.",
+      status: hasAuthor ? "pass" : "fail",
+      score: hasAuthor ? 8 : 0,
+      maxScore: 8,
+    });
+  }
+
+  // has-source (5)
+  {
+    const hasSrc = hasBlockTypeLocal(blocks, "source");
+    rules.push({
+      id: "has-source",
+      label: "Ada daftar referensi",
+      description: "Tambahkan blok Referensi/Sumber untuk mendukung klaim dengan data.",
+      status: hasSrc ? "pass" : "improve",
+      score: hasSrc ? 5 : 2,
+      maxScore: 5,
+    });
+  }
+
+  // kw-density (8)
+  {
+    let status: RuleStatus;
+    let score: number;
+    let description: string;
+    if (!kw || wordCount === 0) {
+      status = "fail";
+      score = 0;
+      description = "Isi focus keyword dan konten untuk cek keyword density.";
+    } else {
+      const kwOccurrences = (allText.toLowerCase().match(new RegExp(kw.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g")) ?? []).length;
+      const density = (kwOccurrences / wordCount) * 100;
+      description = `Keyword density: ${density.toFixed(1)}% (${kwOccurrences}× dari ${wordCount} kata). Ideal: 0.5%–2.5%.`;
+      if (density >= 0.5 && density <= 2.5) {
+        status = "pass";
+        score = 8;
+      } else if (density > 0 && density < 0.5) {
+        status = "improve";
+        score = 4;
+      } else if (density > 2.5 && density <= 4) {
+        status = "improve";
+        score = 4;
+      } else {
+        status = "fail";
+        score = 0;
+      }
+    }
+    rules.push({ id: "kw-density", label: "Keyword density", description, status, score, maxScore: 8 });
   }
 
   const totalScore = Math.min(100, rules.reduce((s, r) => s + r.score, 0));

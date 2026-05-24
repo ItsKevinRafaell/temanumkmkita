@@ -4,7 +4,7 @@ from fastapi.staticfiles import StaticFiles
 import os
 
 from database import engine, Base
-from routers import articles, categories, auth, uploads, pillars, topics
+from routers import articles, categories, auth, uploads, pillars, topics, settings, authors
 
 Base.metadata.create_all(bind=engine)
 
@@ -32,6 +32,8 @@ app.include_router(auth.router)
 app.include_router(uploads.router)
 app.include_router(pillars.router)
 app.include_router(topics.router)
+app.include_router(settings.router)
+app.include_router(authors.router)
 
 # Serve uploaded images — fallback jika Apache tidak serve public/ langsung
 _uploads_dir = os.path.join(os.path.dirname(__file__), "public", "uploads")

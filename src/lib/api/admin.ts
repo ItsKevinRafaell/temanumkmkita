@@ -58,6 +58,7 @@ export interface ArticlePayload {
   meta_description?: string;
   focus_keyword?: string;
   pillar_id?: string | null;
+  author_id?: string | null;
 }
 
 export async function adminListArticles(page = 1, per_page = 20, opts?: {
@@ -152,4 +153,62 @@ export interface AdminArticle {
   meta_description: string | null;
   focus_keyword: string | null;
   pillar_id: string | null;
+  author_id: string | null;
+  author: Author | null;
+}
+
+/* ── Site Settings ────────────────────────────────────────────────────────── */
+
+export interface SiteSettings {
+  id: string;
+  instagram_url: string | null;
+  facebook_url: string | null;
+  linkedin_url: string | null;
+  tiktok_url: string | null;
+  youtube_url: string | null;
+  twitter_url: string | null;
+  address: string | null;
+  phone: string | null;
+  updated_at: string | null;
+}
+
+export async function fetchAdminSettings(): Promise<SiteSettings> {
+  return req<SiteSettings>("/api/settings");
+}
+
+export async function updateSettings(data: Partial<Omit<SiteSettings, "id" | "updated_at">>): Promise<SiteSettings> {
+  return req<SiteSettings>("/api/settings", { method: "PUT", body: JSON.stringify(data) });
+}
+
+/* ── Authors ──────────────────────────────────────────────────────────────── */
+
+export interface Author {
+  id: string;
+  name: string;
+  slug: string;
+  role: string | null;
+  bio: string | null;
+  photo_url: string | null;
+  linkedin_url: string | null;
+  created_at: string;
+}
+
+export async function fetchAuthors(): Promise<Author[]> {
+  return req<Author[]>("/api/authors");
+}
+
+export async function fetchAuthor(id: string): Promise<Author> {
+  return req<Author>(`/api/authors/${id}`);
+}
+
+export async function createAuthor(data: Omit<Author, "id" | "created_at">): Promise<Author> {
+  return req<Author>("/api/authors", { method: "POST", body: JSON.stringify(data) });
+}
+
+export async function updateAuthor(id: string, data: Partial<Omit<Author, "id" | "created_at">>): Promise<Author> {
+  return req<Author>(`/api/authors/${id}`, { method: "PUT", body: JSON.stringify(data) });
+}
+
+export async function deleteAuthor(id: string): Promise<void> {
+  await req(`/api/authors/${id}`, { method: "DELETE" });
 }

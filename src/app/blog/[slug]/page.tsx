@@ -8,7 +8,7 @@ import BlogDetailClient from "@/components/blog/BlogDetailClient";
 import BlogCard from "@/components/blog/BlogCard";
 import { extractHeadings, hasBlockType, type BlogPost, type ContentBlock } from "@/lib/data/blog";
 import { fetchArticleBySlug, fetchArticles, fetchAllSlugs, type Article } from "@/lib/api/blog";
-import { Calendar, Clock, ChevronRight, Tag } from "lucide-react";
+import { Calendar, Clock, ChevronRight, Tag, UserCircle, ExternalLink } from "lucide-react";
 
 const SITE_URL = "https://temanumkmkita.com";
 
@@ -37,10 +37,12 @@ function articleToPost(a: Article): BlogPost {
     excerpt: a.excerpt ?? "",
     category: a.category ?? "Umum",
     date: a.published_at ?? a.created_at,
+    updatedAt: a.updated_at ?? undefined,
     readTime: a.read_time,
     featured: a.featured,
     cover_image: a.cover_image ?? undefined,
     content,
+    author: a.author ?? undefined,
   };
 }
 
@@ -76,6 +78,7 @@ export async function generateMetadata({
         url,
         type: "article",
         publishedTime: article.published_at ?? undefined,
+        modifiedTime: article.updated_at ?? article.published_at ?? undefined,
         tags: article.category ? [article.category] : [],
         images: ogImages,
       },
@@ -119,14 +122,23 @@ export default async function BlogDetailPage({
       .map(articleToPost);
   } catch {}
 
+  const authorSchema = post.author ? {
+    "@type": "Person",
+    name: post.author.name,
+    url: `${SITE_URL}/blog/author/${post.author.slug}`,
+    ...(post.author.linkedin_url ? { sameAs: [post.author.linkedin_url] } : {}),
+    ...(post.author.role ? { jobTitle: post.author.role } : {}),
+  } : { "@type": "Organization", name: "Teman UMKM Kita" };
+
   const jsonLdGraph: object[] = [
     {
       "@type": "Article",
       headline: post.title,
       description: post.excerpt,
       datePublished: post.date,
+      dateModified: article.updated_at ?? post.date,
       ...(post.cover_image ? { image: post.cover_image } : {}),
-      author: { "@type": "Organization", name: "Teman UMKM Kita" },
+      author: authorSchema,
       publisher: { "@type": "Organization", name: "Teman UMKM Kita", url: SITE_URL },
       url: `${SITE_URL}/blog/${post.slug}`,
     },
@@ -140,8 +152,11 @@ export default async function BlogDetailPage({
     },
   ];
 
-  if (hasBlockType(post.content, "faq")) {
-    const faqBlocks = post.content.filter((b) => b.type === "faq") as Extract<ContentBlock, { type: "faq" }>[];
+  if (post.author) {
+    jsonLdGraph.push(authorSchema);
+  }
+
+  if (hasBlockType(post.content, "faq")) {    const faqBlocks = post.content.filter((b) => b.type === "faq") as Extract<ContentBlock, { type: "faq" }>[];
     const mainEntity = faqBlocks.flatMap((b) =>
       b.items.map((item) => ({
         "@type": "Question",
@@ -218,7 +233,30 @@ export default async function BlogDetailPage({
                   <Clock size={13} />
                   {post.readTime} menit baca
                 </span>
+                {post.updatedAt && post.updatedAt !== post.date && (
+                  <>
+                    <span className="w-1 h-1 rounded-full bg-brand-dark/20" />
+                    <span className="text-xs text-brand-dark/35">Diperbarui {formatDate(post.updatedAt)}</span>
+                  </>
+                )}
               </div>
+
+              {/* Author byline */}
+              {post.author && (
+                <div className="flex items-center gap-2.5 mt-4">
+                  {post.author.photo_url ? (
+                    <img src={post.author.photo_url} alt={post.author.name} className="w-9 h-9 rounded-full object-cover border border-brand-dark/8 flex-shrink-0" />
+                  ) : (
+                    <UserCircle size={36} className="text-brand-dark/25 flex-shrink-0" />
+                  )}
+                  <div>
+                    <Link href={`/blog/author/${post.author.slug}`} className="text-sm font-bold text-brand-dark hover:text-accent transition-colors">
+                      {post.author.name}
+                    </Link>
+                    {post.author.role && <p className="text-xs text-brand-dark/45">{post.author.role}</p>}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </section>
@@ -229,6 +267,35 @@ export default async function BlogDetailPage({
             <BlogDetailClient post={post} related={related} headings={headings} />
           </div>
         </section>
+
+        {/* ── About Author ──────────────────────────────────────────── */}
+        {post.author && (
+          <section className="pb-10">
+            <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="border border-brand-dark/8 rounded-2xl p-6 flex items-start gap-5">
+                {post.author.photo_url ? (
+                  <img src={post.author.photo_url} alt={post.author.name} className="w-14 h-14 rounded-full object-cover border border-brand-dark/8 flex-shrink-0" loading="lazy" />
+                ) : (
+                  <UserCircle size={56} className="text-brand-dark/20 flex-shrink-0" />
+                )}
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs font-bold uppercase tracking-wider text-brand-dark/35 mb-1">Tentang Penulis</p>
+                  <Link href={`/blog/author/${post.author.slug}`} className="text-base font-extrabold text-brand-dark hover:text-accent transition-colors">
+                    {post.author.name}
+                  </Link>
+                  {post.author.role && <p className="text-sm text-brand-dark/50 mt-0.5">{post.author.role}</p>}
+                  {post.author.bio && <p className="text-sm text-brand-dark/65 mt-2 leading-relaxed max-w-lg">{post.author.bio}</p>}
+                  {post.author.linkedin_url && (
+                    <a href={post.author.linkedin_url} target="_blank" rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 mt-2 text-xs font-semibold text-brand-dark/40 hover:text-accent transition-colors">
+                      <ExternalLink size={11} /> LinkedIn
+                    </a>
+                  )}
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* ── Related posts ─────────────────────────────────────────── */}
         {related.length > 0 && (

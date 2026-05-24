@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import TableOfContents from "@/components/blog/TableOfContents";
 import BlogCard from "@/components/blog/BlogCard";
 import type { BlogPost } from "@/lib/data/blog";
@@ -32,6 +32,7 @@ export default function BlogDetailClient({ post, related, headings }: Props) {
               src={post.cover_image}
               alt={post.title}
               className="w-full h-full object-cover"
+              loading="lazy"
             />
           </div>
         ) : (
@@ -56,6 +57,7 @@ export default function BlogDetailClient({ post, related, headings }: Props) {
         <div className="blog-prose">
           <BlogContent blocks={post.content} postTitle={post.title} />
         </div>
+        <ShareButtons title={post.title} slug={post.slug} />
 
         {/* Related posts — mobile/tablet */}
         {related.length > 0 && (
@@ -123,6 +125,17 @@ export default function BlogDetailClient({ post, related, headings }: Props) {
 
 /* ── Article content renderer ─────────────────────────────────────────────── */
 
+function renderInline(text: string): React.ReactNode[] {
+  const tokens = text.split(/(\*\*.+?\*\*|\*.+?\*|\[.+?\]\(.+?\))/g);
+  return tokens.map((t, i) => {
+    if (t.startsWith("**") && t.endsWith("**")) return <strong key={i}>{t.slice(2, -2)}</strong>;
+    if (t.startsWith("*") && t.endsWith("*") && !t.startsWith("**")) return <em key={i}>{t.slice(1, -1)}</em>;
+    const m = t.match(/^\[(.+?)\]\((.+?)\)$/);
+    if (m) return <a key={i} href={m[2]} target="_blank" rel="noopener noreferrer" className="text-accent underline underline-offset-2 hover:text-accent/80 transition-colors">{m[1]}</a>;
+    return t;
+  });
+}
+
 function BlogContent({ blocks, postTitle }: { blocks: BlogPost["content"]; postTitle: string }) {
   const elements: React.ReactNode[] = [];
   let h2Seen = 0;
@@ -142,21 +155,21 @@ function BlogContent({ blocks, postTitle }: { blocks: BlogPost["content"]; postT
     } else if (b.type === "h3") {
       elements.push(<h3 key={i} id={b.id}>{b.text}</h3>);
     } else if (b.type === "p") {
-      elements.push(<p key={i}>{b.text}</p>);
+      elements.push(<p key={i}>{renderInline(b.text)}</p>);
     } else if (b.type === "ul") {
       elements.push(
         <ul key={i}>
-          {b.items.map((item, j) => <li key={j}>{item}</li>)}
+          {b.items.map((item, j) => <li key={j}>{renderInline(item)}</li>)}
         </ul>
       );
     } else if (b.type === "ol") {
       elements.push(
         <ol key={i}>
-          {b.items.map((item, j) => <li key={j}>{item}</li>)}
+          {b.items.map((item, j) => <li key={j}>{renderInline(item)}</li>)}
         </ol>
       );
     } else if (b.type === "blockquote") {
-      elements.push(<blockquote key={i}>{b.text}</blockquote>);
+      elements.push(<blockquote key={i}>{renderInline(b.text)}</blockquote>);
     } else if (b.type === "cta-inline") {
       elements.push(<InlineCTA key={i} postTitle={postTitle} />);
     } else if (b.type === "image") {
@@ -166,6 +179,7 @@ function BlogContent({ blocks, postTitle }: { blocks: BlogPost["content"]; postT
             src={b.src}
             alt={b.alt}
             className="w-full rounded-2xl border border-brand-dark/8 object-cover"
+            loading="lazy"
           />
           {b.caption && (
             <figcaption className="text-center text-xs text-brand-dark/40 mt-2">
@@ -219,12 +233,57 @@ function BlogContent({ blocks, postTitle }: { blocks: BlogPost["content"]; postT
                   <p className="font-bold text-sm text-brand-dark">{step.name}</p>
                   <p className="text-sm text-brand-dark/65 mt-0.5 leading-relaxed">{step.text}</p>
                   {step.image && (
-                    <img src={step.image} alt={step.name} className="mt-2 w-full rounded-xl border border-brand-dark/8 object-cover max-h-48" />
+                    <img src={step.image} alt={step.name} className="mt-2 w-full rounded-xl border border-brand-dark/8 object-cover max-h-48" loading="lazy" />
                   )}
                 </div>
               </li>
             ))}
           </ol>
+        </div>
+      );
+    } else if (b.type === "key-takeaway") {
+      elements.push(
+        <div key={i} className="not-prose my-6 bg-accent/8 border border-accent/25 rounded-2xl p-5">
+          <p className="text-xs font-bold uppercase tracking-wider text-accent mb-3">Yang akan kamu pelajari</p>
+          <ul className="space-y-2">
+            {b.items.filter(Boolean).map((item, j) => (
+              <li key={j} className="flex items-start gap-2.5 text-sm text-brand-dark/80">
+                <span className="w-1.5 h-1.5 rounded-full bg-accent flex-shrink-0 mt-1.5" />
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+      );
+    } else if (b.type === "source") {
+      elements.push(
+        <div key={i} className="not-prose my-8 border-t border-brand-dark/8 pt-6">
+          <p className="text-xs font-bold uppercase tracking-wider text-brand-dark/35 mb-3">Referensi</p>
+          <ol className="space-y-1.5">
+            {b.items.filter((s) => s.label || s.url).map((src, j) => (
+              <li key={j} className="flex items-start gap-2 text-xs text-brand-dark/55">
+                <span className="font-mono text-brand-dark/30 flex-shrink-0">[{j + 1}]</span>
+                {src.url ? (
+                  <a href={src.url} target="_blank" rel="nofollow noopener noreferrer" className="hover:text-accent underline underline-offset-2 transition-colors">
+                    {src.label || src.url}
+                  </a>
+                ) : (
+                  <span>{src.label}</span>
+                )}
+              </li>
+            ))}
+          </ol>
+        </div>
+      );
+    } else if (b.type === "expert-quote") {
+      elements.push(
+        <div key={i} className="not-prose my-6 border-l-4 border-accent/50 pl-5 py-1">
+          <p className="text-base text-brand-dark/80 italic leading-relaxed">&ldquo;{b.quote}&rdquo;</p>
+          <div className="mt-2 flex items-center gap-1.5 text-xs text-brand-dark/50">
+            <span className="font-bold text-brand-dark/70">{b.author_name}</span>
+            {b.author_title && <><span>·</span><span>{b.author_title}</span></>}
+            {b.author_company && <><span>·</span><span>{b.author_company}</span></>}
+          </div>
         </div>
       );
     }
@@ -253,6 +312,45 @@ function InlineCTA({ postTitle }: { postTitle: string }) {
         <MessageCircle size={14} />
         Konsultasi Gratis
       </a>
+    </div>
+  );
+}
+
+function ShareButtons({ title, slug }: { title: string; slug: string }) {
+  const [copied, setCopied] = useState(false);
+  const url = `https://temanumkmkita.com/blog/${slug}`;
+  const enc = encodeURIComponent;
+
+  function copyLink() {
+    navigator.clipboard.writeText(url).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }).catch(() => {});
+  }
+
+  return (
+    <div className="flex items-center gap-2 mt-10 pt-6 border-t border-brand-dark/8 flex-wrap">
+      <span className="text-xs font-bold text-brand-dark/40 uppercase tracking-wider">Bagikan:</span>
+      <a
+        href={`https://twitter.com/intent/tweet?text=${enc(title)}&url=${enc(url)}`}
+        target="_blank" rel="noopener noreferrer"
+        className="px-3 py-1.5 rounded-lg bg-brand-dark/5 text-xs font-semibold text-brand-dark/60 hover:bg-brand-dark/10 transition-colors"
+      >
+        X / Twitter
+      </a>
+      <a
+        href={`https://wa.me/?text=${enc(title + " " + url)}`}
+        target="_blank" rel="noopener noreferrer"
+        className="px-3 py-1.5 rounded-lg bg-green-50 text-xs font-semibold text-green-700 hover:bg-green-100 transition-colors"
+      >
+        WhatsApp
+      </a>
+      <button
+        onClick={copyLink}
+        className="px-3 py-1.5 rounded-lg bg-brand-dark/5 text-xs font-semibold text-brand-dark/60 hover:bg-brand-dark/10 transition-colors"
+      >
+        {copied ? "Tersalin!" : "Salin Link"}
+      </button>
     </div>
   );
 }

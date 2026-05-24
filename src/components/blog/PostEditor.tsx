@@ -13,7 +13,8 @@ import {
 import { CSS } from "@dnd-kit/utilities";
 import {
   adminCreateArticle, adminUpdateArticle, uploadImage, fetchCategories,
-  type ArticlePayload, type AdminCategory,
+  fetchAuthors,
+  type ArticlePayload, type AdminCategory, type Author,
 } from "@/lib/api/admin";
 import { type ContentBlock } from "@/lib/data/blog";
 import Link from "next/link";
@@ -75,6 +76,9 @@ function newBlockFromType(type: ContentBlock["type"], params?: Record<string, un
     }
     case "faq": block = { type: "faq", items: [{ question: "", answer: "" }] }; break;
     case "howto": block = { type: "howto", steps: [{ name: "", text: "" }] }; break;
+    case "key-takeaway": block = { type: "key-takeaway", items: [""] }; break;
+    case "source": block = { type: "source", items: [{ label: "", url: "" }] }; break;
+    case "expert-quote": block = { type: "expert-quote", quote: "", author_name: "", author_title: "" }; break;
     default: block = { type: "p", text: "" };
   }
   return { id, block };
@@ -118,6 +122,9 @@ const SLASH_COMMANDS: SlashCommand[] = [
   { keywords: ["3col", "tiga", "three"], label: "3 Kolom", desc: "/3col", blockType: "columns", params: { count: 3 }, icon: <Columns size={13} /> },
   { keywords: ["faq", "pertanyaan", "qanda"], label: "FAQ", desc: "/faq", blockType: "faq", icon: <HelpCircle size={13} /> },
   { keywords: ["howto", "cara", "langkah", "tutorial"], label: "How To", desc: "/howto", blockType: "howto", icon: <ListChecks size={13} /> },
+  { keywords: ["takeaway", "pelajari", "ringkasan", "tldr"], label: "Key Takeaway", desc: "/takeaway", blockType: "key-takeaway", icon: <Zap size={13} /> },
+  { keywords: ["source", "referensi", "sumber", "daftar"], label: "Referensi / Sumber", desc: "/source", blockType: "source", icon: <List size={13} /> },
+  { keywords: ["expertquote", "expert", "ahli", "narasumber"], label: "Expert Quote", desc: "/expertquote", blockType: "expert-quote", icon: <Quote size={13} /> },
 ];
 
 /* ── Slash menu ───────────────────────────────────────────────────────────── */
@@ -718,7 +725,139 @@ function NotionBlock({
     return <HowToBlockEditor block={item.block} onChange={(b) => onUpdate(item.id, b)} />;
   }
 
-  return null;
+  if (item.block.type === "key-takeaway") {
+    const ktBlock = item.block;
+    return (
+      <div className="bg-[#f5a700]/8 border border-[#f5a700]/30 rounded-xl p-3 space-y-2">
+        <p className="text-xs font-bold uppercase tracking-wider text-[#f5a700]">Yang akan kamu pelajari</p>
+        {ktBlock.items.map((itm, i) => (
+          <div key={i} className="flex items-center gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#f5a700] flex-shrink-0" />
+            <input
+              className="flex-1 outline-none text-sm text-[#242423] placeholder:text-[#242423]/25 bg-transparent"
+              placeholder="Poin pembelajaran..."
+              value={itm}
+              onChange={(e) => {
+                const items = [...ktBlock.items];
+                items[i] = e.target.value;
+                onUpdate(item.id, { ...ktBlock, items });
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  const items = [...ktBlock.items];
+                  items.splice(i + 1, 0, "");
+                  onUpdate(item.id, { ...ktBlock, items });
+                }
+                if (e.key === "Backspace" && itm === "") {
+                  e.preventDefault();
+                  if (ktBlock.items.length === 1) {
+                    onDelete(item.id);
+                  } else {
+                    onUpdate(item.id, { ...ktBlock, items: ktBlock.items.filter((_, j) => j !== i) });
+                  }
+                }
+              }}
+            />
+            {ktBlock.items.length > 1 && (
+              <button onClick={() => onUpdate(item.id, { ...ktBlock, items: ktBlock.items.filter((_, j) => j !== i) })}
+                className="text-[#242423]/25 hover:text-red-500 transition flex-shrink-0">
+                <X size={11} />
+              </button>
+            )}
+          </div>
+        ))}
+        <button
+          onMouseDown={(e) => { e.preventDefault(); onUpdate(item.id, { ...ktBlock, items: [...ktBlock.items, ""] }); }}
+          className="flex items-center gap-1.5 text-xs font-semibold text-[#f5a700] hover:underline"
+        >
+          <Plus size={11} /> Tambah poin
+        </button>
+      </div>
+    );
+  }
+
+  if (item.block.type === "source") {
+    const srcBlock = item.block;
+    return (
+      <div className="border border-[#242423]/10 rounded-xl p-3 space-y-2">
+        <p className="text-xs font-bold uppercase tracking-wider text-[#242423]/35">Referensi / Sumber</p>
+        {srcBlock.items.map((src, i) => (
+          <div key={i} className="flex items-start gap-2">
+            <span className="text-xs text-[#242423]/35 font-mono mt-1 flex-shrink-0">[{i + 1}]</span>
+            <div className="flex-1 space-y-1">
+              <input
+                className="w-full outline-none text-xs text-[#242423] placeholder:text-[#242423]/25 bg-transparent border-b border-[#242423]/10 pb-0.5"
+                placeholder="Judul / nama sumber..."
+                value={src.label}
+                onChange={(e) => {
+                  const items = srcBlock.items.map((s, j) => j === i ? { ...s, label: e.target.value } : s);
+                  onUpdate(item.id, { ...srcBlock, items });
+                }}
+              />
+              <input
+                className="w-full outline-none text-xs text-[#242423]/60 placeholder:text-[#242423]/20 bg-transparent font-mono"
+                placeholder="https://..."
+                value={src.url}
+                onChange={(e) => {
+                  const items = srcBlock.items.map((s, j) => j === i ? { ...s, url: e.target.value } : s);
+                  onUpdate(item.id, { ...srcBlock, items });
+                }}
+              />
+            </div>
+            {srcBlock.items.length > 1 && (
+              <button onClick={() => onUpdate(item.id, { ...srcBlock, items: srcBlock.items.filter((_, j) => j !== i) })}
+                className="text-[#242423]/25 hover:text-red-500 transition flex-shrink-0 mt-1">
+                <X size={11} />
+              </button>
+            )}
+          </div>
+        ))}
+        <button
+          onMouseDown={(e) => { e.preventDefault(); onUpdate(item.id, { ...srcBlock, items: [...srcBlock.items, { label: "", url: "" }] }); }}
+          className="flex items-center gap-1.5 text-xs font-semibold text-[#242423]/40 hover:text-[#242423] hover:underline"
+        >
+          <Plus size={11} /> Tambah sumber
+        </button>
+      </div>
+    );
+  }
+
+  if (item.block.type === "expert-quote") {
+    const eqBlock = item.block;
+    return (
+      <div className="border-l-4 border-[#242423]/20 pl-4 space-y-2 py-1">
+        <p className="text-xs font-bold uppercase tracking-wider text-[#242423]/35">Expert Quote</p>
+        <textarea
+          className="w-full outline-none text-sm text-[#242423]/75 italic placeholder:text-[#242423]/20 bg-transparent resize-none leading-relaxed"
+          placeholder="Kutipan dari ahli / narasumber..."
+          rows={2}
+          value={eqBlock.quote}
+          onChange={(e) => { autoResize(e.currentTarget); onUpdate(item.id, { ...eqBlock, quote: e.target.value }); }}
+        />
+        <div className="flex gap-2">
+          <input
+            className="flex-1 outline-none text-xs font-semibold text-[#242423] placeholder:text-[#242423]/25 bg-transparent border-b border-[#242423]/10 pb-0.5"
+            placeholder="Nama narasumber"
+            value={eqBlock.author_name}
+            onChange={(e) => onUpdate(item.id, { ...eqBlock, author_name: e.target.value })}
+          />
+          <input
+            className="flex-1 outline-none text-xs text-[#242423]/55 placeholder:text-[#242423]/20 bg-transparent border-b border-[#242423]/10 pb-0.5"
+            placeholder="Jabatan"
+            value={eqBlock.author_title}
+            onChange={(e) => onUpdate(item.id, { ...eqBlock, author_title: e.target.value })}
+          />
+          <input
+            className="flex-1 outline-none text-xs text-[#242423]/40 placeholder:text-[#242423]/20 bg-transparent border-b border-[#242423]/10 pb-0.5"
+            placeholder="Perusahaan (opsional)"
+            value={eqBlock.author_company ?? ""}
+            onChange={(e) => onUpdate(item.id, { ...eqBlock, author_company: e.target.value || undefined })}
+          />
+        </div>
+      </div>
+    );
+  }
 }
 
 /* ── Columns block editor ─────────────────────────────────────────────────── */
@@ -779,7 +918,9 @@ function SortableNotionBlock({
   const isNonText = item.block.type === "image" || item.block.type === "columns" ||
     item.block.type === "cta-inline" || item.block.type === "divider" ||
     item.block.type === "ul" || item.block.type === "ol" ||
-    item.block.type === "faq" || item.block.type === "howto";
+    item.block.type === "faq" || item.block.type === "howto" ||
+    item.block.type === "key-takeaway" || item.block.type === "source" ||
+    item.block.type === "expert-quote";
 
   return (
     <div ref={setNodeRef} style={style} className="group relative flex items-start gap-1 px-1 py-0.5 rounded-lg hover:bg-[#242423]/3 transition-colors">
@@ -1044,6 +1185,7 @@ interface PostEditorProps {
     seo_title?: string;
     meta_description?: string;
     focus_keyword?: string;
+    author_id?: string;
   };
 }
 
@@ -1072,6 +1214,8 @@ export default function PostEditor({ initial = {} }: PostEditorProps) {
     return parsed.length > 0 ? parsed : [newBlockFromType("p")];
   });
   const [categories, setCategories] = useState<AdminCategory[]>([]);
+  const [authors, setAuthors] = useState<Author[]>([]);
+  const [authorId, setAuthorId] = useState<string>(initial.author_id ?? "");
   const [saving, setSaving] = useState(false);
   const [savingDraft, setSavingDraft] = useState(false);
   const [error, setError] = useState("");
@@ -1080,6 +1224,7 @@ export default function PostEditor({ initial = {} }: PostEditorProps) {
 
   useEffect(() => {
     fetchCategories().then(setCategories).catch(() => {});
+    fetchAuthors().then(setAuthors).catch(() => {});
   }, []);
 
   const seoResult = useMemo(() => checkSEO({
@@ -1091,7 +1236,8 @@ export default function PostEditor({ initial = {} }: PostEditorProps) {
     excerpt,
     coverImage,
     blocks: blockItems.map((i) => i.block),
-  }), [title, seoTitle, metaDescription, focusKeyword, slug, excerpt, coverImage, blockItems]);
+    hasAuthor: Boolean(authorId),
+  }), [title, seoTitle, metaDescription, focusKeyword, slug, excerpt, coverImage, blockItems, authorId]);
 
   /* ── Quick-add handler ──────────────────────────────────────────────────── */
 
@@ -1125,6 +1271,7 @@ export default function PostEditor({ initial = {} }: PostEditorProps) {
         seo_title: seoTitle || undefined,
         meta_description: metaDescription || undefined,
         focus_keyword: focusKeyword || undefined,
+        author_id: authorId || null,
       };
       if (isEdit && initial.id) {
         await adminUpdateArticle(initial.id, payload);
@@ -1419,6 +1566,18 @@ export default function PostEditor({ initial = {} }: PostEditorProps) {
                   >
                     <option value="">Pilih kategori</option>
                     {categories.map((c) => <option key={c.id} value={c.name}>{c.name}</option>)}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-[#242423]/50 mb-1">Penulis</label>
+                  <select
+                    value={authorId}
+                    onChange={(e) => setAuthorId(e.target.value)}
+                    className="w-full border border-[#242423]/12 rounded-lg px-3 py-2 text-xs text-[#242423] bg-white focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30"
+                  >
+                    <option value="">Tanpa penulis</option>
+                    {authors.map((a) => <option key={a.id} value={a.id}>{a.name}</option>)}
                   </select>
                 </div>
 

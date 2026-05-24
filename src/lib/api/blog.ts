@@ -18,6 +18,16 @@ export interface Article {
   seo_title: string | null;
   meta_description: string | null;
   focus_keyword: string | null;
+  author_id: string | null;
+  author: {
+    id: string;
+    name: string;
+    slug: string;
+    role: string | null;
+    bio: string | null;
+    photo_url: string | null;
+    linkedin_url: string | null;
+  } | null;
 }
 
 export interface PaginatedArticles {
@@ -52,4 +62,31 @@ export async function fetchArticleBySlug(slug: string): Promise<Article> {
 export async function fetchAllSlugs(): Promise<string[]> {
   const data = await fetchArticles({ per_page: 100 });
   return data.items.map((a) => a.slug);
+}
+
+/* ── Site Settings (public) ───────────────────────────────────────────────── */
+
+export interface SiteSettings {
+  id: string;
+  instagram_url: string | null;
+  facebook_url: string | null;
+  linkedin_url: string | null;
+  tiktok_url: string | null;
+  youtube_url: string | null;
+  twitter_url: string | null;
+  address: string | null;
+  phone: string | null;
+}
+
+export async function fetchSiteSettings(): Promise<SiteSettings> {
+  const res = await fetch(`${API_BASE}/api/settings`, { next: { revalidate: 3600 } });
+  if (!res.ok) throw new Error("Failed to fetch settings");
+  return res.json();
+}
+
+export async function fetchAllAuthorSlugs(): Promise<string[]> {
+  const res = await fetch(`${API_BASE}/api/authors`, { next: { revalidate: 3600 } });
+  if (!res.ok) return [];
+  const authors: { slug: string }[] = await res.json();
+  return authors.map((a) => a.slug);
 }

@@ -13,6 +13,39 @@ class ArticleCategoryOut(ArticleCategoryBase):
     model_config = {"from_attributes": True}
 
 
+# ── Authors (defined early — ArticleOut references AuthorOut) ─────────────────
+
+class AuthorBase(BaseModel):
+    name: str
+    slug: str
+    role: Optional[str] = None
+    bio: Optional[str] = None
+    photo_url: Optional[str] = None
+    linkedin_url: Optional[str] = None
+
+
+class AuthorCreate(AuthorBase):
+    pass
+
+
+class AuthorUpdate(BaseModel):
+    name: Optional[str] = None
+    slug: Optional[str] = None
+    role: Optional[str] = None
+    bio: Optional[str] = None
+    photo_url: Optional[str] = None
+    linkedin_url: Optional[str] = None
+
+
+class AuthorOut(AuthorBase):
+    id: str
+    created_at: str
+
+    model_config = {"from_attributes": True}
+
+
+# ── Articles ───────────────────────────────────────────────────────────────────
+
 class ArticleBase(BaseModel):
     title: str
     slug: str
@@ -29,6 +62,7 @@ class ArticleBase(BaseModel):
     meta_description: Optional[str] = None
     focus_keyword: Optional[str] = None
     pillar_id: Optional[str] = None
+    author_id: Optional[str] = None
 
 
 class ArticleCreate(ArticleBase):
@@ -51,12 +85,14 @@ class ArticleUpdate(BaseModel):
     meta_description: Optional[str] = None
     focus_keyword: Optional[str] = None
     pillar_id: Optional[str] = None
+    author_id: Optional[str] = None
 
 
 class ArticleOut(ArticleBase):
     id: str
     created_at: str
     updated_at: Optional[str] = None
+    author: Optional[AuthorOut] = None
 
     model_config = {"from_attributes": True}
 
@@ -153,3 +189,31 @@ class TopicOut(TopicBase):
     created_at: str
 
     model_config = {"from_attributes": True}
+
+
+# ── Site Settings ──────────────────────────────────────────────────────────────
+
+class SiteSettingsOut(BaseModel):
+    id: str
+    instagram_url: Optional[str] = None
+    facebook_url: Optional[str] = None
+    linkedin_url: Optional[str] = None
+    tiktok_url: Optional[str] = None
+    youtube_url: Optional[str] = None
+    twitter_url: Optional[str] = None
+    address: Optional[str] = None
+    phone: Optional[str] = None
+    updated_at: Optional[str] = None
+
+    model_config = {"from_attributes": True}
+
+
+class SiteSettingsUpdate(BaseModel):
+    instagram_url: Optional[str] = None
+    facebook_url: Optional[str] = None
+    linkedin_url: Optional[str] = None
+    tiktok_url: Optional[str] = None
+    youtube_url: Optional[str] = None
+    twitter_url: Optional[str] = None
+    address: Optional[str] = None
+    phone: Optional[str] = None

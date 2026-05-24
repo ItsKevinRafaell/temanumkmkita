@@ -10,7 +10,10 @@ export type ContentBlock =
   | { type: "divider" }
   | { type: "columns"; count: 2 | 3; columns: ContentBlock[][] }
   | { type: "faq"; items: { question: string; answer: string }[] }
-  | { type: "howto"; steps: { name: string; text: string; image?: string }[] };
+  | { type: "howto"; steps: { name: string; text: string; image?: string }[] }
+  | { type: "key-takeaway"; items: string[] }
+  | { type: "source"; items: { label: string; url: string; accessed?: string }[] }
+  | { type: "expert-quote"; quote: string; author_name: string; author_title: string; author_company?: string };
 
 export interface BlogPost {
   slug: string;
@@ -18,10 +21,19 @@ export interface BlogPost {
   excerpt: string;
   category: string;
   date: string;
+  updatedAt?: string;
   readTime: number;
   featured?: boolean;
   cover_image?: string;
   content: ContentBlock[];
+  author?: {
+    name: string;
+    slug: string;
+    role: string | null;
+    bio: string | null;
+    photo_url: string | null;
+    linkedin_url: string | null;
+  };
 }
 
 export function hasBlockType(content: ContentBlock[], type: ContentBlock["type"]): boolean {

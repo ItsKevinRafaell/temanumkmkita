@@ -40,6 +40,7 @@ class Article(Base):
     meta_description = Column(Text, nullable=True)
     focus_keyword = Column(String(255), nullable=True)
     pillar_id = Column(String(36), nullable=True)
+    author_id = Column(String(36), ForeignKey("authors.id"), nullable=True)
 
 
 class ContentPillar(Base):
@@ -69,3 +70,31 @@ class ContentTopic(Base):
     position_x    = Column(Float, default=0)
     position_y    = Column(Float, default=0)
     created_at    = Column(Text, nullable=False)
+
+
+class SiteSettings(Base):
+    __tablename__ = "site_settings"
+
+    id            = Column(String(36), primary_key=True, default="1")
+    instagram_url = Column(String(500), nullable=True)
+    facebook_url  = Column(String(500), nullable=True)
+    linkedin_url  = Column(String(500), nullable=True)
+    tiktok_url    = Column(String(500), nullable=True)
+    youtube_url   = Column(String(500), nullable=True)
+    twitter_url   = Column(String(500), nullable=True)
+    address       = Column(String(500), nullable=True)
+    phone         = Column(String(100), nullable=True)
+    updated_at    = Column(String(255), nullable=True)
+
+
+class Author(Base):
+    __tablename__ = "authors"
+
+    id          = Column(String(36), primary_key=True)
+    name        = Column(String(255), nullable=False)
+    slug        = Column(String(255), unique=True, nullable=False)
+    role        = Column(String(255), nullable=True)
+    bio         = Column(Text, nullable=True)
+    photo_url   = Column(String(500), nullable=True)
+    linkedin_url = Column(String(500), nullable=True)
+    created_at  = Column(String(255), nullable=False)

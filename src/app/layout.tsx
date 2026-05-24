@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import AnimatedDots from "@/components/ui/AnimatedDots";
+import { fetchSiteSettings } from "@/lib/api/blog";
 import "./globals.css";
 
 const jakarta = Plus_Jakarta_Sans({
@@ -8,6 +9,8 @@ const jakarta = Plus_Jakarta_Sans({
   variable: "--font-jakarta",
   weight: ["400", "500", "600", "700", "800"],
 });
+
+const SITE_URL = "https://temanumkmkita.com";
 
 export const metadata: Metadata = {
   title: "Teman UMKM Kita — Solusi Digital untuk UMKM Indonesia",
@@ -17,21 +20,78 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Teman UMKM Kita",
     description: "Solusi Digital untuk UMKM Indonesia",
-    url: "https://temanumkmkita.com",
+    url: SITE_URL,
     siteName: "Teman UMKM Kita",
     locale: "id_ID",
     type: "website",
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  let settings = null;
+  try { settings = await fetchSiteSettings(); } catch {}
+
+  const sameAs = [
+    settings?.instagram_url,
+    settings?.facebook_url,
+    settings?.linkedin_url,
+    settings?.tiktok_url,
+    settings?.youtube_url,
+    settings?.twitter_url,
+  ].filter(Boolean) as string[];
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "LocalBusiness",
+        "@id": `${SITE_URL}/#organization`,
+        name: "Teman UMKM Kita",
+        url: SITE_URL,
+        logo: `${SITE_URL}/logo.png`,
+        description: "Solusi digital untuk UMKM Indonesia — web development, SEO, sosial media, branding.",
+        areaServed: "ID",
+        ...(settings?.phone ? {
+          telephone: settings.phone,
+          contactPoint: {
+            "@type": "ContactPoint",
+            telephone: settings.phone,
+            contactType: "customer service",
+            areaServed: "ID",
+            availableLanguage: "Indonesian",
+          },
+        } : {}),
+        ...(settings?.address ? {
+          address: {
+            "@type": "PostalAddress",
+            streetAddress: settings.address,
+            addressCountry: "ID",
+          },
+        } : {}),
+        ...(sameAs.length > 0 ? { sameAs } : {}),
+      },
+      {
+        "@type": "WebSite",
+        "@id": `${SITE_URL}/#website`,
+        name: "Teman UMKM Kita",
+        url: SITE_URL,
+        inLanguage: "id-ID",
+        publisher: { "@id": `${SITE_URL}/#organization` },
+      },
+    ],
+  };
+
   return (
     <html lang="id">
       <body className={`${jakarta.variable} font-sans antialiased bg-canvas text-brand-dark noise`}>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <AnimatedDots />
         <div className="relative" style={{ zIndex: 1 }}>
           {children}

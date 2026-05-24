@@ -6,7 +6,7 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 
 from database import get_db
-from models import Article
+from models import Article, Author
 from schemas import ArticleCreate, ArticleOut, ArticleUpdate, PaginatedArticles
 from auth import require_auth
 
@@ -20,6 +20,7 @@ def now_iso() -> str:
 @router.get("", response_model=PaginatedArticles)
 def list_articles(
     category: Optional[str] = Query(None),
+    author_id: Optional[str] = Query(None),
     page: int = Query(1, ge=1),
     per_page: int = Query(6, ge=1, le=50),
     db: Session = Depends(get_db),
@@ -27,9 +28,14 @@ def list_articles(
     q = db.query(Article).filter(Article.status == "published")
     if category and category != "Semua":
         q = q.filter(Article.category == category)
+    if author_id:
+        q = q.filter(Article.author_id == author_id)
     total = q.count()
     pages = max(1, math.ceil(total / per_page))
     items = q.order_by(Article.published_at.desc()).offset((page - 1) * per_page).limit(per_page).all()
+    for item in items:
+        if item.author_id:
+            item.author = db.query(Author).filter(Author.id == item.author_id).first()
     return {"items": items, "total": total, "page": page, "per_page": per_page, "pages": pages}
 
 
@@ -62,6 +68,8 @@ def get_article(slug: str, db: Session = Depends(get_db)):
     ).first()
     if not article:
         raise HTTPException(status_code=404, detail="Article not found")
+    if article.author_id:
+        article.author = db.query(Author).filter(Author.id == article.author_id).first()
     return article
 
 
