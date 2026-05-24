@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { adminListArticles, adminDeleteArticle, logout, type AdminArticle } from "@/lib/api/admin";
+import ConfirmModal from "@/components/ui/ConfirmModal";
 import {
   PenLine, Trash2, Plus, LogOut, FileText,
   CheckCircle, Clock, ChevronLeft, ChevronRight,
@@ -30,6 +31,7 @@ export default function AdminPostsPage() {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [deleting, setDeleting] = useState<string | null>(null);
+  const [modal, setModal] = useState<{ id: string; title: string } | null>(null);
 
   const load = useCallback(async (p: number) => {
     setLoading(true);
@@ -48,10 +50,15 @@ export default function AdminPostsPage() {
   useEffect(() => { load(page); }, [page, load]);
 
   async function handleDelete(id: string, title: string) {
-    if (!confirm(`Hapus artikel "${title}"?`)) return;
-    setDeleting(id);
+    setModal({ id, title });
+  }
+
+  async function confirmDelete() {
+    if (!modal) return;
+    setDeleting(modal.id);
+    setModal(null);
     try {
-      await adminDeleteArticle(id);
+      await adminDeleteArticle(modal.id);
       await load(page);
     } catch (err: unknown) {
       alert(err instanceof Error ? err.message : "Gagal menghapus");
@@ -207,6 +214,15 @@ export default function AdminPostsPage() {
           </div>
         )}
       </main>
+
+      <ConfirmModal
+        open={modal !== null}
+        title="Hapus Artikel"
+        message={modal ? `Artikel "${modal.title}" akan dihapus permanen. Tindakan ini tidak bisa dibatalkan.` : ""}
+        confirmLabel="Hapus"
+        onConfirm={confirmDelete}
+        onCancel={() => setModal(null)}
+      />
     </div>
   );
 }
