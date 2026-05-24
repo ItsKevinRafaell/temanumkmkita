@@ -63,8 +63,8 @@ export default function Navbar() {
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
         scrolled
-          ? "bg-canvas/85 backdrop-blur-md border-b border-brand-dark/8 shadow-sm"
-          : "bg-white/98 border-b border-brand-dark/6 md:bg-transparent md:border-transparent md:shadow-none"
+          ? "bg-canvas/90 backdrop-blur-md border-b border-brand-dark/8 shadow-sm"
+          : "bg-canvas/60 backdrop-blur-sm md:bg-transparent md:backdrop-blur-none md:border-transparent md:shadow-none"
       )}
     >
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -207,95 +207,102 @@ export default function Navbar() {
           </button>
         </div>
 
-        {/* Mobile menu */}
+      </nav>
+
+      {/* Mobile menu — outside nav so bg covers full viewport width */}
+      <AnimatePresence>
         {mobileOpen && (
           <motion.div
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
-            className="md:hidden py-4 border-t border-brand-dark/8 space-y-1 bg-white"
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.2 }}
+            className="md:hidden bg-canvas border-t border-brand-dark/8"
           >
-            {navLinks.slice(0, 1).map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={cn(
-                  "block px-3 py-2.5 rounded-lg text-sm font-medium transition-colors",
-                  pathname === link.href
-                    ? "bg-accent/10 text-brand-dark"
-                    : "text-brand-dark/60 hover:text-brand-dark hover:bg-brand-dark/5"
-                )}
-                onClick={() => setMobileOpen(false)}
-              >
-                {link.label}
-              </Link>
-            ))}
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 space-y-1">
+              {navLinks.slice(0, 1).map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={cn(
+                    "block px-3 py-2.5 rounded-lg text-sm font-medium transition-colors",
+                    pathname === link.href
+                      ? "bg-accent/10 text-brand-dark"
+                      : "text-brand-dark/60 hover:text-brand-dark hover:bg-brand-dark/5"
+                  )}
+                  onClick={() => setMobileOpen(false)}
+                >
+                  {link.label}
+                </Link>
+              ))}
 
-            {/* Mobile Layanan dropdown */}
-            <div>
-              <button
-                onClick={() => setLayananMobileOpen(!layananMobileOpen)}
-                className={cn(
-                  "w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium transition-colors",
-                  pathname.startsWith("/layanan")
-                    ? "bg-accent/10 text-brand-dark"
-                    : "text-brand-dark/60 hover:text-brand-dark hover:bg-brand-dark/5"
+              {/* Mobile Layanan dropdown */}
+              <div>
+                <button
+                  onClick={() => setLayananMobileOpen(!layananMobileOpen)}
+                  className={cn(
+                    "w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium transition-colors",
+                    pathname.startsWith("/layanan")
+                      ? "bg-accent/10 text-brand-dark"
+                      : "text-brand-dark/60 hover:text-brand-dark hover:bg-brand-dark/5"
+                  )}
+                >
+                  Layanan
+                  <ChevronDown
+                    size={14}
+                    className={cn("transition-transform duration-200", layananMobileOpen && "rotate-180")}
+                  />
+                </button>
+                {layananMobileOpen && (
+                  <div className="pl-4 mt-1 space-y-0.5">
+                    {layananLinks.map((item) => {
+                      const Icon = item.icon;
+                      return (
+                        <Link
+                          key={item.href}
+                          href={item.href}
+                          className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-brand-dark/60 hover:text-brand-dark hover:bg-brand-dark/5 transition-colors"
+                          onClick={() => { setMobileOpen(false); setLayananMobileOpen(false); }}
+                        >
+                          <Icon size={14} className="text-brand-dark/30" />
+                          {item.label}
+                        </Link>
+                      );
+                    })}
+                  </div>
                 )}
-              >
-                Layanan
-                <ChevronDown
-                  size={14}
-                  className={cn("transition-transform duration-200", layananMobileOpen && "rotate-180")}
-                />
-              </button>
-              {layananMobileOpen && (
-                <div className="pl-4 mt-1 space-y-0.5">
-                  {layananLinks.map((item) => {
-                    const Icon = item.icon;
-                    return (
-                      <Link
-                        key={item.href}
-                        href={item.href}
-                        className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-brand-dark/60 hover:text-brand-dark hover:bg-brand-dark/5 transition-colors"
-                        onClick={() => { setMobileOpen(false); setLayananMobileOpen(false); }}
-                      >
-                        <Icon size={14} className="text-brand-dark/30" />
-                        {item.label}
-                      </Link>
-                    );
-                  })}
-                </div>
-              )}
-            </div>
+              </div>
 
-            {navLinks.slice(1).map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={cn(
-                  "block px-3 py-2.5 rounded-lg text-sm font-medium transition-colors",
-                  pathname === link.href
-                    ? "bg-accent/10 text-brand-dark"
-                    : "text-brand-dark/60 hover:text-brand-dark hover:bg-brand-dark/5"
-                )}
-                onClick={() => setMobileOpen(false)}
-              >
-                {link.label}
-              </Link>
-            ))}
+              {navLinks.slice(1).map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={cn(
+                    "block px-3 py-2.5 rounded-lg text-sm font-medium transition-colors",
+                    pathname === link.href
+                      ? "bg-accent/10 text-brand-dark"
+                      : "text-brand-dark/60 hover:text-brand-dark hover:bg-brand-dark/5"
+                  )}
+                  onClick={() => setMobileOpen(false)}
+                >
+                  {link.label}
+                </Link>
+              ))}
 
-            <div className="pt-2">
-              <a
-                href="https://wa.me/6289501925395?text=Halo%2C+saya+ingin+konsultasi+gratis"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block text-center bg-accent text-white font-bold text-sm px-4 py-3 rounded-full"
-              >
-                Konsultasi Gratis
-              </a>
+              <div className="pt-2">
+                <a
+                  href="https://wa.me/6289501925395?text=Halo%2C+saya+ingin+konsultasi+gratis"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block text-center bg-accent text-white font-bold text-sm px-4 py-3 rounded-full"
+                >
+                  Konsultasi Gratis
+                </a>
+              </div>
             </div>
           </motion.div>
         )}
-      </nav>
+      </AnimatePresence>
     </motion.header>
   );
 }

@@ -5,6 +5,12 @@ sys.path.insert(0, os.path.dirname(__file__))
 import asyncio
 import io
 
+ALLOWED_ORIGINS = [
+    "https://temanumkmkita.com",
+    "https://www.temanumkmkita.com",
+    "http://localhost:3000",
+]
+
 def application(environ, start_response):
     from main import app
 
@@ -28,22 +34,38 @@ def application(environ, start_response):
             scope['headers'].append((key.lower().replace('_', '-').encode(), environ[key].encode()))
 
     body = environ.get('wsgi.input', io.BytesIO()).read()
-    result = {'status': '500 Error', 'headers': [], 'body': []}
+    result = {'status': '500 Internal Server Error', 'headers': [], 'body': []}
 
     async def run():
         async def receive():
             return {'type': 'http.request', 'body': body, 'more_body': False}
+
         async def send(message):
             if message['type'] == 'http.response.start':
-                phrases = {200:'OK',201:'Created',204:'No Content',400:'Bad Request',
-                           401:'Unauthorized',403:'Forbidden',404:'Not Found',
-                           405:'Method Not Allowed',422:'Unprocessable Entity',500:'Internal Server Error'}
+                phrases = {200: 'OK', 201: 'Created', 204: 'No Content', 400: 'Bad Request',
+                           401: 'Unauthorized', 403: 'Forbidden', 404: 'Not Found',
+                           405: 'Method Not Allowed', 422: 'Unprocessable Entity', 500: 'Internal Server Error'}
                 code = message['status']
-                result['status'] = f"{code} {phrases.get(code,'Unknown')}"
+                result['status'] = f"{code} {phrases.get(code, 'Unknown')}"
                 result['headers'] = [(k.decode(), v.decode()) for k, v in message.get('headers', [])]
             elif message['type'] == 'http.response.body':
                 result['body'].append(message.get('body', b''))
-        await app(scope, receive, send)
+
+        try:
+            await app(scope, receive, send)
+        except Exception:
+            import traceback
+            traceback.print_exc()
+            origin = dict(scope['headers']).get(b'origin', b'').decode()
+            cors_headers = []
+            if origin in ALLOWED_ORIGINS:
+                cors_headers = [
+                    ('Access-Control-Allow-Origin', origin),
+                    ('Access-Control-Allow-Credentials', 'true'),
+                ]
+            result['status'] = '500 Internal Server Error'
+            result['headers'] = cors_headers + [('Content-Type', 'application/json')]
+            result['body'] = [b'{"detail":"Internal server error"}']
 
     loop = asyncio.new_event_loop()
     try:
