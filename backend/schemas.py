@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Optional
+from typing import Optional, List
 
 
 class ArticleCategoryBase(BaseModel):
@@ -22,6 +22,8 @@ class ArticleBase(BaseModel):
     category: Optional[str] = None
     tags: Optional[str] = "[]"
     status: Optional[str] = "draft"
+    featured: Optional[bool] = False
+    read_time: Optional[int] = 5
     published_at: Optional[str] = None
 
 
@@ -38,6 +40,8 @@ class ArticleUpdate(BaseModel):
     category: Optional[str] = None
     tags: Optional[str] = None
     status: Optional[str] = None
+    featured: Optional[bool] = None
+    read_time: Optional[int] = None
     published_at: Optional[str] = None
 
 
@@ -45,5 +49,31 @@ class ArticleOut(ArticleBase):
     id: str
     created_at: str
     updated_at: Optional[str] = None
+
+    model_config = {"from_attributes": True}
+
+
+class PaginatedArticles(BaseModel):
+    items: List[ArticleOut]
+    total: int
+    page: int
+    per_page: int
+    pages: int
+
+
+class LoginRequest(BaseModel):
+    username: str
+    password: str
+
+
+class TokenOut(BaseModel):
+    access_token: str
+    token_type: str = "bearer"
+
+
+class UserOut(BaseModel):
+    id: str
+    username: str
+    created_at: str
 
     model_config = {"from_attributes": True}

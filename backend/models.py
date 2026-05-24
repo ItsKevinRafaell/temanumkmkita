@@ -1,5 +1,14 @@
-from sqlalchemy import Column, String, Text
+from sqlalchemy import Column, String, Text, Integer, Boolean
 from database import Base
+
+
+class User(Base):
+    __tablename__ = "users"
+
+    id = Column(String(36), primary_key=True)
+    username = Column(String(100), unique=True, nullable=False)
+    password_hash = Column(String(255), nullable=False)
+    created_at = Column(String(255), nullable=False)
 
 
 class ArticleCategory(Base):
@@ -22,6 +31,8 @@ class Article(Base):
     category = Column(String(255), nullable=True)
     tags = Column(Text, default="[]")
     status = Column(String(50), default="draft")
+    featured = Column(Boolean, default=False)
+    read_time = Column(Integer, default=5)
     published_at = Column(String(255), nullable=True)
     created_at = Column(String(255), nullable=False)
     updated_at = Column(String(255), nullable=True)

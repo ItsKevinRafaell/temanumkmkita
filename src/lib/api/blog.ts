@@ -1,0 +1,52 @@
+const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "https://api.temanumkmkita.com";
+
+export interface Article {
+  id: string;
+  title: string;
+  slug: string;
+  excerpt: string | null;
+  content: string;
+  cover_image: string | null;
+  category: string | null;
+  tags: string;
+  status: string;
+  featured: boolean;
+  read_time: number;
+  published_at: string | null;
+  created_at: string;
+  updated_at: string | null;
+}
+
+export interface PaginatedArticles {
+  items: Article[];
+  total: number;
+  page: number;
+  per_page: number;
+  pages: number;
+}
+
+export async function fetchArticles(params: {
+  category?: string;
+  page?: number;
+  per_page?: number;
+}): Promise<PaginatedArticles> {
+  const url = new URL(`${API_BASE}/api/articles`);
+  if (params.category && params.category !== "Semua") url.searchParams.set("category", params.category);
+  if (params.page) url.searchParams.set("page", String(params.page));
+  if (params.per_page) url.searchParams.set("per_page", String(params.per_page));
+
+  const res = await fetch(url.toString(), { next: { revalidate: 60 } });
+  if (!res.ok) throw new Error("Failed to fetch articles");
+  return res.json();
+}
+
+export async function fetchArticleBySlug(slug: string): Promise<Article> {
+  const res = await fetch(`${API_BASE}/api/articles/${slug}`, { next: { revalidate: 60 } });
+  if (!res.ok) throw new Error("Article not found");
+  return res.json();
+}
+
+export async function fetchAllSlugs(): Promise<string[]> {
+  const data = await fetchArticles({ per_page: 100 });
+  return data.items.map((a) => a.slug);
+}
