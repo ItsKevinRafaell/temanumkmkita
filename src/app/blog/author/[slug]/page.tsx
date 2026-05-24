@@ -1,11 +1,10 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import Link from "next/link";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import BlogCard from "@/components/blog/BlogCard";
 import { type BlogPost, type ContentBlock } from "@/lib/data/blog";
-import { fetchArticles, type Article } from "@/lib/api/blog";
+import { type Article } from "@/lib/api/blog";
 import { UserCircle, ExternalLink } from "lucide-react";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "https://api.temanumkmkita.com";
