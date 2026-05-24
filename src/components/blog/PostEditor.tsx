@@ -1246,7 +1246,7 @@ export default function PostEditor({ initial = {} }: PostEditorProps) {
         </div>
 
         {/* ── Sidebar ─────────────────────────────────────────────────── */}
-        <div className="w-64 flex-shrink-0 space-y-4 sticky top-20">
+        <div className="w-64 flex-shrink-0 space-y-4 sticky top-20 max-h-[calc(100vh-6rem)] overflow-y-auto pb-4 pr-0.5">
 
           {/* Featured image */}
           <div className="bg-white border border-[#242423]/8 rounded-2xl p-4">
@@ -1331,22 +1331,19 @@ export default function PostEditor({ initial = {} }: PostEditorProps) {
               const failing = seoResult.rules.filter((r) => r.status !== "pass");
               const passCount = seoResult.rules.length - failing.length;
               return (
-                <div className="space-y-1.5">
+                <div className="space-y-1">
                   {failing.map((rule) => {
                     const dot = rule.status === "improve" ? "bg-amber-400" : "bg-red-400";
                     return (
-                      <div key={rule.id}>
-                        <div className="flex items-center gap-2">
-                          <span className={`w-2 h-2 rounded-full flex-shrink-0 ${dot}`} />
-                          <span className="text-xs text-[#242423]/60 flex-1 leading-snug">{rule.label}</span>
-                          <span className="text-[10px] text-[#242423]/30 font-mono flex-shrink-0">{rule.score}/{rule.maxScore}</span>
-                        </div>
-                        <p className="text-[10px] text-[#242423]/40 pl-4 leading-snug mt-0.5">{rule.description}</p>
+                      <div key={rule.id} className="flex items-center gap-2" title={rule.description}>
+                        <span className={`w-2 h-2 rounded-full flex-shrink-0 ${dot}`} />
+                        <span className="text-xs text-[#242423]/60 flex-1 leading-snug truncate">{rule.label}</span>
+                        <span className="text-[10px] text-[#242423]/30 font-mono flex-shrink-0">{rule.score}/{rule.maxScore}</span>
                       </div>
                     );
                   })}
                   {passCount > 0 && (
-                    <div className="flex items-center gap-2 pt-0.5">
+                    <div className="flex items-center gap-2">
                       <span className="w-2 h-2 rounded-full flex-shrink-0 bg-green-500" />
                       <span className="text-[10px] text-[#242423]/35">{passCount} lainnya ok</span>
                     </div>
