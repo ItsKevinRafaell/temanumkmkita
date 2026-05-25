@@ -24,15 +24,6 @@ const testimonials = [
     result: "3× lebih cepat • Zero downtime",
   },
   {
-    name: "Warung Makan Bu Sulasmi",
-    role: "Google Maps Optimization",
-    avatar: "S",
-    color: "#34d399",
-    text: "Sekarang kalau orang cari warung makan di daerah sini, nama warung saya yang pertama muncul. Pelanggan baru terus datang dari Google Maps tiap harinya.",
-    short: "Pelanggan baru dari Google Maps tiap hari!",
-    result: "+40% pelanggan baru per bulan",
-  },
-  {
     name: "Batik Nusantara Online",
     role: "Social Media Management",
     avatar: "B",

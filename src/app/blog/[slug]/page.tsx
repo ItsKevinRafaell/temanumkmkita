@@ -105,8 +105,11 @@ export default async function BlogDetailPage({
   let article: Article;
   try {
     article = await fetchArticleBySlug(slug);
-  } catch {
-    notFound();
+  } catch (err) {
+    if (err instanceof Error && err.message === "Article not found") {
+      notFound();
+    }
+    throw err;
   }
 
   const post = articleToPost(article);

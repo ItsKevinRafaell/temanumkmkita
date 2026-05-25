@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Calendar, Clock, ArrowRight } from "lucide-react";
@@ -33,6 +36,7 @@ interface BlogCardProps {
 }
 
 export default function BlogCard({ post }: BlogCardProps) {
+  const [imgError, setImgError] = useState(false);
   const colorClass = categoryColors[post.category] ?? "bg-brand-dark/5 text-brand-dark/60 border-brand-dark/10";
   const bgClass = categoryBg[post.category] ?? "bg-brand-dark/5";
 
@@ -43,13 +47,14 @@ export default function BlogCard({ post }: BlogCardProps) {
     >
       {/* Thumbnail */}
       <div className={`h-44 ${bgClass} border-b border-brand-dark/6 flex items-center justify-center relative overflow-hidden`}>
-        {post.cover_image ? (
+        {post.cover_image && !imgError ? (
           <Image
             src={post.cover_image}
             alt={post.title}
             fill
             className="object-cover"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            onError={() => setImgError(true)}
           />
         ) : (
           <div className="text-4xl font-black text-brand-dark/10 select-none uppercase tracking-widest">

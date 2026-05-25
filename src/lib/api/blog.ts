@@ -55,7 +55,8 @@ export async function fetchArticles(params: {
 
 export async function fetchArticleBySlug(slug: string): Promise<Article> {
   const res = await fetch(`${API_BASE}/api/articles/${slug}`, { cache: "no-store" });
-  if (!res.ok) throw new Error("Article not found");
+  if (res.status === 404) throw new Error("Article not found");
+  if (!res.ok) throw new Error(`API error ${res.status}`);
   return res.json();
 }
 

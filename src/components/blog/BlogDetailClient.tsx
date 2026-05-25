@@ -33,6 +33,7 @@ export default function BlogDetailClient({ post, related, headings }: Props) {
               alt={post.title}
               className="w-full h-full object-cover"
               loading="lazy"
+              onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
             />
           </div>
         ) : (
