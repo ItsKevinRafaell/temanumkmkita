@@ -5,13 +5,12 @@ const layananLinks = [
   { label: "Web Development", href: "/layanan/web-development" },
   { label: "SEO & Google Maps", href: "/layanan/seo-google-maps" },
   { label: "Kelola Sosial Media", href: "/layanan/kelola-sosial-media" },
-  { label: "Maintenance Website", href: "/layanan/maintenance-website" },
+  { label: "Maintenance Website", href: "/layanan/maintenance" },
   { label: "Desain Logo", href: "/layanan/desain-logo" },
 ];
 
 const companyLinks = [
   { label: "Tentang Kami", href: "/tentang-kami" },
-  { label: "Portofolio", href: "/portofolio" },
   { label: "Artikel", href: "/blog" },
   { label: "Kontak", href: "/kontak" },
 ];
