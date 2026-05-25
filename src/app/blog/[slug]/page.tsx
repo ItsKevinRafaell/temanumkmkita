@@ -7,8 +7,10 @@ import BlobDecoration from "@/components/ui/BlobDecoration";
 import BlogDetailClient from "@/components/blog/BlogDetailClient";
 import BlogCard from "@/components/blog/BlogCard";
 import { extractHeadings, hasBlockType, type BlogPost, type ContentBlock } from "@/lib/data/blog";
-import { fetchArticleBySlug, fetchArticles, fetchAllSlugs, type Article } from "@/lib/api/blog";
+import { fetchArticleBySlug, fetchArticles, type Article } from "@/lib/api/blog";
 import { Calendar, Clock, ChevronRight, Tag, UserCircle, ExternalLink } from "lucide-react";
+
+export const dynamic = "force-dynamic";
 
 const SITE_URL = "https://temanumkmkita.com";
 
@@ -44,15 +46,6 @@ function articleToPost(a: Article): BlogPost {
     content,
     author: a.author ?? undefined,
   };
-}
-
-export async function generateStaticParams() {
-  try {
-    const slugs = await fetchAllSlugs();
-    return slugs.map((slug) => ({ slug }));
-  } catch {
-    return [];
-  }
 }
 
 export async function generateMetadata({

@@ -7,6 +7,8 @@ import { type BlogPost, type ContentBlock } from "@/lib/data/blog";
 import { type Article } from "@/lib/api/blog";
 import { UserCircle, ExternalLink } from "lucide-react";
 
+export const dynamic = "force-dynamic";
+
 const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "https://api.temanumkmkita.com";
 const SITE_URL = "https://temanumkmkita.com";
 
