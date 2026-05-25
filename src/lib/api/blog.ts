@@ -74,6 +74,18 @@ export async function fetchAllSlugs(): Promise<string[]> {
   return data.items.map((a) => a.slug);
 }
 
+export interface PublicCategory {
+  id: string;
+  name: string;
+  slug: string;
+}
+
+export async function fetchPublicCategories(): Promise<PublicCategory[]> {
+  const res = await fetch(`${API_BASE}/api/categories`, { cache: "no-store" });
+  if (!res.ok) throw new Error("Failed to fetch categories");
+  return res.json();
+}
+
 /* ── Site Settings (public) ───────────────────────────────────────────────── */
 
 export interface SiteSettings {

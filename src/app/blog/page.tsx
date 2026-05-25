@@ -8,8 +8,8 @@ import Footer from "@/components/layout/Footer";
 import BlogCard from "@/components/blog/BlogCard";
 import BlobDecoration from "@/components/ui/BlobDecoration";
 import { ChevronRight, ChevronLeft, BookOpen, Loader2 } from "lucide-react";
-import { categories, type Category, type BlogPost, type ContentBlock } from "@/lib/data/blog";
-import { fetchArticles, type Article } from "@/lib/api/blog";
+import { type BlogPost, type ContentBlock } from "@/lib/data/blog";
+import { fetchArticles, fetchPublicCategories, type Article } from "@/lib/api/blog";
 
 const PER_PAGE = 6;
 
@@ -40,7 +40,8 @@ function buildPages(total: number, current: number): (number | "...")[] {
 }
 
 export default function BlogPage() {
-  const [activeCategory, setActiveCategory] = useState<Category>("Semua");
+  const [activeCategory, setActiveCategory] = useState<string>("Semua");
+  const [categories, setCategories] = useState<string[]>(["Semua"]);
   const [page, setPage] = useState(1);
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [totalPages, setTotalPages] = useState(1);
@@ -70,7 +71,13 @@ export default function BlogPage() {
     return () => { cancelled = true; };
   }, [activeCategory, page]);
 
-  function handleCategory(cat: Category) {
+  useEffect(() => {
+    fetchPublicCategories()
+      .then((cats) => setCategories(["Semua", ...cats.map((c) => c.name)]))
+      .catch(() => {});
+  }, []);
+
+  function handleCategory(cat: string) {
     setActiveCategory(cat);
     setPage(1);
   }
