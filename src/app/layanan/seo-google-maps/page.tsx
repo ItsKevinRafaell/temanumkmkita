@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import {
@@ -12,6 +12,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import BlobDecoration from "@/components/ui/BlobDecoration";
 import PortfolioSlider from "@/components/sections/PortfolioSlider";
+import { fetchPortfolios } from "@/lib/api/portfolio";
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 
@@ -96,12 +97,6 @@ const notes = [
   },
 ];
 
-const portfolioItems = [
-  { name: "Kenaikan Traffic Organik", category: "SEO Organik", plan: "SEO Pro", accent: "bg-green-50 border-green-100" },
-  { name: "Optimasi Google Maps", category: "Google Business Profile", plan: "SEO Starter", accent: "bg-blue-50 border-blue-100" },
-  { name: "Ranking Keyword Lokal", category: "Local SEO", plan: "SEO Expert", accent: "bg-orange-50 border-orange-100" },
-];
-
 // ─── Sub-components ───────────────────────────────────────────────────────────
 
 function CellValue({ val }: { val: boolean | string }) {
@@ -119,6 +114,12 @@ function CellValue({ val }: { val: boolean | string }) {
 
 export default function SEOPage() {
   const [tableOpen, setTableOpen] = useState(false);
+  const [portfolioItems, setPortfolioItems] = useState<Array<{ name: string; category: string; image_url: string }>>([]);
+  useEffect(() => {
+    fetchPortfolios("seo-google-maps").then((data) =>
+      setPortfolioItems(data.map((item) => ({ name: item.title, category: item.category ?? "", image_url: item.image_url })))
+    );
+  }, []);
   const { ref: pricingRef, inView: pricingInView } = useInView({ triggerOnce: true, threshold: 0.1 });
   const { ref: ctaRef, inView: ctaInView } = useInView({ triggerOnce: true, threshold: 0.2 });
 
@@ -180,7 +181,8 @@ export default function SEOPage() {
           </div>
         </section>
 
-        {/* ── Portfolio Slider ──────────────────────────────────────── */}
+        {/* ── Portfolio ──────────────────────────────────────────────── */}
+        {portfolioItems.length > 0 && (
         <section className="py-20">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10">
@@ -193,13 +195,11 @@ export default function SEOPage() {
                   <span className="text-accent">kami capai</span>
                 </h2>
               </div>
-              <span className="inline-flex items-center gap-2 bg-brand-dark/5 border border-brand-dark/8 px-4 py-2 rounded-full text-xs text-brand-dark/50 font-semibold flex-shrink-0">
-                Before & after segera hadir
-              </span>
             </div>
             <PortfolioSlider items={portfolioItems} />
           </div>
         </section>
+        )}
 
         {/* ── Pricing Cards ─────────────────────────────────────────── */}
         <section ref={pricingRef} className="py-10 pb-20">

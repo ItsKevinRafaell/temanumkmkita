@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import {
@@ -12,6 +12,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import BlobDecoration from "@/components/ui/BlobDecoration";
 import PortfolioSlider from "@/components/sections/PortfolioSlider";
+import { fetchPortfolios } from "@/lib/api/portfolio";
 
 const WA_BASE = "https://wa.me/6289501925395?text=";
 
@@ -93,12 +94,6 @@ const notes = [
   },
 ];
 
-const portfolioItems = [
-  { name: "Feed Instagram Teratur", category: "Instagram", plan: "Sosmed Pro", accent: "bg-pink-50 border-pink-100" },
-  { name: "Konten Produk Viral", category: "Content Marketing", plan: "Sosmed Expert", accent: "bg-purple-50 border-purple-100" },
-  { name: "Branding Konsisten", category: "Brand Awareness", plan: "Sosmed Starter", accent: "bg-yellow-50 border-yellow-100" },
-];
-
 function CellValue({ val }: { val: boolean | string }) {
   if (typeof val === "string") {
     return <span className="font-semibold text-brand-dark text-sm">{val}</span>;
@@ -112,6 +107,12 @@ function CellValue({ val }: { val: boolean | string }) {
 
 export default function SosmedPage() {
   const [tableOpen, setTableOpen] = useState(false);
+  const [portfolioItems, setPortfolioItems] = useState<Array<{ name: string; category: string; image_url: string }>>([]);
+  useEffect(() => {
+    fetchPortfolios("kelola-sosial-media").then((data) =>
+      setPortfolioItems(data.map((item) => ({ name: item.title, category: item.category ?? "", image_url: item.image_url })))
+    );
+  }, []);
   const { ref: pricingRef, inView: pricingInView } = useInView({ triggerOnce: true, threshold: 0.1 });
   const { ref: ctaRef, inView: ctaInView } = useInView({ triggerOnce: true, threshold: 0.2 });
 
@@ -168,7 +169,8 @@ export default function SosmedPage() {
           </div>
         </section>
 
-        {/* ── Portfolio Slider ──────────────────────────────────────── */}
+        {/* ── Portfolio ──────────────────────────────────────────────── */}
+        {portfolioItems.length > 0 && (
         <section className="py-20">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10">
@@ -179,13 +181,11 @@ export default function SosmedPage() {
                   <span className="text-accent">kami kelola</span>
                 </h2>
               </div>
-              <span className="inline-flex items-center gap-2 bg-brand-dark/5 border border-brand-dark/8 px-4 py-2 rounded-full text-xs text-brand-dark/50 font-semibold flex-shrink-0">
-                Contoh konten segera hadir
-              </span>
             </div>
             <PortfolioSlider items={portfolioItems} />
           </div>
         </section>
+        )}
 
         {/* ── Pricing Cards ─────────────────────────────────────────── */}
         <section ref={pricingRef} className="py-10 pb-20">

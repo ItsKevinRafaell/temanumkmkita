@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useEffect, useCallback } from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { Globe, ChevronLeft, ChevronRight } from "lucide-react";
@@ -8,8 +9,9 @@ import { Globe, ChevronLeft, ChevronRight } from "lucide-react";
 export interface PortfolioItem {
   name: string;
   category: string;
-  plan: string;
-  accent: string;
+  image_url?: string;
+  accent?: string;
+  plan?: string;
 }
 
 const AUTO_MS = 3500;
@@ -70,13 +72,25 @@ export default function PortfolioSlider({ items }: { items: PortfolioItem[] }) {
             className="flex-shrink-0 w-72 bg-white/80 backdrop-blur-sm border border-brand-dark/8 card-shadow rounded-2xl overflow-hidden"
             style={{ scrollSnapAlign: "start" }}
           >
-            <div className={`h-44 ${item.accent} border-b border-brand-dark/6 flex items-center justify-center relative`}>
-              <Globe size={36} className="text-brand-dark/15" />
-              <div className="absolute top-3 right-3">
-                <span className="bg-white/80 backdrop-blur-sm text-brand-dark/50 text-xs font-semibold px-2.5 py-1 rounded-full border border-brand-dark/8">
-                  {item.plan}
-                </span>
-              </div>
+            <div className={`h-44 ${item.accent ?? "bg-orange-50 border-orange-100"} border-b border-brand-dark/6 flex items-center justify-center relative overflow-hidden`}>
+              {item.image_url ? (
+                <Image
+                  src={item.image_url}
+                  alt={item.name}
+                  fill
+                  className="object-cover"
+                  sizes="288px"
+                />
+              ) : (
+                <Globe size={36} className="text-brand-dark/15" />
+              )}
+              {item.plan && (
+                <div className="absolute top-3 right-3">
+                  <span className="bg-white/80 backdrop-blur-sm text-brand-dark/50 text-xs font-semibold px-2.5 py-1 rounded-full border border-brand-dark/8">
+                    {item.plan}
+                  </span>
+                </div>
+              )}
             </div>
             <div className="p-5">
               <div className="text-xs text-accent font-bold uppercase tracking-wider mb-1">{item.category}</div>

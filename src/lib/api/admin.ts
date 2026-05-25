@@ -232,3 +232,38 @@ export async function generateIntegrationToken(): Promise<IntegrationTokenInfo &
 export async function revokeIntegrationToken(): Promise<void> {
   await req("/api/integration/token", { method: "DELETE" });
 }
+
+/* ── Portfolio ────────────────────────────────────────────────────────────── */
+
+export interface AdminPortfolioItem {
+  id: string;
+  service_slug: string;
+  title: string;
+  category: string | null;
+  image_url: string;
+  sort_order: number;
+  created_at: string;
+}
+
+export type PortfolioPayload = Omit<AdminPortfolioItem, "id" | "created_at">;
+
+export async function adminListPortfolios(service_slug?: string): Promise<AdminPortfolioItem[]> {
+  const p = service_slug ? `?service_slug=${encodeURIComponent(service_slug)}` : "";
+  return req<AdminPortfolioItem[]>(`/api/portfolios${p}`);
+}
+
+export async function adminGetPortfolio(id: string): Promise<AdminPortfolioItem> {
+  return req<AdminPortfolioItem>(`/api/portfolios/${id}`);
+}
+
+export async function adminCreatePortfolio(data: PortfolioPayload): Promise<AdminPortfolioItem> {
+  return req<AdminPortfolioItem>("/api/portfolios", { method: "POST", body: JSON.stringify(data) });
+}
+
+export async function adminUpdatePortfolio(id: string, data: Partial<PortfolioPayload>): Promise<AdminPortfolioItem> {
+  return req<AdminPortfolioItem>(`/api/portfolios/${id}`, { method: "PUT", body: JSON.stringify(data) });
+}
+
+export async function adminDeletePortfolio(id: string): Promise<void> {
+  await req(`/api/portfolios/${id}`, { method: "DELETE" });
+}

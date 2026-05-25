@@ -8,7 +8,7 @@ import ConfirmModal from "@/components/ui/ConfirmModal";
 import {
   PenLine, Trash2, Plus, LogOut, FileText,
   CheckCircle, Clock, ChevronLeft, ChevronRight,
-  ArrowUpDown, Star, Map as MapIcon, Settings, Users,
+  ArrowUpDown, Star, Map as MapIcon, Settings, Users, Images,
 } from "lucide-react";
 
 function formatDate(iso: string | null) {
@@ -115,6 +115,12 @@ export default function AdminPostsPage() {
               className="flex items-center gap-2 border border-[#242423]/12 text-[#242423]/55 font-semibold px-3 py-2.5 rounded-xl text-sm hover:border-[#242423]/25 hover:text-[#242423] transition"
             >
               <Users size={13} /> Penulis
+            </Link>
+            <Link
+              href="/admin/portfolio"
+              className="flex items-center gap-2 border border-[#242423]/12 text-[#242423]/55 font-semibold px-3 py-2.5 rounded-xl text-sm hover:border-[#242423]/25 hover:text-[#242423] transition"
+            >
+              <Images size={13} /> Portfolio
             </Link>
             <Link
               href="/admin/content-map"
