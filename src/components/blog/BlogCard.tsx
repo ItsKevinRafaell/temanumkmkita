@@ -33,9 +33,10 @@ function formatDate(iso: string) {
 interface BlogCardProps {
   post: BlogPost;
   index?: number;
+  priority?: boolean;
 }
 
-export default function BlogCard({ post }: BlogCardProps) {
+export default function BlogCard({ post, priority }: BlogCardProps) {
   const [imgError, setImgError] = useState(false);
   const colorClass = categoryColors[post.category] ?? "bg-brand-dark/5 text-brand-dark/60 border-brand-dark/10";
   const bgClass = categoryBg[post.category] ?? "bg-brand-dark/5";
@@ -52,6 +53,7 @@ export default function BlogCard({ post }: BlogCardProps) {
             src={post.cover_image}
             alt={post.title}
             fill
+            priority={priority}
             className="object-cover"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             onError={() => setImgError(true)}

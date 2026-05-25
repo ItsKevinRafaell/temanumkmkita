@@ -1,6 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export function middleware(req: NextRequest) {
+  const host = req.headers.get("host") ?? "";
+
+  // Enforce www
+  if (host === "temanumkmkita.com") {
+    const url = req.nextUrl.clone();
+    url.host = "www.temanumkmkita.com";
+    return NextResponse.redirect(url, 308);
+  }
+
   const { pathname } = req.nextUrl;
 
   if (pathname.startsWith("/admin") && pathname !== "/admin/login") {
@@ -16,5 +25,5 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/admin/:path*"],
+  matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
 };

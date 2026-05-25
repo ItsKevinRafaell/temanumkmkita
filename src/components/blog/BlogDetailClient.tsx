@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import TableOfContents from "@/components/blog/TableOfContents";
 import BlogCard from "@/components/blog/BlogCard";
 import type { BlogPost } from "@/lib/data/blog";
@@ -27,12 +28,14 @@ export default function BlogDetailClient({ post, related, headings }: Props) {
 
         {/* Featured image */}
         {post.cover_image ? (
-          <div className="w-full h-64 sm:h-80 rounded-2xl mb-8 overflow-hidden border border-brand-dark/8">
-            <img
+          <div className="w-full h-64 sm:h-80 rounded-2xl mb-8 overflow-hidden border border-brand-dark/8 relative">
+            <Image
               src={post.cover_image}
               alt={post.title}
-              className="w-full h-full object-cover"
-              loading="lazy"
+              fill
+              priority
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 800px"
               onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
             />
           </div>

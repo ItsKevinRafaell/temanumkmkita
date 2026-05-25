@@ -182,7 +182,7 @@ export default function BlogPage() {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: i * 0.05, duration: 0.35 }}
                     >
-                      <BlogCard post={post} index={i} />
+                      <BlogCard post={post} index={i} priority={i < 3} />
                     </motion.div>
                   ))}
                 </motion.div>

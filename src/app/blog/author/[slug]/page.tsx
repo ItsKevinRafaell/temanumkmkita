@@ -10,7 +10,7 @@ import { UserCircle, ExternalLink } from "lucide-react";
 export const dynamic = "force-dynamic";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "https://api.temanumkmkita.com";
-const SITE_URL = "https://temanumkmkita.com";
+import { SITE_URL } from "@/lib/seo/site";
 
 interface AuthorData {
   id: string;

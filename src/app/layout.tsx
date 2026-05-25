@@ -2,21 +2,22 @@ import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import AnimatedDots from "@/components/ui/AnimatedDots";
 import { fetchSiteSettings } from "@/lib/api/blog";
+import { SITE_URL } from "@/lib/seo/site";
 import "./globals.css";
 
 const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
   variable: "--font-jakarta",
-  weight: ["400", "500", "600", "700", "800"],
+  weight: ["400", "600", "700", "800"],
 });
 
-const SITE_URL = "https://temanumkmkita.com";
-
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: "Teman UMKM Kita — Solusi Digital untuk UMKM Indonesia",
   description:
     "Kami bantu UMKM kamu hadir dan berkembang secara online. Web development, SEO Google Maps, kelola sosial media, dan lebih banyak lagi.",
   keywords: ["UMKM", "web development", "SEO", "sosial media", "digital marketing", "Indonesia"],
+  alternates: { canonical: SITE_URL },
   openGraph: {
     title: "Teman UMKM Kita",
     description: "Solusi Digital untuk UMKM Indonesia",
@@ -24,6 +25,11 @@ export const metadata: Metadata = {
     siteName: "Teman UMKM Kita",
     locale: "id_ID",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Teman UMKM Kita",
+    description: "Solusi Digital untuk UMKM Indonesia",
   },
 };
 
@@ -87,6 +93,9 @@ export default async function RootLayout({
 
   return (
     <html lang="id">
+      <head>
+        <link rel="preconnect" href="https://api.temanumkmkita.com" />
+      </head>
       <body className={`${jakarta.variable} font-sans antialiased bg-canvas text-brand-dark noise`}>
         <script
           type="application/ld+json"

@@ -8,11 +8,10 @@ import BlogDetailClient from "@/components/blog/BlogDetailClient";
 import BlogCard from "@/components/blog/BlogCard";
 import { extractHeadings, hasBlockType, type BlogPost, type ContentBlock } from "@/lib/data/blog";
 import { fetchArticleBySlug, fetchArticles, type Article } from "@/lib/api/blog";
+import { SITE_URL, extractFirstParagraph } from "@/lib/seo/site";
 import { Calendar, Clock, ChevronRight, Tag, UserCircle, ExternalLink } from "lucide-react";
 
 export const dynamic = "force-dynamic";
-
-const SITE_URL = "https://temanumkmkita.com";
 
 const categoryColors: Record<string, string> = {
   Website: "bg-blue-50 text-blue-700 border-blue-100",
@@ -58,7 +57,7 @@ export async function generateMetadata({
     const article = await fetchArticleBySlug(slug);
     const url = `${SITE_URL}/blog/${article.slug}`;
     const metaTitle = article.seo_title ?? `${article.title} | Blog Teman UMKM Kita`;
-    const metaDesc = article.meta_description ?? article.excerpt ?? undefined;
+    const metaDesc = article.meta_description ?? article.excerpt ?? extractFirstParagraph(article.content);
     const ogImages = article.cover_image
       ? [{ url: article.cover_image, width: 1200, height: 630 }]
       : undefined;

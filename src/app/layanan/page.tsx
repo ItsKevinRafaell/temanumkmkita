@@ -2,15 +2,14 @@ import Link from "next/link";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { servicesData } from "@/lib/data/services";
+import { SITE_URL } from "@/lib/seo/site";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Layanan — Teman UMKM Kita",
   description: "Web development, SEO, kelola sosial media, maintenance website, dan desain logo untuk UMKM Indonesia.",
-  alternates: { canonical: "https://temanumkmkita.com/layanan" },
+  alternates: { canonical: `${SITE_URL}/layanan` },
 };
-
-const SITE_URL = "https://temanumkmkita.com";
 
 const allServices = [
   ...servicesData,
