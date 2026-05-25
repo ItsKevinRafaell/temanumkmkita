@@ -1181,7 +1181,7 @@ interface PostEditorProps {
     read_time?: number;
     published_at?: string;
     content?: string;
-    cover_image?: string;
+    cover_image?: string | null;
     seo_title?: string;
     meta_description?: string;
     focus_keyword?: string;
@@ -1267,7 +1267,7 @@ export default function PostEditor({ initial = {} }: PostEditorProps) {
         featured,
         read_time: readTime,
         published_at: finalStatus === "published" ? new Date(publishedAt).toISOString() : undefined,
-        cover_image: coverImage || undefined,
+        cover_image: coverImage || null,
         seo_title: seoTitle || undefined,
         meta_description: metaDescription || undefined,
         focus_keyword: focusKeyword || undefined,

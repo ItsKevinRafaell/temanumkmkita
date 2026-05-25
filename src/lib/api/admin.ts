@@ -48,7 +48,7 @@ export interface ArticlePayload {
   slug: string;
   excerpt?: string;
   content: string;
-  cover_image?: string;
+  cover_image?: string | null;
   category?: string;
   status: "draft" | "published";
   featured?: boolean;
