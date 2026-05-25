@@ -48,13 +48,13 @@ export async function fetchArticles(params: {
   if (params.page) url.searchParams.set("page", String(params.page));
   if (params.per_page) url.searchParams.set("per_page", String(params.per_page));
 
-  const res = await fetch(url.toString(), { next: { revalidate: 60 } });
+  const res = await fetch(url.toString(), { cache: "no-store" });
   if (!res.ok) throw new Error("Failed to fetch articles");
   return res.json();
 }
 
 export async function fetchArticleBySlug(slug: string): Promise<Article> {
-  const res = await fetch(`${API_BASE}/api/articles/${slug}`, { next: { revalidate: 60 } });
+  const res = await fetch(`${API_BASE}/api/articles/${slug}`, { cache: "no-store" });
   if (!res.ok) throw new Error("Article not found");
   return res.json();
 }
