@@ -2,13 +2,11 @@
 
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { useEffect, useRef, useState } from "react";
 import { Users, BarChart2, Target, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import CTASection from "@/components/sections/CTASection";
-import TestimonialSection from "@/components/sections/TestimonialSection";
 import BlobDecoration from "@/components/ui/BlobDecoration";
 
 // ─── Hero ─────────────────────────────────────────────────────────────────────
@@ -258,62 +256,6 @@ function MisiNilaiSection() {
   );
 }
 
-// ─── Stats ────────────────────────────────────────────────────────────────────
-
-function useCountUp(target: number, active: boolean, duration = 1600) {
-  const [count, setCount] = useState(0);
-  const raf = useRef<number>(0);
-
-  useEffect(() => {
-    if (!active) return;
-    const start = performance.now();
-    function tick(now: number) {
-      const elapsed = now - start;
-      const progress = Math.min(elapsed / duration, 1);
-      const ease = 1 - Math.pow(1 - progress, 3);
-      setCount(Math.round(ease * target));
-      if (progress < 1) raf.current = requestAnimationFrame(tick);
-    }
-    raf.current = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf.current);
-  }, [active, target, duration]);
-
-  return count;
-}
-
-const statsData = [
-  { target: 2, suffix: "", label: "Klien Aktif" },
-  { target: 6, suffix: "", label: "Proyek Dikerjakan" },
-  { target: 5, suffix: "", label: "Layanan Tersedia" },
-  { target: 2025, suffix: "", label: "Tahun Mulai" },
-];
-
-function StatCell({ target, suffix, label, active }: { target: number; suffix: string; label: string; active: boolean }) {
-  const count = useCountUp(target, active, target === 2025 ? 1200 : 1600);
-  return (
-    <div className="bg-accent px-8 py-12 text-center">
-      <div className="text-5xl sm:text-6xl font-black text-white tabular-nums">
-        {count}{suffix}
-      </div>
-      <div className="text-xs uppercase tracking-widest text-white/80 font-semibold mt-2">{label}</div>
-    </div>
-  );
-}
-
-function StatsSection() {
-  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.3 });
-
-  return (
-    <section ref={ref} className="overflow-hidden">
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-brand-dark/10">
-        {statsData.map((s) => (
-          <StatCell key={s.label} {...s} active={inView} />
-        ))}
-      </div>
-    </section>
-  );
-}
-
 // ─── Tim ──────────────────────────────────────────────────────────────────────
 
 function TimSection() {
@@ -407,8 +349,6 @@ export default function TentangKamiPage() {
         <CeritaSection />
         <ManifestoStrip />
         <MisiNilaiSection />
-        <StatsSection />
-        <TestimonialSection />
         <TimSection />
         <CTASection />
       </main>
