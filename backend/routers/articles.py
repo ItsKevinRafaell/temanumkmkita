@@ -128,7 +128,7 @@ def update_article(article_id: str, data: ArticleUpdate, db: Session = Depends(g
     article = db.query(Article).filter(Article.id == article_id).first()
     if not article:
         raise HTTPException(status_code=404, detail="Article not found")
-    for field, value in data.model_dump(exclude_none=True).items():
+    for field, value in data.model_dump(exclude_unset=True).items():
         setattr(article, field, value)
     article.updated_at = now_iso()
     db.commit()
