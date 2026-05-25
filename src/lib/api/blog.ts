@@ -54,19 +54,26 @@ export async function fetchArticles(params: {
 }
 
 export async function fetchArticleBySlug(slug: string): Promise<Article> {
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 8000);
-  try {
-    const res = await fetch(`${API_BASE}/api/articles/${slug}`, {
-      cache: "no-store",
-      signal: controller.signal,
-    });
-    if (res.status === 404) throw new Error("Article not found");
-    if (!res.ok) throw new Error(`API error ${res.status}`);
-    return res.json();
-  } finally {
-    clearTimeout(timeout);
+  let lastErr: Error | null = null;
+  for (let attempt = 0; attempt < 2; attempt++) {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 8000);
+    try {
+      const res = await fetch(`${API_BASE}/api/articles/${slug}`, {
+        cache: "no-store",
+        signal: controller.signal,
+      });
+      if (res.status === 404) throw new Error("Article not found");
+      if (!res.ok) throw new Error(`API error ${res.status}`);
+      return res.json();
+    } catch (err) {
+      lastErr = err instanceof Error ? err : new Error(String(err));
+      if (lastErr.message === "Article not found") throw lastErr;
+    } finally {
+      clearTimeout(timeout);
+    }
   }
+  throw lastErr!;
 }
 
 export async function fetchAllSlugs(): Promise<string[]> {
