@@ -146,7 +146,7 @@ export default async function BlogDetailPage({
       "@type": "BreadcrumbList",
       itemListElement: [
         { "@type": "ListItem", position: 1, name: "Beranda", item: SITE_URL },
-        { "@type": "ListItem", position: 2, name: "Blog", item: `${SITE_URL}/blog` },
+        { "@type": "ListItem", position: 2, name: "Artikel", item: `${SITE_URL}/blog` },
         { "@type": "ListItem", position: 3, name: post.title, item: `${SITE_URL}/blog/${post.slug}` },
       ],
     },
@@ -207,7 +207,7 @@ export default async function BlogDetailPage({
             <div className="flex items-center gap-1.5 text-xs text-brand-dark/40 font-medium mb-6 flex-wrap">
               <Link href="/" className="hover:text-brand-dark transition-colors">Beranda</Link>
               <ChevronRight size={12} />
-              <Link href="/blog" className="hover:text-brand-dark transition-colors">Blog</Link>
+              <Link href="/blog" className="hover:text-brand-dark transition-colors">Artikel</Link>
               <ChevronRight size={12} />
               <span className="text-brand-dark/70 line-clamp-1">{post.title}</span>
             </div>

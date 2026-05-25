@@ -334,7 +334,7 @@ function ShareButtons({ title, slug }: { title: string; slug: string }) {
       <a
         href={`https://twitter.com/intent/tweet?text=${enc(title)}&url=${enc(url)}`}
         target="_blank" rel="noopener noreferrer"
-        className="px-3 py-1.5 rounded-lg bg-brand-dark/5 text-xs font-semibold text-brand-dark/60 hover:bg-brand-dark/10 transition-colors"
+        className="px-3 py-1.5 rounded-lg bg-neutral-900/8 text-xs font-semibold text-neutral-900 hover:bg-neutral-900/15 transition-colors"
       >
         X / Twitter
       </a>
@@ -347,7 +347,7 @@ function ShareButtons({ title, slug }: { title: string; slug: string }) {
       </a>
       <button
         onClick={copyLink}
-        className="px-3 py-1.5 rounded-lg bg-brand-dark/5 text-xs font-semibold text-brand-dark/60 hover:bg-brand-dark/10 transition-colors"
+        className="px-3 py-1.5 rounded-lg bg-blue-50 text-xs font-semibold text-blue-600 hover:bg-blue-100 transition-colors"
       >
         {copied ? "Tersalin!" : "Salin Link"}
       </button>

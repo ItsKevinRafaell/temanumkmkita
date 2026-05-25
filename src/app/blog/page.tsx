@@ -24,6 +24,7 @@ function articleToPost(a: Article): BlogPost {
     date: a.published_at ?? a.created_at,
     readTime: a.read_time,
     featured: a.featured,
+    cover_image: a.cover_image ?? undefined,
     content,
   };
 }
@@ -45,10 +46,12 @@ export default function BlogPage() {
   const [totalPages, setTotalPages] = useState(1);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
     setLoading(true);
+    setError(false);
     fetchArticles({ category: activeCategory === "Semua" ? undefined : activeCategory, page, per_page: PER_PAGE })
       .then((data) => {
         if (!cancelled) {
@@ -59,7 +62,10 @@ export default function BlogPage() {
         }
       })
       .catch(() => {
-        if (!cancelled) setLoading(false);
+        if (!cancelled) {
+          setLoading(false);
+          setError(true);
+        }
       });
     return () => { cancelled = true; };
   }, [activeCategory, page]);
@@ -86,7 +92,7 @@ export default function BlogPage() {
             <div className="flex items-center gap-1.5 text-xs text-brand-dark/40 font-medium mb-6">
               <Link href="/" className="hover:text-brand-dark transition-colors">Beranda</Link>
               <ChevronRight size={12} />
-              <span className="text-brand-dark/70">Blog</span>
+              <span className="text-brand-dark/70">Artikel</span>
             </div>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -96,7 +102,7 @@ export default function BlogPage() {
             >
               <div className="inline-flex items-center gap-2 bg-accent/10 border border-accent/30 px-4 py-1.5 rounded-full mb-5">
                 <BookOpen size={13} className="text-accent" />
-                <span className="text-sm font-semibold text-brand-dark">Blog</span>
+                <span className="text-sm font-semibold text-brand-dark">Artikel</span>
               </div>
               <h1 className="text-4xl sm:text-5xl font-extrabold text-brand-dark leading-tight mb-4">
                 Tips & Panduan Digital<br />
@@ -137,6 +143,16 @@ export default function BlogPage() {
               <div className="py-24 flex items-center justify-center gap-3 text-brand-dark/40">
                 <Loader2 size={20} className="animate-spin" />
                 <span className="text-sm font-medium">Memuat artikel...</span>
+              </div>
+            ) : error ? (
+              <div className="py-24 text-center">
+                <p className="text-brand-dark/55 font-medium mb-4">Gagal memuat artikel. Coba lagi.</p>
+                <button
+                  onClick={() => { setError(false); setLoading(true); fetchArticles({ category: activeCategory === "Semua" ? undefined : activeCategory, page, per_page: PER_PAGE }).then((data) => { setPosts(data.items.map(articleToPost)); setTotalPages(data.pages); setTotal(data.total); setLoading(false); }).catch(() => { setLoading(false); setError(true); }); }}
+                  className="bg-accent text-white font-bold px-6 py-2.5 rounded-full text-sm hover:bg-accent/90 transition-colors"
+                >
+                  Coba Lagi
+                </button>
               </div>
             ) : posts.length === 0 ? (
               <div className="py-24 text-center text-brand-dark/40 font-medium">

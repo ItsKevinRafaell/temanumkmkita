@@ -284,15 +284,15 @@ export default function SEOPage() {
               </button>
             </div>
 
-            <div className={`${tableOpen ? "block" : "hidden"} md:block`}>
-              <div className="bg-white/80 backdrop-blur-sm border border-brand-dark/8 card-shadow rounded-2xl overflow-hidden">
+            <div className={`${tableOpen ? "block" : "hidden"} md:block overflow-x-auto`}>
+              <div className="bg-white/80 backdrop-blur-sm border border-brand-dark/8 card-shadow rounded-2xl overflow-hidden min-w-[600px]">
                 <div className="grid grid-cols-4 border-b border-brand-dark/8 bg-brand-dark/2">
                   <div className="px-5 py-4 text-xs font-bold uppercase tracking-wider text-brand-dark/40">Fitur</div>
                   {["Starter", "Pro", "Expert"].map((h) => (
                     <div
                       key={h}
                       className={`px-3 py-4 text-center text-sm font-extrabold ${
-                        h === "Pro" ? "text-accent border-l-2 border-l-accent/30" : "text-brand-dark border-l border-brand-dark/6"
+                        h === "Pro" ? "text-accent border-l-2 border-l-accent/30 bg-accent/8" : "text-brand-dark border-l border-brand-dark/6"
                       }`}
                     >
                       {h}
@@ -315,7 +315,7 @@ export default function SEOPage() {
                       <div
                         key={col}
                         className={`px-3 py-3.5 text-center flex items-center justify-center ${
-                          col === "pro" ? "border-l-2 border-l-accent/30 bg-accent/3" : "border-l border-brand-dark/5"
+                          col === "pro" ? "border-l-2 border-l-accent/30 bg-accent/8" : "border-l border-brand-dark/5"
                         }`}
                       >
                         <CellValue val={row[col] as boolean | string} />

@@ -11,7 +11,7 @@ import Logo from "@/components/ui/Logo";
 const navLinks = [
   { label: "Beranda", href: "/" },
   { label: "Tentang Kami", href: "/tentang-kami" },
-  { label: "Blog", href: "/blog" },
+  { label: "Artikel", href: "/blog" },
   { label: "Kontak", href: "/kontak" },
 ];
 

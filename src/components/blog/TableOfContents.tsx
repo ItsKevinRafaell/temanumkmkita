@@ -50,7 +50,7 @@ export default function TableOfContents({ headings }: TableOfContentsProps) {
         onClick={() => setMobileOpen((v) => !v)}
         className="w-full flex items-center justify-between px-5 py-4 lg:pointer-events-none"
       >
-        <span className="text-xs font-bold uppercase tracking-wider text-brand-dark/50">
+        <span className="text-xs font-bold uppercase tracking-wider text-brand-dark/70">
           Daftar Isi
         </span>
         <ChevronDown
@@ -73,7 +73,7 @@ export default function TableOfContents({ headings }: TableOfContentsProps) {
                   } ${
                     isActive
                       ? "bg-accent/10 text-accent font-semibold"
-                      : "text-brand-dark/55 hover:text-brand-dark hover:bg-brand-dark/4"
+                      : "text-brand-dark/75 hover:text-brand-dark hover:bg-brand-dark/4"
                   }`}
                 >
                   {isActive && (

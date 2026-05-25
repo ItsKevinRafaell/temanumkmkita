@@ -23,6 +23,7 @@ const plans = [
     id: "starter",
     name: "Web Starter",
     price: "1.000.000",
+    renewal: "350.000",
     tagline: "Bisnis yang baru mau hadir online dengan satu halaman fokus penjualan.",
     features: [
       "1 Halaman (Sales Focus)",
@@ -39,6 +40,7 @@ const plans = [
     id: "pro",
     name: "Web Pro",
     price: "2.250.000",
+    renewal: "500.000",
     badge: "Paling Populer",
     tagline: "Bisnis yang butuh website lengkap dengan beberapa halaman dan visibilitas Google.",
     features: [
@@ -56,6 +58,7 @@ const plans = [
     id: "expert",
     name: "Web Expert",
     price: "3.750.000",
+    renewal: "750.000",
     tagline: "Bisnis yang butuh website skala penuh dengan blog dan performa optimal.",
     features: [
       "Semua fitur Pro",
@@ -172,17 +175,22 @@ export default function WebDevelopmentPage() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3, duration: 0.4 }}
-                className="flex items-center bg-white/80 backdrop-blur-sm border border-brand-dark/8 rounded-xl p-1 self-start sm:self-auto flex-shrink-0"
+                className="flex flex-col items-start sm:items-end gap-1.5 self-start sm:self-auto flex-shrink-0"
               >
-                <span className="px-4 py-2 rounded-lg bg-accent text-white text-sm font-bold">
-                  Tahunan
+                <div className="flex items-center bg-white/80 backdrop-blur-sm border border-brand-dark/8 rounded-xl p-1">
+                  <span className="px-4 py-2 rounded-lg bg-accent text-white text-sm font-bold">
+                    Tahunan
+                  </span>
+                  <Link
+                    href="/layanan/web-development-bulanan"
+                    className="px-4 py-2 rounded-lg text-brand-dark/50 text-sm font-semibold hover:text-brand-dark transition-colors"
+                  >
+                    Bulanan
+                  </Link>
+                </div>
+                <span className="bg-accent/10 text-accent text-xs font-bold px-3 py-1 rounded-full">
+                  Hemat hingga 20%
                 </span>
-                <Link
-                  href="/layanan/web-development-bulanan"
-                  className="px-4 py-2 rounded-lg text-brand-dark/50 text-sm font-semibold hover:text-brand-dark transition-colors"
-                >
-                  Bulanan
-                </Link>
               </motion.div>
             </div>
           </div>
@@ -239,11 +247,14 @@ export default function WebDevelopmentPage() {
                     <div className="text-xs font-bold uppercase tracking-widest text-brand-dark/40 mb-1">
                       {plan.name}
                     </div>
-                    <div className="flex items-baseline gap-1 mb-3">
+                    <div className="flex items-baseline gap-1 mb-1">
                       <span className="text-xs text-brand-dark/50 font-medium">Rp</span>
                       <span className="text-3xl font-black text-brand-dark">{plan.price}</span>
                       <span className="text-brand-dark/40 text-sm">/tahun</span>
                     </div>
+                    <p className="text-xs text-brand-dark/40 font-medium mb-3">
+                      Perpanjangan: Rp {plan.renewal}/tahun
+                    </p>
                     <p className="text-brand-dark/60 text-sm leading-relaxed border-t border-brand-dark/6 pt-3">
                       {plan.tagline}
                     </p>
@@ -296,8 +307,8 @@ export default function WebDevelopmentPage() {
               </button>
             </div>
 
-            <div className={`${tableOpen ? "block" : "hidden"} md:block`}>
-              <div className="bg-white/80 backdrop-blur-sm border border-brand-dark/8 card-shadow rounded-2xl overflow-hidden">
+            <div className={`${tableOpen ? "block" : "hidden"} md:block overflow-x-auto`}>
+              <div className="bg-white/80 backdrop-blur-sm border border-brand-dark/8 card-shadow rounded-2xl overflow-hidden min-w-[600px]">
                 {/* Header row */}
                 <div className="grid grid-cols-4 border-b border-brand-dark/8 bg-brand-dark/2">
                   <div className="px-5 py-4 text-xs font-bold uppercase tracking-wider text-brand-dark/40">Fitur</div>
@@ -305,7 +316,7 @@ export default function WebDevelopmentPage() {
                     <div
                       key={h}
                       className={`px-3 py-4 text-center text-sm font-extrabold ${
-                        h === "Pro" ? "text-accent border-l-2 border-l-accent/30" : "text-brand-dark border-l border-brand-dark/6"
+                        h === "Pro" ? "text-accent border-l-2 border-l-accent/30 bg-accent/8" : "text-brand-dark border-l border-brand-dark/6"
                       }`}
                     >
                       {h}
@@ -329,7 +340,7 @@ export default function WebDevelopmentPage() {
                       <div
                         key={col}
                         className={`px-3 py-3.5 text-center flex items-center justify-center ${
-                          col === "pro" ? "border-l-2 border-l-accent/30 bg-accent/3" : "border-l border-brand-dark/5"
+                          col === "pro" ? "border-l-2 border-l-accent/30 bg-accent/8" : "border-l border-brand-dark/5"
                         }`}
                       >
                         <CellValue val={row[col] as boolean | string} />
@@ -388,7 +399,7 @@ export default function WebDevelopmentPage() {
                 <MessageCircle size={20} />
                 Konsultasi via WhatsApp
               </a>
-              <p className="text-brand-dark/35 text-sm mt-4">Gratis, tanpa komitmen</p>
+              <p className="text-brand-dark/60 text-sm mt-4">Gratis, tanpa komitmen</p>
             </motion.div>
           </div>
         </section>

@@ -12,7 +12,7 @@ const layananLinks = [
 const companyLinks = [
   { label: "Tentang Kami", href: "/tentang-kami" },
   { label: "Portofolio", href: "/portofolio" },
-  { label: "Blog", href: "/blog" },
+  { label: "Artikel", href: "/blog" },
   { label: "Kontak", href: "/kontak" },
 ];
 
@@ -27,7 +27,7 @@ export default function Footer() {
           {/* Brand */}
           <div className="md:col-span-1">
             <Logo variant="light" className="mb-4" />
-            <p className="text-white/80 text-sm leading-relaxed mt-3">
+            <p className="text-white/90 text-sm leading-relaxed mt-3">
               Membantu UMKM Indonesia hadir dan berkembang secara digital.
             </p>
             <a
@@ -45,13 +45,13 @@ export default function Footer() {
 
           {/* Layanan */}
           <div>
-            <h3 className="font-bold text-white/80 mb-4 text-xs uppercase tracking-widest">Layanan</h3>
+            <h3 className="font-bold text-white/90 mb-4 text-xs uppercase tracking-widest">Layanan</h3>
             <ul className="space-y-2.5">
               {layananLinks.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-white/80 text-sm hover:text-white transition-colors"
+                    className="text-white/90 text-sm hover:text-white transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -62,13 +62,13 @@ export default function Footer() {
 
           {/* Perusahaan */}
           <div>
-            <h3 className="font-bold text-white/80 mb-4 text-xs uppercase tracking-widest">Perusahaan</h3>
+            <h3 className="font-bold text-white/90 mb-4 text-xs uppercase tracking-widest">Perusahaan</h3>
             <ul className="space-y-2.5">
               {companyLinks.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-white/80 text-sm hover:text-white transition-colors"
+                    className="text-white/90 text-sm hover:text-white transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -79,8 +79,8 @@ export default function Footer() {
 
           {/* Kontak */}
           <div>
-            <h3 className="font-bold text-white/80 mb-4 text-xs uppercase tracking-widest">Hubungi Kami</h3>
-            <p className="text-white/80 text-sm mb-4 leading-relaxed">
+            <h3 className="font-bold text-white/90 mb-4 text-xs uppercase tracking-widest">Hubungi Kami</h3>
+            <p className="text-white/90 text-sm mb-4 leading-relaxed">
               Konsultasi gratis, tanpa syarat. Kami siap bantu UMKM kamu.
             </p>
             <a
@@ -94,11 +94,11 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 pt-8 border-t border-white/20 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-white/65 text-sm">
+        <div className="mt-12 pt-8 border-t border-white/30 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="text-white/80 text-sm">
             © {new Date().getFullYear()} Teman UMKM Kita. Semua hak dilindungi.
           </p>
-          <p className="text-white/65 text-sm">temanumkmkita.com</p>
+          <p className="text-white/80 text-sm">temanumkmkita.com</p>
         </div>
       </div>
     </footer>

@@ -8,6 +8,7 @@ import Link from "next/link";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import CTASection from "@/components/sections/CTASection";
+import TestimonialSection from "@/components/sections/TestimonialSection";
 import BlobDecoration from "@/components/ui/BlobDecoration";
 
 // ─── Hero ─────────────────────────────────────────────────────────────────────
@@ -291,10 +292,10 @@ function StatCell({ target, suffix, label, active }: { target: number; suffix: s
   const count = useCountUp(target, active, target === 2025 ? 1200 : 1600);
   return (
     <div className="bg-accent px-8 py-12 text-center">
-      <div className="text-5xl sm:text-6xl font-black text-brand-dark tabular-nums">
+      <div className="text-5xl sm:text-6xl font-black text-white tabular-nums">
         {count}{suffix}
       </div>
-      <div className="text-xs uppercase tracking-widest text-brand-dark/60 font-semibold mt-2">{label}</div>
+      <div className="text-xs uppercase tracking-widest text-white/80 font-semibold mt-2">{label}</div>
     </div>
   );
 }
@@ -467,6 +468,7 @@ export default function TentangKamiPage() {
         <MisiNilaiSection />
         <StatsSection />
         <KlienSection />
+        <TestimonialSection />
         <TimSection />
         <CTASection />
       </main>

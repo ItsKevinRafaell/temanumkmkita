@@ -23,6 +23,7 @@ const plans = [
     id: "starter",
     name: "Web Starter",
     price: "120.000",
+    renewal: "50.000",
     tagline: "Untuk bisnis yang baru pertama kali mau hadir online.",
     features: [
       "1 Halaman (Sales Focus)",
@@ -38,6 +39,7 @@ const plans = [
     id: "pro",
     name: "Web Pro",
     price: "250.000",
+    renewal: "75.000",
     badge: "Paling Populer",
     tagline: "Untuk bisnis yang butuh website lengkap dan mulai terlihat di Google.",
     features: [
@@ -53,6 +55,7 @@ const plans = [
     id: "expert",
     name: "Web Expert",
     price: "375.000",
+    renewal: "100.000",
     tagline: "Untuk bisnis yang serius membangun kehadiran digital skala penuh.",
     features: [
       "Max. 10 Halaman",
@@ -170,8 +173,8 @@ export default function WebDevelopmentBulananPage() {
                     Bulanan
                   </span>
                 </div>
-                <p className="text-xs text-brand-dark/40 font-medium">
-                  Hemat hingga 20% dengan paket tahunan.
+                <p className="bg-accent/10 text-accent text-xs font-bold px-3 py-1 rounded-full">
+                  Hemat hingga 20% dengan paket tahunan
                 </p>
               </motion.div>
             </div>
@@ -227,11 +230,14 @@ export default function WebDevelopmentBulananPage() {
                     <div className="text-xs font-bold uppercase tracking-widest text-brand-dark/40 mb-1">
                       {plan.name}
                     </div>
-                    <div className="flex items-baseline gap-1 mb-3">
+                    <div className="flex items-baseline gap-1 mb-1">
                       <span className="text-xs text-brand-dark/50 font-medium">Rp</span>
                       <span className="text-3xl font-black text-brand-dark">{plan.price}</span>
                       <span className="text-brand-dark/40 text-sm">/bulan</span>
                     </div>
+                    <p className="text-xs text-brand-dark/40 font-medium mb-3">
+                      Perpanjangan: Rp {plan.renewal}/bulan
+                    </p>
                     <p className="text-brand-dark/60 text-sm leading-relaxed border-t border-brand-dark/6 pt-3">
                       {plan.tagline}
                     </p>
@@ -281,15 +287,15 @@ export default function WebDevelopmentBulananPage() {
               </button>
             </div>
 
-            <div className={`${tableOpen ? "block" : "hidden"} md:block`}>
-              <div className="bg-white/80 backdrop-blur-sm border border-brand-dark/8 card-shadow rounded-2xl overflow-hidden">
+            <div className={`${tableOpen ? "block" : "hidden"} md:block overflow-x-auto`}>
+              <div className="bg-white/80 backdrop-blur-sm border border-brand-dark/8 card-shadow rounded-2xl overflow-hidden min-w-[600px]">
                 <div className="grid grid-cols-4 border-b border-brand-dark/8 bg-brand-dark/2">
                   <div className="px-5 py-4 text-xs font-bold uppercase tracking-wider text-brand-dark/40">Fitur</div>
                   {["Starter", "Pro", "Expert"].map((h) => (
                     <div
                       key={h}
                       className={`px-3 py-4 text-center text-sm font-extrabold ${
-                        h === "Pro" ? "text-accent border-l-2 border-l-accent/30" : "text-brand-dark border-l border-brand-dark/6"
+                        h === "Pro" ? "text-accent border-l-2 border-l-accent/30 bg-accent/8" : "text-brand-dark border-l border-brand-dark/6"
                       }`}
                     >
                       {h}
@@ -312,7 +318,7 @@ export default function WebDevelopmentBulananPage() {
                       <div
                         key={col}
                         className={`px-3 py-3.5 text-center flex items-center justify-center ${
-                          col === "pro" ? "border-l-2 border-l-accent/30 bg-accent/3" : "border-l border-brand-dark/5"
+                          col === "pro" ? "border-l-2 border-l-accent/30 bg-accent/8" : "border-l border-brand-dark/5"
                         }`}
                       >
                         <CellValue val={row[col] as boolean | string} />
@@ -371,7 +377,7 @@ export default function WebDevelopmentBulananPage() {
                 <MessageCircle size={20} />
                 Konsultasi via WhatsApp
               </a>
-              <p className="text-brand-dark/35 text-sm mt-4">Gratis, tanpa komitmen</p>
+              <p className="text-brand-dark/60 text-sm mt-4">Gratis, tanpa komitmen</p>
             </motion.div>
           </div>
         </section>

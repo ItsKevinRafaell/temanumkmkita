@@ -57,7 +57,7 @@ export async function generateMetadata({
     const author = await fetchAuthorBySlug(slug);
     return {
       title: `${author.name} — Penulis di Teman UMKM Kita`,
-      description: author.bio ?? `Artikel oleh ${author.name}${author.role ? `, ${author.role}` : ""} di Blog Teman UMKM Kita.`,
+      description: author.bio ?? `Artikel oleh ${author.name}${author.role ? `, ${author.role}` : ""} di Teman UMKM Kita.`,
       alternates: { canonical: `${SITE_URL}/blog/author/${slug}` },
     };
   } catch {

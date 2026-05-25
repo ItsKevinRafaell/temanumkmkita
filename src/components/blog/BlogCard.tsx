@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Calendar, Clock, ArrowRight } from "lucide-react";
 import type { BlogPost } from "@/lib/data/blog";
 
@@ -40,11 +41,21 @@ export default function BlogCard({ post }: BlogCardProps) {
       href={`/blog/${post.slug}`}
       className="group flex flex-col bg-white/80 backdrop-blur-sm border border-brand-dark/8 card-shadow rounded-2xl overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-200"
     >
-      {/* Thumbnail placeholder */}
-      <div className={`h-44 ${bgClass} border-b border-brand-dark/6 flex items-center justify-center relative`}>
-        <div className="text-4xl font-black text-brand-dark/10 select-none uppercase tracking-widest">
-          {post.category.slice(0, 3)}
-        </div>
+      {/* Thumbnail */}
+      <div className={`h-44 ${bgClass} border-b border-brand-dark/6 flex items-center justify-center relative overflow-hidden`}>
+        {post.cover_image ? (
+          <Image
+            src={post.cover_image}
+            alt={post.title}
+            fill
+            className="object-cover"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          />
+        ) : (
+          <div className="text-4xl font-black text-brand-dark/10 select-none uppercase tracking-widest">
+            {post.category.slice(0, 3)}
+          </div>
+        )}
         {post.featured && (
           <div className="absolute top-3 left-3">
             <span className="bg-accent text-white text-xs font-bold px-2.5 py-1 rounded-full">
