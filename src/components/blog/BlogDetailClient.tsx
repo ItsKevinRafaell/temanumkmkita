@@ -87,7 +87,7 @@ export default function BlogDetailClient({ post, related, headings }: Props) {
             href={WA_BASE + encodeURIComponent(`Halo, saya baca artikel "${post.title}" dan ingin konsultasi layanan digital untuk bisnis saya.`)}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-center gap-2 bg-accent text-white font-bold py-2.5 rounded-xl text-sm hover:bg-accent/90 transition-colors duration-200"
+            className="flex items-center justify-center gap-2 bg-accent text-white no-underline font-bold py-2.5 rounded-xl text-sm hover:bg-accent/90 transition-colors duration-200"
           >
             <MessageCircle size={14} />
             Konsultasi Gratis
@@ -308,7 +308,7 @@ function InlineCTA({ postTitle }: { postTitle: string }) {
         href={`${WA_BASE}${encodeURIComponent(`Halo, saya baca artikel "${postTitle}" dan ingin konsultasi layanan digital.`)}`}
         target="_blank"
         rel="noopener noreferrer"
-        className="flex-shrink-0 inline-flex items-center gap-2 bg-accent !text-white font-bold px-5 py-3 rounded-xl text-sm hover:bg-accent/90 transition-colors duration-200"
+        className="flex-shrink-0 inline-flex items-center gap-2 bg-accent !text-white !no-underline font-bold px-5 py-3 rounded-xl text-sm hover:bg-accent/90 transition-colors duration-200"
       >
         <MessageCircle size={14} />
         Konsultasi Gratis
