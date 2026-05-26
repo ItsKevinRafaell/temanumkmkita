@@ -12,8 +12,8 @@ from models import ContactSubmission
 
 router = APIRouter(prefix="/api", tags=["contact"])
 
-CRM_API_URL = os.getenv("CRM_API_URL", "")
-CRM_API_KEY = os.getenv("CRM_API_KEY", "")
+CRM_API_URL = os.getenv("CRM_API_URL", "").strip()
+CRM_API_KEY = os.getenv("CRM_API_KEY", "").strip()
 
 
 VALID_SERVICES = {
