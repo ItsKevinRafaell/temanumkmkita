@@ -10,13 +10,12 @@ import BlobDecoration from "@/components/ui/BlobDecoration";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "https://api.temanumkmkita.com";
 
-const layananOptions = [
-  "Website",
-  "SEO & Google Maps",
-  "Social Media",
-  "Branding / Desain Logo",
-  "Maintenance Website",
-  "Belum tahu",
+const layananOptions: { value: string; label: string }[] = [
+  { value: "web_development", label: "Web Development" },
+  { value: "seo_google_maps", label: "SEO & Google Maps" },
+  { value: "kelola_sosial_media", label: "Kelola Sosial Media" },
+  { value: "maintenance_website", label: "Maintenance Website" },
+  { value: "desain_logo", label: "Desain Logo" },
 ];
 
 const contactItems = [
@@ -312,7 +311,7 @@ export default function KontakPage() {
                         >
                           <option value="" disabled>Pilih layanan</option>
                           {layananOptions.map((opt) => (
-                            <option key={opt} value={opt}>{opt}</option>
+                            <option key={opt.value} value={opt.value}>{opt.label}</option>
                           ))}
                         </select>
                       </div>

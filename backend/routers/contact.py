@@ -15,13 +15,13 @@ router = APIRouter(prefix="/api", tags=["contact"])
 CRM_API_URL = os.getenv("CRM_API_URL", "")
 CRM_API_KEY = os.getenv("CRM_API_KEY", "")
 
-SERVICE_MAP = {
-    "Website": "Web Development",
-    "SEO & Google Maps": "SEO & Google Maps",
-    "Social Media": "Kelola Sosial Media",
-    "Branding / Desain Logo": "Desain Logo & Identitas Visual",
-    "Maintenance Website": "Maintenance Website",
-    "Belum tahu": None,
+
+VALID_SERVICES = {
+    "web_development",
+    "seo_google_maps",
+    "kelola_sosial_media",
+    "maintenance_website",
+    "desain_logo",
 }
 
 
@@ -47,6 +47,15 @@ class ContactFormIn(BaseModel):
             raise ValueError("Nomor WhatsApp tidak valid")
         return v.strip()
 
+    @field_validator("service")
+    @classmethod
+    def service_valid(cls, v: Optional[str]) -> Optional[str]:
+        if v is None or v == "":
+            raise ValueError("Layanan wajib dipilih")
+        if v not in VALID_SERVICES:
+            raise ValueError(f"Layanan tidak valid: {v}")
+        return v
+
 
 def _now_iso() -> str:
     return datetime.now(timezone.utc).isoformat()
@@ -70,13 +79,12 @@ def submit_contact_form(body: ContactFormIn, db: Session = Depends(get_db)):
     sent_to_crm = False
     if CRM_API_URL and CRM_API_KEY:
         try:
-            product_interest = SERVICE_MAP.get(body.service or "", None)
             payload = {
                 "business_name": body.name,
                 "phone_number": body.phone,
                 "email": body.email,
                 "message": body.message,
-                "product_interest": product_interest,
+                "product_interest": body.service,
                 "source": "website_temanumkmkita",
             }
             resp = httpx.post(
