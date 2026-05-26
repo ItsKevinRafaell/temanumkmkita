@@ -1,12 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { MessageCircle, Mail, AtSign, Clock, MapPin, CheckCircle, Send, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import BlobDecoration from "@/components/ui/BlobDecoration";
+
+const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "https://api.temanumkmkita.com";
 
 const layananOptions = [
   "Website",
@@ -62,23 +64,35 @@ export default function KontakPage() {
     layanan: "",
     pesan: "",
   });
+  const [submitting, setSubmitting] = useState(false);
+  const [toast, setToast] = useState<{ message: string; type: "success" | "error" } | null>(null);
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    const lines = [
-      `Halo Teman UMKM Kita!`,
-      ``,
-      `Nama: ${form.nama}`,
-      `No. WA: ${form.wa}`,
-      form.email ? `Email: ${form.email}` : null,
-      form.layanan ? `Layanan: ${form.layanan}` : null,
-      ``,
-      `Pesan:`,
-      form.pesan || "—",
-    ]
-      .filter((l) => l !== null)
-      .join("\n");
-    window.open(`https://wa.me/6289501925395?text=${encodeURIComponent(lines)}`, "_blank");
+    if (!form.nama.trim() || !form.wa.trim()) return;
+
+    setSubmitting(true);
+    try {
+      const res = await fetch(`${API_BASE}/api/contact-form`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: form.nama,
+          phone: form.wa,
+          email: form.email || null,
+          service: form.layanan || null,
+          message: form.pesan || null,
+        }),
+      });
+      if (!res.ok) throw new Error("Gagal mengirim");
+      setToast({ message: "Pesan terkirim! Tim kami akan segera menghubungi Anda.", type: "success" });
+      setForm({ nama: "", wa: "", email: "", layanan: "", pesan: "" });
+    } catch {
+      setToast({ message: "Gagal mengirim pesan. Silakan coba lagi atau hubungi via WhatsApp.", type: "error" });
+    } finally {
+      setSubmitting(false);
+      setTimeout(() => setToast(null), 5000);
+    }
   }
 
   return (
@@ -320,10 +334,11 @@ export default function KontakPage() {
                     <div className="pt-1">
                       <button
                         type="submit"
-                        className="w-full bg-accent text-white font-bold py-4 rounded-xl text-base hover:bg-accent/90 transition-all duration-200 shadow-lg shadow-accent/20 flex items-center justify-center gap-2"
+                        disabled={submitting}
+                        className="w-full bg-accent text-white font-bold py-4 rounded-xl text-base hover:bg-accent/90 transition-all duration-200 shadow-lg shadow-accent/20 flex items-center justify-center gap-2 disabled:opacity-50"
                       >
                         <Send size={16} />
-                        Kirim Pesan
+                        {submitting ? "Mengirim..." : "Kirim Pesan"}
                       </button>
                       <p className="text-center text-brand-dark/35 text-xs mt-3">
                         Kami tidak akan spam. Data Anda aman.
@@ -355,6 +370,26 @@ export default function KontakPage() {
 
       </main>
       <Footer />
+
+      <AnimatePresence>
+        {toast && (
+          <motion.div
+            initial={{ opacity: 0, y: 24, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 24, scale: 0.95 }}
+            className={`fixed bottom-6 left-1/2 -translate-x-1/2 z-50 px-5 py-3 rounded-xl shadow-lg max-w-md ${
+              toast.type === "success"
+                ? "bg-green-50 border-2 border-green-400 text-green-800"
+                : "bg-red-50 border-2 border-red-400 text-red-800"
+            }`}
+          >
+            <p className="text-sm font-semibold flex items-center gap-2">
+              {toast.type === "success" ? <CheckCircle size={16} /> : null}
+              {toast.message}
+            </p>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }

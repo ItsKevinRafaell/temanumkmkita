@@ -1,0 +1,95 @@
+import os
+import uuid
+import httpx
+from datetime import datetime, timezone
+from typing import Optional
+from fastapi import APIRouter, Depends, HTTPException
+from pydantic import BaseModel, field_validator
+from sqlalchemy.orm import Session
+
+from database import get_db
+from models import ContactSubmission
+
+router = APIRouter(prefix="/api", tags=["contact"])
+
+CRM_API_URL = os.getenv("CRM_API_URL", "")
+CRM_API_KEY = os.getenv("CRM_API_KEY", "")
+
+SERVICE_MAP = {
+    "Website": "Web Development",
+    "SEO & Google Maps": "SEO & Google Maps",
+    "Social Media": "Kelola Sosial Media",
+    "Branding / Desain Logo": "Desain Logo & Identitas Visual",
+    "Maintenance Website": "Maintenance Website",
+    "Belum tahu": None,
+}
+
+
+class ContactFormIn(BaseModel):
+    name: str
+    phone: str
+    email: Optional[str] = None
+    service: Optional[str] = None
+    message: Optional[str] = None
+
+    @field_validator("name")
+    @classmethod
+    def name_not_empty(cls, v: str) -> str:
+        if not v.strip():
+            raise ValueError("Nama tidak boleh kosong")
+        return v.strip()
+
+    @field_validator("phone")
+    @classmethod
+    def phone_not_empty(cls, v: str) -> str:
+        digits = "".join(c for c in v if c.isdigit())
+        if len(digits) < 8:
+            raise ValueError("Nomor WhatsApp tidak valid")
+        return v.strip()
+
+
+def _now_iso() -> str:
+    return datetime.now(timezone.utc).isoformat()
+
+
+@router.post("/contact-form", status_code=201)
+def submit_contact_form(body: ContactFormIn, db: Session = Depends(get_db)):
+    submission = ContactSubmission(
+        id=str(uuid.uuid4()),
+        name=body.name,
+        phone=body.phone,
+        email=body.email,
+        service=body.service,
+        message=body.message,
+        created_at=_now_iso(),
+        sent_to_crm=False,
+    )
+    db.add(submission)
+    db.commit()
+
+    sent_to_crm = False
+    if CRM_API_URL and CRM_API_KEY:
+        try:
+            product_interest = SERVICE_MAP.get(body.service or "", None)
+            payload = {
+                "business_name": body.name,
+                "phone_number": body.phone,
+                "email": body.email,
+                "message": body.message,
+                "product_interest": product_interest,
+                "source": "website_temanumkmkita",
+            }
+            resp = httpx.post(
+                f"{CRM_API_URL.rstrip('/')}/api/leads/external",
+                json=payload,
+                headers={"X-API-Key": CRM_API_KEY},
+                timeout=10,
+            )
+            if resp.status_code in (200, 201):
+                sent_to_crm = True
+                submission.sent_to_crm = True
+                db.commit()
+        except Exception as e:
+            print(f"[CONTACT] CRM forward failed: {e}", flush=True)
+
+    return {"success": True, "sent_to_crm": sent_to_crm}
