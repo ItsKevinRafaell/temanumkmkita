@@ -3,11 +3,11 @@ import uuid
 import httpx
 from datetime import datetime, timezone
 from typing import Optional
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, BackgroundTasks, Depends
 from pydantic import BaseModel, field_validator
 from sqlalchemy.orm import Session
 
-from database import get_db
+from database import SessionLocal, get_db
 from models import ContactSubmission
 
 router = APIRouter(prefix="/api", tags=["contact"])
@@ -37,7 +37,7 @@ class ContactFormIn(BaseModel):
     def name_not_empty(cls, v: str) -> str:
         if not v.strip():
             raise ValueError("Nama tidak boleh kosong")
-        return v.strip()
+        return v.strip()[:255]
 
     @field_validator("phone")
     @classmethod
@@ -45,7 +45,7 @@ class ContactFormIn(BaseModel):
         digits = "".join(c for c in v if c.isdigit())
         if len(digits) < 8:
             raise ValueError("Nomor WhatsApp tidak valid")
-        return v.strip()
+        return v.strip()[:50]
 
     @field_validator("service")
     @classmethod
@@ -56,13 +56,47 @@ class ContactFormIn(BaseModel):
             raise ValueError(f"Layanan tidak valid: {v}")
         return v
 
+    @field_validator("message")
+    @classmethod
+    def cap_message(cls, v: Optional[str]) -> Optional[str]:
+        return (v or "").strip()[:1000] or None
+
 
 def _now_iso() -> str:
     return datetime.now(timezone.utc).isoformat()
 
 
+def _forward_to_crm(submission_id: str, payload: dict):
+    """Background task: POST to CRM, mark sent_to_crm if success."""
+    if not CRM_API_URL or not CRM_API_KEY:
+        return
+    db = SessionLocal()
+    try:
+        with httpx.Client(timeout=15) as client:
+            resp = client.post(
+                f"{CRM_API_URL.rstrip('/')}/api/leads/external",
+                json=payload,
+                headers={"X-API-Key": CRM_API_KEY},
+            )
+            if resp.status_code in (200, 201):
+                sub = db.query(ContactSubmission).filter(ContactSubmission.id == submission_id).first()
+                if sub:
+                    sub.sent_to_crm = True
+                    db.commit()
+            else:
+                print(f"[CONTACT] CRM responded {resp.status_code}: {resp.text[:200]}", flush=True)
+    except Exception as e:
+        print(f"[CONTACT] CRM forward failed: {e}", flush=True)
+    finally:
+        db.close()
+
+
 @router.post("/contact-form", status_code=201)
-def submit_contact_form(body: ContactFormIn, db: Session = Depends(get_db)):
+def submit_contact_form(
+    body: ContactFormIn,
+    background_tasks: BackgroundTasks,
+    db: Session = Depends(get_db),
+):
     submission = ContactSubmission(
         id=str(uuid.uuid4()),
         name=body.name,
@@ -76,28 +110,14 @@ def submit_contact_form(body: ContactFormIn, db: Session = Depends(get_db)):
     db.add(submission)
     db.commit()
 
-    sent_to_crm = False
-    if CRM_API_URL and CRM_API_KEY:
-        try:
-            payload = {
-                "business_name": body.name,
-                "phone_number": body.phone,
-                "email": body.email,
-                "message": body.message,
-                "product_interest": body.service,
-                "source": "website_temanumkmkita",
-            }
-            resp = httpx.post(
-                f"{CRM_API_URL.rstrip('/')}/api/leads/external",
-                json=payload,
-                headers={"X-API-Key": CRM_API_KEY},
-                timeout=10,
-            )
-            if resp.status_code in (200, 201):
-                sent_to_crm = True
-                submission.sent_to_crm = True
-                db.commit()
-        except Exception as e:
-            print(f"[CONTACT] CRM forward failed: {e}", flush=True)
+    payload = {
+        "business_name": body.name,
+        "phone_number": body.phone,
+        "email": body.email,
+        "message": body.message,
+        "product_interest": body.service,
+        "source": "website_temanumkmkita",
+    }
+    background_tasks.add_task(_forward_to_crm, submission.id, payload)
 
-    return {"success": True, "sent_to_crm": sent_to_crm}
+    return {"success": True, "submission_id": submission.id}
