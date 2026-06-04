@@ -1,0 +1,27 @@
+---
+description: Project rules for TemanUMKMkita — read first
+globs: **/*
+alwaysApply: true
+---
+
+# Teman UMKM Kita — Project Rules
+
+Baca juga: [CLAUDE.md](./CLAUDE.md)
+
+## Git
+- **HANYA branch `main`** — tidak ada development, staging, feature branches
+- Conventional Commits: `feat:`, `fix:`, `chore:`
+- Push ke `main` = auto-deploy Vercel
+- JANGAN buat branch baru, rebase, atau force push
+
+## Stack
+- Frontend: Next.js 14 (App Router), TypeScript 5 strict, Tailwind CSS 3, Framer Motion
+- Backend: FastAPI, SQLAlchemy 2.0, bcrypt (NOT passlib), JWT
+- DB: MySQL, hosting: Vercel + LiteSpeed Passenger
+
+## Penting
+- JANGAN pakai `passlib` — broken di Python 3.13, gunakan `bcrypt` langsung
+- JANGAN commit `.env`
+- CORS: dua domain (temanumkmkita.com + api.temanumkmkita.com)
+- Backend deploy manual — frontend auto via Vercel
+- Semua admin API endpoint wajib JWT auth (`require_auth`)

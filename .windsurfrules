@@ -1,0 +1,18 @@
+# Teman UMKM Kita — Project Rules
+
+Baca juga: [CLAUDE.md](./CLAUDE.md)
+
+## Git
+- HANYA branch `main` — tidak ada development, staging, feature branches
+- Conventional Commits
+- Push ke `main` = auto-deploy Vercel
+
+## Stack
+- Frontend: Next.js 14 (App Router), TypeScript 5 strict, Tailwind CSS 3, Framer Motion
+- Backend: FastAPI, SQLAlchemy 2.0, bcrypt (NOT passlib), JWT
+- DB: MySQL, hosting: Vercel + LiteSpeed Passenger
+
+## Never
+- JANGAN pakai `passlib` — pakai `bcrypt>=4.0`
+- JANGAN commit `.env`
+- JANGAN buat branch baru
