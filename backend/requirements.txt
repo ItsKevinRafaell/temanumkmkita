@@ -9,3 +9,4 @@ pydantic>=2.0
 python-jose[cryptography]
 Pillow>=10.0
 passlib[bcrypt]
+httpx
