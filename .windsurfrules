@@ -3,9 +3,10 @@
 Baca juga: [CLAUDE.md](./CLAUDE.md)
 
 ## Git
-- HANYA branch `main` — tidak ada development, staging, feature branches
+- Feature branch: `feat/`, `fix/`, `chore/` + kebab-case — jangan commit langsung ke `main`
 - Conventional Commits
-- Push ke `main` = auto-deploy Vercel
+- Merge ke `main` = auto-deploy Vercel
+- Hapus branch setelah merge
 
 ## Stack
 - Frontend: Next.js 14 (App Router), TypeScript 5 strict, Tailwind CSS 3, Framer Motion
@@ -15,4 +16,3 @@ Baca juga: [CLAUDE.md](./CLAUDE.md)
 ## Never
 - JANGAN pakai `passlib` — pakai `bcrypt>=4.0`
 - JANGAN commit `.env`
-- JANGAN buat branch baru

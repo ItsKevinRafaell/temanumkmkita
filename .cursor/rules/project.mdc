@@ -9,10 +9,11 @@ alwaysApply: true
 Baca juga: [CLAUDE.md](./CLAUDE.md)
 
 ## Git
-- **HANYA branch `main`** — tidak ada development, staging, feature branches
-- Conventional Commits: `feat:`, `fix:`, `chore:`
-- Push ke `main` = auto-deploy Vercel
-- JANGAN buat branch baru, rebase, atau force push
+- Feature branch: `feat/`, `fix/`, `chore/` + kebab-case — jangan commit langsung ke `main`
+- Commit: Conventional Commits (`feat:`, `fix:`, `chore:`)
+- Merge ke `main` = auto-deploy Vercel
+- JANGAN rebase atau force push
+- Hapus branch setelah di-merge
 
 ## Stack
 - Frontend: Next.js 14 (App Router), TypeScript 5 strict, Tailwind CSS 3, Framer Motion

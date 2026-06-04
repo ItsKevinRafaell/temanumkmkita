@@ -27,18 +27,50 @@ Line count: ~8,000 lines frontend TypeScript, ~1,350 lines backend Python.
 
 ## Git Workflow (WAJIB DIIKUTI)
 
-### Satu-satunya branch: `main`
+### Branch strategy: Feature Branch
+
+```
+main          ← production, auto-deploy Vercel
+feat/xxx      ← fitur baru
+fix/xxx       ← perbaikan bug
+chore/xxx     ← maintenance, deps, refactor
+```
+
+### Naming convention branch
+
+```
+feat/<deskripsi-fitur>
+feat/contact-form-crm-forward
+feat/admin-export-csv
+
+fix/<deskripsi-bug>
+fix/login-500-bcrypt
+fix/mobile-nav-overflow
+
+chore/<deskripsi-maintenance>
+chore/upgrade-next-15
+chore/clean-legacy-models
+```
+
+Format: `type/kebab-case-deskripsi` — lowercase, kata dipisah tanda hubung, maks 4-5 kata.
+
+### Cara kerja
 
 ```
 git checkout main
 git pull origin main
+git checkout -b feat/nama-fitur          # buat feature branch
 # kerjakan perubahan
 git add -A
-git commit -m "feat/fix/chore: description"
-git push origin main
+git commit -m "feat: deskripsi singkat"  # conventional commit
+git push origin feat/nama-fitur          # push branch
+# merge via GitHub PR atau merge langsung
+git checkout main
+git merge feat/nama-fitur
+git push origin main                     # auto-deploy Vercel
+git branch -d feat/nama-fitur            # hapus local
+git push origin --delete feat/nama-fitur # hapus remote
 ```
-
-**Tidak ada branch development, staging, atau feature branch.** Semua langsung ke `main`.
 
 ### Commit convention: [Conventional Commits](https://www.conventionalcommits.org/)
 
@@ -54,10 +86,11 @@ chore: maintenance, deps, config
 - Backend di shared hosting di-deploy manual via rsync/SFTP
 
 ### Larangan keras
-- JANGAN buat branch baru
+- JANGAN commit langsung ke `main` — selalu lewat feature branch
 - JANGAN rebase
 - JANGAN force push
 - JANGAN edit `.env` atau file dengan credentials
+- JANGAN biarkan branch stale — hapus setelah di-merge
 
 ---
 
