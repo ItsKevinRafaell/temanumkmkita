@@ -1,24 +1,19 @@
 import uuid
-from datetime import datetime, timezone
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
-from typing import Optional
 
-from database import get_db
-from models import Portfolio
-from schemas import PortfolioCreate, PortfolioUpdate, PortfolioOut
-from auth import require_auth
+from app.core.database import get_db
+from app.models import Portfolio
+from app.schemas import PortfolioCreate, PortfolioUpdate, PortfolioOut
+from app.core.security import require_auth
+from app.core.utils import now_iso
 
 router = APIRouter(prefix="/api/portfolios", tags=["portfolios"])
 
 
-def now_iso() -> str:
-    return datetime.now(timezone.utc).isoformat()
-
-
 @router.get("", response_model=list[PortfolioOut])
 def list_portfolios(
-    service_slug: Optional[str] = Query(None),
+    service_slug: str | None = Query(None),
     db: Session = Depends(get_db),
 ):
     q = db.query(Portfolio)

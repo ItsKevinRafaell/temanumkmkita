@@ -1,19 +1,14 @@
-from datetime import datetime, timezone
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
-from database import get_db
-from models import SiteSettings
-from schemas import SiteSettingsOut, SiteSettingsUpdate
-from auth import require_auth
+from app.core.database import get_db
+from app.models import SiteSettings
+from app.schemas import SiteSettingsOut, SiteSettingsUpdate
+from app.core.security import require_auth
+from app.core.config import SETTINGS_ID
+from app.core.utils import now_iso
 
 router = APIRouter(prefix="/api/settings", tags=["settings"])
-
-SETTINGS_ID = "1"
-
-
-def now_iso() -> str:
-    return datetime.now(timezone.utc).isoformat()
 
 
 @router.get("", response_model=SiteSettingsOut)

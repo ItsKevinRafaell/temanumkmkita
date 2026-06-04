@@ -193,15 +193,15 @@ export default function ContentMapPage() {
   return (
     <div className="h-screen overflow-hidden flex flex-col bg-[#fcfaf7]">
       {/* Topbar */}
-      <header className="bg-white border-b border-[#242423]/8 px-6 py-3.5 flex items-center justify-between shrink-0 z-20">
-        <div className="flex items-center gap-3">
-          <div className="w-7 h-7 bg-[#f5a700] rounded-lg flex items-center justify-center">
+      <header className="bg-white border-b border-[#242423]/8 px-4 sm:px-6 py-3.5 flex items-center justify-between shrink-0 z-20">
+        <div className="flex items-center gap-2 sm:gap-3">
+          <div className="w-7 h-7 bg-[#f5a700] rounded-lg flex items-center justify-center flex-shrink-0">
             <FileText size={13} className="text-white" />
           </div>
-          <span className="font-extrabold text-[#242423] text-base">Teman UMKM Kita</span>
-          <span className="text-[#242423]/20 text-sm">/ Content Map</span>
+          <span className="hidden sm:inline font-extrabold text-[#242423] text-base">Teman UMKM Kita</span>
+          <span className="hidden sm:inline text-[#242423]/20 text-sm">/ Content Map</span>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3">
           <a
             href="/admin/posts"
             className="text-xs text-[#242423]/50 hover:text-[#242423] transition"

@@ -1,15 +1,15 @@
 """
 Run once to create the first admin user.
-Usage: python seed_admin.py
+Usage: cd backend && python scripts/seed_admin.py
 """
 import uuid
 import sys
 import os
-sys.path.insert(0, os.path.dirname(__file__))
+sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 
-from database import SessionLocal
-from models import User
-from auth import hash_password
+from app.core.database import SessionLocal
+from app.models import User
+from app.core.security import hash_password
 from datetime import datetime, timezone
 
 

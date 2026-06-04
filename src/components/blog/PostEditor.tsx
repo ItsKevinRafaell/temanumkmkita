@@ -1294,7 +1294,7 @@ export default function PostEditor({ initial = {} }: PostEditorProps) {
   return (
     <div className="min-h-screen bg-[#fcfaf7]">
       {/* Top bar */}
-      <header className="bg-white border-b border-[#242423]/8 px-6 py-3.5 flex items-center justify-between sticky top-0 z-20 shadow-sm">
+      <header className="bg-white border-b border-[#242423]/8 px-4 sm:px-6 py-3.5 flex items-center justify-between sticky top-0 z-20 shadow-sm">
         <div className="flex items-center gap-3">
           <Link
             href="/admin/posts"
@@ -1302,19 +1302,19 @@ export default function PostEditor({ initial = {} }: PostEditorProps) {
           >
             <ChevronLeft size={13} /> Kembali
           </Link>
-          <span className="text-[#242423]/20">/</span>
-          <span className="text-sm font-bold text-[#242423]">{isEdit ? "Edit Artikel" : "Artikel Baru"}</span>
+          <span className="hidden sm:inline text-[#242423]/20">/</span>
+          <span className="hidden sm:inline text-sm font-bold text-[#242423]">{isEdit ? "Edit Artikel" : "Artikel Baru"}</span>
         </div>
 
         <div className="flex items-center gap-2">
-          {error && <span className="text-xs text-red-600 max-w-xs truncate">{error}</span>}
+          {error && <span className="hidden sm:block text-xs text-red-600 max-w-xs truncate">{error}</span>}
           {isEdit && initial.id && (
             <Link
               href={`/preview/${initial.id}`}
               target="_blank"
               className="flex items-center gap-1.5 border border-[#242423]/12 text-[#242423]/55 font-semibold px-3 py-1.5 rounded-lg text-xs hover:border-[#242423]/25 hover:text-[#242423] transition"
             >
-              <Eye size={12} /> Preview
+              <Eye size={12} /> <span className="hidden sm:inline">Preview</span>
             </Link>
           )}
           <select
@@ -1336,12 +1336,12 @@ export default function PostEditor({ initial = {} }: PostEditorProps) {
         </div>
       </header>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex gap-5 items-start">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex flex-col lg:flex-row gap-5 items-start">
 
         {/* ── Left: SEO sidebar ───────────────────────────────────────── */}
-        <div className={`flex-shrink-0 sticky top-20 max-h-[calc(100vh-6rem)] transition-all duration-200 ${showSeo ? "w-48" : "w-8"}`}>
+        <div className={`w-full lg:flex-shrink-0 lg:sticky lg:top-20 lg:max-h-[calc(100vh-6rem)] transition-all duration-200 order-3 lg:order-1 ${showSeo ? "lg:w-48" : "lg:w-8"}`}>
           {showSeo ? (
-            <div className="overflow-y-auto max-h-[calc(100vh-6rem)] pb-4">
+            <div className="overflow-y-auto lg:max-h-[calc(100vh-6rem)] pb-4">
               <div className="bg-white border border-[#242423]/8 rounded-2xl p-4 space-y-3">
                 {/* Panel header */}
                 <div className="flex items-center justify-between">
@@ -1352,7 +1352,7 @@ export default function PostEditor({ initial = {} }: PostEditorProps) {
                   <button
                     onClick={() => setShowSeo(false)}
                     title="Sembunyikan SEO panel"
-                    className="text-[#242423]/25 hover:text-[#242423]/60 transition rounded p-0.5 hover:bg-[#242423]/5"
+                    className="hidden lg:block text-[#242423]/25 hover:text-[#242423]/60 transition rounded p-0.5 hover:bg-[#242423]/5"
                   >
                     <ChevronLeft size={13} />
                   </button>
@@ -1449,7 +1449,7 @@ export default function PostEditor({ initial = {} }: PostEditorProps) {
             <button
               onClick={() => setShowSeo(true)}
               title="Tampilkan SEO panel"
-              className="h-36 w-full bg-white border border-[#242423]/8 rounded-xl flex flex-col items-center justify-center gap-2 hover:border-[#f5a700]/40 hover:bg-[#f5a700]/4 transition group"
+              className="hidden lg:flex h-36 w-full bg-white border border-[#242423]/8 rounded-xl flex-col items-center justify-center gap-2 hover:border-[#f5a700]/40 hover:bg-[#f5a700]/4 transition group"
             >
               <BarChart2 size={13} className="text-[#242423]/30 group-hover:text-[#f5a700] transition" />
               <span
@@ -1464,7 +1464,7 @@ export default function PostEditor({ initial = {} }: PostEditorProps) {
         </div>
 
         {/* ── Center: Main editor ──────────────────────────────────────── */}
-        <div className="flex-1 min-w-0 space-y-0">
+        <div className="flex-1 min-w-0 space-y-0 order-1 lg:order-2">
 
           {/* Title */}
           <div className="mb-2">
@@ -1521,7 +1521,7 @@ export default function PostEditor({ initial = {} }: PostEditorProps) {
         </div>
 
         {/* ── Right: Settings sidebar ──────────────────────────────────── */}
-        <div className={`flex-shrink-0 sticky top-20 max-h-[calc(100vh-6rem)] transition-all duration-200 ${showSettings ? "w-52" : "w-8"}`}>
+        <div className={`w-full lg:flex-shrink-0 lg:sticky lg:top-20 lg:max-h-[calc(100vh-6rem)] transition-all duration-200 order-2 lg:order-3 ${showSettings ? "lg:w-52" : "lg:w-8"}`}>
           {showSettings ? (
             <div className="overflow-y-auto max-h-[calc(100vh-6rem)] pb-4 space-y-4 pr-0.5">
 
@@ -1531,7 +1531,7 @@ export default function PostEditor({ initial = {} }: PostEditorProps) {
                   <button
                     onClick={() => setShowSettings(false)}
                     title="Sembunyikan Settings panel"
-                    className="text-[#242423]/25 hover:text-[#242423]/60 transition rounded p-0.5 hover:bg-[#242423]/5"
+                    className="hidden lg:block text-[#242423]/25 hover:text-[#242423]/60 transition rounded p-0.5 hover:bg-[#242423]/5"
                   >
                     <ChevronRight size={13} />
                   </button>
@@ -1628,7 +1628,7 @@ export default function PostEditor({ initial = {} }: PostEditorProps) {
             <button
               onClick={() => setShowSettings(true)}
               title="Tampilkan Settings panel"
-              className="h-36 w-full bg-white border border-[#242423]/8 rounded-xl flex flex-col items-center justify-center gap-2 hover:border-[#242423]/25 hover:bg-[#242423]/3 transition group"
+              className="hidden lg:flex h-36 w-full bg-white border border-[#242423]/8 rounded-xl flex-col items-center justify-center gap-2 hover:border-[#242423]/25 hover:bg-[#242423]/3 transition group"
             >
               <ChevronLeft size={11} className="text-[#242423]/20 group-hover:text-[#242423]/50 transition" />
               <span

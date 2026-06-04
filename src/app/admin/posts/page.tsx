@@ -8,7 +8,7 @@ import ConfirmModal from "@/components/ui/ConfirmModal";
 import {
   PenLine, Trash2, Plus, LogOut, FileText,
   CheckCircle, Clock, ChevronLeft, ChevronRight,
-  ArrowUpDown, Star, Map as MapIcon, Settings, Users, Images,
+  ArrowUpDown, Star, Map as MapIcon, Settings, Users, Images, Menu,
 } from "lucide-react";
 
 function formatDate(iso: string | null) {
@@ -26,6 +26,7 @@ export default function AdminPostsPage() {
   const [loading, setLoading] = useState(true);
   const [deleting, setDeleting] = useState<string | null>(null);
   const [modal, setModal] = useState<{ id: string; title: string } | null>(null);
+  const [navOpen, setNavOpen] = useState(false);
 
   // Filters
   const [statusFilter, setStatusFilter] = useState<"" | "draft" | "published">("");
@@ -80,13 +81,13 @@ export default function AdminPostsPage() {
   return (
     <div className="min-h-screen bg-[#fcfaf7]">
       {/* ── Top bar ─────────────────────────────────────────────────── */}
-      <header className="bg-white border-b border-[#242423]/8 px-6 py-4 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="w-7 h-7 bg-[#f5a700] rounded-lg flex items-center justify-center">
+      <header className="bg-white border-b border-[#242423]/8 px-4 sm:px-6 py-4 flex items-center justify-between">
+        <div className="flex items-center gap-2 sm:gap-3">
+          <div className="w-7 h-7 bg-[#f5a700] rounded-lg flex items-center justify-center flex-shrink-0">
             <FileText size={13} className="text-white" />
           </div>
-          <span className="font-extrabold text-[#242423] text-base">Teman UMKM Kita</span>
-          <span className="text-[#242423]/20 text-sm">/ Admin</span>
+          <span className="hidden sm:inline font-extrabold text-[#242423] text-base">Teman UMKM Kita</span>
+          <span className="hidden sm:inline text-[#242423]/20 text-sm">/ Admin</span>
         </div>
         <button
           onClick={handleLogout}
@@ -96,6 +97,17 @@ export default function AdminPostsPage() {
         </button>
       </header>
 
+      {/* Mobile nav dropdown */}
+      {navOpen && (
+        <div className="sm:hidden bg-white border-b border-[#242423]/8 px-4 py-2 flex flex-col gap-0.5">
+          <Link href="/admin/categories" onClick={() => setNavOpen(false)} className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm text-[#242423]/60 hover:bg-[#242423]/5 hover:text-[#242423] transition">Kategori</Link>
+          <Link href="/admin/authors" onClick={() => setNavOpen(false)} className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm text-[#242423]/60 hover:bg-[#242423]/5 hover:text-[#242423] transition"><Users size={14} /> Penulis</Link>
+          <Link href="/admin/portfolio" onClick={() => setNavOpen(false)} className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm text-[#242423]/60 hover:bg-[#242423]/5 hover:text-[#242423] transition"><Images size={14} /> Portfolio</Link>
+          <Link href="/admin/content-map" onClick={() => setNavOpen(false)} className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm text-[#242423]/60 hover:bg-[#242423]/5 hover:text-[#242423] transition"><MapIcon size={14} /> Content Map</Link>
+          <Link href="/admin/settings" onClick={() => setNavOpen(false)} className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm text-[#242423]/60 hover:bg-[#242423]/5 hover:text-[#242423] transition"><Settings size={14} /> Pengaturan</Link>
+        </div>
+      )}
+
       {/* ── Content ─────────────────────────────────────────────────── */}
       <main className="max-w-5xl mx-auto px-6 py-8">
         <div className="flex items-center justify-between mb-6">
@@ -104,42 +116,50 @@ export default function AdminPostsPage() {
             <p className="text-xs text-[#242423]/45 mt-0.5">{total} total artikel</p>
           </div>
           <div className="flex items-center gap-2">
-            <Link
-              href="/admin/categories"
-              className="flex items-center gap-2 border border-[#242423]/12 text-[#242423]/55 font-semibold px-3 py-2.5 rounded-xl text-sm hover:border-[#242423]/25 hover:text-[#242423] transition"
-            >
-              Kategori
-            </Link>
-            <Link
-              href="/admin/authors"
-              className="flex items-center gap-2 border border-[#242423]/12 text-[#242423]/55 font-semibold px-3 py-2.5 rounded-xl text-sm hover:border-[#242423]/25 hover:text-[#242423] transition"
-            >
-              <Users size={13} /> Penulis
-            </Link>
-            <Link
-              href="/admin/portfolio"
-              className="flex items-center gap-2 border border-[#242423]/12 text-[#242423]/55 font-semibold px-3 py-2.5 rounded-xl text-sm hover:border-[#242423]/25 hover:text-[#242423] transition"
-            >
-              <Images size={13} /> Portfolio
-            </Link>
-            <Link
-              href="/admin/content-map"
-              className="flex items-center gap-2 border border-[#242423]/12 text-[#242423]/55 font-semibold px-3 py-2.5 rounded-xl text-sm hover:border-[#242423]/25 hover:text-[#242423] transition"
-            >
-              <MapIcon size={13} /> Content Map
-            </Link>
-            <Link
-              href="/admin/settings"
-              className="flex items-center gap-2 border border-[#242423]/12 text-[#242423]/55 font-semibold px-3 py-2.5 rounded-xl text-sm hover:border-[#242423]/25 hover:text-[#242423] transition"
-            >
-              <Settings size={13} /> Pengaturan
-            </Link>
+            <div className="hidden sm:flex items-center gap-2">
+              <Link
+                href="/admin/categories"
+                className="flex items-center gap-2 border border-[#242423]/12 text-[#242423]/55 font-semibold px-3 py-2.5 rounded-xl text-sm hover:border-[#242423]/25 hover:text-[#242423] transition"
+              >
+                Kategori
+              </Link>
+              <Link
+                href="/admin/authors"
+                className="flex items-center gap-2 border border-[#242423]/12 text-[#242423]/55 font-semibold px-3 py-2.5 rounded-xl text-sm hover:border-[#242423]/25 hover:text-[#242423] transition"
+              >
+                <Users size={13} /> Penulis
+              </Link>
+              <Link
+                href="/admin/portfolio"
+                className="flex items-center gap-2 border border-[#242423]/12 text-[#242423]/55 font-semibold px-3 py-2.5 rounded-xl text-sm hover:border-[#242423]/25 hover:text-[#242423] transition"
+              >
+                <Images size={13} /> Portfolio
+              </Link>
+              <Link
+                href="/admin/content-map"
+                className="flex items-center gap-2 border border-[#242423]/12 text-[#242423]/55 font-semibold px-3 py-2.5 rounded-xl text-sm hover:border-[#242423]/25 hover:text-[#242423] transition"
+              >
+                <MapIcon size={13} /> Content Map
+              </Link>
+              <Link
+                href="/admin/settings"
+                className="flex items-center gap-2 border border-[#242423]/12 text-[#242423]/55 font-semibold px-3 py-2.5 rounded-xl text-sm hover:border-[#242423]/25 hover:text-[#242423] transition"
+              >
+                <Settings size={13} /> Pengaturan
+              </Link>
+            </div>
             <Link
               href="/admin/posts/new"
               className="flex items-center gap-2 bg-[#f5a700] text-white font-bold px-4 py-2.5 rounded-xl text-sm hover:bg-[#f5a700]/90 transition"
             >
-              <Plus size={14} /> Artikel Baru
+              <Plus size={14} /> <span className="hidden sm:inline">Artikel Baru</span>
             </Link>
+            <button
+              onClick={() => setNavOpen((v) => !v)}
+              className="sm:hidden flex items-center justify-center w-9 h-9 border border-[#242423]/12 rounded-xl text-[#242423]/50 hover:text-[#242423] transition"
+            >
+              <Menu size={15} />
+            </button>
           </div>
         </div>
 

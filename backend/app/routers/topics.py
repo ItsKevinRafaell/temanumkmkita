@@ -1,24 +1,19 @@
 import uuid
-from typing import Optional
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 
-from database import get_db
-from models import ContentTopic
-from schemas import TopicCreate, TopicOut, TopicUpdate
-from auth import require_auth
+from app.core.database import get_db
+from app.models import ContentTopic
+from app.schemas import TopicCreate, TopicOut, TopicUpdate
+from app.core.security import require_auth
+from app.core.utils import now_iso
 
 router = APIRouter(prefix="/api/topics", tags=["topics"])
 
 
-def now_iso() -> str:
-    from datetime import datetime, timezone
-    return datetime.now(timezone.utc).isoformat()
-
-
 @router.get("", response_model=list[TopicOut], dependencies=[Depends(require_auth)])
 def list_topics(
-    pillar_id: Optional[str] = Query(None),
+    pillar_id: str | None = Query(None),
     db: Session = Depends(get_db),
 ):
     q = db.query(ContentTopic)

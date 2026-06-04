@@ -1,73 +1,19 @@
 import os
 import uuid
 import httpx
-from datetime import datetime, timezone
-from typing import Optional
 from fastapi import APIRouter, BackgroundTasks, Depends
-from pydantic import BaseModel, field_validator
 from sqlalchemy.orm import Session
 
-from database import SessionLocal, get_db
-from models import ContactSubmission
+from app.core.database import SessionLocal, get_db
+from app.core.config import CRM_API_URL, CRM_API_KEY
+from app.core.utils import now_iso
+from app.models import ContactSubmission
+from app.schemas.contact import ContactFormIn
 
 router = APIRouter(prefix="/api", tags=["contact"])
 
-CRM_API_URL = os.getenv("CRM_API_URL", "").strip()
-CRM_API_KEY = os.getenv("CRM_API_KEY", "").strip()
-
-
-VALID_SERVICES = {
-    "web_development",
-    "seo_google_maps",
-    "kelola_sosial_media",
-    "maintenance_website",
-    "desain_logo",
-}
-
-
-class ContactFormIn(BaseModel):
-    name: str
-    phone: str
-    email: Optional[str] = None
-    service: Optional[str] = None
-    message: Optional[str] = None
-
-    @field_validator("name")
-    @classmethod
-    def name_not_empty(cls, v: str) -> str:
-        if not v.strip():
-            raise ValueError("Nama tidak boleh kosong")
-        return v.strip()[:255]
-
-    @field_validator("phone")
-    @classmethod
-    def phone_not_empty(cls, v: str) -> str:
-        digits = "".join(c for c in v if c.isdigit())
-        if len(digits) < 8:
-            raise ValueError("Nomor WhatsApp tidak valid")
-        return v.strip()[:50]
-
-    @field_validator("service")
-    @classmethod
-    def service_valid(cls, v: Optional[str]) -> Optional[str]:
-        if v is None or v == "":
-            raise ValueError("Layanan wajib dipilih")
-        if v not in VALID_SERVICES:
-            raise ValueError(f"Layanan tidak valid: {v}")
-        return v
-
-    @field_validator("message")
-    @classmethod
-    def cap_message(cls, v: Optional[str]) -> Optional[str]:
-        return (v or "").strip()[:1000] or None
-
-
-def _now_iso() -> str:
-    return datetime.now(timezone.utc).isoformat()
-
 
 def _forward_to_crm(submission_id: str, payload: dict):
-    """Background task: POST to CRM, mark sent_to_crm if success."""
     if not CRM_API_URL or not CRM_API_KEY:
         return
     db = SessionLocal()
@@ -104,7 +50,7 @@ def submit_contact_form(
         email=body.email,
         service=body.service,
         message=body.message,
-        created_at=_now_iso(),
+        created_at=now_iso(),
         sent_to_crm=False,
     )
     db.add(submission)

@@ -95,13 +95,13 @@ export default function CategoriesPage() {
 
   return (
     <div className="min-h-screen bg-[#fcfaf7]">
-      <header className="bg-white border-b border-[#242423]/8 px-6 py-4 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="w-7 h-7 bg-[#f5a700] rounded-lg flex items-center justify-center">
+      <header className="bg-white border-b border-[#242423]/8 px-4 sm:px-6 py-4 flex items-center justify-between">
+        <div className="flex items-center gap-2 sm:gap-3">
+          <div className="w-7 h-7 bg-[#f5a700] rounded-lg flex items-center justify-center flex-shrink-0">
             <FileText size={13} className="text-white" />
           </div>
-          <span className="font-extrabold text-[#242423] text-base">Teman UMKM Kita</span>
-          <span className="text-[#242423]/20 text-sm">/ Admin</span>
+          <span className="hidden sm:inline font-extrabold text-[#242423] text-base">Teman UMKM Kita</span>
+          <span className="hidden sm:inline text-[#242423]/20 text-sm">/ Admin</span>
         </div>
         <Link
           href="/admin/posts"
@@ -206,7 +206,7 @@ export default function CategoriesPage() {
         <div className="bg-white border border-[#242423]/8 rounded-2xl p-5">
           <p className="text-xs font-bold uppercase tracking-wider text-[#242423]/35 mb-4">Tambah Kategori</p>
           {error && <p className="text-xs text-red-600 mb-3">{error}</p>}
-          <div className="flex gap-3">
+          <div className="flex flex-col sm:flex-row gap-3">
             <div className="flex-1">
               <label className="block text-xs font-semibold text-[#242423]/50 mb-1">Nama</label>
               <input
@@ -230,11 +230,11 @@ export default function CategoriesPage() {
                 onKeyDown={(e) => { if (e.key === "Enter") handleAdd(); }}
               />
             </div>
-            <div className="flex items-end">
+            <div className="flex sm:items-end">
               <button
                 onClick={handleAdd}
                 disabled={adding}
-                className="flex items-center gap-1.5 bg-[#f5a700] text-white font-bold px-4 py-2 rounded-xl text-sm hover:bg-[#f5a700]/90 disabled:opacity-60 transition"
+                className="flex items-center justify-center gap-1.5 w-full sm:w-auto bg-[#f5a700] text-white font-bold px-4 py-2 rounded-xl text-sm hover:bg-[#f5a700]/90 disabled:opacity-60 transition"
               >
                 {adding ? <Loader2 size={13} className="animate-spin" /> : <Plus size={13} />}
                 Tambah

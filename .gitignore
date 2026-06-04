@@ -37,3 +37,7 @@ next-env.d.ts
 
 # backend env
 backend/.env
+backend/__pycache__/
+.agents/
+.claude/
+.commandcode/

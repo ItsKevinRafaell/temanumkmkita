@@ -1,13 +1,11 @@
 import uuid
-from typing import Optional
 from fastapi import APIRouter, Depends, HTTPException
-from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
-from database import get_db
-from models import ArticleCategory
-from schemas import ArticleCategoryBase, ArticleCategoryOut
-from auth import require_auth
+from app.core.database import get_db
+from app.models import ArticleCategory
+from app.schemas import ArticleCategoryBase, ArticleCategoryOut, CategoryUpdate
+from app.core.security import require_auth
 
 router = APIRouter(prefix="/api/categories", tags=["categories"])
 
@@ -27,11 +25,6 @@ def create_category(data: ArticleCategoryBase, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(category)
     return category
-
-
-class CategoryUpdate(BaseModel):
-    name: Optional[str] = None
-    slug: Optional[str] = None
 
 
 @router.put("/{category_id}", response_model=ArticleCategoryOut, dependencies=[Depends(require_auth)])

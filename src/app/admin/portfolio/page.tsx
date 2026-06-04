@@ -65,13 +65,13 @@ export default function AdminPortfolioPage() {
 
   return (
     <div className="min-h-screen bg-[#fcfaf7]">
-      <header className="bg-white border-b border-[#242423]/8 px-6 py-4 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="w-7 h-7 bg-[#f5a700] rounded-lg flex items-center justify-center">
+      <header className="bg-white border-b border-[#242423]/8 px-4 sm:px-6 py-4 flex items-center justify-between">
+        <div className="flex items-center gap-2 sm:gap-3">
+          <div className="w-7 h-7 bg-[#f5a700] rounded-lg flex items-center justify-center flex-shrink-0">
             <FileText size={13} className="text-white" />
           </div>
-          <span className="font-extrabold text-[#242423] text-base">Teman UMKM Kita</span>
-          <span className="text-[#242423]/20 text-sm">/ Admin</span>
+          <span className="hidden sm:inline font-extrabold text-[#242423] text-base">Teman UMKM Kita</span>
+          <span className="hidden sm:inline text-[#242423]/20 text-sm">/ Admin</span>
         </div>
         <button
           onClick={handleLogout}

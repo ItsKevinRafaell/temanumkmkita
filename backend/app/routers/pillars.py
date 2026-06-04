@@ -1,19 +1,14 @@
 import uuid
-from typing import Optional
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 
-from database import get_db
-from models import ContentPillar
-from schemas import PillarCreate, PillarOut, PillarUpdate
-from auth import require_auth
+from app.core.database import get_db
+from app.models import ContentPillar
+from app.schemas import PillarCreate, PillarOut, PillarUpdate
+from app.core.security import require_auth
+from app.core.utils import now_iso
 
 router = APIRouter(prefix="/api/pillars", tags=["pillars"])
-
-
-def now_iso() -> str:
-    from datetime import datetime, timezone
-    return datetime.now(timezone.utc).isoformat()
 
 
 @router.get("", response_model=list[PillarOut], dependencies=[Depends(require_auth)])

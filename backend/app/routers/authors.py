@@ -1,18 +1,14 @@
 import uuid
-from datetime import datetime, timezone
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
-from database import get_db
-from models import Author
-from schemas import AuthorCreate, AuthorUpdate, AuthorOut
-from auth import require_auth
+from app.core.database import get_db
+from app.models import Author
+from app.schemas import AuthorCreate, AuthorUpdate, AuthorOut
+from app.core.security import require_auth
+from app.core.utils import now_iso
 
 router = APIRouter(prefix="/api/authors", tags=["authors"])
-
-
-def now_iso() -> str:
-    return datetime.now(timezone.utc).isoformat()
 
 
 @router.get("", response_model=list[AuthorOut])
