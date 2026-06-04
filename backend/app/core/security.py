@@ -4,17 +4,16 @@ from datetime import datetime, timezone, timedelta
 from fastapi import HTTPException, Security
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from jose import JWTError, jwt
-from passlib.context import CryptContext
+import bcrypt
 
 from app.core.config import SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_HOURS
 
 
 bearer_scheme = HTTPBearer()
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
 def hash_password(password: str) -> str:
-    return pwd_context.hash(password)
+    return bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
 
 
 def verify_and_upgrade_password(plain: str, hashed: str, db_session, user_id: str) -> bool:
@@ -22,14 +21,14 @@ def verify_and_upgrade_password(plain: str, hashed: str, db_session, user_id: st
         legacy_hash = hmac.new(SECRET_KEY.encode(), plain.encode(), hashlib.sha256).hexdigest()
         if hmac.compare_digest(legacy_hash, hashed):
             from app.models import User
-            new_hash = pwd_context.hash(plain)
+            new_hash = bcrypt.hashpw(plain.encode(), bcrypt.gensalt()).decode()
             user = db_session.query(User).filter(User.id == user_id).first()
             if user:
                 user.password_hash = new_hash
                 db_session.commit()
             return True
         return False
-    return pwd_context.verify(plain, hashed)
+    return bcrypt.checkpw(plain.encode(), hashed.encode())
 
 
 def create_access_token(subject: str) -> str:
