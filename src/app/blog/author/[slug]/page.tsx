@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import Image from "next/image";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import BlogCard from "@/components/blog/BlogCard";
@@ -102,7 +103,7 @@ export default async function AuthorPage({
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-start gap-6">
               {author.photo_url ? (
-                <img src={author.photo_url} alt={author.name} className="w-20 h-20 rounded-full object-cover border border-brand-dark/8 flex-shrink-0" />
+                <Image src={author.photo_url} alt={author.name} width={80} height={80} className="rounded-full object-cover border border-brand-dark/8 flex-shrink-0" />
               ) : (
                 <UserCircle size={80} className="text-brand-dark/20 flex-shrink-0" />
               )}

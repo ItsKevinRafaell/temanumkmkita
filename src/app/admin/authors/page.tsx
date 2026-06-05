@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Plus, Trash2, PenLine, ChevronLeft, Loader2, Users } from "lucide-react";
 import { fetchAuthors, deleteAuthor, type Author } from "@/lib/api/admin";
@@ -66,7 +67,7 @@ export default function AuthorsPage() {
             {authors.map((author) => (
               <div key={author.id} className="bg-white border border-[#242423]/8 rounded-2xl p-4 flex items-center gap-4">
                 {author.photo_url ? (
-                  <img src={author.photo_url} alt={author.name} className="w-12 h-12 rounded-full object-cover border border-[#242423]/8 flex-shrink-0" />
+                  <Image src={author.photo_url} alt={author.name} width={48} height={48} className="rounded-full object-cover border border-[#242423]/8 flex-shrink-0" />
                 ) : (
                   <div className="w-12 h-12 rounded-full bg-[#f5a700]/15 flex items-center justify-center flex-shrink-0">
                     <span className="text-[#f5a700] font-extrabold text-lg">{author.name[0]}</span>

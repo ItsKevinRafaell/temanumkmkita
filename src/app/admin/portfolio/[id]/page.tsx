@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter, useParams } from "next/navigation";
 import { Save, ChevronLeft, Loader2, Upload, X } from "lucide-react";
 import { adminGetPortfolio, adminUpdatePortfolio, uploadImage } from "@/lib/api/admin";
@@ -125,7 +126,7 @@ export default function EditPortfolioPage() {
             <label className="block text-xs font-semibold text-[#242423]/55 mb-2">Gambar *</label>
             {imageUrl ? (
               <div className="relative w-full aspect-video rounded-xl overflow-hidden border border-[#242423]/10">
-                <img src={imageUrl} alt="preview" className="w-full h-full object-cover" />
+                <Image src={imageUrl} alt="preview" fill className="object-cover" />
                 <button
                   onClick={() => setImageUrl("")}
                   className="absolute top-2 right-2 w-6 h-6 bg-white border border-[#242423]/12 rounded-full flex items-center justify-center hover:bg-red-50 transition"

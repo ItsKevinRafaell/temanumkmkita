@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter, useParams } from "next/navigation";
 import { Save, ChevronLeft, Loader2, Upload, X } from "lucide-react";
 import { fetchAuthor, updateAuthor, uploadImage } from "@/lib/api/admin";
@@ -106,7 +107,7 @@ export default function EditAuthorPage() {
               <label className="block text-xs font-semibold text-[#242423]/55 mb-2">Foto</label>
               {photoUrl ? (
                 <div className="relative w-20 h-20">
-                  <img src={photoUrl} alt="foto" className="w-20 h-20 rounded-full object-cover border border-[#242423]/10" />
+                  <Image src={photoUrl} alt="foto" width={80} height={80} className="w-20 h-20 rounded-full object-cover border border-[#242423]/10" />
                   <button onClick={() => setPhotoUrl("")} className="absolute -top-1 -right-1 w-5 h-5 bg-white border border-[#242423]/12 rounded-full flex items-center justify-center hover:bg-red-50 transition">
                     <X size={9} className="text-[#242423]/50" />
                   </button>

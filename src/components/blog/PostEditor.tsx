@@ -3,6 +3,7 @@
 import {
   useState, useRef, useEffect, useCallback, useMemo,
 } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import {
   DndContext, DragEndEvent, PointerSensor, useSensor, useSensors, closestCenter,
@@ -218,7 +219,7 @@ function ImageBlockEditor({
     <div className="space-y-2">
       {block.src ? (
         <div className="relative">
-          <img src={block.src} alt={block.alt} className="w-full rounded-lg object-cover max-h-72 border border-[#242423]/8" />
+          <Image src={block.src} alt={block.alt} width={800} height={450} className="w-full rounded-lg object-cover max-h-72 border border-[#242423]/8" />
           <button
             onClick={() => onChange({ ...block, src: "" })}
             className="absolute top-2 right-2 w-7 h-7 bg-white border border-[#242423]/12 rounded-full flex items-center justify-center hover:bg-red-50 hover:border-red-200 transition"
@@ -380,7 +381,7 @@ function HowToBlockEditor({
           />
           {step.image ? (
             <div className="relative">
-              <img src={step.image} alt={step.name} className="w-full rounded-lg object-cover max-h-32 border border-[#242423]/8" />
+              <Image src={step.image} alt={step.name} width={600} height={128} className="w-full rounded-lg object-cover max-h-32 border border-[#242423]/8" />
               <button onClick={() => updateStep(i, "image", "")} className="absolute top-1 right-1 w-6 h-6 bg-white border border-[#242423]/12 rounded-full flex items-center justify-center hover:bg-red-50 transition">
                 <X size={10} className="text-[#242423]/50" />
               </button>
@@ -1138,7 +1139,7 @@ function FeaturedImageUpload({
       <label className="block text-xs font-semibold text-[#242423]/55 mb-1.5">Thumbnail / Featured Image</label>
       {value ? (
         <div className="relative rounded-xl overflow-hidden border border-[#242423]/10">
-          <img src={value} alt="Featured" className="w-full h-28 object-cover" />
+          <Image src={value} alt="Featured" width={800} height={112} className="w-full h-28 object-cover" />
           <button
             onClick={() => onChange("")}
             className="absolute top-1.5 right-1.5 w-6 h-6 bg-white border border-[#242423]/12 rounded-full flex items-center justify-center hover:bg-red-50 transition"

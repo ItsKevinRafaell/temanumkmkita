@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import BlobDecoration from "@/components/ui/BlobDecoration";
@@ -240,7 +241,7 @@ export default async function BlogDetailPage({
               {post.author && (
                 <div className="flex items-center gap-2.5 mt-4">
                   {post.author.photo_url ? (
-                    <img src={post.author.photo_url} alt={post.author.name} className="w-9 h-9 rounded-full object-cover border border-brand-dark/8 flex-shrink-0" />
+                    <Image src={post.author.photo_url} alt={post.author.name} width={36} height={36} className="rounded-full object-cover border border-brand-dark/8 flex-shrink-0" />
                   ) : (
                     <UserCircle size={36} className="text-brand-dark/25 flex-shrink-0" />
                   )}
@@ -269,7 +270,7 @@ export default async function BlogDetailPage({
             <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="border border-brand-dark/8 rounded-2xl p-6 flex items-start gap-5">
                 {post.author.photo_url ? (
-                  <img src={post.author.photo_url} alt={post.author.name} className="w-14 h-14 rounded-full object-cover border border-brand-dark/8 flex-shrink-0" loading="lazy" />
+                  <Image src={post.author.photo_url} alt={post.author.name} width={56} height={56} className="rounded-full object-cover border border-brand-dark/8 flex-shrink-0" />
                 ) : (
                   <UserCircle size={56} className="text-brand-dark/20 flex-shrink-0" />
                 )}

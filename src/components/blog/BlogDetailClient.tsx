@@ -179,9 +179,11 @@ function BlogContent({ blocks, postTitle }: { blocks: BlogPost["content"]; postT
     } else if (b.type === "image") {
       elements.push(
         <figure key={i} className="not-prose my-8">
-          <img
+          <Image
             src={b.src}
             alt={b.alt}
+            width={800}
+            height={450}
             className="w-full rounded-2xl border border-brand-dark/8 object-cover"
             loading="lazy"
           />
@@ -237,7 +239,7 @@ function BlogContent({ blocks, postTitle }: { blocks: BlogPost["content"]; postT
                   <p className="font-bold text-sm text-brand-dark">{step.name}</p>
                   <p className="text-sm text-brand-dark/65 mt-0.5 leading-relaxed">{step.text}</p>
                   {step.image && (
-                    <img src={step.image} alt={step.name} className="mt-2 w-full rounded-xl border border-brand-dark/8 object-cover max-h-48" loading="lazy" />
+                    <Image src={step.image} alt={step.name} width={600} height={192} className="mt-2 w-full rounded-xl border border-brand-dark/8 object-cover max-h-48" loading="lazy" />
                   )}
                 </div>
               </li>

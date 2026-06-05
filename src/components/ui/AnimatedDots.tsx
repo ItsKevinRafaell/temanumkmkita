@@ -24,6 +24,7 @@ export default function AnimatedDots() {
     if (!ctx) return;
 
     let dots: Dot[] = [];
+    let isRunning = true;
 
     function buildDots() {
       if (!canvas) return;
@@ -52,6 +53,10 @@ export default function AnimatedDots() {
 
     function draw(t: number) {
       if (!canvas || !ctx) return;
+      if (!isRunning) {
+        rafRef.current = requestAnimationFrame(draw);
+        return;
+      }
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       for (const dot of dots) {
@@ -67,13 +72,19 @@ export default function AnimatedDots() {
       rafRef.current = requestAnimationFrame(draw);
     }
 
+    function handleVisibility() {
+      isRunning = !document.hidden;
+    }
+
     resize();
+    document.addEventListener("visibilitychange", handleVisibility);
     rafRef.current = requestAnimationFrame(draw);
     window.addEventListener("resize", resize);
 
     return () => {
       cancelAnimationFrame(rafRef.current);
       window.removeEventListener("resize", resize);
+      document.removeEventListener("visibilitychange", handleVisibility);
     };
   }, []);
 
