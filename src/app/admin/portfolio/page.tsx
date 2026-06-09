@@ -16,6 +16,7 @@ const SERVICE_LABELS: Record<string, string> = {
   "web-development-bulanan": "Web Dev Bulanan",
   "seo-google-maps": "SEO & Google Maps",
   "kelola-sosial-media": "Kelola Sosmed",
+  maintenance: "Maintenance Website",
   "desain-logo": "Desain Logo",
 };
 

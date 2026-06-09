@@ -28,7 +28,7 @@ export default function ServicePageLayout({ service }: Props) {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {service.benefits.map((benefit, i) => (
-                <div key={i} className="flex items-start gap-3 p-4 bg-canvas rounded-xl">
+                <div key={i} className="flex items-start gap-3 p-4 bg-canvas rounded-lg">
                   <span className="text-accent font-bold text-lg mt-0.5">✓</span>
                   <span className="text-brand-dark font-medium">{benefit}</span>
                 </div>
@@ -54,7 +54,7 @@ export default function ServicePageLayout({ service }: Props) {
               href={`https://wa.me/6289501925395?text=Halo%2C+saya+tertarik+dengan+layanan+${encodeURIComponent(service.title)}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block bg-brand-dark text-white font-bold px-8 py-4 rounded-full text-lg hover:bg-brand-dark/90 transition-colors"
+            className="inline-block bg-white text-brand-dark font-bold px-6 py-3.5 rounded-lg text-base hover:bg-white/90 transition-colors"
             >
               Hubungi Kami via WhatsApp →
             </a>

@@ -1,4 +1,4 @@
-const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "https://api.temanumkmkita.com";
+import { buildPublicApiUrl } from "@/lib/api/public";
 
 export interface PublicPortfolioItem {
   id: string;
@@ -12,10 +12,10 @@ export interface PublicPortfolioItem {
 
 export async function fetchPortfolios(service_slug: string): Promise<PublicPortfolioItem[]> {
   try {
-    const res = await fetch(
-      `${API_BASE}/api/portfolios?service_slug=${encodeURIComponent(service_slug)}`,
-      { next: { revalidate: 3600 } }
-    );
+    const url = buildPublicApiUrl("portfolios");
+    url.searchParams.set("service_slug", service_slug);
+
+    const res = await fetch(url.toString(), { cache: "no-store" });
     if (!res.ok) return [];
     return res.json();
   } catch {

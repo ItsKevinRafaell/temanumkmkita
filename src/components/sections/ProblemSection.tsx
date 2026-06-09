@@ -47,7 +47,7 @@ function TimelineItem({
       initial={{ opacity: 0, x: isLeft ? -30 : 30 }}
       animate={inView ? { opacity: 1, x: 0 } : {}}
       transition={{ delay: index * 0.18 + 0.1, duration: 0.55, ease: "easeOut" }}
-      className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-brand-dark/8 card-shadow"
+      className="bg-white rounded-lg p-6 border border-brand-dark/8 card-shadow"
     >
       <span className="text-accent font-bold text-xs uppercase tracking-widest">Masalah {index + 1}</span>
       <h3 className="text-xl sm:text-2xl font-extrabold text-brand-dark mt-2 mb-3 leading-tight">
@@ -64,7 +64,7 @@ function TimelineItem({
       transition={{ delay: index * 0.18, duration: 0.35, ease: "backOut" }}
       className="flex flex-col items-center gap-2 relative z-10"
     >
-      <div className="w-12 h-12 rounded-full bg-white border-2 border-accent/40 flex items-center justify-center shadow-md flex-shrink-0">
+      <div className="w-12 h-12 rounded-md bg-white border border-accent/40 flex items-center justify-center shadow-sm flex-shrink-0">
         <Icon size={20} className="text-accent" strokeWidth={1.8} />
       </div>
       {index === 0 && (
@@ -72,9 +72,9 @@ function TimelineItem({
           initial={{ opacity: 0, y: -4 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.5, duration: 0.4 }}
-          className="bg-accent text-white text-[10px] font-bold px-2.5 py-1 rounded-full whitespace-nowrap shadow-sm"
+          className="bg-accent text-white text-[10px] font-bold px-2.5 py-1 rounded-md whitespace-nowrap shadow-sm"
         >
-          📍 Kalian di sini
+          Posisi Umum
         </motion.div>
       )}
     </motion.div>
@@ -105,7 +105,7 @@ function TimelineItem({
         transition={{ delay: index * 0.15 + 0.1, duration: 0.5 }}
       >
         <div className="flex flex-col items-center pt-0.5">
-          <div className="w-10 h-10 rounded-full bg-white border-2 border-accent/40 flex items-center justify-center shadow-sm flex-shrink-0 z-10">
+          <div className="w-10 h-10 rounded-md bg-white border border-accent/40 flex items-center justify-center shadow-sm flex-shrink-0 z-10">
             <Icon size={16} className="text-accent" strokeWidth={1.8} />
           </div>
           {index < problems.length - 1 && (
@@ -115,8 +115,8 @@ function TimelineItem({
         <div className="flex-1 pb-2">
           {index === 0 && (
             <div className="mb-2">
-              <span className="inline-flex bg-accent text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
-                📍 Kalian di sini
+              <span className="inline-flex bg-accent text-white text-[10px] font-bold px-2 py-0.5 rounded-md">
+                Posisi Umum
               </span>
             </div>
           )}
@@ -143,8 +143,8 @@ export default function ProblemSection() {
         >
           <span className="text-accent font-bold text-sm uppercase tracking-wider">Masalah yang Kami Pahami</span>
           <h2 className="text-4xl sm:text-5xl font-extrabold text-brand-dark mt-3 leading-tight">
-            Bisnis bagus, tapi susah<br />
-            <span className="text-accent">ditemukan online?</span>
+            Bisnis Bagus, Tapi Susah<br />
+            <span className="text-accent">Ditemukan Online?</span>
           </h2>
           <p className="text-brand-dark/60 mt-4 text-lg max-w-2xl mx-auto">
             Banyak UMKM punya produk luar biasa, tapi tak ada yang tahu. Di sinilah kami hadir.

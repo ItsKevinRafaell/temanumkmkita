@@ -1,14 +1,14 @@
 "use client";
 
-import { useRef } from "react";
 import Link from "next/link";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { Globe, MapPin, Smartphone, Wrench, PenLine } from "lucide-react";
+import { motion } from "framer-motion";
+import { ArrowRight, Globe, MapPin, PenLine, Smartphone, Wrench } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
 const services: {
   IconComponent: LucideIcon;
   title: string;
+  label: string;
   desc: string;
   href: string;
   featured?: boolean;
@@ -16,93 +16,83 @@ const services: {
   {
     IconComponent: Globe,
     title: "Web Development",
-    desc: "Website profesional yang cepat, SEO-friendly, dan mudah dikelola. Bukan sekadar tampilan — tapi mesin penjualan yang bekerja 24 jam untuk bisnis kamu.",
+    label: "Biar bisnis terlihat kredibel",
+    desc: "Website cepat, jelas, mobile-friendly, dan siap jadi pusat informasi saat calon pelanggan membandingkan kamu dengan kompetitor.",
     href: "/layanan/web-development",
     featured: true,
   },
   {
     IconComponent: MapPin,
     title: "SEO & Google Maps",
-    desc: "Muncul di halaman pertama Google dan Maps saat calon pelanggan mencari bisnismu.",
+    label: "Biar muncul saat dicari",
+    desc: "Optimasi pencarian lokal, Google Business Profile, dan konten agar bisnis lebih mudah ditemukan di area target.",
     href: "/layanan/seo-google-maps",
   },
   {
     IconComponent: Smartphone,
     title: "Kelola Sosial Media",
-    desc: "Konten konsisten, desain menarik, engagement tumbuh.",
+    label: "Biar brand tetap hidup",
+    desc: "Rencana konten, desain visual, caption, dan jadwal posting supaya akun tidak terlihat kosong saat dicek pelanggan.",
     href: "/layanan/kelola-sosial-media",
   },
   {
     IconComponent: Wrench,
     title: "Maintenance Website",
-    desc: "Website tetap aman, cepat, dan up-to-date tanpa pusing teknikal.",
-    href: "/layanan/maintenance-website",
+    label: "Biar website tetap aman",
+    desc: "Monitoring, update, backup, dan perbaikan teknis supaya website tidak jadi beban operasional.",
+    href: "/layanan/maintenance",
   },
   {
     IconComponent: PenLine,
     title: "Desain Logo",
-    desc: "Identitas visual yang berkesan, profesional, dan mencerminkan bisnismu.",
+    label: "Biar brand lebih mudah diingat",
+    desc: "Identitas visual yang rapi dan siap dipakai untuk website, sosial media, kemasan, dan materi promosi.",
     href: "/layanan/desain-logo",
   },
 ];
 
-function TiltCard({
+function ServiceCard({
   service,
   className,
 }: {
   service: (typeof services)[0];
   className?: string;
 }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const rotateX = useSpring(useTransform(y, [-50, 50], [6, -6]), { stiffness: 300, damping: 30 });
-  const rotateY = useSpring(useTransform(x, [-50, 50], [-6, 6]), { stiffness: 300, damping: 30 });
-
-  function handleMouse(e: React.MouseEvent<HTMLDivElement>) {
-    const rect = ref.current?.getBoundingClientRect();
-    if (!rect) return;
-    x.set(e.clientX - rect.left - rect.width / 2);
-    y.set(e.clientY - rect.top - rect.height / 2);
-  }
-  function handleLeave() { x.set(0); y.set(0); }
-
   const { IconComponent } = service;
 
   return (
-    <motion.div
-      ref={ref}
-      style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-      onMouseMove={handleMouse}
-      onMouseLeave={handleLeave}
-      className={className}
+    <Link
+      href={service.href}
+      className={`group flex h-full flex-col rounded-lg border bg-white p-6 transition-all duration-200 hover:-translate-y-0.5 hover:border-accent/45 hover:shadow-card ${
+        service.featured ? "border-accent/35" : "border-brand-dark/10"
+      } ${className ?? ""}`}
     >
-      <Link
-        href={service.href}
-        className={`group flex flex-col h-full bg-white/80 backdrop-blur-sm rounded-2xl border border-brand-dark/8 card-shadow hover:card-shadow-hover hover:-translate-y-1 transition-all duration-300 shine-sweep ${
-          service.featured ? "p-8 sm:p-10" : "p-6"
-        }`}
-      >
-        <div className={`rounded-xl bg-accent/10 flex items-center justify-center flex-shrink-0 mb-5 ${
-          service.featured ? "w-14 h-14" : "w-11 h-11"
-        }`}>
-          <IconComponent size={service.featured ? 26 : 22} className="text-accent" />
+      <div className="mb-5 flex items-center justify-between gap-4">
+        <div className="h-11 w-11 rounded-md bg-accent/10 flex items-center justify-center">
+          <IconComponent size={21} className="text-accent" />
         </div>
-        <h3 className={`font-bold text-brand-dark leading-tight mb-3 group-hover:text-accent transition-colors ${
-          service.featured ? "text-2xl" : "text-lg"
-        }`}>
-          {service.title}
-        </h3>
-        <p className={`text-brand-dark/60 leading-relaxed flex-1 ${
-          service.featured ? "text-base" : "text-sm"
-        }`}>
-          {service.desc}
-        </p>
-        <span className="mt-4 inline-flex items-center gap-1 text-accent font-bold text-sm group-hover:gap-2 transition-all">
-          Pelajari lebih →
-        </span>
-      </Link>
-    </motion.div>
+        {service.featured && (
+          <span className="rounded-md bg-accent/10 px-2.5 py-1 text-[11px] font-bold text-accent">
+            Prioritas
+          </span>
+        )}
+      </div>
+      <p className="text-xs font-bold uppercase tracking-wider text-accent mb-2">
+        {service.label}
+      </p>
+      <h3 className={`font-extrabold text-brand-dark leading-tight mb-3 ${
+        service.featured ? "text-2xl" : "text-xl"
+      }`}>
+        {service.title}
+      </h3>
+      <p className="text-brand-dark/60 leading-relaxed flex-1 text-sm">
+        {service.desc}
+      </p>
+      <span className="mt-5 inline-flex items-center gap-2 text-brand-dark font-bold text-sm group-hover:text-accent transition-colors">
+        Lihat detail
+        <ArrowRight size={15} />
+      </span>
+    </Link>
   );
 }
 
@@ -111,76 +101,76 @@ export default function LayananSection() {
   const rest = services.slice(1);
 
   return (
-    <section className="py-24 bg-transparent">
+    <section className="py-24 bg-canvas">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-14"
+          transition={{ duration: 0.5 }}
+          className="mb-12 max-w-3xl"
         >
           <span className="text-accent font-bold text-sm uppercase tracking-wider">
-            Apa yang Kami Lakukan
+            Layanan
           </span>
-          <h2 className="text-4xl sm:text-5xl font-extrabold text-brand-dark mt-3">
-            Semua yang kamu butuhkan
-            <br />
-            <span className="text-accent">untuk hadir online</span>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-brand-dark mt-3 leading-tight">
+            Pilih Titik Yang Paling Bikin Bisnismu Tertinggal Online.
           </h2>
+          <p className="text-brand-dark/60 text-lg mt-4 max-w-2xl">
+            Mulai dari yang paling urgent dulu. Setelah audit, kami bantu tentukan apakah kamu butuh website, Maps, konten, maintenance, atau identitas brand.
+          </p>
         </motion.div>
 
-        {/* Bento grid — desktop */}
         <div className="hidden lg:grid lg:grid-cols-3 lg:grid-rows-2 gap-4 auto-rows-fr">
           <motion.div
             className="lg:col-span-1 lg:row-span-2"
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.45 }}
           >
-            <TiltCard service={featured} className="h-full" />
+            <ServiceCard service={featured} className="min-h-[390px]" />
           </motion.div>
           {rest.map((service, i) => (
             <motion.div
               key={service.href}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: (i + 1) * 0.08, duration: 0.5 }}
+              transition={{ delay: (i + 1) * 0.06, duration: 0.45 }}
             >
-              <TiltCard service={service} className="h-full" />
+              <ServiceCard service={service} />
             </motion.div>
           ))}
         </div>
 
-        {/* Card grid — mobile/tablet */}
         <div className="lg:hidden grid grid-cols-1 sm:grid-cols-2 gap-4">
           {services.map((service, i) => (
             <motion.div
               key={service.href}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 18 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.07, duration: 0.4 }}
+              transition={{ delay: i * 0.05, duration: 0.35 }}
             >
-              <TiltCard service={service} className="h-full" />
+              <ServiceCard service={service} />
             </motion.div>
           ))}
         </div>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.4 }}
-          className="mt-10 text-center"
+          transition={{ delay: 0.3 }}
+          className="mt-9"
         >
           <Link
             href="/layanan"
-            className="inline-flex items-center gap-2 border border-brand-dark/20 text-brand-dark font-semibold px-6 py-3 rounded-full hover:border-brand-dark/40 transition-colors"
+            className="inline-flex items-center gap-2 border border-brand-dark/15 bg-white text-brand-dark font-bold px-5 py-3 rounded-lg hover:border-accent/45 hover:text-accent transition-colors"
           >
-            Lihat semua layanan →
+            Bandingkan semua layanan
+            <ArrowRight size={16} />
           </Link>
         </motion.div>
       </div>

@@ -167,8 +167,17 @@ export interface SiteSettings {
   tiktok_url: string | null;
   youtube_url: string | null;
   twitter_url: string | null;
+  logo_url: string | null;
+  logo_light_url: string | null;
+  favicon_url: string | null;
   address: string | null;
   phone: string | null;
+  clients_active: string | null;
+  projects_completed: string | null;
+  founded_year: string | null;
+  primary_service_areas: string | null;
+  response_time: string | null;
+  show_testimonials: boolean | null;
   updated_at: string | null;
 }
 

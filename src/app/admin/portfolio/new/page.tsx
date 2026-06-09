@@ -12,6 +12,7 @@ const SERVICE_SLUGS = [
   { value: "web-development-bulanan", label: "Web Development Bulanan" },
   { value: "seo-google-maps", label: "SEO & Google Maps" },
   { value: "kelola-sosial-media", label: "Kelola Sosial Media" },
+  { value: "maintenance", label: "Maintenance Website" },
   { value: "desain-logo", label: "Desain Logo" },
 ];
 

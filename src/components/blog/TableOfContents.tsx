@@ -44,7 +44,7 @@ export default function TableOfContents({ headings }: TableOfContentsProps) {
   }
 
   return (
-    <div className="bg-white/80 backdrop-blur-sm border border-brand-dark/8 card-shadow rounded-2xl overflow-hidden">
+    <div className="bg-white border border-brand-dark/8 card-shadow rounded-lg overflow-hidden">
       {/* Header — always visible */}
       <button
         onClick={() => setMobileOpen((v) => !v)}
@@ -77,7 +77,7 @@ export default function TableOfContents({ headings }: TableOfContentsProps) {
                   }`}
                 >
                   {isActive && (
-                    <span className="inline-block w-1.5 h-1.5 rounded-full bg-accent mr-2 -mt-0.5 align-middle" />
+                    <span className="inline-block w-1.5 h-1.5 rounded-sm bg-accent mr-2 -mt-0.5 align-middle" />
                   )}
                   {h.text}
                 </button>

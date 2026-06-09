@@ -6,8 +6,7 @@ import Link from "next/link";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import BlogCard from "@/components/blog/BlogCard";
-import BlobDecoration from "@/components/ui/BlobDecoration";
-import { ChevronRight, ChevronLeft, BookOpen, Loader2 } from "lucide-react";
+import { ChevronRight, ChevronLeft, Loader2 } from "lucide-react";
 import { type BlogPost, type ContentBlock } from "@/lib/data/blog";
 import { fetchArticles, fetchPublicCategories, type Article } from "@/lib/api/blog";
 
@@ -93,10 +92,10 @@ export default function BlogPage() {
       <main className="pt-20">
 
         {/* ── Header ────────────────────────────────────────────────── */}
-        <section className="relative pt-12 pb-10">
-          <BlobDecoration position="top-right" size={340} opacity={0.14} shape={1} />
-          <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center gap-1.5 text-xs text-brand-dark/40 font-medium mb-6">
+        <section className="relative overflow-hidden pt-12 pb-10">
+          <div className="absolute inset-x-0 top-0 h-px bg-brand-dark/10" />
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center gap-1.5 text-xs text-brand-dark/40 font-medium mb-8">
               <Link href="/" className="hover:text-brand-dark transition-colors">Beranda</Link>
               <ChevronRight size={12} />
               <span className="text-brand-dark/70">Artikel</span>
@@ -107,15 +106,13 @@ export default function BlogPage() {
               transition={{ duration: 0.5 }}
               className="max-w-2xl"
             >
-              <div className="inline-flex items-center gap-2 bg-accent/10 border border-accent/30 px-4 py-1.5 rounded-full mb-5">
-                <BookOpen size={13} className="text-accent" />
-                <span className="text-sm font-semibold text-brand-dark">Artikel</span>
-              </div>
-              <h1 className="text-4xl sm:text-5xl font-extrabold text-brand-dark leading-tight mb-4">
-                Tips & Panduan Digital<br />
-                <span className="text-accent">untuk UMKM.</span>
+              <p className="text-accent font-bold text-sm uppercase tracking-wider mb-4">
+                Artikel Dan Panduan
+              </p>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-brand-dark leading-tight mb-5">
+                Tips Dan Panduan Digital Untuk UMKM.
               </h1>
-              <p className="text-brand-dark/60 text-lg">
+              <p className="text-brand-dark/60 text-lg leading-relaxed">
                 Strategi praktis yang bisa langsung diterapkan — tanpa jargon teknis yang membingungkan.
               </p>
             </motion.div>
@@ -130,7 +127,7 @@ export default function BlogPage() {
                 <button
                   key={cat}
                   onClick={() => handleCategory(cat)}
-                  className={`px-4 py-2 rounded-full text-sm font-semibold transition-all duration-200 ${
+                  className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 ${
                     activeCategory === cat
                       ? "bg-accent text-white shadow-md shadow-accent/20"
                       : "bg-white/80 border border-brand-dark/10 text-brand-dark/60 hover:border-accent hover:text-accent"
@@ -156,7 +153,7 @@ export default function BlogPage() {
                 <p className="text-brand-dark/55 font-medium mb-4">Gagal memuat artikel. Coba lagi.</p>
                 <button
                   onClick={() => { setError(false); setLoading(true); fetchArticles({ category: activeCategory === "Semua" ? undefined : activeCategory, page, per_page: PER_PAGE }).then((data) => { setPosts(data.items.map(articleToPost)); setTotalPages(data.pages); setTotal(data.total); setLoading(false); }).catch(() => { setLoading(false); setError(true); }); }}
-                  className="bg-accent text-white font-bold px-6 py-2.5 rounded-full text-sm hover:bg-accent/90 transition-colors"
+                  className="bg-accent text-white font-bold px-6 py-2.5 rounded-lg text-sm hover:bg-accent/90 transition-colors"
                 >
                   Coba Lagi
                 </button>

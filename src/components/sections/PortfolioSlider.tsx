@@ -48,7 +48,7 @@ export default function PortfolioSlider({ items }: { items: PortfolioItem[] }) {
   }
 
   const btnClass =
-    "hidden md:flex flex-shrink-0 w-10 h-10 rounded-full bg-white border border-brand-dark/10 card-shadow items-center justify-center text-brand-dark/40 hover:text-brand-dark hover:shadow-lg transition-all duration-200";
+    "hidden md:flex flex-shrink-0 w-10 h-10 rounded-lg bg-white border border-brand-dark/10 card-shadow items-center justify-center text-brand-dark/40 hover:text-brand-dark hover:shadow-lg transition-all duration-200";
 
   return (
     <div ref={ref} className="flex items-center gap-4">
@@ -69,7 +69,7 @@ export default function PortfolioSlider({ items }: { items: PortfolioItem[] }) {
             initial={{ opacity: 0, y: 24 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: i * 0.08, duration: 0.5 }}
-            className="flex-shrink-0 w-72 bg-white/80 backdrop-blur-sm border border-brand-dark/8 card-shadow rounded-2xl overflow-hidden"
+            className="flex-shrink-0 w-72 bg-white border border-brand-dark/8 card-shadow rounded-lg overflow-hidden"
             style={{ scrollSnapAlign: "start" }}
           >
             <div className={`h-44 ${item.accent ?? "bg-orange-50 border-orange-100"} border-b border-brand-dark/6 flex items-center justify-center relative overflow-hidden`}>
@@ -86,7 +86,7 @@ export default function PortfolioSlider({ items }: { items: PortfolioItem[] }) {
               )}
               {item.plan && (
                 <div className="absolute top-3 right-3">
-                  <span className="bg-white/80 backdrop-blur-sm text-brand-dark/50 text-xs font-semibold px-2.5 py-1 rounded-full border border-brand-dark/8">
+                  <span className="bg-white/80 backdrop-blur-sm text-brand-dark/50 text-xs font-semibold px-2.5 py-1 rounded-md border border-brand-dark/8">
                     {item.plan}
                   </span>
                 </div>

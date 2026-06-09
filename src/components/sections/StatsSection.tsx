@@ -12,10 +12,10 @@ interface StatItem {
 }
 
 const stats: StatItem[] = [
-  { end: 50, suffix: "+", label: "Klien Aktif", Icon: Users },
-  { end: 120, suffix: "+", label: "Proyek Selesai", Icon: CheckCircle2 },
+  { end: 3, suffix: "", label: "Klien Aktif", Icon: Users },
+  { end: 10, suffix: "+", label: "Proyek Selesai", Icon: CheckCircle2 },
   { end: 5, suffix: "", label: "Jenis Layanan", Icon: Layers },
-  { end: 100, suffix: "%", label: "Kepuasan Klien", Icon: Star },
+  { end: 2025, suffix: "", label: "Tahun Berdiri", Icon: Star },
 ];
 
 function useCountUp(end: number, duration: number, active: boolean) {

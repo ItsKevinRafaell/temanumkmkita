@@ -2,98 +2,122 @@
 
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { Users, BarChart2, Target, ChevronRight } from "lucide-react";
+import { BarChart2, CalendarDays, ChevronRight, MapPin, Target, Users } from "lucide-react";
 import Link from "next/link";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import CTASection from "@/components/sections/CTASection";
-import BlobDecoration from "@/components/ui/BlobDecoration";
 
 // ─── Hero ─────────────────────────────────────────────────────────────────────
 
-const heroWords1 = "Kami bukan vendor.".split(" ");
-const heroWords2 = "Kami teman bisnis kamu.".split(" ");
-const accentWords = new Set(["teman", "bisnis", "kamu."]);
-
 const heroStats = [
-  { value: "2", label: "Klien Aktif" },
-  { value: "6", label: "Proyek" },
-  { value: "5", label: "Layanan" },
+  { value: "3", label: "Klien Aktif" },
+  { value: "10+", label: "Proyek Lintas Layanan" },
   { value: "2025", label: "Berdiri" },
+  { value: "Kaltim", label: "Akar Layanan Utama" },
+];
+
+const focusItems = [
+  { icon: MapPin, title: "Area Fokus", text: "Kalimantan Timur dan Jabodetabek." },
+  { icon: CalendarDays, title: "Respons", text: "Berusaha membalas dalam 24 jam." },
+  { icon: Target, title: "Cara Kerja", text: "Mulai dari kebutuhan paling prioritas." },
 ];
 
 function HeroSection() {
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center pt-24 pb-16">
-      <BlobDecoration position="top-right" size={500} opacity={0.2} shape={1} />
-      <BlobDecoration position="bottom-left" size={380} opacity={0.15} shape={2} />
+    <section className="relative overflow-hidden pt-28 pb-20 lg:pt-32 lg:pb-24">
+      <div className="absolute inset-x-0 top-0 h-px bg-brand-dark/10" />
 
-      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <div className="flex items-center justify-center gap-1.5 text-xs text-brand-dark/40 font-medium mb-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center gap-1.5 text-xs text-brand-dark/40 font-medium mb-8">
           <Link href="/" className="hover:text-brand-dark transition-colors">Beranda</Link>
           <ChevronRight size={12} />
           <span className="text-brand-dark/70">Tentang Kami</span>
         </div>
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="inline-flex items-center gap-2 bg-accent/10 border border-accent/30 px-4 py-1.5 rounded-full mb-8"
-        >
-          <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-          <span className="text-sm font-semibold text-brand-dark">Kenali Kami</span>
-        </motion.div>
 
-        <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold leading-tight mb-5">
-          {heroWords1.map((word, i) => (
-            <motion.span
-              key={`a${i}`}
-              initial={{ opacity: 0, y: 20 }}
+        <div className="grid lg:grid-cols-[1.05fr_0.95fr] gap-12 lg:gap-16 items-center">
+          <div>
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 + i * 0.08, duration: 0.4 }}
-              className="inline-block mr-[0.25em] text-brand-dark"
+              transition={{ duration: 0.45 }}
+              className="text-accent font-bold text-sm uppercase tracking-wider"
             >
-              {word}
-            </motion.span>
-          ))}
-          <br />
-          {heroWords2.map((word, i) => (
-            <motion.span
-              key={`b${i}`}
-              initial={{ opacity: 0, y: 20 }}
+              Tentang Teman UMKM Kita
+            </motion.p>
+
+            <motion.h1
+              initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6 + i * 0.08, duration: 0.4 }}
-              className={`inline-block mr-[0.25em] ${accentWords.has(word) ? "text-accent" : "text-brand-dark"}`}
+              transition={{ delay: 0.08, duration: 0.5 }}
+              className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.05] text-brand-dark mt-4 max-w-3xl"
             >
-              {word}
-            </motion.span>
-          ))}
-        </h1>
+              Kami Bukan Vendor. Kami Teman Bisnis Kamu.
+            </motion.h1>
 
-        <motion.p
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.1, duration: 0.5 }}
-          className="text-brand-dark/60 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed mb-10"
-        >
-          Teman UMKM Kita hadir karena terlalu banyak bisnis lokal yang bagus
-          tapi tidak terlihat online. Kami di sini untuk mengubah itu.
-        </motion.p>
+            <motion.p
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.16, duration: 0.5 }}
+              className="text-lg sm:text-xl text-brand-dark/60 max-w-2xl mt-6 leading-relaxed"
+            >
+              Teman UMKM Kita hadir buat bantu bisnis lokal yang sebenarnya kuat,
+              tapi belum cukup terlihat saat calon pelanggan mencari, membandingkan,
+              dan akhirnya memutuskan untuk beli.
+            </motion.p>
 
-        {/* Stats strip */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.3, duration: 0.5 }}
-          className="w-full max-w-lg mx-auto grid grid-cols-2 sm:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-brand-dark/10 bg-white/60 backdrop-blur-sm border border-brand-dark/8 rounded-2xl overflow-hidden"
-        >
-          {heroStats.map((s) => (
-            <div key={s.label} className="px-4 py-5 text-center">
-              <div className="text-2xl font-extrabold text-brand-dark tabular-nums">{s.value}</div>
-              <div className="text-xs text-brand-dark/50 font-medium mt-0.5">{s.label}</div>
+            <motion.div
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.24, duration: 0.5 }}
+              className="mt-9 grid grid-cols-2 sm:grid-cols-4 max-w-3xl border border-brand-dark/10 bg-white rounded-lg overflow-hidden"
+            >
+              {heroStats.map((s) => (
+                <div key={s.label} className="px-4 py-4 border-r border-b sm:border-b-0 border-brand-dark/8 last:border-r-0 even:border-r-0 sm:even:border-r">
+                  <div className="text-2xl sm:text-3xl font-extrabold text-brand-dark tabular-nums">{s.value}</div>
+                  <div className="text-xs sm:text-sm text-brand-dark/50 mt-1 leading-snug">{s.label}</div>
+                </div>
+              ))}
+            </motion.div>
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.18, duration: 0.55 }}
+            className="rounded-lg border border-brand-dark/10 bg-white shadow-card overflow-hidden"
+          >
+            <div className="border-b border-brand-dark/8 px-5 py-4">
+              <p className="text-xs font-bold uppercase tracking-wider text-brand-dark/40">Prinsip Kerja</p>
+              <h2 className="text-lg font-extrabold text-brand-dark mt-0.5">Dekat, Praktis, Dan Bisa Dicek</h2>
             </div>
-          ))}
-        </motion.div>
+
+            <div className="p-5 space-y-3">
+              {focusItems.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <div key={item.title} className="flex items-start gap-3 rounded-lg border border-brand-dark/8 px-4 py-3">
+                    <div className="h-9 w-9 rounded-md bg-accent/10 flex items-center justify-center flex-shrink-0">
+                      <Icon size={17} className="text-accent" />
+                    </div>
+                    <div>
+                      <div className="text-sm font-bold text-brand-dark">{item.title}</div>
+                      <p className="text-xs text-brand-dark/55 mt-0.5 leading-relaxed">{item.text}</p>
+                    </div>
+                  </div>
+                );
+              })}
+
+              <div className="rounded-lg border border-accent/25 bg-accent/10 p-4">
+                <p className="text-sm font-bold text-brand-dark">Bukan soal terlihat ramai.</p>
+                <p className="text-sm text-brand-dark/65 mt-1 leading-relaxed">
+                  Fokus kami adalah bikin bisnis lebih mudah ditemukan, lebih dipercaya,
+                  dan lebih jelas saat calon pelanggan butuh jawaban cepat.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
       </div>
     </section>
   );
@@ -119,7 +143,7 @@ function CeritaSection() {
               Cerita Kami
             </span>
             <h2 className="text-4xl sm:text-5xl font-extrabold text-brand-dark mb-8 leading-tight">
-              Berawal dari frustrasi yang sama.
+              Berawal Dari Frustrasi Yang Sama.
             </h2>
             <p className="text-brand-dark/60 text-lg leading-relaxed mb-6">
               Terlalu banyak UMKM punya produk bagus, pelayanan solid, tapi kalah
@@ -146,7 +170,7 @@ function CeritaSection() {
             transition={{ duration: 0.6, delay: 0.15 }}
             className="md:col-span-2 md:sticky md:top-28"
           >
-            <div className="bg-accent/8 border border-accent/25 rounded-3xl p-8 flex flex-col gap-6">
+            <div className="bg-white border border-accent/25 rounded-lg p-8 flex flex-col gap-6 shadow-card">
               <span className="text-6xl text-accent/30 font-serif leading-none select-none">&ldquo;</span>
               <p className="text-brand-dark text-2xl font-bold leading-relaxed">
                 Bukan karena kualitas yang kurang. Tapi karena tidak terlihat.
@@ -168,17 +192,17 @@ function ManifestoStrip() {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.3 });
 
   return (
-    <section ref={ref} className="bg-accent py-20">
+    <section ref={ref} className="bg-white border-y border-brand-dark/8 py-20">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight"
+          className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-brand-dark leading-tight"
         >
-          Kami tidak sekadar mengerjakan proyek.
+          Kami Tidak Sekadar Mengerjakan Proyek.
           <br />
-          <span className="text-white/60">Kami bagian dari tim kamu.</span>
+          <span className="text-accent">Kami Ikut Menjaga Momentum Bisnismu.</span>
         </motion.p>
       </div>
     </section>
@@ -221,9 +245,9 @@ function MisiNilaiSection() {
             Cara Kami Kerja
           </span>
           <h2 className="text-4xl sm:text-5xl font-extrabold text-brand-dark max-w-xl">
-            Satu misi,{" "}
-            <span className="text-accent">tiga cara</span>
-            {" "}kami kerja
+            Satu Misi,{" "}
+            <span className="text-accent">Tiga Cara</span>
+            {" "}Kami Kerja
           </h2>
           <p className="text-brand-dark/60 text-lg mt-4 max-w-xl">
             Bantu UMKM Indonesia tumbuh lewat kehadiran digital yang nyata dan terukur.
@@ -239,10 +263,10 @@ function MisiNilaiSection() {
                 initial={{ opacity: 0, y: 24 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
                 transition={{ delay: i * 0.1, duration: 0.5 }}
-                whileHover={{ y: -6 }}
-                className="bg-white/80 backdrop-blur-sm border border-brand-dark/8 card-shadow rounded-2xl p-8 cursor-default"
+                whileHover={{ y: -4 }}
+                className="bg-white border border-brand-dark/8 card-shadow rounded-lg p-8 cursor-default"
               >
-                <div className="w-14 h-14 rounded-xl bg-accent/10 flex items-center justify-center mb-6">
+                <div className="w-14 h-14 rounded-md bg-accent/10 flex items-center justify-center mb-6">
                   <Icon size={24} className="text-accent" />
                 </div>
                 <h3 className="font-bold text-brand-dark text-lg mb-3">{item.title}</h3>
@@ -274,7 +298,7 @@ function TimSection() {
             Tim Kami
           </span>
           <h2 className="text-4xl sm:text-5xl font-extrabold text-brand-dark">
-            Siapa di balik{" "}
+            Siapa Di Balik{" "}
             <span className="text-accent">Teman UMKM Kita?</span>
           </h2>
         </motion.div>
@@ -283,12 +307,12 @@ function TimSection() {
           initial={{ opacity: 0, y: 24 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.15, duration: 0.5 }}
-          className="bg-white/80 backdrop-blur-sm border border-brand-dark/8 card-shadow rounded-3xl p-8 sm:p-12"
+          className="bg-white border border-brand-dark/8 card-shadow rounded-lg p-8 sm:p-12"
         >
           <div className="grid md:grid-cols-5 gap-10 items-start">
             {/* Left — identity */}
             <div className="md:col-span-2 flex flex-col items-center md:items-start gap-4">
-              <div className="w-32 h-32 rounded-2xl border-2 border-accent bg-accent/10 flex items-center justify-center text-4xl font-extrabold text-accent flex-shrink-0">
+              <div className="w-32 h-32 rounded-lg border-2 border-accent bg-accent/10 flex items-center justify-center text-4xl font-extrabold text-accent flex-shrink-0">
                 K
               </div>
               <div>
@@ -305,7 +329,7 @@ function TimSection() {
                 ].map((tag) => (
                   <span
                     key={tag}
-                    className="inline-block bg-brand-dark/5 text-brand-dark/60 text-xs font-semibold px-3 py-1.5 rounded-full mr-2"
+                    className="inline-block bg-brand-dark/5 text-brand-dark/60 text-xs font-semibold px-3 py-1.5 rounded-md mr-2"
                   >
                     {tag}
                   </span>

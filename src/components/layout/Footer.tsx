@@ -18,14 +18,11 @@ const companyLinks = [
 export default function Footer() {
   return (
     <footer className="bg-accent text-white relative overflow-hidden">
-      {/* Top gradient line */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
           {/* Brand */}
           <div className="md:col-span-1">
-            <Logo variant="light" className="mb-4" />
+            <Logo variant="footer" className="mb-4" />
             <p className="text-white/90 text-sm leading-relaxed mt-3">
               Membantu UMKM Indonesia hadir dan berkembang secara digital.
             </p>
@@ -86,7 +83,7 @@ export default function Footer() {
               href="https://wa.me/6289501925395?text=Halo%2C+saya+ingin+konsultasi+gratis"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block bg-brand-dark text-white font-bold text-sm px-5 py-2.5 rounded-full hover:bg-brand-dark/90 transition-colors"
+              className="inline-block bg-white text-brand-dark font-bold text-sm px-5 py-2.5 rounded-lg hover:bg-white/90 transition-colors"
             >
               Konsultasi Gratis
             </a>

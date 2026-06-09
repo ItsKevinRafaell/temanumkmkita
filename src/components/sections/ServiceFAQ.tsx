@@ -36,7 +36,7 @@ export default function ServiceFAQ({ faqs, title }: Props) {
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: i * 0.1, duration: 0.4 }}
-              className="bg-white rounded-2xl border border-brand-dark/8 overflow-hidden"
+              className="bg-white rounded-lg border border-brand-dark/8 overflow-hidden"
             >
               <button
                 className="w-full text-left px-6 py-5 flex items-center justify-between gap-4 font-semibold text-brand-dark hover:text-accent transition-colors"

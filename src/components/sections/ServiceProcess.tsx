@@ -22,7 +22,7 @@ export default function ServiceProcess({ steps }: Props) {
         >
           <span className="text-accent font-bold text-sm uppercase tracking-wider">Cara Kerja</span>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-brand-dark mt-3">
-            Proses pengerjaan
+            Proses Pengerjaan
           </h2>
         </motion.div>
 
@@ -33,9 +33,9 @@ export default function ServiceProcess({ steps }: Props) {
               initial={{ opacity: 0, x: -20 }}
               animate={inView ? { opacity: 1, x: 0 } : {}}
               transition={{ delay: i * 0.12, duration: 0.5 }}
-              className="flex gap-5 items-start bg-canvas rounded-2xl p-6"
+              className="flex gap-5 items-start bg-canvas rounded-lg p-6"
             >
-              <div className="w-10 h-10 bg-accent rounded-full flex items-center justify-center text-brand-dark font-extrabold flex-shrink-0">
+              <div className="w-10 h-10 bg-accent rounded-md flex items-center justify-center text-brand-dark font-extrabold flex-shrink-0">
                 {i + 1}
               </div>
               <div>

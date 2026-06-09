@@ -44,7 +44,7 @@ export default function BlogCard({ post, priority }: BlogCardProps) {
   return (
     <Link
       href={`/blog/${post.slug}`}
-      className="group flex flex-col bg-white/80 backdrop-blur-sm border border-brand-dark/8 card-shadow rounded-2xl overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-200"
+      className="group flex flex-col bg-white border border-brand-dark/8 card-shadow rounded-lg overflow-hidden hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200"
     >
       {/* Thumbnail */}
       <div className={`h-44 ${bgClass} border-b border-brand-dark/6 flex items-center justify-center relative overflow-hidden`}>
@@ -65,7 +65,7 @@ export default function BlogCard({ post, priority }: BlogCardProps) {
         )}
         {post.featured && (
           <div className="absolute top-3 left-3">
-            <span className="bg-accent text-white text-xs font-bold px-2.5 py-1 rounded-full">
+            <span className="bg-accent text-white text-xs font-bold px-2.5 py-1 rounded-md">
               Featured
             </span>
           </div>
@@ -75,7 +75,7 @@ export default function BlogCard({ post, priority }: BlogCardProps) {
       {/* Body */}
       <div className="p-5 flex flex-col gap-3 flex-1">
         <span
-          className={`self-start text-xs font-bold px-2.5 py-1 rounded-full border ${colorClass}`}
+          className={`self-start text-xs font-bold px-2.5 py-1 rounded-md border ${colorClass}`}
         >
           {post.category}
         </span>

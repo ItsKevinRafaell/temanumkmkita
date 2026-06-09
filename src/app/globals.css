@@ -6,6 +6,8 @@
   --accent: #f5a700;
   --brand-dark: #242423;
   --bg-canvas: #fcfaf7;
+  --brand-logo-url: url("/brand/logo-secondary.png");
+  --brand-logo-light-url: url("/brand/logo-secondary.png");
 }
 
 html,

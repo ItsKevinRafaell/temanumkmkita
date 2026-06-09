@@ -4,6 +4,7 @@ import Footer from "@/components/layout/Footer";
 import { servicesData } from "@/lib/data/services";
 import { SITE_URL } from "@/lib/seo/site";
 import type { Metadata } from "next";
+import { ArrowRight, ChevronRight, Globe, MapPin, PenLine, Share2, Wrench, type LucideIcon } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Layanan — Teman UMKM Kita",
@@ -14,7 +15,7 @@ export const metadata: Metadata = {
 const allServices = [
   ...servicesData,
   {
-    slug: "maintenance-website",
+    slug: "maintenance",
     title: "Maintenance Website",
     icon: "🔧",
     hook: "Website kamu tetap aman, cepat, dan selalu diperbarui.",
@@ -39,6 +40,15 @@ const allServices = [
   },
 ];
 
+const iconMap: Record<string, LucideIcon> = {
+  "web-development": Globe,
+  "web-development-bulanan": Globe,
+  "seo-google-maps": MapPin,
+  "kelola-sosial-media": Share2,
+  maintenance: Wrench,
+  "desain-logo": PenLine,
+};
+
 const serviceJsonLd = {
   "@context": "https://schema.org",
   "@graph": allServices.map((s) => ({
@@ -58,14 +68,21 @@ export default function LayananPage() {
       <Navbar />
       <main className="pt-20">
         {/* Hero */}
-        <section className="py-20 bg-canvas">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <span className="text-accent font-bold text-sm uppercase tracking-wider">Semua Layanan</span>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-brand-dark mt-3 mb-6">
-              Semua yang kamu butuhkan<br />
-              <span className="text-accent">untuk hadir online</span>
+        <section className="relative overflow-hidden pt-12 pb-16 bg-canvas">
+          <div className="absolute inset-x-0 top-0 h-px bg-brand-dark/10" />
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center gap-1.5 text-xs text-brand-dark/40 font-medium mb-8">
+              <Link href="/" className="hover:text-brand-dark transition-colors">Beranda</Link>
+              <ChevronRight size={12} />
+              <span className="text-brand-dark/70">Layanan</span>
+            </div>
+            <p className="text-accent font-bold text-sm uppercase tracking-wider mb-4">
+              Semua Layanan
+            </p>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-brand-dark leading-tight mb-5 max-w-3xl">
+              Solusi Digital Yang Bisa Dimulai Dari Kebutuhan Paling Mendesak.
             </h1>
-            <p className="text-xl text-brand-dark/60 max-w-2xl mx-auto">
+            <p className="text-lg sm:text-xl text-brand-dark/60 max-w-2xl leading-relaxed">
               Dari website, SEO, sosial media, hingga logo — kami kerjakan semuanya
               sehingga kamu bisa fokus menjalankan bisnis.
             </p>
@@ -76,45 +93,54 @@ export default function LayananPage() {
         <section className="pb-24 bg-canvas">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {allServices.map((service) => (
+              {allServices.map((service) => {
+                const Icon = iconMap[service.slug] ?? Globe;
+                return (
                 <Link
                   key={service.slug}
                   href={`/layanan/${service.slug}`}
-                  className="group bg-white rounded-2xl p-8 border border-brand-dark/8 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 shine-sweep"
+                  className="group bg-white rounded-lg p-8 border border-brand-dark/8 hover:border-accent/45 hover:shadow-card hover:-translate-y-0.5 transition-all duration-200"
                 >
-                  <div className="text-4xl mb-4">{service.icon}</div>
+                  <div className="h-11 w-11 rounded-md bg-accent/10 flex items-center justify-center mb-5">
+                    <Icon size={21} className="text-accent" />
+                  </div>
                   <h2 className="font-bold text-brand-dark text-xl mb-3 group-hover:text-accent transition-colors">
                     {service.title}
                   </h2>
                   <p className="text-brand-dark/60 text-sm leading-relaxed mb-4">
                     {service.hook}
                   </p>
-                  <span className="text-accent font-semibold text-sm group-hover:underline">
-                    Lihat detail →
+                  <span className="inline-flex items-center gap-2 text-brand-dark font-bold text-sm group-hover:text-accent transition-colors">
+                    Lihat Detail
+                    <ArrowRight size={15} />
                   </span>
                 </Link>
-              ))}
+                );
+              })}
             </div>
           </div>
         </section>
 
         {/* CTA */}
-        <section className="py-20 bg-accent">
+        <section className="py-20 bg-canvas">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-4">
-              Tidak yakin layanan mana yang tepat?
-            </h2>
-            <p className="text-white/70 mb-8">
-              Ceritakan bisnismu dan kami bantu rekomendasikan solusi terbaik, gratis.
-            </p>
-            <a
-              href="https://wa.me/6289501925395?text=Halo%2C+saya+ingin+konsultasi+layanan+yang+tepat+untuk+bisnis+saya"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block bg-brand-dark text-white font-bold px-8 py-4 rounded-full text-lg hover:bg-brand-dark/90 transition-colors"
-            >
-              Konsultasi Gratis →
-            </a>
+            <div className="rounded-lg border border-accent/25 bg-white p-8 sm:p-10 shadow-card">
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-brand-dark mb-4">
+                Tidak Yakin Layanan Mana Yang Tepat?
+              </h2>
+              <p className="text-brand-dark/60 mb-8">
+                Ceritakan bisnismu dan kami bantu rekomendasikan solusi paling prioritas, gratis.
+              </p>
+              <a
+                href="https://wa.me/6289501925395?text=Halo%2C+saya+ingin+konsultasi+layanan+yang+tepat+untuk+bisnis+saya"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 bg-accent text-white font-bold px-6 py-3.5 rounded-lg text-base hover:bg-accent/90 transition-colors shadow-lg shadow-accent/20"
+              >
+                Konsultasi Gratis
+                <ArrowRight size={18} />
+              </a>
+            </div>
           </div>
         </section>
       </main>

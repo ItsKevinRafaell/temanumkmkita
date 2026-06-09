@@ -16,6 +16,7 @@ const navLinks = [
 ];
 
 const layananLinks = [
+  { label: "Semua Layanan", href: "/layanan", icon: Globe },
   { label: "Web Development", href: "/layanan/web-development", icon: Globe },
   { label: "Web Development (Bulanan)", href: "/layanan/web-development-bulanan", icon: Globe },
   { label: "SEO & Google Maps", href: "/layanan/seo-google-maps", icon: MapPin },
@@ -89,7 +90,7 @@ export default function Navbar() {
                   {active && (
                     <motion.div
                       layoutId="nav-indicator"
-                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-accent rounded-full"
+                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-accent rounded-sm"
                     />
                   )}
                 </Link>
@@ -102,8 +103,11 @@ export default function Navbar() {
               className="relative"
               onMouseEnter={() => setLayananOpen(true)}
               onMouseLeave={() => setLayananOpen(false)}
+              onFocus={() => setLayananOpen(true)}
             >
-              <button
+              <Link
+                href="/layanan"
+                onClick={() => setLayananOpen(false)}
                 className={cn(
                   "nav-link-hover px-3 py-2 text-sm font-medium rounded-lg transition-colors flex items-center gap-1 relative",
                   pathname.startsWith("/layanan") ? activeLinkColor : linkColor
@@ -117,10 +121,10 @@ export default function Navbar() {
                 {pathname.startsWith("/layanan") && (
                   <motion.div
                     layoutId="nav-indicator"
-                    className="absolute bottom-0 left-0 right-0 h-0.5 bg-accent rounded-full"
+                    className="absolute bottom-0 left-0 right-0 h-0.5 bg-accent rounded-sm"
                   />
                 )}
-              </button>
+              </Link>
 
               <AnimatePresence>
                 {layananOpen && (
@@ -129,7 +133,7 @@ export default function Navbar() {
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: -8, scale: 0.97 }}
                     transition={{ duration: 0.15 }}
-                    className="absolute top-full left-0 mt-2 bg-white border border-brand-dark/10 rounded-2xl shadow-lg p-2 min-w-[220px] z-50"
+                    className="absolute top-full left-0 mt-2 bg-white border border-brand-dark/10 rounded-lg shadow-lg p-2 min-w-[220px] z-50"
                   >
                     {layananLinks.map((item) => {
                       const Icon = item.icon;
@@ -140,7 +144,7 @@ export default function Navbar() {
                           href={item.href}
                           onClick={() => setLayananOpen(false)}
                           className={cn(
-                            "flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors",
+                            "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors",
                             active
                               ? "bg-accent/10 text-brand-dark"
                               : "text-brand-dark/60 hover:text-brand-dark hover:bg-accent/8"
@@ -172,7 +176,7 @@ export default function Navbar() {
                   {active && (
                     <motion.div
                       layoutId="nav-indicator"
-                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-accent rounded-full"
+                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-accent rounded-sm"
                     />
                   )}
                 </Link>
@@ -187,7 +191,7 @@ export default function Navbar() {
               href="https://wa.me/6289501925395?text=Halo%2C+saya+ingin+konsultasi+gratis"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-accent text-white font-bold text-sm px-5 py-2.5 rounded-full hover:bg-accent/90 hover:shadow-md transition-all duration-200"
+              className="bg-accent text-white font-bold text-sm px-5 py-2.5 rounded-lg hover:bg-accent/90 hover:shadow-md transition-all duration-200"
             >
               Konsultasi Gratis
             </a>
@@ -294,7 +298,7 @@ export default function Navbar() {
                   href="https://wa.me/6289501925395?text=Halo%2C+saya+ingin+konsultasi+gratis"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block text-center bg-accent text-white font-bold text-sm px-4 py-3 rounded-full"
+                  className="block text-center bg-accent text-white font-bold text-sm px-4 py-3 rounded-lg"
                 >
                   Konsultasi Gratis
                 </a>

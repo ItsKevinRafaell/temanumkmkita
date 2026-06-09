@@ -28,7 +28,7 @@ export default function BlogDetailClient({ post, related, headings }: Props) {
 
         {/* Featured image */}
         {post.cover_image ? (
-          <div className="w-full h-64 sm:h-80 rounded-2xl mb-8 overflow-hidden border border-brand-dark/8 relative">
+          <div className="w-full h-64 sm:h-80 rounded-lg mb-8 overflow-hidden border border-brand-dark/8 relative">
             <Image
               src={post.cover_image}
               alt={post.title}
@@ -41,7 +41,7 @@ export default function BlogDetailClient({ post, related, headings }: Props) {
           </div>
         ) : (
           <div
-            className={`w-full h-64 sm:h-80 rounded-2xl mb-8 flex items-center justify-center border border-brand-dark/8 ${
+            className={`w-full h-64 sm:h-80 rounded-lg mb-8 flex items-center justify-center border border-brand-dark/8 ${
               {
                 Website: "bg-blue-50",
                 SEO: "bg-green-50",
@@ -81,7 +81,7 @@ export default function BlogDetailClient({ post, related, headings }: Props) {
         <TableOfContents headings={headings} />
 
         {/* Sidebar CTA */}
-        <div className="bg-accent/10 border border-accent/30 rounded-2xl p-5">
+        <div className="bg-accent/10 border border-accent/30 rounded-lg p-5">
           <p className="text-sm font-bold text-brand-dark mb-1">Butuh bantuan digital?</p>
           <p className="text-xs text-brand-dark/55 mb-4 leading-relaxed">
             Konsultasi gratis — kami rekomendasikan layanan yang sesuai kebutuhan bisnis Anda.
@@ -90,7 +90,7 @@ export default function BlogDetailClient({ post, related, headings }: Props) {
             href={WA_BASE + encodeURIComponent(`Halo, saya baca artikel "${post.title}" dan ingin konsultasi layanan digital untuk bisnis saya.`)}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-center gap-2 bg-accent text-white no-underline font-bold py-2.5 rounded-xl text-sm hover:bg-accent/90 transition-colors duration-200"
+            className="flex items-center justify-center gap-2 bg-accent text-white no-underline font-bold py-2.5 rounded-lg text-sm hover:bg-accent/90 transition-colors duration-200"
           >
             <MessageCircle size={14} />
             Konsultasi Gratis
@@ -98,7 +98,7 @@ export default function BlogDetailClient({ post, related, headings }: Props) {
         </div>
 
         {/* Popular posts */}
-        <div className="bg-white/80 backdrop-blur-sm border border-brand-dark/8 card-shadow rounded-2xl p-5">
+        <div className="bg-white border border-brand-dark/8 card-shadow rounded-lg p-5">
           <p className="text-xs font-bold uppercase tracking-wider text-brand-dark/40 mb-4">
             Artikel Terkait
           </p>
@@ -184,7 +184,7 @@ function BlogContent({ blocks, postTitle }: { blocks: BlogPost["content"]; postT
             alt={b.alt}
             width={800}
             height={450}
-            className="w-full rounded-2xl border border-brand-dark/8 object-cover"
+            className="w-full rounded-lg border border-brand-dark/8 object-cover"
             loading="lazy"
           />
           {b.caption && (
@@ -217,7 +217,7 @@ function BlogContent({ blocks, postTitle }: { blocks: BlogPost["content"]; postT
           <h3 className="text-base font-extrabold text-brand-dark mb-3">Pertanyaan Umum</h3>
           <div className="space-y-2">
             {b.items.map((item, j) => (
-              <details key={j} className="group border border-brand-dark/10 rounded-xl overflow-hidden">
+              <details key={j} className="group border border-brand-dark/10 rounded-lg overflow-hidden">
                 <summary className="flex items-center justify-between px-4 py-3 cursor-pointer font-semibold text-sm text-brand-dark select-none list-none">
                   {item.question}
                   <ChevronRight size={14} className="flex-shrink-0 text-brand-dark/40 group-open:rotate-90 transition-transform" />
@@ -234,12 +234,12 @@ function BlogContent({ blocks, postTitle }: { blocks: BlogPost["content"]; postT
           <ol className="space-y-4">
             {b.steps.map((step, j) => (
               <li key={j} className="flex gap-4">
-                <span className="w-7 h-7 rounded-full bg-accent flex items-center justify-center text-white text-xs font-bold flex-shrink-0 mt-0.5">{j + 1}</span>
+                <span className="w-7 h-7 rounded-md bg-accent flex items-center justify-center text-white text-xs font-bold flex-shrink-0 mt-0.5">{j + 1}</span>
                 <div className="flex-1">
                   <p className="font-bold text-sm text-brand-dark">{step.name}</p>
                   <p className="text-sm text-brand-dark/65 mt-0.5 leading-relaxed">{step.text}</p>
                   {step.image && (
-                    <Image src={step.image} alt={step.name} width={600} height={192} className="mt-2 w-full rounded-xl border border-brand-dark/8 object-cover max-h-48" loading="lazy" />
+                    <Image src={step.image} alt={step.name} width={600} height={192} className="mt-2 w-full rounded-lg border border-brand-dark/8 object-cover max-h-48" loading="lazy" />
                   )}
                 </div>
               </li>
@@ -249,12 +249,12 @@ function BlogContent({ blocks, postTitle }: { blocks: BlogPost["content"]; postT
       );
     } else if (b.type === "key-takeaway") {
       elements.push(
-        <div key={i} className="not-prose my-6 bg-accent/8 border border-accent/25 rounded-2xl p-5">
+        <div key={i} className="not-prose my-6 bg-accent/8 border border-accent/25 rounded-lg p-5">
           <p className="text-xs font-bold uppercase tracking-wider text-accent mb-3">Yang akan kamu pelajari</p>
           <ul className="space-y-2">
             {b.items.filter(Boolean).map((item, j) => (
               <li key={j} className="flex items-start gap-2.5 text-sm text-brand-dark/80">
-                <span className="w-1.5 h-1.5 rounded-full bg-accent flex-shrink-0 mt-1.5" />
+                <span className="w-1.5 h-1.5 rounded-sm bg-accent flex-shrink-0 mt-1.5" />
                 {item}
               </li>
             ))}
@@ -300,7 +300,7 @@ function BlogContent({ blocks, postTitle }: { blocks: BlogPost["content"]; postT
 
 function InlineCTA({ postTitle }: { postTitle: string }) {
   return (
-    <div className="not-prose my-8 bg-accent/10 border border-accent/30 rounded-2xl p-6 flex flex-col sm:flex-row sm:items-center gap-4">
+    <div className="not-prose my-8 bg-accent/10 border border-accent/30 rounded-lg p-6 flex flex-col sm:flex-row sm:items-center gap-4">
       <div className="flex-1">
         <p className="font-bold text-brand-dark text-base mb-1">
           Butuh bantuan mengoptimalkan bisnis Anda?

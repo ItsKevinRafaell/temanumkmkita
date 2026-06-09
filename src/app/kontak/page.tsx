@@ -6,7 +6,6 @@ import { MessageCircle, Mail, AtSign, Clock, MapPin, CheckCircle, Send, ChevronR
 import Link from "next/link";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import BlobDecoration from "@/components/ui/BlobDecoration";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "https://api.temanumkmkita.com";
 
@@ -46,12 +45,12 @@ const contactItems = [
 
 const reassuranceItems = [
   "Konsultasi gratis, tanpa syarat",
-  "Proposal dalam 1×24 jam",
+  "Berusaha balas dalam 24 jam",
   "Tidak ada tekanan untuk langsung deal",
 ];
 
 const inputClass =
-  "w-full px-4 py-3 rounded-xl border border-brand-dark/12 bg-white focus:outline-none focus:ring-2 focus:ring-accent/30 text-brand-dark placeholder:text-brand-dark/35 transition-all text-sm";
+  "w-full px-4 py-3 rounded-lg border border-brand-dark/12 bg-white focus:outline-none focus:ring-2 focus:ring-accent/30 text-brand-dark placeholder:text-brand-dark/35 transition-all text-sm";
 
 const labelClass = "block text-sm font-semibold text-brand-dark mb-2";
 
@@ -100,11 +99,11 @@ export default function KontakPage() {
       <main className="pt-20">
 
         {/* ── Header ─────────────────────────────────────────────── */}
-        <section className="relative py-16">
-          <BlobDecoration position="top-right" size={380} opacity={0.18} shape={1} />
+        <section className="relative overflow-hidden pt-12 pb-12">
+          <div className="absolute inset-x-0 top-0 h-px bg-brand-dark/10" />
 
-          <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center gap-1.5 text-xs text-brand-dark/40 font-medium mb-6">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center gap-1.5 text-xs text-brand-dark/40 font-medium mb-8">
               <Link href="/" className="hover:text-brand-dark transition-colors">Beranda</Link>
               <ChevronRight size={12} />
               <span className="text-brand-dark/70">Kontak</span>
@@ -114,27 +113,24 @@ export default function KontakPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
-              <div className="inline-flex items-center gap-2 bg-accent/10 border border-accent/30 px-4 py-1.5 rounded-full mb-6">
-                <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-                <span className="text-sm font-semibold text-brand-dark">Hubungi Kami</span>
-              </div>
-              <h1 className="text-4xl sm:text-5xl font-extrabold text-brand-dark mb-4 leading-tight">
-                Ceritakan kebutuhan<br />
-                <span className="text-accent">bisnis Anda.</span>
+              <p className="text-accent font-bold text-sm uppercase tracking-wider mb-4">
+                Kontak Teman UMKM Kita
+              </p>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-brand-dark mb-5 leading-tight max-w-3xl">
+                Ceritakan Kebutuhan Bisnis Anda.
               </h1>
-              <p className="text-brand-dark/60 text-lg max-w-xl mb-6">
-                Kami balas dalam 1×24 jam. Konsultasi pertama gratis, tanpa komitmen.
+              <p className="text-brand-dark/60 text-lg max-w-2xl mb-8 leading-relaxed">
+                Mulai dari kondisi bisnismu sekarang. Kami bantu petakan kebutuhan digital yang paling prioritas sebelum bicara paket.
               </p>
 
-              {/* Reassurance chips */}
-              <div className="flex flex-wrap gap-3">
+              <div className="grid sm:grid-cols-3 gap-3 max-w-3xl">
                 {reassuranceItems.map((item, i) => (
                   <motion.div
                     key={i}
                     initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.4 + i * 0.08, duration: 0.4 }}
-                    className="flex items-center gap-2 bg-white/70 backdrop-blur-sm border border-brand-dark/8 px-4 py-2 rounded-full"
+                    className="flex items-start gap-2 bg-white border border-brand-dark/8 px-4 py-3 rounded-lg"
                   >
                     <CheckCircle size={13} className="text-accent flex-shrink-0" />
                     <span className="text-brand-dark/70 text-sm font-medium">{item}</span>
@@ -158,7 +154,7 @@ export default function KontakPage() {
                 className="lg:col-span-2 space-y-4"
               >
                 {/* Contact channels */}
-                <div className="bg-white/80 backdrop-blur-sm border border-brand-dark/8 card-shadow rounded-2xl overflow-hidden">
+                <div className="bg-white border border-brand-dark/8 card-shadow rounded-lg overflow-hidden">
                   {contactItems.map((item, i) => {
                     const Icon = item.icon;
                     return (
@@ -168,7 +164,7 @@ export default function KontakPage() {
                           i < contactItems.length - 1 ? "border-b border-brand-dark/6" : ""
                         } ${item.muted ? "opacity-50" : ""}`}
                       >
-                        <div className="w-9 h-9 rounded-xl bg-accent/10 flex items-center justify-center flex-shrink-0">
+                        <div className="w-9 h-9 rounded-md bg-accent/10 flex items-center justify-center flex-shrink-0">
                           <Icon size={16} className="text-accent" />
                         </div>
                         <div className="flex-1 min-w-0">
@@ -206,7 +202,7 @@ export default function KontakPage() {
                 </div>
 
                 {/* Hours */}
-                <div className="bg-white/80 backdrop-blur-sm border border-brand-dark/8 card-shadow rounded-2xl p-5">
+                <div className="bg-white border border-brand-dark/8 card-shadow rounded-lg p-5">
                   <div className="flex items-center gap-2 mb-4">
                     <Clock size={15} className="text-accent" />
                     <span className="text-sm font-bold text-brand-dark uppercase tracking-wider">
@@ -230,8 +226,8 @@ export default function KontakPage() {
                 </div>
 
                 {/* Location */}
-                <div className="flex items-start gap-3 px-5 py-4 bg-white/80 backdrop-blur-sm border border-brand-dark/8 card-shadow rounded-2xl">
-                  <div className="w-9 h-9 rounded-xl bg-accent/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <div className="flex items-start gap-3 px-5 py-4 bg-white border border-brand-dark/8 card-shadow rounded-lg">
+                  <div className="w-9 h-9 rounded-md bg-accent/10 flex items-center justify-center flex-shrink-0 mt-0.5">
                     <MapPin size={16} className="text-accent" />
                   </div>
                   <div>
@@ -252,7 +248,7 @@ export default function KontakPage() {
                 transition={{ delay: 0.25, duration: 0.5 }}
                 className="lg:col-span-3"
               >
-                <div className="bg-white/80 backdrop-blur-sm border border-brand-dark/8 card-shadow rounded-3xl overflow-hidden">
+                <div className="bg-white border border-brand-dark/8 card-shadow rounded-lg overflow-hidden">
                   <div className="h-1 bg-accent" />
 
                   <form onSubmit={handleSubmit} className="p-8 sm:p-10 space-y-5">
@@ -353,7 +349,7 @@ export default function KontakPage() {
         {/* ── Google Maps ────────────────────────────────────────── */}
         <section className="pb-24">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="rounded-3xl overflow-hidden border border-brand-dark/8 card-shadow h-[420px]">
+            <div className="rounded-lg overflow-hidden border border-brand-dark/8 card-shadow h-[420px]">
               <iframe
                 src="https://maps.google.com/maps?q=Jl.+Daksa+Timur+XIV+No.6+Sepinggan+Balikpapan+Selatan+Balikpapan+Kalimantan+Timur+76116&output=embed&hl=id"
                 width="100%"

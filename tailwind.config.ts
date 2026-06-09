@@ -22,7 +22,7 @@ const config: Config = {
         },
       },
       fontFamily: {
-        sans: ["var(--font-jakarta)", "system-ui", "sans-serif"],
+        sans: ["var(--font-poppins)", "Poppins", "system-ui", "sans-serif"],
       },
       boxShadow: {
         card: "0 1px 3px rgba(36,36,35,0.07), 0 4px 16px rgba(36,36,35,0.05)",

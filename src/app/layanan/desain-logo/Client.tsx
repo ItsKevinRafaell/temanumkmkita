@@ -10,7 +10,6 @@ import {
 import Link from "next/link";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import BlobDecoration from "@/components/ui/BlobDecoration";
 import PortfolioSlider from "@/components/sections/PortfolioSlider";
 import { fetchPortfolios } from "@/lib/api/portfolio";
 
@@ -110,7 +109,7 @@ export default function DesainLogoPage() {
       setPortfolioItems(data.map((item) => ({ name: item.title, category: item.category ?? "", image_url: item.image_url })))
     );
   }, []);
-  const { ref: pricingRef, inView: pricingInView } = useInView({ triggerOnce: true, threshold: 0.1 });
+  const { ref: pricingRef } = useInView({ triggerOnce: true, threshold: 0.1 });
   const { ref: ctaRef, inView: ctaInView } = useInView({ triggerOnce: true, threshold: 0.2 });
 
   return (
@@ -119,13 +118,13 @@ export default function DesainLogoPage() {
       <main className="pt-20">
 
         {/* ── Header ────────────────────────────────────────────────── */}
-        <section className="relative pt-12 pb-10">
-          <BlobDecoration position="top-right" size={340} opacity={0.16} shape={1} />
-          <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="relative overflow-hidden pt-12 pb-12">
+          <div className="absolute inset-x-0 top-0 h-px bg-brand-dark/10" />
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center gap-1.5 text-xs text-brand-dark/40 font-medium mb-6">
               <Link href="/" className="hover:text-brand-dark transition-colors">Beranda</Link>
               <ChevronRight size={12} />
-              <Link href="/layanan/desain-logo" className="hover:text-brand-dark transition-colors">Layanan</Link>
+              <Link href="/layanan" className="hover:text-brand-dark transition-colors">Layanan</Link>
               <ChevronRight size={12} />
               <span className="text-brand-dark/70">Branding & Logo</span>
             </div>
@@ -136,13 +135,10 @@ export default function DesainLogoPage() {
                 transition={{ duration: 0.5 }}
                 className="max-w-2xl"
               >
-                <div className="inline-flex items-center gap-2 bg-accent/10 border border-accent/30 px-4 py-1.5 rounded-full mb-5">
-                  <PenLine size={13} className="text-accent" />
-                  <span className="text-sm font-semibold text-brand-dark">Branding & Logo</span>
-                </div>
+                <p className="text-accent font-bold text-sm uppercase tracking-wider mb-4">Branding & Logo</p>
                 <h1 className="text-4xl sm:text-5xl font-extrabold text-brand-dark leading-tight mb-4">
-                  Logo yang bikin bisnis Anda<br />
-                  <span className="text-accent">langsung dipercaya.</span>
+                  Logo Yang Bikin Bisnis Anda<br />
+                  <span className="text-accent">Langsung Dipercaya.</span>
                 </h1>
                 <p className="text-brand-dark/60 text-lg">
                   Selesai dalam 24 jam. Format vektor dan PNG transparan siap pakai di mana saja.
@@ -154,7 +150,7 @@ export default function DesainLogoPage() {
                 transition={{ delay: 0.3, duration: 0.4 }}
                 className="flex flex-col items-start sm:items-end gap-1.5 self-start sm:self-auto flex-shrink-0"
               >
-                <div className="flex items-center bg-white/80 backdrop-blur-sm border border-brand-dark/8 rounded-xl px-4 py-2.5 gap-2">
+                <div className="flex items-center bg-white border border-brand-dark/8 rounded-lg px-4 py-2.5 gap-2">
                   <PenLine size={13} className="text-accent" />
                   <span className="text-sm font-bold text-brand-dark">One-time Payment</span>
                 </div>
@@ -174,8 +170,8 @@ export default function DesainLogoPage() {
               <div>
                 <span className="text-accent font-bold text-sm uppercase tracking-wider block mb-3">Portofolio</span>
                 <h2 className="text-4xl font-extrabold text-brand-dark">
-                  Logo yang sudah<br />
-                  <span className="text-accent">kami desain</span>
+                  Logo Yang Sudah<br />
+                  <span className="text-accent">Kami Desain</span>
                 </h2>
               </div>
             </div>
@@ -191,10 +187,10 @@ export default function DesainLogoPage() {
               {plans.map((plan, i) => (
                 <motion.div
                   key={plan.id}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={pricingInView ? { opacity: 1, y: 0 } : {}}
+                  initial={false}
+                  animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.1, duration: 0.5 }}
-                  className={`relative rounded-3xl p-7 flex flex-col gap-5 ${
+                  className={`relative rounded-lg p-7 flex flex-col gap-5 ${
                     plan.featured
                       ? "bg-white border-2 border-accent shadow-xl shadow-accent/10 md:-mt-3 md:pb-10"
                       : "bg-white/80 backdrop-blur-sm border border-brand-dark/8 card-shadow"
@@ -202,7 +198,7 @@ export default function DesainLogoPage() {
                 >
                   {plan.badge && (
                     <div className="absolute -top-3 right-5">
-                      <span className="bg-accent text-white text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1.5">
+                      <span className="bg-accent text-white text-xs font-bold px-3 py-1.5 rounded-md flex items-center gap-1.5">
                         <Star size={11} fill="white" />
                         {plan.badge}
                       </span>
@@ -248,18 +244,18 @@ export default function DesainLogoPage() {
             <div className="flex items-center justify-between mb-8">
               <div>
                 <span className="text-accent font-bold text-sm uppercase tracking-wider block mb-2">Perbandingan</span>
-                <h2 className="text-3xl font-extrabold text-brand-dark">Fitur lengkap tiap paket</h2>
+                <h2 className="text-3xl font-extrabold text-brand-dark">Fitur Lengkap Tiap Paket</h2>
               </div>
               <button
                 onClick={() => setTableOpen(!tableOpen)}
-                className="md:hidden flex items-center gap-2 text-sm font-semibold text-brand-dark/60 border border-brand-dark/15 px-4 py-2 rounded-xl"
+                className="md:hidden flex items-center gap-2 text-sm font-semibold text-brand-dark/60 border border-brand-dark/15 px-4 py-2 rounded-lg"
               >
                 {tableOpen ? "Tutup" : "Lihat tabel"}
                 <ChevronDown size={14} className={`transition-transform ${tableOpen ? "rotate-180" : ""}`} />
               </button>
             </div>
             <div className={`${tableOpen ? "block" : "hidden"} md:block overflow-x-auto`}>
-              <div className="bg-white/80 backdrop-blur-sm border border-brand-dark/8 card-shadow rounded-2xl overflow-hidden min-w-[600px]">
+              <div className="bg-white border border-brand-dark/8 card-shadow rounded-lg overflow-hidden min-w-[600px]">
                 <div className="grid grid-cols-4 border-b border-brand-dark/8 bg-brand-dark/2">
                   <div className="px-5 py-4 text-xs font-bold uppercase tracking-wider text-brand-dark/40">Fitur</div>
                   {["Starter", "Pro", "Expert"].map((h) => (
@@ -287,7 +283,7 @@ export default function DesainLogoPage() {
         {/* ── Notes Box ─────────────────────────────────────────────── */}
         <section className="pb-16">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="bg-amber-50 border border-amber-200 rounded-2xl p-6">
+            <div className="bg-amber-50 border border-amber-200 rounded-lg p-6">
               <div className="text-xs font-bold uppercase tracking-wider text-amber-700 mb-4">Catatan Penting</div>
               <div className="grid sm:grid-cols-3 gap-5">
                 {notes.map((n, i) => {
@@ -316,7 +312,7 @@ export default function DesainLogoPage() {
               transition={{ duration: 0.5 }}
             >
               <h2 className="text-3xl sm:text-4xl font-extrabold text-brand-dark mb-4">
-                Tidak yakin paket mana<br />yang cocok?
+                Tidak Yakin Paket Mana<br />Yang Cocok?
               </h2>
               <p className="text-brand-dark/60 text-lg mb-8">
                 Ceritakan bisnis Anda — kami bantu rekomendasikan yang paling sesuai.
@@ -325,7 +321,7 @@ export default function DesainLogoPage() {
                 href={WA_BASE + encodeURIComponent("Halo, saya ingin konsultasi paket desain logo yang cocok untuk bisnis saya.")}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2.5 bg-accent text-white font-bold px-10 py-4 rounded-full text-lg hover:bg-accent/90 hover:scale-105 transition-all duration-200 shadow-xl shadow-accent/30"
+                className="inline-flex items-center gap-2.5 bg-accent text-white font-bold px-8 py-3.5 rounded-lg text-base hover:bg-accent/90 transition-colors shadow-lg shadow-accent/20"
               >
                 <MessageCircle size={20} />
                 Konsultasi via WhatsApp

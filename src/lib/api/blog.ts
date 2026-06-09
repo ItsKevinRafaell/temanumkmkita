@@ -1,3 +1,5 @@
+import { buildPublicApiUrl } from "@/lib/api/public";
+
 const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "https://api.temanumkmkita.com";
 
 export interface Article {
@@ -43,7 +45,7 @@ export async function fetchArticles(params: {
   page?: number;
   per_page?: number;
 }): Promise<PaginatedArticles> {
-  const url = new URL(`${API_BASE}/api/articles`);
+  const url = buildPublicApiUrl("articles");
   if (params.category && params.category !== "Semua") url.searchParams.set("category", params.category);
   if (params.page) url.searchParams.set("page", String(params.page));
   if (params.per_page) url.searchParams.set("per_page", String(params.per_page));
@@ -59,7 +61,7 @@ export async function fetchArticleBySlug(slug: string): Promise<Article> {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 8000);
     try {
-      const res = await fetch(`${API_BASE}/api/articles/${slug}`, {
+      const res = await fetch(buildPublicApiUrl(`articles/${encodeURIComponent(slug)}`).toString(), {
         cache: "no-store",
         signal: controller.signal,
       });
@@ -88,7 +90,7 @@ export interface PublicCategory {
 }
 
 export async function fetchPublicCategories(): Promise<PublicCategory[]> {
-  const res = await fetch(`${API_BASE}/api/categories`, { cache: "no-store" });
+  const res = await fetch(buildPublicApiUrl("categories").toString(), { cache: "no-store" });
   if (!res.ok) throw new Error("Failed to fetch categories");
   return res.json();
 }
@@ -103,8 +105,17 @@ export interface SiteSettings {
   tiktok_url: string | null;
   youtube_url: string | null;
   twitter_url: string | null;
+  logo_url: string | null;
+  logo_light_url: string | null;
+  favicon_url: string | null;
   address: string | null;
   phone: string | null;
+  clients_active: string | null;
+  projects_completed: string | null;
+  founded_year: string | null;
+  primary_service_areas: string | null;
+  response_time: string | null;
+  show_testimonials: boolean | null;
 }
 
 export async function fetchSiteSettings(): Promise<SiteSettings> {

@@ -6,6 +6,7 @@ import { Save, ChevronLeft, Loader2, Link2, Copy, Check, KeyRound, Trash2 } from
 import {
   fetchAdminSettings,
   updateSettings,
+  uploadImage,
   fetchIntegrationToken,
   generateIntegrationToken,
   revokeIntegrationToken,
@@ -13,8 +14,11 @@ import {
   type IntegrationTokenInfo,
 } from "@/lib/api/admin";
 
-const FIELDS: {
-  key: keyof Omit<SiteSettings, "id" | "updated_at">;
+type EditableSettings = Omit<SiteSettings, "id" | "updated_at">;
+type TextFieldKey = Exclude<keyof EditableSettings, "show_testimonials">;
+
+const SOCIAL_FIELDS: {
+  key: TextFieldKey;
   label: string;
   placeholder: string;
   icon?: React.ReactNode;
@@ -25,16 +29,64 @@ const FIELDS: {
   { key: "tiktok_url", label: "TikTok", placeholder: "https://tiktok.com/@temanumkmkita" },
   { key: "youtube_url", label: "YouTube", placeholder: "https://youtube.com/@temanumkmkita", icon: <Link2 size={14} /> },
   { key: "twitter_url", label: "X / Twitter", placeholder: "https://x.com/temanumkmkita", icon: <Link2 size={14} /> },
+];
+
+const BRAND_FIELDS: {
+  key: TextFieldKey;
+  label: string;
+  placeholder: string;
+  hint: string;
+}[] = [
+  {
+    key: "logo_url",
+    label: "Logo Utama",
+    placeholder: "https://www.temanumkmkita.com/brand/logo-secondary.png",
+    hint: "Dipakai di navbar dan schema SEO.",
+  },
+  {
+    key: "logo_light_url",
+    label: "Logo untuk Background Warna",
+    placeholder: "https://www.temanumkmkita.com/brand/logo-secondary.png",
+    hint: "Dipakai di footer atau section berwarna. Boleh sama dengan logo utama.",
+  },
+  {
+    key: "favicon_url",
+    label: "Favicon",
+    placeholder: "https://www.temanumkmkita.com/brand/favicon.png",
+    hint: "Ikon browser/tab. Idealnya square.",
+  },
+];
+
+const CONTACT_FIELDS: {
+  key: TextFieldKey;
+  label: string;
+  placeholder: string;
+}[] = [
   { key: "phone", label: "Nomor WhatsApp / Telepon", placeholder: "+62 895-0192-5395" },
   { key: "address", label: "Alamat", placeholder: "Jl. ..., Kota, Provinsi, Indonesia" },
 ];
 
+const PROOF_FIELDS: {
+  key: TextFieldKey;
+  label: string;
+  placeholder: string;
+}[] = [
+  { key: "clients_active", label: "Klien Aktif", placeholder: "3" },
+  { key: "projects_completed", label: "Total Proyek", placeholder: "10+" },
+  { key: "founded_year", label: "Tahun Berdiri", placeholder: "2025" },
+  { key: "primary_service_areas", label: "Area Layanan Utama", placeholder: "Kalimantan Timur & Jabodetabek" },
+  { key: "response_time", label: "Response Time", placeholder: "Berusaha membalas dalam 24 jam" },
+];
+
+const TEXT_FIELDS = [...SOCIAL_FIELDS, ...BRAND_FIELDS, ...CONTACT_FIELDS, ...PROOF_FIELDS];
+
 export default function SettingsPage() {
-  const [form, setForm] = useState<Partial<Omit<SiteSettings, "id" | "updated_at">>>({});
+  const [form, setForm] = useState<Partial<EditableSettings>>({});
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState("");
+  const [uploadingAsset, setUploadingAsset] = useState<TextFieldKey | null>(null);
 
   // Integration token state
   const [tokenInfo, setTokenInfo] = useState<IntegrationTokenInfo | null>(null);
@@ -53,8 +105,17 @@ export default function SettingsPage() {
           tiktok_url: s.tiktok_url ?? "",
           youtube_url: s.youtube_url ?? "",
           twitter_url: s.twitter_url ?? "",
+          logo_url: s.logo_url ?? "https://www.temanumkmkita.com/brand/logo-secondary.png",
+          logo_light_url: s.logo_light_url ?? "https://www.temanumkmkita.com/brand/logo-secondary.png",
+          favicon_url: s.favicon_url ?? "https://www.temanumkmkita.com/brand/favicon.png",
           phone: s.phone ?? "",
           address: s.address ?? "",
+          clients_active: s.clients_active ?? "3",
+          projects_completed: s.projects_completed ?? "10+",
+          founded_year: s.founded_year ?? "2025",
+          primary_service_areas: s.primary_service_areas ?? "Kalimantan Timur & Jabodetabek",
+          response_time: s.response_time ?? "Berusaha membalas dalam 24 jam",
+          show_testimonials: Boolean(s.show_testimonials),
         });
       })
       .catch(() => setError("Gagal memuat pengaturan"))
@@ -70,11 +131,12 @@ export default function SettingsPage() {
     setError("");
     setSaved(false);
     try {
-      const payload: Partial<Omit<SiteSettings, "id" | "updated_at">> = {};
-      for (const { key } of FIELDS) {
-        const val = (form as Record<string, string>)[key as string];
+      const payload: Partial<EditableSettings> = {};
+      for (const { key } of TEXT_FIELDS) {
+        const val = (form as Record<string, string | null | undefined>)[key as string];
         (payload as Record<string, string | null>)[key as string] = val?.trim() || null;
       }
+      payload.show_testimonials = Boolean(form.show_testimonials);
       await updateSettings(payload);
       setSaved(true);
       setTimeout(() => setSaved(false), 3000);
@@ -120,6 +182,20 @@ export default function SettingsPage() {
     });
   }
 
+  async function handleAssetUpload(key: TextFieldKey, file: File | null) {
+    if (!file) return;
+    setUploadingAsset(key);
+    setError("");
+    try {
+      const url = await uploadImage(file);
+      setForm((prev) => ({ ...prev, [key]: url }));
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Gagal upload aset");
+    } finally {
+      setUploadingAsset(null);
+    }
+  }
+
   return (
     <div className="min-h-screen bg-[#fcfaf7]">
       <header className="bg-white border-b border-[#242423]/8 px-6 py-3.5 flex items-center justify-between sticky top-0 z-20 shadow-sm">
@@ -155,7 +231,7 @@ export default function SettingsPage() {
             <div className="bg-white border border-[#242423]/8 rounded-2xl p-6">
               <p className="text-xs font-bold uppercase tracking-wider text-[#242423]/40 mb-4">Sosial Media</p>
               <div className="space-y-3">
-                {FIELDS.filter((f) => f.key !== "phone" && f.key !== "address").map(({ key, label, placeholder, icon }) => (
+                {SOCIAL_FIELDS.map(({ key, label, placeholder, icon }) => (
                   <div key={key}>
                     <label className="flex items-center gap-1.5 text-xs font-semibold text-[#242423]/55 mb-1">
                       {icon && <span className="text-[#242423]/35">{icon}</span>}
@@ -173,11 +249,59 @@ export default function SettingsPage() {
               </div>
             </div>
 
+            {/* Brand Assets */}
+            <div className="bg-white border border-[#242423]/8 rounded-2xl p-6">
+              <p className="text-xs font-bold uppercase tracking-wider text-[#242423]/40 mb-1">Brand Assets</p>
+              <p className="text-xs text-[#242423]/45 mb-4">
+                Logo ditampilkan dengan object-fit/contain supaya tidak gepeng. Kalau terlihat terlalu kecil, upload versi crop.
+              </p>
+              <div className="space-y-4">
+                {BRAND_FIELDS.map(({ key, label, placeholder, hint }) => {
+                  const value = (form as Record<string, string>)[key as string] ?? "";
+                  return (
+                    <div key={key}>
+                      <label className="block text-xs font-semibold text-[#242423]/55 mb-1">{label}</label>
+                      <div className="flex flex-col sm:flex-row gap-3">
+                        <div className="flex-1 space-y-2">
+                          <input
+                            type="url"
+                            className="w-full border border-[#242423]/12 rounded-lg px-3 py-2 text-sm text-[#242423] bg-white focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30 focus:border-[#f5a700]"
+                            placeholder={placeholder}
+                            value={value}
+                            onChange={(e) => setForm((prev) => ({ ...prev, [key]: e.target.value }))}
+                          />
+                          <p className="text-xs text-[#242423]/40">{hint}</p>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          {value && (
+                            <div className="h-14 w-24 rounded-lg border border-[#242423]/8 bg-[#fcfaf7] p-2 flex items-center justify-center">
+                              {/* eslint-disable-next-line @next/next/no-img-element */}
+                              <img src={value} alt="" className="max-h-full max-w-full object-contain" />
+                            </div>
+                          )}
+                          <label className="relative inline-flex cursor-pointer items-center justify-center rounded-lg border border-[#242423]/12 px-3 py-2 text-xs font-semibold text-[#242423]/60 hover:border-[#f5a700] hover:text-[#f5a700] transition">
+                            {uploadingAsset === key ? "Upload..." : "Upload"}
+                            <input
+                              type="file"
+                              accept="image/png,image/jpeg,image/webp,image/gif"
+                              className="absolute inset-0 cursor-pointer opacity-0"
+                              disabled={uploadingAsset === key}
+                              onChange={(e) => handleAssetUpload(key, e.target.files?.[0] ?? null)}
+                            />
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
             {/* Contact */}
             <div className="bg-white border border-[#242423]/8 rounded-2xl p-6">
               <p className="text-xs font-bold uppercase tracking-wider text-[#242423]/40 mb-4">Kontak & Alamat</p>
               <div className="space-y-3">
-                {FIELDS.filter((f) => f.key === "phone" || f.key === "address").map(({ key, label, placeholder }) => (
+                {CONTACT_FIELDS.map(({ key, label, placeholder }) => (
                   <div key={key}>
                     <label className="block text-xs font-semibold text-[#242423]/55 mb-1">{label}</label>
                     <input
@@ -190,6 +314,42 @@ export default function SettingsPage() {
                   </div>
                 ))}
               </div>
+            </div>
+
+            {/* Proof & positioning */}
+            <div className="bg-white border border-[#242423]/8 rounded-2xl p-6">
+              <p className="text-xs font-bold uppercase tracking-wider text-[#242423]/40 mb-1">Proof & Positioning</p>
+              <p className="text-xs text-[#242423]/45 mb-4">
+                Data ini dipakai di homepage, CTA, dan schema SEO. Isi hanya dengan angka yang bisa dipertanggungjawabkan.
+              </p>
+              <div className="grid sm:grid-cols-2 gap-3">
+                {PROOF_FIELDS.map(({ key, label, placeholder }) => (
+                  <div key={key} className={key === "primary_service_areas" || key === "response_time" ? "sm:col-span-2" : ""}>
+                    <label className="block text-xs font-semibold text-[#242423]/55 mb-1">{label}</label>
+                    <input
+                      type="text"
+                      className="w-full border border-[#242423]/12 rounded-lg px-3 py-2 text-sm text-[#242423] bg-white focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30 focus:border-[#f5a700]"
+                      placeholder={placeholder}
+                      value={(form as Record<string, string>)[key as string] ?? ""}
+                      onChange={(e) => setForm((prev) => ({ ...prev, [key]: e.target.value }))}
+                    />
+                  </div>
+                ))}
+              </div>
+              <label className="mt-4 flex items-start gap-3 rounded-lg border border-[#242423]/8 bg-[#fcfaf7] px-3 py-3">
+                <input
+                  type="checkbox"
+                  checked={Boolean(form.show_testimonials)}
+                  onChange={(e) => setForm((prev) => ({ ...prev, show_testimonials: e.target.checked }))}
+                  className="mt-0.5 h-4 w-4 accent-[#f5a700]"
+                />
+                <span>
+                  <span className="block text-sm font-semibold text-[#242423]">Tampilkan testimoni publik</span>
+                  <span className="block text-xs text-[#242423]/50 mt-0.5">
+                    Aktifkan setelah testimoni sudah dikonfirmasi dan boleh dipublikasikan.
+                  </span>
+                </span>
+              </label>
             </div>
 
             {/* Integration Token */}

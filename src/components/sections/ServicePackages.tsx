@@ -24,7 +24,7 @@ export default function ServicePackages({ packages }: Props) {
         >
           <span className="text-accent font-bold text-sm uppercase tracking-wider">Paket & Harga</span>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-brand-dark mt-3">
-            Pilih yang sesuai bisnismu
+            Pilih Yang Sesuai Bisnismu
           </h2>
         </motion.div>
 
@@ -38,23 +38,22 @@ export default function ServicePackages({ packages }: Props) {
               className={cn(pkg.highlighted ? "scale-105" : "")}
             >
               {pkg.highlighted ? (
-                <div className="relative p-[1.5px] rounded-[17px] bg-gradient-to-b from-accent/60 to-accent/20">
-                  <div className="bg-brand-dark rounded-2xl p-8 relative h-full">
-                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-accent text-white text-xs font-bold px-4 py-1 rounded-full">
+                <div className="relative rounded-lg border-2 border-accent bg-white p-8 h-full shadow-card">
+                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-accent text-white text-xs font-bold px-4 py-1 rounded-md">
                       Paling Populer
                     </div>
 
-                    <div className="font-bold text-lg mb-1 text-white">{pkg.name}</div>
+                    <div className="font-bold text-lg mb-1 text-brand-dark">{pkg.name}</div>
                     <div className="text-3xl font-extrabold mb-1 text-accent">{pkg.price}</div>
                     {pkg.period && (
-                      <div className="text-sm mb-6 text-white/60">{pkg.period}</div>
+                      <div className="text-sm mb-6 text-brand-dark/50">{pkg.period}</div>
                     )}
 
                     <ul className="space-y-3 mb-8">
                       {pkg.features.map((feature, j) => (
                         <li key={j} className="flex items-start gap-2 text-sm">
                           <Check size={15} className="text-accent mt-0.5 flex-shrink-0" />
-                          <span className="text-white/80">{feature}</span>
+                          <span className="text-brand-dark/70">{feature}</span>
                         </li>
                       ))}
                     </ul>
@@ -63,14 +62,13 @@ export default function ServicePackages({ packages }: Props) {
                       href="https://wa.me/6289501925395?text=Halo%2C+saya+tertarik+dengan+paket"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="block text-center font-bold py-3 rounded-full transition-colors bg-accent text-white hover:bg-accent/90"
+                      className="block text-center font-bold py-3 rounded-lg transition-colors bg-accent text-white hover:bg-accent/90"
                     >
                       Pilih Paket Ini
                     </a>
-                  </div>
                 </div>
               ) : (
-                <div className="rounded-2xl p-8 relative bg-white border border-brand-dark/10 card-shadow hover:card-shadow-hover hover:-translate-y-1 transition-all duration-300">
+                <div className="rounded-lg p-8 relative bg-white border border-brand-dark/10 card-shadow hover:card-shadow-hover hover:-translate-y-0.5 transition-all duration-300">
                   <div className="font-bold text-lg mb-1 text-brand-dark">{pkg.name}</div>
                   <div className="text-3xl font-extrabold mb-1 text-brand-dark">{pkg.price}</div>
                   {pkg.period && (
@@ -90,7 +88,7 @@ export default function ServicePackages({ packages }: Props) {
                     href="https://wa.me/6289501925395?text=Halo%2C+saya+tertarik+dengan+paket"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="block text-center font-bold py-3 rounded-full transition-colors border border-brand-dark/20 text-brand-dark hover:border-brand-dark/40"
+                    className="block text-center font-bold py-3 rounded-lg transition-colors border border-brand-dark/20 text-brand-dark hover:border-brand-dark/40"
                   >
                     Pilih Paket Ini
                   </a>

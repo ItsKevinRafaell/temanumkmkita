@@ -135,8 +135,8 @@ function DesktopSteps() {
         <div className="mb-8">
           <span className="text-accent font-bold text-sm uppercase tracking-wider">Proses Kerja</span>
           <h2 className="text-4xl font-extrabold text-brand-dark mt-2">
-            Sederhana, transparan,{" "}
-            <span className="text-accent">tanpa ribet</span>
+            Sederhana, Transparan,{" "}
+            <span className="text-accent">Tanpa Ribet</span>
           </h2>
         </div>
         {steps.map((s, i) => {
@@ -148,11 +148,11 @@ function DesktopSteps() {
               animate={{ opacity: active ? 1 : 0.38, x: active ? 6 : 0 }}
               transition={{ duration: 0.25 }}
               onClick={() => goTo(i)}
-              className="w-full text-left flex items-center gap-4 p-4 rounded-2xl transition-colors"
+              className="w-full text-left flex items-center gap-4 p-4 rounded-lg transition-colors"
               style={{ background: active ? "rgba(245,167,0,0.09)" : "transparent" }}
             >
               <div
-                className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors"
+                className="w-10 h-10 rounded-md flex items-center justify-center flex-shrink-0 transition-colors"
                 style={{ background: active ? "rgba(245,167,0,0.15)" : "rgba(36,36,35,0.05)" }}
               >
                 <IC size={17} className={active ? "text-accent" : "text-brand-dark/40"} />
@@ -183,9 +183,9 @@ function DesktopSteps() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -28 }}
             transition={{ duration: 0.38, ease: "easeOut" }}
-            className="bg-white/85 backdrop-blur-sm rounded-3xl p-10 border border-brand-dark/8 card-shadow"
+            className="bg-white rounded-lg p-10 border border-brand-dark/8 card-shadow"
           >
-            <div className="w-16 h-16 rounded-2xl bg-accent/10 flex items-center justify-center mb-6">
+            <div className="w-16 h-16 rounded-md bg-accent/10 flex items-center justify-center mb-6">
               <IconComponent size={30} className="text-accent" />
             </div>
             <span className="text-accent font-bold text-sm uppercase tracking-widest">Langkah {step.number}</span>
@@ -195,7 +195,7 @@ function DesktopSteps() {
               {steps.map((_, i) => (
                 <div
                   key={i}
-                  className={`h-1 rounded-full transition-all duration-500 ${
+                  className={`h-1 rounded-md transition-all duration-500 ${
                     i === activeStep ? "bg-accent flex-1" : "bg-brand-dark/10 w-6"
                   }`}
                 />
@@ -221,8 +221,8 @@ function MobileSteps() {
         >
           <span className="text-accent font-bold text-sm uppercase tracking-wider">Proses Kerja</span>
           <h2 className="text-4xl font-extrabold text-brand-dark mt-3">
-            Sederhana, transparan,<br />
-            <span className="text-accent">tanpa ribet</span>
+            Sederhana, Transparan,<br />
+            <span className="text-accent">Tanpa Ribet</span>
           </h2>
         </motion.div>
         <div className="space-y-0">
@@ -237,7 +237,7 @@ function MobileSteps() {
                 className="flex gap-4"
               >
                 <div className="flex flex-col items-center">
-                  <div className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center flex-shrink-0 border border-accent/20">
+                  <div className="w-10 h-10 rounded-md bg-accent/10 flex items-center justify-center flex-shrink-0 border border-accent/20">
                     <IconComponent size={17} className="text-accent" />
                   </div>
                   {i < steps.length - 1 && <div className="w-0.5 flex-1 mt-2 bg-accent/20 min-h-[28px]" />}

@@ -201,8 +201,17 @@ class SiteSettingsOut(BaseModel):
     tiktok_url: Optional[str] = None
     youtube_url: Optional[str] = None
     twitter_url: Optional[str] = None
+    logo_url: Optional[str] = None
+    logo_light_url: Optional[str] = None
+    favicon_url: Optional[str] = None
     address: Optional[str] = None
     phone: Optional[str] = None
+    clients_active: Optional[str] = None
+    projects_completed: Optional[str] = None
+    founded_year: Optional[str] = None
+    primary_service_areas: Optional[str] = None
+    response_time: Optional[str] = None
+    show_testimonials: Optional[bool] = False
     updated_at: Optional[str] = None
 
     model_config = {"from_attributes": True}
@@ -215,8 +224,17 @@ class SiteSettingsUpdate(BaseModel):
     tiktok_url: Optional[str] = None
     youtube_url: Optional[str] = None
     twitter_url: Optional[str] = None
+    logo_url: Optional[str] = None
+    logo_light_url: Optional[str] = None
+    favicon_url: Optional[str] = None
     address: Optional[str] = None
     phone: Optional[str] = None
+    clients_active: Optional[str] = None
+    projects_completed: Optional[str] = None
+    founded_year: Optional[str] = None
+    primary_service_areas: Optional[str] = None
+    response_time: Optional[str] = None
+    show_testimonials: Optional[bool] = False
 
 
 # ── Integration Token ──────────────────────────────────────────────────────────

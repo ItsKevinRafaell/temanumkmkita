@@ -1,15 +1,28 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans } from "next/font/google";
-import AnimatedDots from "@/components/ui/AnimatedDots";
+import { Poppins } from "next/font/google";
 import { fetchSiteSettings } from "@/lib/api/blog";
 import { SITE_URL } from "@/lib/seo/site";
+import { buildHomepageProof } from "@/lib/site-proof";
 import "./globals.css";
 
-const jakarta = Plus_Jakarta_Sans({
+const poppins = Poppins({
   subsets: ["latin"],
-  variable: "--font-jakarta",
-  weight: ["400", "600", "700", "800"],
+  variable: "--font-poppins",
+  weight: ["400", "500", "600", "700", "800"],
 });
+
+const DEFAULT_LOGO_PATH = "/brand/logo-secondary.png";
+const DEFAULT_FOOTER_LOGO_PATH = "/brand/logo-footer-yellow.png";
+const DEFAULT_FAVICON_PATH = "/brand/favicon.png";
+const DEFAULT_LOGO_URL = `${SITE_URL}${DEFAULT_LOGO_PATH}`;
+
+function absoluteAssetUrl(value: string) {
+  try {
+    return new URL(value, SITE_URL).toString();
+  } catch {
+    return value;
+  }
+}
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -50,6 +63,20 @@ export default async function RootLayout({
     settings?.twitter_url,
   ].filter(Boolean) as string[];
 
+  const proof = buildHomepageProof(settings);
+  const logoCssUrl = settings?.logo_url?.trim() || DEFAULT_LOGO_PATH;
+  const logoLightCssUrl = settings?.logo_light_url?.trim() || logoCssUrl;
+  const footerLogoCssUrl = DEFAULT_FOOTER_LOGO_PATH;
+  const faviconHref = settings?.favicon_url?.trim() || DEFAULT_FAVICON_PATH;
+  const logoUrl = settings?.logo_url?.trim()
+    ? absoluteAssetUrl(settings.logo_url.trim())
+    : DEFAULT_LOGO_URL;
+  const areaServed = proof.primaryServiceAreas
+    .split(/\s*(?:,|&| dan )\s*/i)
+    .map((area) => area.trim())
+    .filter(Boolean)
+    .map((area) => ({ "@type": "AdministrativeArea", name: area }));
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -58,9 +85,10 @@ export default async function RootLayout({
         "@id": `${SITE_URL}/#organization`,
         name: "Teman UMKM Kita",
         url: SITE_URL,
-        logo: `${SITE_URL}/logo.png`,
+        logo: logoUrl,
         description: "Solusi digital untuk UMKM Indonesia — web development, SEO, sosial media, branding.",
-        areaServed: "ID",
+        areaServed,
+        foundingDate: proof.foundedYear,
         ...(settings?.phone ? {
           telephone: settings.phone,
           contactPoint: {
@@ -95,13 +123,18 @@ export default async function RootLayout({
     <html lang="id">
       <head>
         <link rel="preconnect" href="https://api.temanumkmkita.com" />
+        <link rel="icon" href={faviconHref} />
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `:root{--brand-logo-url:url("${logoCssUrl}");--brand-logo-light-url:url("${logoLightCssUrl}");--brand-logo-footer-url:url("${footerLogoCssUrl}");}`,
+          }}
+        />
       </head>
-      <body className={`${jakarta.variable} font-sans antialiased bg-canvas text-brand-dark noise`}>
+      <body className={`${poppins.variable} font-sans antialiased bg-canvas text-brand-dark noise`}>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <AnimatedDots />
         <div className="relative" style={{ zIndex: 1 }}>
           {children}
         </div>

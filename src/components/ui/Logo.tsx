@@ -1,34 +1,31 @@
 import Link from "next/link";
 
 interface LogoProps {
-  variant?: "light" | "dark";
+  variant?: "light" | "dark" | "footer";
   className?: string;
 }
 
-const SYSTEM_FONT = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
-
 export default function Logo({ variant = "dark", className = "" }: LogoProps) {
-  const wordmarkColor = variant === "dark" ? "#f5a700" : "#ffffff";
-  const subColor = variant === "dark" ? "#a3a3a3" : "rgba(255,255,255,0.6)";
+  const imageVar =
+    variant === "footer"
+      ? "var(--brand-logo-footer-url)"
+      : variant === "light"
+        ? "var(--brand-logo-light-url)"
+        : "var(--brand-logo-url)";
+  const imageSize = variant === "footer" ? "h-11 w-[194px]" : "h-8 w-[190px]";
 
   return (
     <Link
       href="/"
-      className={`flex flex-col leading-none ${className}`}
-      style={{ fontFamily: SYSTEM_FONT }}
+      className={`inline-flex items-center ${variant === "light" ? "rounded-lg bg-white px-2 py-1" : ""} ${className}`}
+      aria-label="Teman UMKM Kita"
     >
       <span
-        className="font-bold text-lg"
-        style={{ color: wordmarkColor, letterSpacing: "-0.025em" }}
-      >
-        Teman UMKM Kita
-      </span>
-      <span
-        className="text-[10px] font-medium uppercase"
-        style={{ letterSpacing: "0.1em", color: subColor, marginTop: "2px" }}
-      >
-        Solusi Digital Indonesia
-      </span>
+        aria-hidden="true"
+        className={`block ${imageSize} bg-left bg-contain bg-no-repeat`}
+        style={{ backgroundImage: imageVar }}
+      />
+      <span className="sr-only">Teman UMKM Kita</span>
     </Link>
   );
 }

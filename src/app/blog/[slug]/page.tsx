@@ -4,7 +4,6 @@ import Link from "next/link";
 import Image from "next/image";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import BlobDecoration from "@/components/ui/BlobDecoration";
 import BlogDetailClient from "@/components/blog/BlogDetailClient";
 import BlogCard from "@/components/blog/BlogCard";
 import { extractHeadings, hasBlockType, type BlogPost, type ContentBlock } from "@/lib/data/blog";
@@ -197,9 +196,9 @@ export default async function BlogDetailPage({
       <main className="pt-20">
 
         {/* ── Header ──────────────────────────────────────────────────── */}
-        <section className="relative pt-12 pb-8">
-          <BlobDecoration position="top-right" size={300} opacity={0.12} shape={1} />
-          <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="relative overflow-hidden pt-12 pb-8">
+          <div className="absolute inset-x-0 top-0 h-px bg-brand-dark/10" />
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center gap-1.5 text-xs text-brand-dark/40 font-medium mb-6 flex-wrap">
               <Link href="/" className="hover:text-brand-dark transition-colors">Beranda</Link>
               <ChevronRight size={12} />
@@ -209,7 +208,7 @@ export default async function BlogDetailPage({
             </div>
 
             <div className="max-w-3xl">
-              <span className={`inline-flex items-center gap-1.5 text-xs font-bold px-2.5 py-1 rounded-full border mb-4 ${colorClass}`}>
+              <span className={`inline-flex items-center gap-1.5 text-xs font-bold px-2.5 py-1 rounded-md border mb-4 ${colorClass}`}>
                 <Tag size={10} />
                 {post.category}
               </span>
@@ -224,14 +223,14 @@ export default async function BlogDetailPage({
                   <Calendar size={13} />
                   {formatDate(post.date)}
                 </span>
-                <span className="w-1 h-1 rounded-full bg-brand-dark/20" />
+                <span className="w-1 h-1 rounded-sm bg-brand-dark/20" />
                 <span className="flex items-center gap-1.5">
                   <Clock size={13} />
                   {post.readTime} menit baca
                 </span>
                 {post.updatedAt && post.updatedAt !== post.date && (
                   <>
-                    <span className="w-1 h-1 rounded-full bg-brand-dark/20" />
+                    <span className="w-1 h-1 rounded-sm bg-brand-dark/20" />
                     <span className="text-xs text-brand-dark/35">Diperbarui {formatDate(post.updatedAt)}</span>
                   </>
                 )}
@@ -268,7 +267,7 @@ export default async function BlogDetailPage({
         {post.author && (
           <section className="pb-10">
             <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="border border-brand-dark/8 rounded-2xl p-6 flex items-start gap-5">
+              <div className="border border-brand-dark/8 rounded-lg p-6 flex items-start gap-5">
                 {post.author.photo_url ? (
                   <Image src={post.author.photo_url} alt={post.author.name} width={56} height={56} className="rounded-full object-cover border border-brand-dark/8 flex-shrink-0" />
                 ) : (
