@@ -8,17 +8,21 @@ import type { BlogPost } from "@/lib/data/blog";
 
 const categoryColors: Record<string, string> = {
   Website: "bg-blue-50 text-blue-700 border-blue-100",
+  "SEO & Google Maps": "bg-green-50 text-green-700 border-green-100",
   SEO: "bg-green-50 text-green-700 border-green-100",
   "Sosial Media": "bg-pink-50 text-pink-700 border-pink-100",
   Branding: "bg-purple-50 text-purple-700 border-purple-100",
+  Maintenance: "bg-cyan-50 text-cyan-700 border-cyan-100",
   "Tips Bisnis": "bg-amber-50 text-amber-700 border-amber-100",
 };
 
 const categoryBg: Record<string, string> = {
   Website: "bg-blue-50",
+  "SEO & Google Maps": "bg-green-50",
   SEO: "bg-green-50",
   "Sosial Media": "bg-pink-50",
   Branding: "bg-purple-50",
+  Maintenance: "bg-cyan-50",
   "Tips Bisnis": "bg-amber-50",
 };
 

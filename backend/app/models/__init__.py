@@ -1,4 +1,4 @@
-from app.models.user import User
+from app.models.user import PasswordResetToken, User
 from app.models.author import Author
 from app.models.category import ArticleCategory
 from app.models.article import Article
@@ -11,6 +11,7 @@ from app.models.contact import ContactSubmission
 
 __all__ = [
     "User",
+    "PasswordResetToken",
     "Author",
     "ArticleCategory",
     "Article",

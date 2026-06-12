@@ -8,12 +8,45 @@ import ConfirmModal from "@/components/ui/ConfirmModal";
 import {
   PenLine, Trash2, Plus, LogOut, FileText,
   CheckCircle, Clock, ChevronLeft, ChevronRight,
-  ArrowUpDown, Star, Map as MapIcon, Settings, Users, Images, Menu,
+  ArrowUpDown, Star, Map as MapIcon, Settings, Users, Images, Menu, CalendarDays,
 } from "lucide-react";
 
 function formatDate(iso: string | null) {
   if (!iso) return "—";
   return new Date(iso).toLocaleDateString("id-ID", { day: "numeric", month: "short", year: "numeric" });
+}
+
+const MONTHS = [
+  { value: "01", label: "Jan" },
+  { value: "02", label: "Feb" },
+  { value: "03", label: "Mar" },
+  { value: "04", label: "Apr" },
+  { value: "05", label: "Mei" },
+  { value: "06", label: "Jun" },
+  { value: "07", label: "Jul" },
+  { value: "08", label: "Agu" },
+  { value: "09", label: "Sep" },
+  { value: "10", label: "Okt" },
+  { value: "11", label: "Nov" },
+  { value: "12", label: "Des" },
+];
+
+const YEAR_OPTIONS = Array.from(new Set([
+  new Date().getFullYear() - 1,
+  new Date().getFullYear(),
+  new Date().getFullYear() + 1,
+  new Date().getFullYear() + 2,
+  2026,
+  2027,
+])).sort((a, b) => a - b);
+
+function articleDate(post: AdminArticle) {
+  return post.published_at ?? post.created_at;
+}
+
+function formatMonth(iso: string | null) {
+  if (!iso) return "Tanpa bulan";
+  return new Date(iso).toLocaleDateString("id-ID", { month: "short", year: "numeric" });
 }
 
 
@@ -30,15 +63,22 @@ export default function AdminPostsPage() {
 
   // Filters
   const [statusFilter, setStatusFilter] = useState<"" | "draft" | "published">("");
+  const [yearFilter, setYearFilter] = useState(String(new Date().getFullYear()));
   const [monthFilter, setMonthFilter] = useState("");
+  const [dateFrom, setDateFrom] = useState("");
+  const [dateTo, setDateTo] = useState("");
   const [sort, setSort] = useState<"desc" | "asc">("desc");
 
   const load = useCallback(async (p: number) => {
     setLoading(true);
     try {
+      const selectedMonth = yearFilter && monthFilter ? `${yearFilter}-${monthFilter}` : undefined;
       const data = await adminListArticles(p, 15, {
         status: statusFilter || undefined,
-        month: monthFilter || undefined,
+        year: yearFilter || undefined,
+        month: selectedMonth,
+        date_from: dateFrom || undefined,
+        date_to: dateTo || undefined,
         sort,
       });
       setPosts(data.items);
@@ -49,9 +89,9 @@ export default function AdminPostsPage() {
     } finally {
       setLoading(false);
     }
-  }, [router, statusFilter, monthFilter, sort]);
+  }, [router, statusFilter, yearFilter, monthFilter, dateFrom, dateTo, sort]);
 
-  useEffect(() => { setPage(1); }, [statusFilter, monthFilter, sort]);
+  useEffect(() => { setPage(1); }, [statusFilter, yearFilter, monthFilter, dateFrom, dateTo, sort]);
   useEffect(() => { load(page); }, [page, load]);
 
   async function handleDelete(id: string, title: string) {
@@ -164,7 +204,8 @@ export default function AdminPostsPage() {
         </div>
 
         {/* Filters */}
-        <div className="flex flex-wrap items-center gap-2 mb-4">
+        <div className="mb-4 space-y-3">
+          <div className="flex flex-wrap items-center gap-2">
           {/* Status filter */}
           <select
             value={statusFilter}
@@ -176,13 +217,35 @@ export default function AdminPostsPage() {
             <option value="draft">Draft</option>
           </select>
 
-          {/* Month filter */}
-          <input
-            type="month"
-            value={monthFilter}
-            onChange={(e) => setMonthFilter(e.target.value)}
+          <select
+            value={yearFilter}
+            onChange={(e) => setYearFilter(e.target.value)}
             className="border border-[#242423]/12 rounded-lg px-3 py-1.5 text-xs text-[#242423] bg-white focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30"
-          />
+          >
+            <option value="">Semua tahun</option>
+            {YEAR_OPTIONS.map((year) => (
+              <option key={year} value={year}>{year}</option>
+            ))}
+          </select>
+
+          <div className="flex items-center gap-1 text-xs text-[#242423]/45">
+            <CalendarDays size={12} />
+            <input
+              type="date"
+              value={dateFrom}
+              onChange={(e) => setDateFrom(e.target.value)}
+              className="border border-[#242423]/12 rounded-lg px-2.5 py-1.5 text-xs text-[#242423] bg-white focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30"
+              aria-label="Dari tanggal"
+            />
+            <span>sd</span>
+            <input
+              type="date"
+              value={dateTo}
+              onChange={(e) => setDateTo(e.target.value)}
+              className="border border-[#242423]/12 rounded-lg px-2.5 py-1.5 text-xs text-[#242423] bg-white focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30"
+              aria-label="Sampai tanggal"
+            />
+          </div>
 
           {/* Sort toggle */}
           <button
@@ -194,14 +257,49 @@ export default function AdminPostsPage() {
           </button>
 
           {/* Reset */}
-          {(statusFilter || monthFilter || sort !== "desc") && (
+          {(statusFilter || yearFilter !== String(new Date().getFullYear()) || monthFilter || dateFrom || dateTo || sort !== "desc") && (
             <button
-              onClick={() => { setStatusFilter(""); setMonthFilter(""); setSort("desc"); }}
+              onClick={() => {
+                setStatusFilter("");
+                setYearFilter(String(new Date().getFullYear()));
+                setMonthFilter("");
+                setDateFrom("");
+                setDateTo("");
+                setSort("desc");
+              }}
               className="text-xs text-[#242423]/40 hover:text-[#242423] underline transition"
             >
               Reset
             </button>
           )}
+          </div>
+
+          <div className="flex items-center gap-1.5 overflow-x-auto pb-1">
+            <button
+              onClick={() => setMonthFilter("")}
+              className={`shrink-0 rounded-lg border px-3 py-1.5 text-xs font-semibold transition ${
+                !monthFilter
+                  ? "border-[#f5a700] bg-[#f5a700] text-white"
+                  : "border-[#242423]/10 bg-white text-[#242423]/50 hover:text-[#242423]"
+              }`}
+            >
+              Semua bulan
+            </button>
+            {MONTHS.map((month) => (
+              <button
+                key={month.value}
+                onClick={() => setMonthFilter(month.value)}
+                disabled={!yearFilter}
+                className={`shrink-0 rounded-lg border px-3 py-1.5 text-xs font-semibold transition disabled:opacity-35 disabled:pointer-events-none ${
+                  monthFilter === month.value
+                    ? "border-[#f5a700] bg-[#f5a700] text-white"
+                    : "border-[#242423]/10 bg-white text-[#242423]/50 hover:text-[#242423]"
+                }`}
+              >
+                {month.label}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Table */}
@@ -216,6 +314,7 @@ export default function AdminPostsPage() {
                 <tr className="border-b border-[#242423]/6 bg-[#242423]/2">
                   <th className="text-left px-5 py-3 text-xs font-bold uppercase tracking-wider text-[#242423]/40">Judul</th>
                   <th className="text-left px-4 py-3 text-xs font-bold uppercase tracking-wider text-[#242423]/40 hidden sm:table-cell">Kategori</th>
+                  <th className="text-left px-4 py-3 text-xs font-bold uppercase tracking-wider text-[#242423]/40 hidden lg:table-cell">Batch</th>
                   <th className="text-left px-4 py-3 text-xs font-bold uppercase tracking-wider text-[#242423]/40">Status</th>
                   <th className="text-left px-4 py-3 text-xs font-bold uppercase tracking-wider text-[#242423]/40 hidden md:table-cell">Tanggal</th>
                   <th className="px-4 py-3 w-20" />
@@ -249,6 +348,12 @@ export default function AdminPostsPage() {
                         <span className="text-[#242423]/25">—</span>
                       )}
                     </td>
+                    <td className="px-4 py-3.5 hidden lg:table-cell">
+                      <span className="inline-flex items-center gap-1 text-xs font-semibold px-2 py-0.5 rounded-full bg-[#f5a700]/10 text-[#9b6a00]">
+                        <CalendarDays size={10} />
+                        {formatMonth(articleDate(post))}
+                      </span>
+                    </td>
                     <td className="px-4 py-3.5">
                       {post.status === "published" ? (
                         <span className="flex items-center gap-1 text-xs text-green-700 font-semibold">
@@ -261,7 +366,10 @@ export default function AdminPostsPage() {
                       )}
                     </td>
                     <td className="px-4 py-3.5 text-xs text-[#242423]/45 hidden md:table-cell">
-                      {formatDate(post.published_at ?? post.created_at)}
+                      <span className="block">{formatDate(articleDate(post))}</span>
+                      <span className="text-[10px] text-[#242423]/30">
+                        {post.status === "draft" && post.published_at ? "Rencana" : post.status === "published" ? "Tayang" : "Dibuat"}
+                      </span>
                     </td>
                     <td className="px-4 py-3.5">
                       <div className="flex items-center gap-2 justify-end">

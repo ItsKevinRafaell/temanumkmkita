@@ -3,6 +3,7 @@ import Logo from "@/components/ui/Logo";
 
 const layananLinks = [
   { label: "Web Development", href: "/layanan/web-development" },
+  { label: "Web Development Bulanan", href: "/layanan/web-development-bulanan" },
   { label: "SEO & Google Maps", href: "/layanan/seo-google-maps" },
   { label: "Kelola Sosial Media", href: "/layanan/kelola-sosial-media" },
   { label: "Maintenance Website", href: "/layanan/maintenance" },

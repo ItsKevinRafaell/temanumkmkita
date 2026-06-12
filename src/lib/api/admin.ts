@@ -33,6 +33,20 @@ export async function login(username: string, password: string): Promise<string>
   return data.access_token;
 }
 
+export async function requestPasswordReset(email: string): Promise<{ ok: boolean; message: string }> {
+  return req<{ ok: boolean; message: string }>("/api/auth/password/forgot", {
+    method: "POST",
+    body: JSON.stringify({ email }),
+  });
+}
+
+export async function resetPassword(token: string, password: string): Promise<{ ok: boolean }> {
+  return req<{ ok: boolean }>("/api/auth/password/reset", {
+    method: "POST",
+    body: JSON.stringify({ token, password }),
+  });
+}
+
 export function logout() {
   localStorage.removeItem("admin_token");
 }
@@ -63,12 +77,18 @@ export interface ArticlePayload {
 
 export async function adminListArticles(page = 1, per_page = 20, opts?: {
   status?: "draft" | "published";
+  year?: string;
   month?: string;
+  date_from?: string;
+  date_to?: string;
   sort?: "asc" | "desc";
 }) {
   const p = new URLSearchParams({ page: String(page), per_page: String(per_page) });
   if (opts?.status) p.set("status", opts.status);
+  if (opts?.year) p.set("year", opts.year);
   if (opts?.month) p.set("month", opts.month);
+  if (opts?.date_from) p.set("date_from", opts.date_from);
+  if (opts?.date_to) p.set("date_to", opts.date_to);
   if (opts?.sort) p.set("sort", opts.sort);
   return req<{
     items: AdminArticle[];

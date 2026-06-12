@@ -44,9 +44,11 @@ export default function BlogDetailClient({ post, related, headings }: Props) {
             className={`w-full h-64 sm:h-80 rounded-lg mb-8 flex items-center justify-center border border-brand-dark/8 ${
               {
                 Website: "bg-blue-50",
+                "SEO & Google Maps": "bg-green-50",
                 SEO: "bg-green-50",
                 "Sosial Media": "bg-pink-50",
                 Branding: "bg-purple-50",
+                Maintenance: "bg-cyan-50",
                 "Tips Bisnis": "bg-amber-50",
               }[post.category] ?? "bg-brand-dark/5"
             }`}

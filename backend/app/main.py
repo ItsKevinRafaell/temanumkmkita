@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 import os
@@ -16,6 +16,7 @@ from app.routers import (
     integration,
     portfolios,
     contact,
+    office,
 )
 
 Base.metadata.create_all(bind=engine)
@@ -32,11 +33,26 @@ app.add_middleware(
         "https://temanumkmkita.com",
         "https://www.temanumkmkita.com",
         "http://localhost:3000",
+        "http://127.0.0.1:3000",
+        "http://localhost:3001",
+        "http://127.0.0.1:3001",
     ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+@app.middleware("http")
+async def security_headers(request: Request, call_next):
+    response = await call_next(request)
+    response.headers.setdefault("X-Content-Type-Options", "nosniff")
+    response.headers.setdefault("X-Frame-Options", "DENY")
+    response.headers.setdefault("Referrer-Policy", "strict-origin-when-cross-origin")
+    response.headers.setdefault("Permissions-Policy", "camera=(), microphone=(), geolocation=()")
+    if request.url.scheme == "https":
+        response.headers.setdefault("Strict-Transport-Security", "max-age=31536000; includeSubDomains")
+    return response
 
 app.include_router(articles.router)
 app.include_router(categories.router)
@@ -49,6 +65,7 @@ app.include_router(authors.router)
 app.include_router(integration.router)
 app.include_router(portfolios.router)
 app.include_router(contact.router)
+app.include_router(office.router)
 
 _uploads_dir = os.path.join(os.path.dirname(__file__), "..", "..", "public", "uploads")
 os.makedirs(_uploads_dir, exist_ok=True)

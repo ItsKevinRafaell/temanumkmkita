@@ -1267,7 +1267,7 @@ export default function PostEditor({ initial = {} }: PostEditorProps) {
         status: finalStatus,
         featured,
         read_time: readTime,
-        published_at: finalStatus === "published" ? new Date(publishedAt).toISOString() : undefined,
+        published_at: publishedAt ? new Date(publishedAt).toISOString() : undefined,
         cover_image: coverImage || null,
         seo_title: seoTitle || undefined,
         meta_description: metaDescription || undefined,
@@ -1595,7 +1595,7 @@ export default function PostEditor({ initial = {} }: PostEditorProps) {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-[#242423]/50 mb-1">Tanggal Tayang</label>
+                  <label className="block text-xs font-semibold text-[#242423]/50 mb-1">Tanggal Rencana/Tayang</label>
                   <input
                     type="date"
                     value={publishedAt}

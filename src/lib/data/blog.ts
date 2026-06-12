@@ -47,9 +47,11 @@ export function hasBlockType(content: ContentBlock[], type: ContentBlock["type"]
 export const categories = [
   "Semua",
   "Website",
+  "SEO & Google Maps",
   "SEO",
   "Sosial Media",
   "Branding",
+  "Maintenance",
   "Tips Bisnis",
 ] as const;
 
