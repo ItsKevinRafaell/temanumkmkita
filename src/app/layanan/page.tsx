@@ -15,6 +15,18 @@ export const metadata: Metadata = {
 const allServices = [
   ...servicesData,
   {
+    slug: "web-development-bulanan",
+    title: "Web Development Bulanan",
+    icon: "🌐",
+    hook: "Website profesional dengan biaya bulanan, cocok untuk UMKM yang ingin mulai tanpa bayar besar di awal.",
+    benefits: [],
+    packages: [],
+    process: [],
+    faqs: [],
+    empathy: "",
+    solution: "",
+  },
+  {
     slug: "maintenance",
     title: "Maintenance Website",
     icon: "🔧",

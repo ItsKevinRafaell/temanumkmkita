@@ -16,5 +16,14 @@ if not DATABASE_URL:
 
 CRM_API_URL = os.getenv("CRM_API_URL", "").strip()
 CRM_API_KEY = os.getenv("CRM_API_KEY", "").strip()
+HERMES_GATEWAY_URL = os.getenv("HERMES_GATEWAY_URL", "").strip()
+HERMES_GATEWAY_TOKEN = os.getenv("HERMES_GATEWAY_TOKEN", "").strip()
+
+FRONTEND_URL = os.getenv("FRONTEND_URL", "https://www.temanumkmkita.com").rstrip("/")
+SMTP_HOST = os.getenv("SMTP_HOST", "").strip()
+SMTP_PORT = int(os.getenv("SMTP_PORT", "587") or "587")
+SMTP_USER = os.getenv("SMTP_USER", "").strip()
+SMTP_PASSWORD = os.getenv("SMTP_PASSWORD", "").strip()
+SMTP_FROM = os.getenv("SMTP_FROM", SMTP_USER).strip()
 
 SETTINGS_ID = "1"

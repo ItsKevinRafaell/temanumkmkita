@@ -1,4 +1,7 @@
-from app.schemas.auth import LoginRequest, TokenOut, UserOut
+from app.schemas.auth import (
+    LoginRequest, PasswordResetConfirm, PasswordResetRequest,
+    RegisterRequest, TokenOut, UserOut,
+)
 from app.schemas.author import AuthorBase, AuthorCreate, AuthorUpdate, AuthorOut
 from app.schemas.contact import ContactFormIn
 from app.schemas.article import (
@@ -21,6 +24,9 @@ __all__ = [
     "LoginRequest",
     "TokenOut",
     "UserOut",
+    "RegisterRequest",
+    "PasswordResetRequest",
+    "PasswordResetConfirm",
     "AuthorBase",
     "AuthorCreate",
     "AuthorUpdate",

@@ -1,16 +1,43 @@
 import os
 import uuid
 import httpx
-from fastapi import APIRouter, BackgroundTasks, Depends
+from fastapi import APIRouter, BackgroundTasks, Depends, Request
 from sqlalchemy.orm import Session
+from urllib.parse import urlparse
 
 from app.core.database import SessionLocal, get_db
 from app.core.config import CRM_API_URL, CRM_API_KEY
+from app.core.security import check_rate_limit
 from app.core.utils import now_iso
 from app.models import ContactSubmission
 from app.schemas.contact import ContactFormIn
 
 router = APIRouter(prefix="/api", tags=["contact"])
+
+
+def _crm_host(url: str) -> str:
+    parsed = urlparse((url or "").strip())
+    return parsed.netloc or parsed.path.split("/")[0]
+
+
+def _client_ip(request: Request) -> str:
+    forwarded = request.headers.get("x-forwarded-for", "")
+    if forwarded:
+        return forwarded.split(",")[0].strip()[:64]
+    return request.client.host if request.client else "unknown"
+
+
+@router.get("/integrations/kantorteman/lead-intake/status")
+def lead_intake_status():
+    return {
+        "service": "temanumkmkita",
+        "flow": "lead_intake",
+        "status": "ok" if CRM_API_URL and CRM_API_KEY else "unconfigured",
+        "crm_configured": bool(CRM_API_URL and CRM_API_KEY),
+        "crm_api_host": _crm_host(CRM_API_URL) if CRM_API_URL else "",
+        "target_path": "/api/leads/external",
+        "source": "website_temanumkmkita",
+    }
 
 
 def _forward_to_crm(submission_id: str, payload: dict):
@@ -40,9 +67,11 @@ def _forward_to_crm(submission_id: str, payload: dict):
 @router.post("/contact-form", status_code=201)
 def submit_contact_form(
     body: ContactFormIn,
+    request: Request,
     background_tasks: BackgroundTasks,
     db: Session = Depends(get_db),
 ):
+    check_rate_limit(f"contact-form:{_client_ip(request)}", 10, 300)
     submission = ContactSubmission(
         id=str(uuid.uuid4()),
         name=body.name,

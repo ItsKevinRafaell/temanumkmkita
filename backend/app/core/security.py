@@ -1,5 +1,7 @@
 import hashlib
 import hmac
+import time
+from collections import defaultdict, deque
 from datetime import datetime, timezone, timedelta
 from fastapi import HTTPException, Security
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
@@ -10,6 +12,18 @@ from app.core.config import SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_HOURS
 
 
 bearer_scheme = HTTPBearer()
+_rate_limit_buckets: dict[str, deque[float]] = defaultdict(deque)
+
+
+def check_rate_limit(key: str, limit: int, window_seconds: int) -> None:
+    now = time.monotonic()
+    bucket = _rate_limit_buckets[key]
+    cutoff = now - window_seconds
+    while bucket and bucket[0] < cutoff:
+        bucket.popleft()
+    if len(bucket) >= limit:
+        raise HTTPException(status_code=429, detail="Terlalu banyak percobaan. Coba lagi nanti.")
+    bucket.append(now)
 
 
 def hash_password(password: str) -> str:

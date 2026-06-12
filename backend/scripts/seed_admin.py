@@ -15,6 +15,7 @@ from datetime import datetime, timezone
 
 def main():
     username = input("Admin username: ").strip()
+    email = input("Admin email (optional, for password reset): ").strip().lower() or None
     password = input("Admin password: ").strip()
     if not username or not password:
         print("Username dan password tidak boleh kosong.")
@@ -29,6 +30,7 @@ def main():
         user = User(
             id=str(uuid.uuid4()),
             username=username,
+            email=email,
             password_hash=hash_password(password),
             created_at=datetime.now(timezone.utc).isoformat(),
         )

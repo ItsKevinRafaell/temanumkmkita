@@ -1,6 +1,7 @@
 "use client";
 
 import { Suspense, useState } from "react";
+import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { login } from "@/lib/api/admin";
 import { Eye, EyeOff, Lock } from "lucide-react";
@@ -80,6 +81,9 @@ function LoginForm() {
       >
         {loading ? "Masuk..." : "Masuk"}
       </button>
+      <Link href="/admin/reset-password" className="block text-center text-xs font-semibold text-[#9a6a00] hover:text-[#242423]">
+        Lupa password?
+      </Link>
     </form>
   );
 }
