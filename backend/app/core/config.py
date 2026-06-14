@@ -25,5 +25,10 @@ SMTP_PORT = int(os.getenv("SMTP_PORT", "587") or "587")
 SMTP_USER = os.getenv("SMTP_USER", "").strip()
 SMTP_PASSWORD = os.getenv("SMTP_PASSWORD", "").strip()
 SMTP_FROM = os.getenv("SMTP_FROM", SMTP_USER).strip()
+AUTH_ALLOWED_EMAIL_DOMAINS = [
+    domain.strip().lower()
+    for domain in os.getenv("AUTH_ALLOWED_EMAIL_DOMAINS", "temanumkmkita.com").split(",")
+    if domain.strip()
+]
 
 SETTINGS_ID = "1"

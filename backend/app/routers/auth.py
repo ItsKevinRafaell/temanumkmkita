@@ -13,7 +13,15 @@ from app.schemas import (
     LoginRequest, PasswordResetConfirm, PasswordResetRequest,
     RegisterRequest, TokenOut, UserOut,
 )
-from app.core.config import FRONTEND_URL, SMTP_FROM, SMTP_HOST, SMTP_PASSWORD, SMTP_PORT, SMTP_USER
+from app.core.config import (
+    AUTH_ALLOWED_EMAIL_DOMAINS,
+    FRONTEND_URL,
+    SMTP_FROM,
+    SMTP_HOST,
+    SMTP_PASSWORD,
+    SMTP_PORT,
+    SMTP_USER,
+)
 from app.core.security import (
     check_rate_limit,
     hash_password,
@@ -40,6 +48,15 @@ def _client_ip(request: Request) -> str:
     if forwarded:
         return forwarded.split(",")[0].strip()[:64]
     return request.client.host if request.client else "unknown"
+
+
+def _email_domain(email: str) -> str:
+    return email.rsplit("@", 1)[-1].lower()
+
+
+def _ensure_allowed_email(email: str) -> None:
+    if AUTH_ALLOWED_EMAIL_DOMAINS and _email_domain(email) not in AUTH_ALLOWED_EMAIL_DOMAINS:
+        raise HTTPException(status_code=400, detail="Gunakan email resmi yang sudah ditentukan.")
 
 
 def _send_password_reset_email(to_email: str, reset_url: str) -> bool:
@@ -78,12 +95,14 @@ def _send_password_reset_email(to_email: str, reset_url: str) -> bool:
 @router.post("/login", response_model=TokenOut)
 def login(data: LoginRequest, request: Request, db: Session = Depends(get_db)):
     ip = _client_ip(request)
-    username_key = data.username.strip().lower()[:100]
+    email = data.email.strip().lower()
+    _ensure_allowed_email(email)
+    username_key = email[:100]
     check_rate_limit(f"login:ip:{ip}", 20, 300)
     check_rate_limit(f"login:user:{username_key}", 10, 300)
-    user = db.query(User).filter(User.username == data.username).first()
+    user = db.query(User).filter(User.email == email).first()
     if not user or not verify_and_upgrade_password(data.password, user.password_hash, db, user.id):
-        raise HTTPException(status_code=401, detail="Username atau password salah")
+        raise HTTPException(status_code=401, detail="Email atau password salah")
     token = create_access_token(user.username)
     return {"access_token": token, "token_type": "bearer"}
 
@@ -98,16 +117,18 @@ def me(username: str = Depends(require_auth), db: Session = Depends(get_db)):
 
 @router.post("/register", response_model=UserOut, dependencies=[Depends(require_auth)])
 def register(data: RegisterRequest, db: Session = Depends(get_db)):
-    existing = db.query(User).filter(User.username == data.username).first()
+    _ensure_allowed_email(data.email)
+    email_owner = db.query(User).filter(User.email == data.email).first()
+    if email_owner:
+        raise HTTPException(status_code=400, detail="Email already exists")
+    username = data.username or data.email.split("@", 1)[0]
+    existing = db.query(User).filter(User.username == username).first()
     if existing:
-        raise HTTPException(status_code=400, detail="Username already exists")
-    if data.email:
-        email_owner = db.query(User).filter(User.email == data.email).first()
-        if email_owner:
-            raise HTTPException(status_code=400, detail="Email already exists")
+        suffix = data.email.rsplit("@", 1)[0].replace(".", "-")
+        username = f"{suffix}-{uuid.uuid4().hex[:6]}"
     user = User(
         id=str(uuid.uuid4()),
-        username=data.username,
+        username=username,
         email=data.email,
         password_hash=hash_password(data.password),
         created_at=now_iso(),
@@ -121,6 +142,8 @@ def register(data: RegisterRequest, db: Session = Depends(get_db)):
 @router.post("/password/forgot")
 def request_password_reset(data: PasswordResetRequest, request: Request, db: Session = Depends(get_db)):
     check_rate_limit(f"password-reset:{_client_ip(request)}", 5, 300)
+    if AUTH_ALLOWED_EMAIL_DOMAINS and _email_domain(data.email) not in AUTH_ALLOWED_EMAIL_DOMAINS:
+        return {"ok": True, "message": "Jika email terdaftar dan SMTP aktif, instruksi reset password akan dikirim."}
     user = db.query(User).filter(User.email == data.email).first()
     if user:
         raw_token = secrets.token_urlsafe(32)

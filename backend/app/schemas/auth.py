@@ -3,8 +3,16 @@ from pydantic import BaseModel, Field, field_validator
 
 
 class LoginRequest(BaseModel):
-    username: str
+    email: str
     password: str
+
+    @field_validator("email")
+    @classmethod
+    def validate_login_email(cls, value: str) -> str:
+        value = value.strip().lower()
+        if not re.match(r"^[^@\s]+@[^@\s]+\.[^@\s]+$", value):
+            raise ValueError("Format email tidak valid")
+        return value
 
 
 class TokenOut(BaseModel):
@@ -21,15 +29,13 @@ class UserOut(BaseModel):
 
 
 class RegisterRequest(BaseModel):
-    username: str
+    email: str
     password: str
-    email: str | None = None
+    username: str | None = None
 
     @field_validator("email")
     @classmethod
-    def validate_email(cls, value: str | None) -> str | None:
-        if value is None:
-            return value
+    def validate_email(cls, value: str) -> str:
         value = value.strip().lower()
         if not re.match(r"^[^@\s]+@[^@\s]+\.[^@\s]+$", value):
             raise ValueError("Format email tidak valid")

@@ -3,6 +3,7 @@ import math
 import hashlib
 from fastapi import APIRouter, Depends, HTTPException, Query, Security
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from sqlalchemy import func
 from sqlalchemy.orm import Session, selectinload
 
 from app.core.database import get_db
@@ -55,18 +56,28 @@ def list_all_articles(
     page: int = Query(1, ge=1),
     per_page: int = Query(20, ge=1, le=500),
     status: str | None = Query(None),
+    year: str | None = Query(None),
     month: str | None = Query(None),
+    date_from: str | None = Query(None),
+    date_to: str | None = Query(None),
     sort: str = Query("desc"),
     db: Session = Depends(get_db),
 ):
     q = db.query(Article)
+    editorial_date = func.coalesce(Article.published_at, Article.created_at)
     if status and status in ("draft", "published"):
         q = q.filter(Article.status == status)
     if month:
-        q = q.filter(Article.created_at.like(f"{month}%"))
+        q = q.filter(editorial_date.like(f"{month}%"))
+    elif year:
+        q = q.filter(editorial_date.like(f"{year}-%"))
+    if date_from:
+        q = q.filter(editorial_date >= f"{date_from}T00:00:00")
+    if date_to:
+        q = q.filter(editorial_date <= f"{date_to}T23:59:59")
     total = q.count()
     pages = max(1, math.ceil(total / per_page))
-    order = Article.created_at.asc() if sort == "asc" else Article.created_at.desc()
+    order = editorial_date.asc() if sort == "asc" else editorial_date.desc()
     items = q.options(selectinload(Article.author)).order_by(order).offset((page - 1) * per_page).limit(per_page).all()
     return {"items": items, "total": total, "page": page, "per_page": per_page, "pages": pages}
 

@@ -5,6 +5,7 @@ from pathlib import Path
 
 os.environ.setdefault("DATABASE_URL", "sqlite:///:memory:")
 os.environ.setdefault("SECRET_KEY", "test-secret-key")
+os.environ.setdefault("AUTH_ALLOWED_EMAIL_DOMAINS", "example.test")
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from fastapi.testclient import TestClient
@@ -121,10 +122,10 @@ def test_login_rate_limit_blocks_repeated_failures(tmp_path):
     db.close()
 
     for _ in range(10):
-        response = client.post("/api/auth/login", json={"username": "admin", "password": "wrongpassword"})
+        response = client.post("/api/auth/login", json={"email": "admin@example.test", "password": "wrongpassword"})
         assert response.status_code == 401
 
-    blocked = client.post("/api/auth/login", json={"username": "admin", "password": "wrongpassword"})
+    blocked = client.post("/api/auth/login", json={"email": "admin@example.test", "password": "wrongpassword"})
     assert blocked.status_code == 429
     app.dependency_overrides.clear()
     security._rate_limit_buckets.clear()
