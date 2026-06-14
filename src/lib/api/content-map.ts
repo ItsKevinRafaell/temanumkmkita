@@ -10,6 +10,38 @@ function authHeaders(): HeadersInit {
   return token ? { Authorization: `Bearer ${token}` } : {};
 }
 
+type ApiErrorItem = {
+  detail?: unknown;
+  message?: unknown;
+  msg?: unknown;
+  loc?: unknown;
+};
+
+function cleanApiErrorText(value: string): string {
+  return value.replace(/^Value error,\s*/i, "").trim();
+}
+
+function errorMessageFromDetail(detail: unknown, fallback: string): string {
+  if (!detail) return fallback;
+  if (typeof detail === "string") return cleanApiErrorText(detail) || fallback;
+
+  if (Array.isArray(detail)) {
+    const messages = detail
+      .map((item) => errorMessageFromDetail(item, ""))
+      .filter(Boolean);
+    return messages.length ? messages.join(" ") : fallback;
+  }
+
+  if (typeof detail === "object") {
+    const item = detail as ApiErrorItem;
+    if (typeof item.msg === "string") return cleanApiErrorText(item.msg) || fallback;
+    if (typeof item.message === "string") return cleanApiErrorText(item.message) || fallback;
+    if (item.detail) return errorMessageFromDetail(item.detail, fallback);
+  }
+
+  return fallback;
+}
+
 async function req<T>(path: string, init?: RequestInit): Promise<T> {
   const res = await fetch(`${API_BASE}${path}`, {
     ...init,
@@ -17,7 +49,7 @@ async function req<T>(path: string, init?: RequestInit): Promise<T> {
   });
   if (!res.ok) {
     const err = await res.json().catch(() => ({ detail: res.statusText }));
-    throw new Error(err.detail ?? "Request failed");
+    throw new Error(errorMessageFromDetail(err.detail, "Request failed"));
   }
   return res.json();
 }
