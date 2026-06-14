@@ -31,6 +31,13 @@ export const metadata: Metadata = {
     "Kami bantu UMKM kamu hadir dan berkembang secara online. Web development, SEO Google Maps, kelola sosial media, dan lebih banyak lagi.",
   keywords: ["UMKM", "web development", "SEO", "sosial media", "digital marketing", "Indonesia"],
   alternates: { canonical: SITE_URL },
+  icons: {
+    icon: [
+      { url: "/favicon.ico" },
+      { url: DEFAULT_FAVICON_PATH, sizes: "512x512", type: "image/png" },
+    ],
+    apple: DEFAULT_FAVICON_PATH,
+  },
   openGraph: {
     title: "Teman UMKM Kita",
     description: "Solusi Digital untuk UMKM Indonesia",
@@ -38,11 +45,13 @@ export const metadata: Metadata = {
     siteName: "Teman UMKM Kita",
     locale: "id_ID",
     type: "website",
+    images: [{ url: DEFAULT_LOGO_URL, width: 1563, height: 1563, alt: "Teman UMKM Kita" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Teman UMKM Kita",
     description: "Solusi Digital untuk UMKM Indonesia",
+    images: [DEFAULT_LOGO_URL],
   },
 };
 
@@ -124,6 +133,7 @@ export default async function RootLayout({
       <head>
         <link rel="preconnect" href="https://api.temanumkmkita.com" />
         <link rel="icon" href={faviconHref} />
+        <link rel="apple-touch-icon" href={faviconHref} />
         <style
           dangerouslySetInnerHTML={{
             __html: `:root{--brand-logo-url:url("${logoCssUrl}");--brand-logo-light-url:url("${logoLightCssUrl}");--brand-logo-footer-url:url("${footerLogoCssUrl}");}`,
