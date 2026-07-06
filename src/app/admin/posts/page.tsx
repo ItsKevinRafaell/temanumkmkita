@@ -3,14 +3,14 @@
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { adminListArticles, adminDeleteArticle, logout, type AdminArticle } from "@/lib/api/admin";
+import { adminListArticles, adminDeleteArticle, logout, adminBulkPublish, type AdminArticle } from "@/lib/api/admin";
 import ConfirmModal from "@/components/ui/ConfirmModal";
 import BulkGenerateModal from "@/components/ui/BulkGenerateModal";
 import {
   PenLine, Trash2, Plus, LogOut, FileText,
   CheckCircle, Clock, ChevronLeft, ChevronRight,
   ArrowUpDown, Star, Map as MapIcon, Settings, Users, Images, Menu, CalendarDays,
-  Sparkles,
+  Sparkles, Send, CheckSquare, Square,
 } from "lucide-react";
 
 function formatDate(iso: string | null) {
@@ -64,6 +64,9 @@ export default function AdminPostsPage() {
   const [navOpen, setNavOpen] = useState(false);
   const [bulkModalOpen, setBulkModalOpen] = useState(false);
   const [bulkEligible, setBulkEligible] = useState<{ id: string; title: string; slug: string; cover_image?: string | null }[]>([]);
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const [publishing, setPublishing] = useState(false);
+  const [publishResult, setPublishResult] = useState<{ published: string[]; skipped: string[]; ping_triggered: boolean } | null>(null);
 
   // Filters
   const [statusFilter, setStatusFilter] = useState<"" | "draft" | "published">("");
@@ -156,6 +159,42 @@ export default function AdminPostsPage() {
     await load(page);
   }
 
+  function toggleSelectAll() {
+    const eligible = posts.filter((p) => p.status === "draft");
+    const allSelected = eligible.every((p) => selectedIds.has(p.id));
+    if (allSelected) {
+      setSelectedIds(new Set());
+    } else {
+      setSelectedIds(new Set(eligible.map((p) => p.id)));
+    }
+  }
+
+  function toggleSelect(id: string) {
+    setSelectedIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  }
+
+  async function handleBulkPublish() {
+    if (selectedIds.size === 0) return;
+    if (!confirm(`Publish ${selectedIds.size} artikel sekaligus? Google + Bing + IndexNow akan langsung dinotif.`)) return;
+    setPublishing(true);
+    setPublishResult(null);
+    try {
+      const result = await adminBulkPublish(Array.from(selectedIds));
+      setPublishResult(result);
+      setSelectedIds(new Set());
+      await load(page);
+    } catch (err) {
+      alert(err instanceof Error ? err.message : "Gagal publish");
+    } finally {
+      setPublishing(false);
+    }
+  }
+
   return (
     <div className="min-h-screen bg-[#fcfaf7]">
       {/* ── Top bar ─────────────────────────────────────────────────── */}
@@ -226,6 +265,16 @@ export default function AdminPostsPage() {
                 <Settings size={12} /> Pengaturan
               </Link>
             </div>
+            {selectedIds.size > 0 && (
+              <button
+                onClick={handleBulkPublish}
+                disabled={publishing}
+                className="flex items-center gap-2 bg-green-600 text-white font-bold px-3 py-2 rounded-lg text-xs hover:bg-green-700 disabled:opacity-50 transition"
+              >
+                <Send size={12} />
+                <span>Publish ({selectedIds.size})</span>
+              </button>
+            )}
             <button
               onClick={openBulkModal}
               className="flex items-center gap-2 border border-[#f5a700]/30 bg-[#f5a700]/5 text-[#9b6a00] font-semibold px-3 py-2 rounded-lg text-xs hover:bg-[#f5a700]/15 transition"
@@ -357,6 +406,20 @@ export default function AdminPostsPage() {
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-[#242423]/6 bg-[#242423]/2">
+                  <th className="px-3 py-3 w-8">
+                    <button
+                      onClick={toggleSelectAll}
+                      className="flex items-center justify-center text-[#242423]/40 hover:text-[#242423]"
+                      title="Pilih/batal semua draft"
+                    >
+                      {posts.filter((p) => p.status === "draft").length > 0 &&
+                      posts.filter((p) => p.status === "draft").every((p) => selectedIds.has(p.id)) ? (
+                        <CheckSquare size={14} />
+                      ) : (
+                        <Square size={14} />
+                      )}
+                    </button>
+                  </th>
                   <th className="text-left px-5 py-3 text-xs font-bold uppercase tracking-wider text-[#242423]/40">Judul</th>
                   <th className="text-left px-4 py-3 text-xs font-bold uppercase tracking-wider text-[#242423]/40 hidden sm:table-cell">Kategori</th>
                   <th className="text-left px-4 py-3 text-xs font-bold uppercase tracking-wider text-[#242423]/40 hidden lg:table-cell">Batch</th>
@@ -373,6 +436,20 @@ export default function AdminPostsPage() {
                       i % 2 !== 0 ? "bg-[#242423]/1" : ""
                     }`}
                   >
+                    <td className="px-3 py-3.5">
+                      {post.status === "draft" && (
+                        <button
+                          onClick={() => toggleSelect(post.id)}
+                          className="flex items-center justify-center text-[#242423]/30 hover:text-[#f5a700]"
+                        >
+                          {selectedIds.has(post.id) ? (
+                            <CheckSquare size={14} className="text-[#f5a700]" />
+                          ) : (
+                            <Square size={14} />
+                          )}
+                        </button>
+                      )}
+                    </td>
                     <td className="px-5 py-3.5">
                       <div className="flex items-start gap-1.5">
                         {post.featured && (
@@ -439,6 +516,17 @@ export default function AdminPostsPage() {
             </table>
           )}
         </div>
+
+        {/* Publish result */}
+        {publishResult && (
+          <div className="mt-4 bg-green-50 border border-green-200 rounded-xl px-4 py-3 text-xs text-green-900">
+            <p className="font-semibold">
+              Publish selesai: {publishResult.published.length} tayang baru
+              {publishResult.skipped.length > 0 && `, ${publishResult.skipped.length} dilewati`}
+              {publishResult.ping_triggered && " · Google + Bing + IndexNow sudah dinotif"}
+            </p>
+          </div>
+        )}
 
         {/* Pagination */}
         {pages > 1 && (
