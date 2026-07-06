@@ -4,13 +4,13 @@ import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { adminListArticles, adminDeleteArticle, logout, type AdminArticle } from "@/lib/api/admin";
-import { generateCoversBulk, type BulkGenerateProgress } from "@/lib/api/imaginer";
 import ConfirmModal from "@/components/ui/ConfirmModal";
+import BulkGenerateModal from "@/components/ui/BulkGenerateModal";
 import {
   PenLine, Trash2, Plus, LogOut, FileText,
   CheckCircle, Clock, ChevronLeft, ChevronRight,
   ArrowUpDown, Star, Map as MapIcon, Settings, Users, Images, Menu, CalendarDays,
-  Sparkles, Loader2,
+  Sparkles,
 } from "lucide-react";
 
 function formatDate(iso: string | null) {
@@ -62,8 +62,8 @@ export default function AdminPostsPage() {
   const [deleting, setDeleting] = useState<string | null>(null);
   const [modal, setModal] = useState<{ id: string; title: string } | null>(null);
   const [navOpen, setNavOpen] = useState(false);
-  const [bulkGenerating, setBulkGenerating] = useState(false);
-  const [bulkProgress, setBulkProgress] = useState<BulkGenerateProgress | null>(null);
+  const [bulkModalOpen, setBulkModalOpen] = useState(false);
+  const [bulkEligible, setBulkEligible] = useState<{ id: string; title: string; slug: string; cover_image?: string | null }[]>([]);
 
   // Filters
   const [statusFilter, setStatusFilter] = useState<"" | "draft" | "published">("");
@@ -122,19 +122,38 @@ export default function AdminPostsPage() {
     router.push("/admin/login");
   }
 
-  async function handleBulkGenerate() {
-    if (!confirm("Generate cover images untuk semua artikel yang belum punya cover? Ini akan memakan waktu beberapa menit.")) return;
-    setBulkGenerating(true);
-    setBulkProgress(null);
+  async function openBulkModal() {
+    // Fetch all eligible articles (no cover, has notes) from all pages.
     try {
-      const result = await generateCoversBulk();
-      setBulkProgress(result);
-      await load(page);
+      const data = await adminListArticles(1, 500, {
+        status: undefined,
+        year: undefined,
+        month: undefined,
+        date_from: undefined,
+        date_to: undefined,
+        sort: "desc",
+      });
+      const eligible = data.items
+        .filter((a) => !a.cover_image || a.cover_image === "")
+        .map((a) => ({
+          id: a.id,
+          title: a.title,
+          slug: a.slug,
+          cover_image: a.cover_image,
+        }));
+      if (eligible.length === 0) {
+        alert("Semua artikel sudah punya cover image.");
+        return;
+      }
+      setBulkEligible(eligible);
+      setBulkModalOpen(true);
     } catch (err) {
-      alert(err instanceof Error ? err.message : "Gagal generate covers");
-    } finally {
-      setBulkGenerating(false);
+      alert(err instanceof Error ? err.message : "Gagal memuat daftar artikel");
     }
+  }
+
+  async function refreshAfterBulk() {
+    await load(page);
   }
 
   return (
@@ -178,57 +197,47 @@ export default function AdminPostsPage() {
             <div className="hidden sm:flex items-center gap-2">
               <Link
                 href="/admin/categories"
-                className="flex items-center gap-2 border border-[#242423]/12 text-[#242423]/55 font-semibold px-3 py-2.5 rounded-xl text-sm hover:border-[#242423]/25 hover:text-[#242423] transition"
+                className="flex items-center gap-1.5 border border-[#242423]/12 text-[#242423]/55 font-semibold px-3 py-2 rounded-lg text-xs hover:border-[#242423]/25 hover:text-[#242423] transition"
               >
                 Kategori
               </Link>
               <Link
                 href="/admin/authors"
-                className="flex items-center gap-2 border border-[#242423]/12 text-[#242423]/55 font-semibold px-3 py-2.5 rounded-xl text-sm hover:border-[#242423]/25 hover:text-[#242423] transition"
+                className="flex items-center gap-1.5 border border-[#242423]/12 text-[#242423]/55 font-semibold px-3 py-2 rounded-lg text-xs hover:border-[#242423]/25 hover:text-[#242423] transition"
               >
-                <Users size={13} /> Penulis
+                <Users size={12} /> Penulis
               </Link>
               <Link
                 href="/admin/portfolio"
-                className="flex items-center gap-2 border border-[#242423]/12 text-[#242423]/55 font-semibold px-3 py-2.5 rounded-xl text-sm hover:border-[#242423]/25 hover:text-[#242423] transition"
+                className="flex items-center gap-1.5 border border-[#242423]/12 text-[#242423]/55 font-semibold px-3 py-2 rounded-lg text-xs hover:border-[#242423]/25 hover:text-[#242423] transition"
               >
-                <Images size={13} /> Portfolio
+                <Images size={12} /> Portfolio
               </Link>
               <Link
                 href="/admin/content-map"
-                className="flex items-center gap-2 border border-[#242423]/12 text-[#242423]/55 font-semibold px-3 py-2.5 rounded-xl text-sm hover:border-[#242423]/25 hover:text-[#242423] transition"
+                className="flex items-center gap-1.5 border border-[#242423]/12 text-[#242423]/55 font-semibold px-3 py-2 rounded-lg text-xs hover:border-[#242423]/25 hover:text-[#242423] transition"
               >
-                <MapIcon size={13} /> Content Map
+                <MapIcon size={12} /> Content Map
               </Link>
               <Link
                 href="/admin/settings"
-                className="flex items-center gap-2 border border-[#242423]/12 text-[#242423]/55 font-semibold px-3 py-2.5 rounded-xl text-sm hover:border-[#242423]/25 hover:text-[#242423] transition"
+                className="flex items-center gap-1.5 border border-[#242423]/12 text-[#242423]/55 font-semibold px-3 py-2 rounded-lg text-xs hover:border-[#242423]/25 hover:text-[#242423] transition"
               >
-                <Settings size={13} /> Pengaturan
+                <Settings size={12} /> Pengaturan
               </Link>
             </div>
             <button
-              onClick={handleBulkGenerate}
-              disabled={bulkGenerating}
-              className="flex items-center gap-2 border border-[#f5a700]/30 bg-[#f5a700]/5 text-[#9b6a00] font-semibold px-3 py-2.5 rounded-xl text-sm hover:bg-[#f5a700]/15 disabled:opacity-50 disabled:pointer-events-none transition"
+              onClick={openBulkModal}
+              className="flex items-center gap-2 border border-[#f5a700]/30 bg-[#f5a700]/5 text-[#9b6a00] font-semibold px-3 py-2 rounded-lg text-xs hover:bg-[#f5a700]/15 transition"
             >
-              {bulkGenerating ? (
-                <>
-                  <Loader2 size={14} className="animate-spin" />
-                  <span className="hidden sm:inline">Generating...</span>
-                </>
-              ) : (
-                <>
-                  <Sparkles size={14} />
-                  <span className="hidden sm:inline">Generate Covers</span>
-                </>
-              )}
+              <Sparkles size={12} />
+              <span className="hidden sm:inline">Generate Covers</span>
             </button>
             <Link
               href="/admin/posts/new"
-              className="flex items-center gap-2 bg-[#f5a700] text-white font-bold px-4 py-2.5 rounded-xl text-sm hover:bg-[#f5a700]/90 transition"
+              className="flex items-center gap-2 bg-[#f5a700] text-white font-bold px-3 py-2 rounded-lg text-xs hover:bg-[#f5a700]/90 transition"
             >
-              <Plus size={14} /> <span className="hidden sm:inline">Artikel Baru</span>
+              <Plus size={12} /> <span className="hidden sm:inline">Artikel Baru</span>
             </Link>
             <button
               onClick={() => setNavOpen((v) => !v)}
@@ -337,23 +346,6 @@ export default function AdminPostsPage() {
             ))}
           </div>
         </div>
-
-        {/* Bulk generate progress */}
-        {bulkProgress && (
-          <div className="mb-4 bg-[#f5a700]/5 border border-[#f5a700]/20 rounded-xl px-4 py-3 text-xs text-[#242423]/70 space-y-1">
-            <p className="font-semibold text-[#9b6a00]">
-              Generate selesai: {bulkProgress.completed} berhasil, {bulkProgress.failed} gagal, {bulkProgress.skipped} dilewati (dari {bulkProgress.total} artikel)
-            </p>
-            {bulkProgress.errors.length > 0 && (
-              <ul className="list-disc ml-4 text-red-600/80">
-                {bulkProgress.errors.slice(0, 5).map((e, i) => (
-                  <li key={i}>{e.slug}: {e.error}</li>
-                ))}
-                {bulkProgress.errors.length > 5 && <li>...dan {bulkProgress.errors.length - 5} error lainnya</li>}
-              </ul>
-            )}
-          </div>
-        )}
 
         {/* Table */}
         <div className="bg-white border border-[#242423]/8 rounded-2xl overflow-hidden shadow-sm">
@@ -479,6 +471,13 @@ export default function AdminPostsPage() {
         confirmLabel="Hapus"
         onConfirm={confirmDelete}
         onCancel={() => setModal(null)}
+      />
+
+      <BulkGenerateModal
+        open={bulkModalOpen}
+        articles={bulkEligible}
+        onClose={() => setBulkModalOpen(false)}
+        onComplete={refreshAfterBulk}
       />
     </div>
   );
