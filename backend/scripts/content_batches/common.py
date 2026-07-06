@@ -6,6 +6,8 @@ import re
 from dataclasses import dataclass
 from typing import Any
 
+from content_batches.prompt_generator import build_image_alt, build_image_prompt
+
 
 @dataclass(frozen=True)
 class Source:
@@ -208,15 +210,28 @@ def build_editorial_notes(article: "ArticleDraft") -> str:
 
     Covers image prompt, alt text, dan catatan internal lainnya.
     Disimpan ke kolom `articles.notes` agar tidak bocor ke publik.
+
+    Prompt di-upgrade lewat prompt_generator untuk hasil cover yang lebih
+    bervariasi per artikel (anti-template). Original prompt dari batch
+    file dipakai sebagai creative brief kalau ada.
     """
-    lines: list[str] = []
-    if article.image_prompt:
-        lines.append("## Cover Image Prompt")
-        lines.append(article.image_prompt.strip())
-    if article.image_alt:
-        lines.append("")
-        lines.append("## Image Alt Text")
-        lines.append(article.image_alt.strip())
-    if not lines:
-        return None
+    prompt = build_image_prompt(
+        title=article.title,
+        slug=article.slug,
+        pillar_name=article.pillar_name,
+        focus_keyword=article.focus_keyword,
+        original_prompt=article.image_prompt or None,
+    )
+    alt = build_image_alt(
+        title=article.title,
+        pillar_name=article.pillar_name,
+        original_alt=article.image_alt or None,
+    )
+    lines: list[str] = [
+        "## Cover Image Prompt",
+        prompt,
+        "",
+        "## Image Alt Text",
+        alt,
+    ]
     return "\n".join(lines).strip()
