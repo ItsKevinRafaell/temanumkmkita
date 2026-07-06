@@ -338,6 +338,23 @@ export default function AdminPostsPage() {
           </div>
         </div>
 
+        {/* Bulk generate progress */}
+        {bulkProgress && (
+          <div className="mb-4 bg-[#f5a700]/5 border border-[#f5a700]/20 rounded-xl px-4 py-3 text-xs text-[#242423]/70 space-y-1">
+            <p className="font-semibold text-[#9b6a00]">
+              Generate selesai: {bulkProgress.completed} berhasil, {bulkProgress.failed} gagal, {bulkProgress.skipped} dilewati (dari {bulkProgress.total} artikel)
+            </p>
+            {bulkProgress.errors.length > 0 && (
+              <ul className="list-disc ml-4 text-red-600/80">
+                {bulkProgress.errors.slice(0, 5).map((e, i) => (
+                  <li key={i}>{e.slug}: {e.error}</li>
+                ))}
+                {bulkProgress.errors.length > 5 && <li>...dan {bulkProgress.errors.length - 5} error lainnya</li>}
+              </ul>
+            )}
+          </div>
+        )}
+
         {/* Table */}
         <div className="bg-white border border-[#242423]/8 rounded-2xl overflow-hidden shadow-sm">
           {loading ? (
