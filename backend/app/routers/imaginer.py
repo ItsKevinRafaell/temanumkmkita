@@ -8,8 +8,10 @@ from __future__ import annotations
 
 import asyncio
 import logging
+import os
 
-from fastapi import APIRouter, Depends, HTTPException
+import httpx
+from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from app.core.database import get_db
@@ -25,6 +27,23 @@ router = APIRouter(prefix="/api/admin/articles", tags=["imaginer"], dependencies
 
 # Delay between bulk generations to respect RPM limits.
 BULK_DELAY_SECONDS = 15.0
+FRONTEND_URL = os.getenv("FRONTEND_URL", "https://www.temanumkmkita.com").rstrip("/")
+
+
+async def _revalidate_frontend_sitemap() -> None:
+    """Panggil endpoint revalidate Next.js supaya sitemap.xml fresh."""
+    token = os.getenv("REVALIDATE_TOKEN", "").strip()
+    if not token:
+        return
+    try:
+        async with httpx.AsyncClient() as client:
+            await client.post(
+                f"{FRONTEND_URL}/api/revalidate-sitemap",
+                headers={"Authorization": f"Bearer {token}"},
+                timeout=10,
+            )
+    except Exception as e:
+        logger.warning("Revalidate sitemap gagal: %s", e)
 
 
 @router.post("/{article_id}/generate-cover", response_model=GenerateCoverResponse)
@@ -60,7 +79,7 @@ async def generate_single_cover(article_id: str, db: Session = Depends(get_db)):
 
 
 @router.post("/generate-covers-bulk", response_model=BulkGenerateProgress)
-async def generate_bulk_covers(db: Session = Depends(get_db)):
+async def generate_bulk_covers(background: BackgroundTasks, db: Session = Depends(get_db)):
     """Generate cover images for all articles that have notes but no cover_image.
 
     Runs sequentially with a delay between each generation to respect API rate limits.
@@ -105,6 +124,9 @@ async def generate_bulk_covers(db: Session = Depends(get_db)):
             await asyncio.sleep(BULK_DELAY_SECONDS)
 
     db.commit()
+
+    # Trigger Next.js sitemap revalidation supaya artikel baru dengan cover muncul di sitemap.xml.
+    background.add_task(_revalidate_frontend_sitemap)
 
     return BulkGenerateProgress(
         total=len(articles),
