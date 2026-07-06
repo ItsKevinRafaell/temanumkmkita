@@ -39,6 +39,11 @@ class Article(Base):
     meta_description = Column(Text, nullable=True)
     focus_keyword = Column(String(255), nullable=True)
 
+    # Editorial notes (image prompt, alt text, cover direction, dll).
+    # Disimpan terpisah dari `content` (rendered body) agar tidak ikut
+    # tampil di publik blog.
+    notes = Column(Text, nullable=True)
+
     # Relationships
     author = relationship("Author", back_populates="articles")
 

@@ -42,7 +42,7 @@ function errorMessageFromDetail(detail: unknown, fallback: string): string {
   return fallback;
 }
 
-async function req<T>(path: string, init?: RequestInit): Promise<T> {
+export async function req<T>(path: string, init?: RequestInit): Promise<T> {
   const res = await fetch(`${API_BASE}${path}`, {
     ...init,
     headers: { "Content-Type": "application/json", ...authHeaders(), ...init?.headers },

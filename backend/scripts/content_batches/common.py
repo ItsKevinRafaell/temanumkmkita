@@ -198,12 +198,25 @@ def build_blocks(article: ArticleDraft) -> list[dict[str, Any]]:
         {"type": "cta-inline"},
         {"type": "h2", "id": heading_id("Pertanyaan umum"), "text": "Pertanyaan Umum"},
         {"type": "faq", "items": [{"question": q, "answer": a} for q, a in article.faq]},
-        {
-            "type": "p",
-            "text": (
-                f"Catatan untuk cover image: {article.image_prompt} Alt text yang disarankan: {article.image_alt}."
-            ),
-        },
         {"type": "source", "items": [{"label": s.label, "url": s.url} for s in article.sources]},
     ]
     return blocks
+
+
+def build_editorial_notes(article: "ArticleDraft") -> str:
+    """Editorial metadata kept out of the rendered body.
+
+    Covers image prompt, alt text, dan catatan internal lainnya.
+    Disimpan ke kolom `articles.notes` agar tidak bocor ke publik.
+    """
+    lines: list[str] = []
+    if article.image_prompt:
+        lines.append("## Cover Image Prompt")
+        lines.append(article.image_prompt.strip())
+    if article.image_alt:
+        lines.append("")
+        lines.append("## Image Alt Text")
+        lines.append(article.image_alt.strip())
+    if not lines:
+        return None
+    return "\n".join(lines).strip()

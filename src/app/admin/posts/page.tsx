@@ -4,11 +4,13 @@ import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { adminListArticles, adminDeleteArticle, logout, type AdminArticle } from "@/lib/api/admin";
+import { generateCoversBulk, type BulkGenerateProgress } from "@/lib/api/imaginer";
 import ConfirmModal from "@/components/ui/ConfirmModal";
 import {
   PenLine, Trash2, Plus, LogOut, FileText,
   CheckCircle, Clock, ChevronLeft, ChevronRight,
   ArrowUpDown, Star, Map as MapIcon, Settings, Users, Images, Menu, CalendarDays,
+  Sparkles, Loader2,
 } from "lucide-react";
 
 function formatDate(iso: string | null) {
@@ -60,6 +62,8 @@ export default function AdminPostsPage() {
   const [deleting, setDeleting] = useState<string | null>(null);
   const [modal, setModal] = useState<{ id: string; title: string } | null>(null);
   const [navOpen, setNavOpen] = useState(false);
+  const [bulkGenerating, setBulkGenerating] = useState(false);
+  const [bulkProgress, setBulkProgress] = useState<BulkGenerateProgress | null>(null);
 
   // Filters
   const [statusFilter, setStatusFilter] = useState<"" | "draft" | "published">("");
@@ -116,6 +120,21 @@ export default function AdminPostsPage() {
     logout();
     document.cookie = "admin_token=; path=/; max-age=0";
     router.push("/admin/login");
+  }
+
+  async function handleBulkGenerate() {
+    if (!confirm("Generate cover images untuk semua artikel yang belum punya cover? Ini akan memakan waktu beberapa menit.")) return;
+    setBulkGenerating(true);
+    setBulkProgress(null);
+    try {
+      const result = await generateCoversBulk();
+      setBulkProgress(result);
+      await load(page);
+    } catch (err) {
+      alert(err instanceof Error ? err.message : "Gagal generate covers");
+    } finally {
+      setBulkGenerating(false);
+    }
   }
 
   return (
@@ -188,6 +207,23 @@ export default function AdminPostsPage() {
                 <Settings size={13} /> Pengaturan
               </Link>
             </div>
+            <button
+              onClick={handleBulkGenerate}
+              disabled={bulkGenerating}
+              className="flex items-center gap-2 border border-[#f5a700]/30 bg-[#f5a700]/5 text-[#9b6a00] font-semibold px-3 py-2.5 rounded-xl text-sm hover:bg-[#f5a700]/15 disabled:opacity-50 disabled:pointer-events-none transition"
+            >
+              {bulkGenerating ? (
+                <>
+                  <Loader2 size={14} className="animate-spin" />
+                  <span className="hidden sm:inline">Generating...</span>
+                </>
+              ) : (
+                <>
+                  <Sparkles size={14} />
+                  <span className="hidden sm:inline">Generate Covers</span>
+                </>
+              )}
+            </button>
             <Link
               href="/admin/posts/new"
               className="flex items-center gap-2 bg-[#f5a700] text-white font-bold px-4 py-2.5 rounded-xl text-sm hover:bg-[#f5a700]/90 transition"

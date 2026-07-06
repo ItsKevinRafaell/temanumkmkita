@@ -29,7 +29,7 @@ import uuid
 sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 sys.path.insert(0, os.path.dirname(__file__))
 
-from content_batches.common import ArticleDraft, build_blocks, words_in_blocks
+from content_batches.common import ArticleDraft, build_blocks, build_editorial_notes, words_in_blocks
 from content_batches.generated import build_generated_month
 from content_calendar_2026_2027 import MONTH_TOPICS, TOPICS
 
@@ -69,9 +69,11 @@ def dry_run(month: str) -> None:
         blocks = build_blocks(article)
         word_count = words_in_blocks(blocks)
         publish_date = schedule.get(article.title, "unscheduled")
+        notes = build_editorial_notes(article)
         print(
             f"{i:02d}. {article.slug} | {article.category} | "
-            f"{publish_date} | {word_count} words | CTA {article.target_cta}"
+            f"{publish_date} | {word_count} words | CTA {article.target_cta} | "
+            f"notes={'yes' if notes else 'no'}"
         )
 
 
@@ -120,6 +122,7 @@ def seed(month: str) -> None:
 
             pillar = db.query(ContentPillar).filter(ContentPillar.name == article.pillar_name).first()
             blocks = build_blocks(article)
+            editorial_notes = build_editorial_notes(article)
             row = Article(
                 id=str(uuid.uuid4()),
                 title=article.title,
@@ -140,6 +143,7 @@ def seed(month: str) -> None:
                 seo_title=article.seo_title,
                 meta_description=article.meta_description,
                 focus_keyword=article.focus_keyword,
+                notes=editorial_notes,
             )
             db.add(row)
             created += 1

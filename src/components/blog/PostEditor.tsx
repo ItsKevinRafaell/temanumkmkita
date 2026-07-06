@@ -17,6 +17,7 @@ import {
   fetchAuthors,
   type ArticlePayload, type AdminCategory, type Author,
 } from "@/lib/api/admin";
+import { generateCover } from "@/lib/api/imaginer";
 import { type ContentBlock } from "@/lib/data/blog";
 import Link from "next/link";
 import {
@@ -24,7 +25,7 @@ import {
   Heading1, Heading2, AlignLeft, List, ListOrdered,
   Quote, Zap, Image as ImageIcon, Minus, Plus, X,
   Loader2, Upload, Columns, Eye, HelpCircle, ListChecks,
-  ChevronDown, ChevronRight, Settings, BarChart2,
+  ChevronDown, ChevronRight, Settings, BarChart2, Sparkles,
 } from "lucide-react";
 import { checkSEO } from "@/lib/seo/checker";
 
@@ -1219,6 +1220,7 @@ export default function PostEditor({ initial = {} }: PostEditorProps) {
   const [authorId, setAuthorId] = useState<string>(initial.author_id ?? "");
   const [saving, setSaving] = useState(false);
   const [savingDraft, setSavingDraft] = useState(false);
+  const [generating, setGenerating] = useState(false);
   const [error, setError] = useState("");
 
   const isEdit = Boolean(initial.id);
@@ -1247,6 +1249,19 @@ export default function PostEditor({ initial = {} }: PostEditorProps) {
   }
 
   /* ── Save ─────────────────────────────────────────────────────────────── */
+
+  async function handleGenerateCover() {
+    if (!initial.id) return;
+    setGenerating(true);
+    try {
+      const result = await generateCover(initial.id);
+      setCoverImage(result.cover_image_url);
+    } catch (err) {
+      alert(err instanceof Error ? err.message : "Gagal generate cover image");
+    } finally {
+      setGenerating(false);
+    }
+  }
 
   async function handleSave(overrideStatus?: "draft" | "published") {
     if (!title.trim() || !slug.trim()) {
@@ -1542,6 +1557,25 @@ export default function PostEditor({ initial = {} }: PostEditorProps) {
                   </div>
                 </div>
                 <FeaturedImageUpload value={coverImage} onChange={setCoverImage} />
+                {isEdit && (
+                  <button
+                    onClick={handleGenerateCover}
+                    disabled={generating}
+                    className="mt-2 w-full flex items-center justify-center gap-2 border border-[#f5a700]/30 bg-[#f5a700]/5 text-[#9b6a00] font-semibold px-3 py-2 rounded-xl text-xs hover:bg-[#f5a700]/15 disabled:opacity-50 disabled:pointer-events-none transition"
+                  >
+                    {generating ? (
+                      <>
+                        <Loader2 size={13} className="animate-spin" />
+                        Generating...
+                      </>
+                    ) : (
+                      <>
+                        <Sparkles size={13} />
+                        Generate Cover Image
+                      </>
+                    )}
+                  </button>
+                )}
               </div>
 
               {/* Settings fields */}
