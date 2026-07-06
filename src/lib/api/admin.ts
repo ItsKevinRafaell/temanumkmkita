@@ -43,7 +43,9 @@ function errorMessageFromDetail(detail: unknown, fallback: string): string {
 }
 
 export async function req<T>(path: string, init?: RequestInit): Promise<T> {
-  const res = await fetch(`${API_BASE}${path}`, {
+  const sep = path.includes("?") ? "&" : "?";
+  const cacheBuster = `${sep}_t=${Date.now()}`;
+  const res = await fetch(`${API_BASE}${path}${cacheBuster}`, {
     ...init,
     headers: { "Content-Type": "application/json", ...authHeaders(), ...init?.headers },
   });
