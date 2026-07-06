@@ -123,15 +123,14 @@ export default function AdminPostsPage() {
   }
 
   async function openBulkModal() {
-    // Fetch all eligible articles (no cover, has notes) from all pages.
     try {
       const data = await adminListArticles(1, 500, {
-        status: undefined,
+        status: "draft",
         year: undefined,
         month: undefined,
         date_from: undefined,
         date_to: undefined,
-        sort: "desc",
+        sort: "asc",
       });
       const eligible = data.items
         .filter((a) => !a.cover_image || a.cover_image === "")
@@ -139,10 +138,11 @@ export default function AdminPostsPage() {
           id: a.id,
           title: a.title,
           slug: a.slug,
+          published_at: a.published_at,
           cover_image: a.cover_image,
         }));
       if (eligible.length === 0) {
-        alert("Semua artikel sudah punya cover image.");
+        alert("Tidak ada artikel draft yang belum punya cover image.");
         return;
       }
       setBulkEligible(eligible);
