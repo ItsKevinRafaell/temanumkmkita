@@ -157,6 +157,12 @@ export default function BulkGenerateModal({
           )
         );
       }
+
+      // Jeda antar request: rate limit Imaginer ~15 req/menit.
+      // Kita sleep 25 detik biar tetap di bawah budget walaupun gagal retry.
+      if (i < currentArticles.length - 1) {
+        await new Promise((r) => setTimeout(r, 25000));
+      }
     }
 
     setPhase("preview");
