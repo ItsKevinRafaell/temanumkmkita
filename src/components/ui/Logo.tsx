@@ -12,7 +12,7 @@ export default function Logo({ variant = "dark", className = "" }: LogoProps) {
       : variant === "light"
         ? "var(--brand-logo-light-url)"
         : "var(--brand-logo-url)";
-  const imageSize = variant === "footer" ? "h-11 w-[194px]" : "h-8 w-[190px]";
+  const imageSize = variant === "footer" ? "h-14 w-[220px]" : "h-10 w-[210px]";
 
   return (
     <Link

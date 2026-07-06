@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { generateCover, type GenerateCoverResponse } from "@/lib/api/imaginer";
 import { X, Sparkles, Loader2, RefreshCw, Check, ChevronRight } from "lucide-react";
@@ -27,6 +27,38 @@ interface BulkGenerateModalProps {
 }
 
 const BATCH_SIZES = [5, 10, 20];
+const STORAGE_KEY = "bulk-cover-progress";
+
+interface PersistedState {
+  ids: string[];
+  results: GeneratedResult[];
+  currentBatch: number;
+  ts: number;
+}
+
+function saveProgress(state: PersistedState) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch {}
+}
+
+function loadProgress(): PersistedState | null {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as PersistedState;
+    if (Date.now() - parsed.ts > 6 * 60 * 60 * 1000) return null;
+    return parsed;
+  } catch {
+    return null;
+  }
+}
+
+function clearProgress() {
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch {}
+}
 
 export default function BulkGenerateModal({
   open,
@@ -39,6 +71,50 @@ export default function BulkGenerateModal({
   const [phase, setPhase] = useState<"select" | "generating" | "preview">("select");
   const [currentBatch, setCurrentBatch] = useState(0);
   const [currentIdx, setCurrentIdx] = useState(0);
+  const [resumed, setResumed] = useState(false);
+
+  // Load persisted progress saat modal pertama kali dibuka.
+  useEffect(() => {
+    if (!open || resumed) return;
+    const persisted = loadProgress();
+    if (!persisted) {
+      setResumed(true);
+      return;
+    }
+    const idsMatch = articles.map((a) => a.id).join(",") === persisted.ids.join(",");
+    if (!idsMatch || persisted.results.length === 0) {
+      setResumed(true);
+      return;
+    }
+    const allDone = persisted.results.every(
+      (r) => r.status === "done" || r.status === "error"
+    );
+    if (allDone) {
+      setBatchSize(articles.length); // approximation
+      setCurrentBatch(persisted.currentBatch);
+      setResults(persisted.results);
+      setPhase("preview");
+    }
+    setResumed(true);
+  }, [open, articles, resumed]);
+
+  // Autosave tiap kali results berubah.
+  useEffect(() => {
+    if (phase === "select" || results.length === 0) return;
+    saveProgress({
+      ids: articles.map((a) => a.id),
+      results,
+      currentBatch,
+      ts: Date.now(),
+    });
+  }, [results, phase, currentBatch, articles]);
+
+  function resetForNewBatch() {
+    clearProgress();
+    setResults([]);
+    setPhase("select");
+    setCurrentIdx(0);
+  }
 
   const totalBatches = Math.ceil(articles.length / batchSize);
   const currentArticles = articles.slice(
@@ -125,15 +201,16 @@ export default function BulkGenerateModal({
   function handleNextBatch() {
     if (currentBatch < totalBatches - 1) {
       setCurrentBatch((b) => b + 1);
-      setPhase("select");
-      setResults([]);
+      resetForNewBatch();
     } else {
+      clearProgress();
       onComplete();
       onClose();
     }
   }
 
   function handleDone() {
+    clearProgress();
     onComplete();
     onClose();
   }
