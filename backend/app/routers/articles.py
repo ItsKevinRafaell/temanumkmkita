@@ -1,16 +1,19 @@
 import uuid
 import math
 import hashlib
-from fastapi import APIRouter, Depends, HTTPException, Query, Security
+import os
+from datetime import datetime, timezone
+from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Query, Security
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from sqlalchemy import func
 from sqlalchemy.orm import Session, selectinload
 
 from app.core.database import get_db
-from app.models import Article, IntegrationToken
-from app.schemas import ArticleCreate, ArticleOut, ArticleUpdate, ArticleSummaryOut, PaginatedArticles, AdminPaginatedArticles
-from app.core.security import require_auth, decode_token
+from app.core.index_pinger import ping_after_publish
 from app.core.utils import now_iso
+from app.models import Article, IntegrationToken
+from app.schemas import ArticleCreate, ArticleOut, ArticleUpdate, ArticleSummaryOut, PaginatedArticles, AdminPaginatedArticles, BulkPublishIn, BulkPublishOut
+from app.core.security import require_auth, decode_token
 
 router = APIRouter(prefix="/api/articles", tags=["articles"])
 _bearer = HTTPBearer()
@@ -113,16 +116,64 @@ def create_article(data: ArticleCreate, db: Session = Depends(get_db)):
 
 
 @router.put("/{article_id}", response_model=ArticleOut, dependencies=[Depends(require_auth)])
-def update_article(article_id: str, data: ArticleUpdate, db: Session = Depends(get_db)):
+def update_article(
+    article_id: str,
+    data: ArticleUpdate,
+    background: BackgroundTasks,
+    db: Session = Depends(get_db),
+):
     article = db.query(Article).filter(Article.id == article_id).first()
     if not article:
         raise HTTPException(status_code=404, detail="Article not found")
+    was_draft = article.status == "draft"
+    new_status = data.status or article.status
     for field, value in data.model_dump(exclude_unset=True).items():
         setattr(article, field, value)
     article.updated_at = now_iso()
     db.commit()
     db.refresh(article)
+
+    # Trigger search engine ping kalau baru transisi ke published.
+    if was_draft and new_status == "published":
+        site_url = os.getenv("FRONTEND_URL", "https://www.temanumkmkita.com").rstrip("/")
+        url = f"{site_url}/blog/{article.slug}"
+        background.add_task(ping_after_publish, [url])
+
     return article
+
+
+@router.post("/admin/bulk-publish", response_model=BulkPublishOut, dependencies=[Depends(require_auth)])
+def bulk_publish(payload: BulkPublishIn, background: BackgroundTasks, db: Session = Depends(get_db)):
+    """Publish multiple drafts sekaligus, trigger sitemap ping sekali."""
+    published: list[str] = []
+    skipped: list[str] = []
+    urls: list[str] = []
+    site_url = os.getenv("FRONTEND_URL", "https://www.temanumkmkita.com").rstrip("/")
+
+    for aid in payload.article_ids:
+        article = db.query(Article).filter(Article.id == aid).first()
+        if not article:
+            skipped.append(aid)
+            continue
+        if article.status == "published":
+            skipped.append(aid)
+            continue
+        article.status = "published"
+        if not article.published_at:
+            article.published_at = now_iso()
+        article.updated_at = now_iso()
+        published.append(article.slug)
+        urls.append(f"{site_url}/blog/{article.slug}")
+
+    db.commit()
+    if urls:
+        background.add_task(ping_after_publish, urls)
+
+    return BulkPublishOut(
+        published=published,
+        skipped=skipped,
+        ping_triggered=bool(urls),
+    )
 
 
 @router.delete("/{article_id}", dependencies=[Depends(require_auth)])

@@ -149,6 +149,19 @@ export async function adminDeleteArticle(id: string): Promise<void> {
   await req(`/api/articles/${id}`, { method: "DELETE" });
 }
 
+export interface BulkPublishResult {
+  published: string[];
+  skipped: string[];
+  ping_triggered: boolean;
+}
+
+export async function adminBulkPublish(ids: string[]): Promise<BulkPublishResult> {
+  return req<BulkPublishResult>("/api/articles/admin/bulk-publish", {
+    method: "POST",
+    body: JSON.stringify({ article_ids: ids }),
+  });
+}
+
 /* ── Categories ───────────────────────────────────────────────────────────── */
 
 export interface AdminCategory {

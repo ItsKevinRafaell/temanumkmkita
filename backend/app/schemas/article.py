@@ -84,3 +84,13 @@ class AdminPaginatedArticles(BaseModel):
     page: int
     per_page: int
     pages: int
+
+
+class BulkPublishIn(BaseModel):
+    article_ids: list[str]
+
+
+class BulkPublishOut(BaseModel):
+    published: list[str]
+    skipped: list[str]
+    ping_triggered: bool

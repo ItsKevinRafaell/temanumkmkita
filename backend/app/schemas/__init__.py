@@ -12,6 +12,8 @@ from app.schemas.article import (
     ArticleSummaryOut,
     PaginatedArticles,
     AdminPaginatedArticles,
+    BulkPublishIn,
+    BulkPublishOut,
 )
 from app.schemas.category import ArticleCategoryBase, ArticleCategoryOut, CategoryUpdate
 from app.schemas.pillar import PillarBase, PillarCreate, PillarUpdate, PillarOut
@@ -39,6 +41,8 @@ __all__ = [
     "ArticleSummaryOut",
     "PaginatedArticles",
     "AdminPaginatedArticles",
+    "BulkPublishIn",
+    "BulkPublishOut",
     "ArticleCategoryBase",
     "ArticleCategoryOut",
     "CategoryUpdate",
