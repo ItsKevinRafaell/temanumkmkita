@@ -15,6 +15,7 @@ from app.core.index_pinger import (
     transactional_urls,
     ping_google_indexing_blocking,
 )
+from app.core.revalidate import revalidate_frontend_sitemap
 from app.core.utils import now_iso
 from app.models import Article, IntegrationToken
 from app.schemas import ArticleCreate, ArticleOut, ArticleUpdate, ArticleSummaryOut, PaginatedArticles, AdminPaginatedArticles, BulkPublishIn, BulkPublishOut, BulkReindexIn, BulkReindexOut, BulkReindexResult
@@ -45,7 +46,7 @@ def list_articles(
     category: str | None = Query(None),
     author_id: str | None = Query(None),
     page: int = Query(1, ge=1),
-    per_page: int = Query(6, ge=1, le=50),
+    per_page: int = Query(6, ge=1, le=500),
     db: Session = Depends(get_db),
 ):
     q = db.query(Article).filter(Article.status == "published")
@@ -143,6 +144,7 @@ def update_article(
         site_url = os.getenv("FRONTEND_URL", "https://www.temanumkmkita.com").rstrip("/")
         url = f"{site_url}/blog/{article.slug}"
         background.add_task(ping_after_publish, [url])
+        background.add_task(revalidate_frontend_sitemap)
 
     return article
 
@@ -173,6 +175,7 @@ def bulk_publish(payload: BulkPublishIn, background: BackgroundTasks, db: Sessio
     db.commit()
     if urls:
         background.add_task(ping_after_publish, urls)
+        background.add_task(revalidate_frontend_sitemap)
 
     return BulkPublishOut(
         published=published,
