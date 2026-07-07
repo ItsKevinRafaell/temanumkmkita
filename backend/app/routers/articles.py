@@ -136,6 +136,12 @@ def update_article(
     for field, value in data.model_dump(exclude_unset=True).items():
         setattr(article, field, value)
     article.updated_at = now_iso()
+    # Cegah future-date bug: kalau published_at kosong atau di masa depan (calendar seed),
+    # set ke now() saat transisi draft → published.
+    if was_draft and new_status == "published":
+        current_iso = now_iso()
+        if not article.published_at or article.published_at > current_iso:
+            article.published_at = current_iso
     db.commit()
     db.refresh(article)
 
@@ -166,9 +172,11 @@ def bulk_publish(payload: BulkPublishIn, background: BackgroundTasks, db: Sessio
             skipped.append(aid)
             continue
         article.status = "published"
-        if not article.published_at:
-            article.published_at = now_iso()
-        article.updated_at = now_iso()
+        current_iso = now_iso()
+        # Sama seperti single publish hook: cap published_at ke now kalau future.
+        if not article.published_at or article.published_at > current_iso:
+            article.published_at = current_iso
+        article.updated_at = current_iso
         published.append(article.slug)
         urls.append(f"{site_url}/blog/{article.slug}")
 

@@ -38,9 +38,13 @@ def mark_published(article_id: str) -> bool:
         if not art or art.status == "published":
             return False
         art.status = "published"
-        if not art.published_at:
-            art.published_at = datetime.now(timezone.utc).isoformat()
-        art.updated_at = datetime.now(timezone.utc).isoformat()
+        now_iso = datetime.now(timezone.utc).isoformat()
+        # Selalu pakai now() kalau published_at kosong ATAU future-date (calendar seed bug).
+        # Editorial intent "planned date" lebih baik disimpan di kolom terpisah (scheduled_for)
+        # supaya tidak konflik dengan sort/filter frontend.
+        if not art.published_at or art.published_at > now_iso:
+            art.published_at = now_iso
+        art.updated_at = now_iso
         db.commit()
         return True
     finally:
