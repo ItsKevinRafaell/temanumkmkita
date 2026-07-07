@@ -43,3 +43,7 @@ backend/.env
 .agents/
 .claude/
 .commandcode/
+
+# scripts logs (bulk index, indexing API, etc) — generated, jangan di-commit
+/scripts/logs/
+/scripts/**/__pycache__/
