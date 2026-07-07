@@ -31,19 +31,9 @@ FRONTEND_URL = os.getenv("FRONTEND_URL", "https://www.temanumkmkita.com").rstrip
 
 
 async def _revalidate_frontend_sitemap() -> None:
-    """Panggil endpoint revalidate Next.js supaya sitemap.xml fresh."""
-    token = os.getenv("REVALIDATE_TOKEN", "").strip()
-    if not token:
-        return
-    try:
-        async with httpx.AsyncClient() as client:
-            await client.post(
-                f"{FRONTEND_URL}/api/revalidate-sitemap",
-                headers={"Authorization": f"Bearer {token}"},
-                timeout=10,
-            )
-    except Exception as e:
-        logger.warning("Revalidate sitemap gagal: %s", e)
+    """Re-export dari app.core.revalidate — biar backward-compat dengan caller lama."""
+    from app.core.revalidate import revalidate_frontend_sitemap
+    await revalidate_frontend_sitemap()
 
 
 @router.post("/{article_id}/generate-cover", response_model=GenerateCoverResponse)

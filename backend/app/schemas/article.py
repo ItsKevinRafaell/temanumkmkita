@@ -94,3 +94,24 @@ class BulkPublishOut(BaseModel):
     published: list[str]
     skipped: list[str]
     ping_triggered: bool
+
+
+class BulkReindexIn(BaseModel):
+    article_ids: list[str] | None = None  # kalau None → semua published
+    batch_size: int | None = 100  # max 200 (Google quota harian)
+    sync: bool | None = False  # kalau True → return hasil per URL; kalau False → fire-and-forget
+
+
+class BulkReindexResult(BaseModel):
+    url: str
+    ok: bool
+    error: str | None = None
+
+
+class BulkReindexOut(BaseModel):
+    total: int
+    submitted: int
+    succeeded: int
+    failed: int
+    results: list[BulkReindexResult]
+    skipped_reason: str | None = None  # e.g. "sitemap ping disabled"

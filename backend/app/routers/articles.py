@@ -9,10 +9,16 @@ from sqlalchemy import func
 from sqlalchemy.orm import Session, selectinload
 
 from app.core.database import get_db
-from app.core.index_pinger import ping_after_publish
+from app.core.index_pinger import (
+    ping_after_publish,
+    ping_transactional,
+    transactional_urls,
+    ping_google_indexing_blocking,
+)
+from app.core.revalidate import revalidate_frontend_sitemap
 from app.core.utils import now_iso
 from app.models import Article, IntegrationToken
-from app.schemas import ArticleCreate, ArticleOut, ArticleUpdate, ArticleSummaryOut, PaginatedArticles, AdminPaginatedArticles, BulkPublishIn, BulkPublishOut
+from app.schemas import ArticleCreate, ArticleOut, ArticleUpdate, ArticleSummaryOut, PaginatedArticles, AdminPaginatedArticles, BulkPublishIn, BulkPublishOut, BulkReindexIn, BulkReindexOut, BulkReindexResult
 from app.core.security import require_auth, decode_token
 
 router = APIRouter(prefix="/api/articles", tags=["articles"])
@@ -40,7 +46,7 @@ def list_articles(
     category: str | None = Query(None),
     author_id: str | None = Query(None),
     page: int = Query(1, ge=1),
-    per_page: int = Query(6, ge=1, le=50),
+    per_page: int = Query(6, ge=1, le=500),
     db: Session = Depends(get_db),
 ):
     q = db.query(Article).filter(Article.status == "published")
@@ -138,6 +144,7 @@ def update_article(
         site_url = os.getenv("FRONTEND_URL", "https://www.temanumkmkita.com").rstrip("/")
         url = f"{site_url}/blog/{article.slug}"
         background.add_task(ping_after_publish, [url])
+        background.add_task(revalidate_frontend_sitemap)
 
     return article
 
@@ -168,6 +175,7 @@ def bulk_publish(payload: BulkPublishIn, background: BackgroundTasks, db: Sessio
     db.commit()
     if urls:
         background.add_task(ping_after_publish, urls)
+        background.add_task(revalidate_frontend_sitemap)
 
     return BulkPublishOut(
         published=published,
@@ -184,3 +192,92 @@ def delete_article(article_id: str, db: Session = Depends(get_db)):
     db.delete(article)
     db.commit()
     return {"ok": True}
+
+
+@router.post("/admin/index-transactional", dependencies=[Depends(require_auth)])
+async def submit_transactional_urls():
+    """Submit halaman ber-CTA ke Google + Bing + IndexNow sekaligus.
+
+    Dipakai setelah deploy page baru atau untuk force re-index halaman utama.
+    Quota Google Indexing: 200/hari (aman untuk 11 URL ini).
+    """
+    urls = transactional_urls()
+    result = await ping_transactional()
+    return {
+        "urls": urls,
+        "count": len(urls),
+        "result": result,
+    }
+
+
+@router.post("/admin/bulk-reindex", response_model=BulkReindexOut, dependencies=[Depends(require_auth)])
+async def bulk_reindex(payload: BulkReindexIn, db: Session = Depends(get_db)):
+    """Bulk re-index artikel published.
+
+    Body opsional:
+      - article_ids: list ID spesifik. Kalau None → semua published.
+      - batch_size: max URL per call (default 100, hard-cap 200 = Google quota harian).
+      - sync: True → tunggu hasil Google per URL lalu return detail.
+              False (default) → fire-and-forget sitemap+IndexNow, return ringkas.
+
+    Google Indexing API SELALU dijalankan sync (entah via sync atau background)
+    karena lib googleapiclient bawaan cuma support sync call. Kalau sync=False,
+    tetap dikembalikan jumlah total + status singkat.
+
+    Quota Google Indexing: 200/hari. Untuk 122 artikel → batch_size=100 aman,
+    batch kedua (22) bisa langsung tanpa nunggu besok.
+    """
+    batch_size = min(payload.batch_size or 100, 200)
+    site_url = os.getenv("FRONTEND_URL", "https://www.temanumkmkita.com").rstrip("/")
+
+    if payload.article_ids:
+        articles = db.query(Article).filter(Article.id.in_(payload.article_ids)).all()
+        articles = [a for a in articles if a.status == "published"]
+    else:
+        articles = db.query(Article).filter(Article.status == "published").all()
+
+    urls = [f"{site_url}/blog/{a.slug}" for a in articles]
+
+    if not urls:
+        return BulkReindexOut(
+            total=0, submitted=0, succeeded=0, failed=0,
+            results=[], skipped_reason="no-published-articles",
+        )
+
+    if len(urls) > batch_size:
+        urls = urls[:batch_size]
+
+    # Sitemap ping + IndexNow (async, fire-and-forget)
+    sitemap_indexnow_result = await ping_after_publish(urls)
+
+    # Google Indexing API — sync call (lib bawaan sync-only)
+    google_result = ping_google_indexing_blocking(urls)
+
+    results: list[BulkReindexResult] = []
+    succeeded = 0
+    failed = 0
+    if google_result.get("ok") and "results" in google_result:
+        for r in google_result["results"]:
+            ok = bool(r.get("ok"))
+            results.append(BulkReindexResult(
+                url=r["url"], ok=ok,
+                error=None if ok else r.get("error"),
+            ))
+            succeeded += 1 if ok else 0
+            failed += 0 if ok else 1
+    elif google_result.get("reason"):
+        # lib missing / no key / setup fail → tandai semua gagal tapi tetap return
+        results = [
+            BulkReindexResult(url=u, ok=False, error=google_result.get("reason"))
+            for u in urls
+        ]
+        failed = len(urls)
+
+    return BulkReindexOut(
+        total=len(articles),
+        submitted=len(urls),
+        succeeded=succeeded,
+        failed=failed,
+        results=results,
+        skipped_reason=None,
+    )

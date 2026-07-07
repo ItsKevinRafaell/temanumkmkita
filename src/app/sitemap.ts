@@ -29,6 +29,18 @@ function articlePriority(publishedAt: string | null, featured: boolean): number 
   return 0.7;
 }
 
+async function fetchAllPublishedArticles(): Promise<Awaited<ReturnType<typeof fetchArticles>>["items"]> {
+  const PAGE_SIZE = 500;
+  const first = await fetchArticles({ per_page: PAGE_SIZE, page: 1 });
+  if (first.pages <= 1) return first.items;
+  const rest: typeof first.items = [];
+  for (let page = 2; page <= first.pages; page++) {
+    const next = await fetchArticles({ per_page: PAGE_SIZE, page });
+    rest.push(...next.items);
+  }
+  return [...first.items, ...rest];
+}
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticEntries: MetadataRoute.Sitemap = STATIC_PAGES.map(({ url, priority, changeFrequency }) => ({
     url,
@@ -39,8 +51,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   let articleEntries: MetadataRoute.Sitemap = [];
   try {
-    const data = await fetchArticles({ per_page: 200 });
-    articleEntries = data.items.map((a) => {
+    const articles = await fetchAllPublishedArticles();
+    articleEntries = articles.map((a) => {
       const days = a.published_at ? (Date.now() - new Date(a.published_at).getTime()) / 86400000 : 999;
       return {
         url: `${SITE_URL}/blog/${a.slug}`,
@@ -49,7 +61,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         priority: articlePriority(a.published_at, a.featured),
       };
     });
-  } catch {}
+    console.log(`[sitemap] generated ${articleEntries.length} article entries`);
+  } catch (err) {
+    console.error("[sitemap] failed to fetch articles:", err instanceof Error ? err.message : err);
+  }
 
   let authorEntries: MetadataRoute.Sitemap = [];
   try {
@@ -60,7 +75,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "monthly" as const,
       priority: 0.6,
     }));
-  } catch {}
+    console.log(`[sitemap] generated ${authorEntries.length} author entries`);
+  } catch (err) {
+    console.error("[sitemap] failed to fetch authors:", err instanceof Error ? err.message : err);
+  }
 
+  const total = staticEntries.length + articleEntries.length + authorEntries.length;
+  console.log(`[sitemap] total entries: ${total}`);
   return [...staticEntries, ...articleEntries, ...authorEntries];
 }
