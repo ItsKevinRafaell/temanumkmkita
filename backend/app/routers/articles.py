@@ -13,6 +13,7 @@ from app.core.index_pinger import (
     ping_after_publish,
     ping_transactional,
     transactional_urls,
+    ping_google_indexing_blocking,
 )
 from app.core.utils import now_iso
 from app.models import Article, IntegrationToken
