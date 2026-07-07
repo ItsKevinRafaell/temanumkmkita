@@ -10,3 +10,6 @@ python-jose[cryptography]
 Pillow>=10.0
 bcrypt>=4.0
 httpx
+python-multipart>=0.0.6
+google-auth>=2.0
+google-api-python-client>=2.0
