@@ -72,8 +72,8 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16">
           <Logo variant="secondary" color={isDarkHero ? "white" : "yellow"} />
 
-          {/* Desktop nav */}
-          <div className="hidden md:flex items-center gap-1">
+          {/* Desktop nav — only at lg (1024px+) */}
+          <div className="hidden lg:flex items-center gap-1">
             {/* Beranda */}
             {navLinks.slice(0, 1).map((link) => {
               const active = pathname === link.href;
@@ -82,7 +82,7 @@ export default function Navbar() {
                   key={link.href}
                   href={link.href}
                   className={cn(
-                    "nav-link-hover px-3 py-2 text-sm font-medium rounded-lg transition-colors relative",
+                    "nav-link-hover px-3 py-2 text-sm font-medium rounded-lg transition-colors relative whitespace-nowrap",
                     active ? activeLinkColor : linkColor
                   )}
                 >
@@ -109,7 +109,7 @@ export default function Navbar() {
                 href="/layanan"
                 onClick={() => setLayananOpen(false)}
                 className={cn(
-                  "nav-link-hover px-3 py-2 text-sm font-medium rounded-lg transition-colors flex items-center gap-1 relative",
+                  "nav-link-hover px-3 py-2 text-sm font-medium rounded-lg transition-colors flex items-center gap-1 relative whitespace-nowrap",
                   pathname.startsWith("/layanan") ? activeLinkColor : linkColor
                 )}
               >
@@ -168,7 +168,7 @@ export default function Navbar() {
                   key={link.href}
                   href={link.href}
                   className={cn(
-                    "nav-link-hover px-3 py-2 text-sm font-medium rounded-lg transition-colors relative",
+                    "nav-link-hover px-3 py-2 text-sm font-medium rounded-lg transition-colors relative whitespace-nowrap",
                     active ? activeLinkColor : linkColor
                   )}
                 >
@@ -185,21 +185,21 @@ export default function Navbar() {
 
           </div>
 
-          {/* CTA */}
-          <div className="hidden md:block">
+          {/* CTA — desktop only */}
+          <div className="hidden lg:block">
             <a
               href="https://wa.me/6289501925395?text=Halo%2C+saya+ingin+konsultasi+gratis"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-accent text-white font-bold text-sm px-5 py-2.5 rounded-lg hover:bg-accent/90 hover:shadow-md transition-all duration-200"
+              className="bg-accent text-white font-bold text-sm px-5 py-2.5 rounded-lg hover:bg-accent/90 hover:shadow-md transition-all duration-200 whitespace-nowrap"
             >
               Konsultasi Gratis
             </a>
           </div>
 
-          {/* Mobile hamburger */}
+          {/* Hamburger — visible below lg (tablet + mobile) */}
           <button
-            className={cn("md:hidden p-2", isDarkHero ? "text-white" : "text-brand-dark")}
+            className={cn("lg:hidden p-2", isDarkHero ? "text-white" : "text-brand-dark")}
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Toggle menu"
           >
@@ -221,7 +221,7 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.2 }}
-            className="md:hidden bg-canvas border-t border-brand-dark/8"
+            className="lg:hidden bg-canvas border-t border-brand-dark/8"
           >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 space-y-1">
               {navLinks.slice(0, 1).map((link) => (
