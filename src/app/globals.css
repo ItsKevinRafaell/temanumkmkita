@@ -6,8 +6,13 @@
   --accent: #f5a700;
   --brand-dark: #242423;
   --bg-canvas: #fcfaf7;
-  --brand-logo-url: url("/brand/logo-secondary.png");
-  --brand-logo-light-url: url("/brand/logo-secondary.png");
+  --brand-logo-url: url("/brand/logo-secondary-yellow.png");
+  --brand-logo-light-url: url("/brand/logo-secondary-white.png");
+  --brand-logo-footer-url: url("/brand/logo-footer-yellow.png");
+  --brand-logo-primary-url: url("/brand/logo-primary-yellow.png");
+  --brand-logo-primary-light-url: url("/brand/logo-primary-white.png");
+  --brand-logo-icon-yellow-url: url("/brand/logo-icon-yellow.png");
+  --brand-logo-icon-white-url: url("/brand/logo-icon-white.png");
 }
 
 html,

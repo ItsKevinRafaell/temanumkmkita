@@ -11,9 +11,13 @@ const poppins = Poppins({
   weight: ["400", "500", "600", "700", "800"],
 });
 
-const DEFAULT_LOGO_PATH = "/brand/logo-secondary.png";
+const DEFAULT_LOGO_PATH = "/brand/logo-secondary-yellow.png";
+const DEFAULT_LOGO_LIGHT_PATH = "/brand/logo-secondary-white.png";
+const DEFAULT_PRIMARY_PATH = "/brand/logo-primary-yellow.png";
+const DEFAULT_PRIMARY_LIGHT_PATH = "/brand/logo-primary-white.png";
 const DEFAULT_FOOTER_LOGO_PATH = "/brand/logo-footer-yellow.png";
-const DEFAULT_FAVICON_PATH = "/brand/favicon.png";
+const DEFAULT_FAVICON_PATH = "/favicon.ico";
+const DEFAULT_OG_IMAGE_PATH = "/brand/og-image.png";
 const DEFAULT_LOGO_URL = `${SITE_URL}${DEFAULT_LOGO_PATH}`;
 
 function absoluteAssetUrl(value: string) {
@@ -33,10 +37,13 @@ export const metadata: Metadata = {
   alternates: { canonical: SITE_URL },
   icons: {
     icon: [
-      { url: "/favicon.ico" },
-      { url: DEFAULT_FAVICON_PATH, sizes: "512x512", type: "image/png" },
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/brand/favicon-32.png", sizes: "32x32", type: "image/png" },
+      { url: "/brand/favicon-16.png", sizes: "16x16", type: "image/png" },
+      { url: "/brand/android-chrome-192x192.png", sizes: "192x192", type: "image/png" },
+      { url: "/brand/android-chrome-512x512.png", sizes: "512x512", type: "image/png" },
     ],
-    apple: DEFAULT_FAVICON_PATH,
+    apple: "/brand/apple-touch-icon.png",
   },
   openGraph: {
     title: "Teman UMKM Kita",
@@ -45,13 +52,13 @@ export const metadata: Metadata = {
     siteName: "Teman UMKM Kita",
     locale: "id_ID",
     type: "website",
-    images: [{ url: DEFAULT_LOGO_URL, width: 1563, height: 1563, alt: "Teman UMKM Kita" }],
+    images: [{ url: DEFAULT_OG_IMAGE_PATH, width: 1200, height: 630, alt: "Teman UMKM Kita" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Teman UMKM Kita",
     description: "Solusi Digital untuk UMKM Indonesia",
-    images: [DEFAULT_LOGO_URL],
+    images: [DEFAULT_OG_IMAGE_PATH],
   },
 };
 
