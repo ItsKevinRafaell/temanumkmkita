@@ -83,7 +83,7 @@ function TimelineItem({
   return (
     <>
       {/* ── Desktop: timeline left/right ─────────── */}
-      <div className="hidden md:flex items-start gap-0 mb-14 last:mb-0">
+      <div className="hidden lg:flex items-start gap-0 mb-14 last:mb-0">
         {/* Left 45% */}
         <div className="w-[45%] flex justify-end pr-8 pt-1">
           {isLeft && card}
@@ -99,7 +99,7 @@ function TimelineItem({
 
       {/* ── Mobile: left-side vertical timeline ──── */}
       <motion.div
-        className="md:hidden flex gap-4 mb-8 last:mb-0"
+        className="lg:hidden flex gap-4 mb-8 last:mb-0"
         initial={{ opacity: 0, y: 20 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={{ delay: index * 0.15 + 0.1, duration: 0.5 }}
@@ -155,7 +155,7 @@ export default function ProblemSection() {
         <div className="relative">
           {/* Vertical center line (desktop only) */}
           <div
-            className="hidden md:block absolute left-1/2 top-6 bottom-6 -translate-x-1/2"
+            className="hidden lg:block absolute left-1/2 top-6 bottom-6 -translate-x-1/2"
             style={{ width: "2px", background: "rgba(36,36,35,0.1)" }}
           />
 

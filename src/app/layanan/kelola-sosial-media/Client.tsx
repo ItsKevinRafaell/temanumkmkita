@@ -209,10 +209,10 @@ export default function SosmedPage() {
                   )}
                   <div>
                     <div className="text-xs font-bold uppercase tracking-widest text-brand-dark/40 mb-1">{plan.name}</div>
-                    <div className="flex items-baseline gap-1 mb-3">
+                    <div className="flex items-baseline gap-1 flex-wrap mb-3">
                       <span className="text-xs text-brand-dark/50 font-medium">Rp</span>
-                      <span className="text-3xl font-black text-brand-dark">{plan.price}</span>
-                      <span className="text-brand-dark/40 text-sm">/bulan</span>
+                      <span className="text-2xl md:text-3xl font-black text-brand-dark">{plan.price}</span>
+                      <span className="text-brand-dark/40 text-xs md:text-sm">/bulan</span>
                     </div>
                     <p className="text-brand-dark/60 text-sm leading-relaxed border-t border-brand-dark/6 pt-3">{plan.tagline}</p>
                   </div>

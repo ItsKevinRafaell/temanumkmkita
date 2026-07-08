@@ -129,7 +129,7 @@ function DesktopSteps() {
   const { IconComponent } = step;
 
   return (
-    <div ref={sectionRef} className="hidden md:flex items-center h-screen max-w-6xl mx-auto px-8 gap-16">
+    <div ref={sectionRef} className="hidden lg:flex items-center h-screen max-w-6xl mx-auto px-8 gap-16">
       {/* Left nav */}
       <div className="w-2/5 space-y-1">
         <div className="mb-8">
@@ -211,7 +211,7 @@ function DesktopSteps() {
 function MobileSteps() {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.05 });
   return (
-    <div ref={ref} className="md:hidden py-20 bg-transparent">
+    <div ref={ref} className="lg:hidden py-20 bg-transparent">
       <div className="max-w-2xl mx-auto px-4 sm:px-6">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
