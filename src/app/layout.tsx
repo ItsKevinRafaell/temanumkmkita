@@ -14,7 +14,6 @@ const poppins = Poppins({
 const DEFAULT_LOGO_PATH = "/brand/logo-secondary-yellow.png";
 const DEFAULT_LOGO_LIGHT_PATH = "/brand/logo-secondary-white.png";
 const DEFAULT_FOOTER_LOGO_PATH = "/brand/logo-footer-yellow.png";
-const DEFAULT_FAVICON_PATH = "/favicon.ico";
 const DEFAULT_OG_IMAGE_PATH = "/brand/og-image.png";
 const DEFAULT_LOGO_URL = `${SITE_URL}${DEFAULT_LOGO_PATH}`;
 // Bump tiap ganti asset brand agar browser re-fetch (cache-busting).
@@ -36,9 +35,12 @@ export const metadata: Metadata = {
     "Kami bantu UMKM kamu hadir dan berkembang secara online. Web development, SEO Google Maps, kelola sosial media, dan lebih banyak lagi.",
   keywords: ["UMKM", "web development", "SEO", "sosial media", "digital marketing", "Indonesia"],
   alternates: { canonical: SITE_URL },
+  manifest: `/brand/site.webmanifest?${ASSET_VERSION}`,
   icons: {
     icon: [
       { url: `/favicon.ico?${ASSET_VERSION}`, sizes: "any" },
+      { url: `/brand/favicon.svg?${ASSET_VERSION}`, type: "image/svg+xml" },
+      { url: `/brand/favicon-96.png?${ASSET_VERSION}`, sizes: "96x96", type: "image/png" },
       { url: `/brand/favicon-32.png?${ASSET_VERSION}`, sizes: "32x32", type: "image/png" },
       { url: `/brand/favicon-16.png?${ASSET_VERSION}`, sizes: "16x16", type: "image/png" },
       { url: `/brand/android-chrome-192x192.png?${ASSET_VERSION}`, sizes: "192x192", type: "image/png" },
@@ -84,7 +86,6 @@ export default async function RootLayout({
   const logoCssUrl = settings?.logo_url?.trim() || DEFAULT_LOGO_PATH;
   const logoLightCssUrl = settings?.logo_light_url?.trim() || DEFAULT_LOGO_LIGHT_PATH;
   const footerLogoCssUrl = DEFAULT_FOOTER_LOGO_PATH;
-  const faviconHref = settings?.favicon_url?.trim() || DEFAULT_FAVICON_PATH;
   const logoUrl = settings?.logo_url?.trim()
     ? absoluteAssetUrl(settings.logo_url.trim())
     : DEFAULT_LOGO_URL;
@@ -140,8 +141,11 @@ export default async function RootLayout({
     <html lang="id">
       <head>
         <link rel="preconnect" href="https://api.temanumkmkita.com" />
-        <link rel="icon" href={`${faviconHref}?${ASSET_VERSION}`} />
-        <link rel="apple-touch-icon" href={`${faviconHref}?${ASSET_VERSION}`} />
+        {/* CMS favicon override (admin settings). Default icon sudah di-handle metadata.icons.
+            Hanya render kalau admin benar-benar set favicon_url, supaya gak duplikat link. */}
+        {settings?.favicon_url?.trim() ? (
+          <link rel="icon" href={settings.favicon_url.trim()} />
+        ) : null}
         <style
           dangerouslySetInnerHTML={{
             __html: `:root{--brand-logo-url:url("${logoCssUrl}");--brand-logo-light-url:url("${logoLightCssUrl}");--brand-logo-footer-url:url("${footerLogoCssUrl}");}`,
