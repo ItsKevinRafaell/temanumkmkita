@@ -17,6 +17,9 @@ const DEFAULT_FOOTER_LOGO_PATH = "/brand/logo-footer-yellow.png";
 const DEFAULT_FAVICON_PATH = "/favicon.ico";
 const DEFAULT_OG_IMAGE_PATH = "/brand/og-image.png";
 const DEFAULT_LOGO_URL = `${SITE_URL}${DEFAULT_LOGO_PATH}`;
+// Bump tiap ganti asset brand agar browser re-fetch (cache-busting).
+// Tanpa ini, favicon lama tetap ke-cache di URL yang sama.
+const ASSET_VERSION = "v2";
 
 function absoluteAssetUrl(value: string) {
   try {
@@ -35,13 +38,13 @@ export const metadata: Metadata = {
   alternates: { canonical: SITE_URL },
   icons: {
     icon: [
-      { url: "/favicon.ico", sizes: "any" },
-      { url: "/brand/favicon-32.png", sizes: "32x32", type: "image/png" },
-      { url: "/brand/favicon-16.png", sizes: "16x16", type: "image/png" },
-      { url: "/brand/android-chrome-192x192.png", sizes: "192x192", type: "image/png" },
-      { url: "/brand/android-chrome-512x512.png", sizes: "512x512", type: "image/png" },
+      { url: `/favicon.ico?${ASSET_VERSION}`, sizes: "any" },
+      { url: `/brand/favicon-32.png?${ASSET_VERSION}`, sizes: "32x32", type: "image/png" },
+      { url: `/brand/favicon-16.png?${ASSET_VERSION}`, sizes: "16x16", type: "image/png" },
+      { url: `/brand/android-chrome-192x192.png?${ASSET_VERSION}`, sizes: "192x192", type: "image/png" },
+      { url: `/brand/android-chrome-512x512.png?${ASSET_VERSION}`, sizes: "512x512", type: "image/png" },
     ],
-    apple: "/brand/apple-touch-icon.png",
+    apple: `/brand/apple-touch-icon.png?${ASSET_VERSION}`,
   },
   openGraph: {
     title: "Teman UMKM Kita",
@@ -137,8 +140,8 @@ export default async function RootLayout({
     <html lang="id">
       <head>
         <link rel="preconnect" href="https://api.temanumkmkita.com" />
-        <link rel="icon" href={faviconHref} />
-        <link rel="apple-touch-icon" href={faviconHref} />
+        <link rel="icon" href={`${faviconHref}?${ASSET_VERSION}`} />
+        <link rel="apple-touch-icon" href={`${faviconHref}?${ASSET_VERSION}`} />
         <style
           dangerouslySetInnerHTML={{
             __html: `:root{--brand-logo-url:url("${logoCssUrl}");--brand-logo-light-url:url("${logoLightCssUrl}");--brand-logo-footer-url:url("${footerLogoCssUrl}");}`,
