@@ -38,7 +38,7 @@ export default function CategoriesPage() {
     }
   }
 
-  useEffect(() => { load(); }, []);
+  useEffect(() => { load(); /* eslint-disable-next-line react-hooks/exhaustive-deps */ }, []);
 
   async function handleAdd() {
     if (!newName.trim() || !newSlug.trim()) { setError("Nama dan slug wajib diisi."); return; }

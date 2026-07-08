@@ -2,6 +2,7 @@
 
 import { Suspense, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { login } from "@/lib/api/admin";
 import { Eye, EyeOff } from "lucide-react";
@@ -93,7 +94,7 @@ export default function AdminLoginPage() {
     <div className="min-h-screen bg-[#fcfaf7] flex items-center justify-center px-4">
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
-          <img src="/brand/logo-secondary.png" alt="Teman UMKM Kita" className="mx-auto mb-4 h-16 w-auto object-contain" />
+          <Image src="/brand/logo-secondary-yellow.png" alt="Teman UMKM Kita" width={320} height={76} className="mx-auto mb-4 h-16 w-auto object-contain" priority />
           <h1 className="text-2xl font-extrabold text-[#242423]">Admin Panel</h1>
           <p className="text-sm text-[#242423]/50 mt-1">Teman UMKM Kita CMS</p>
         </div>

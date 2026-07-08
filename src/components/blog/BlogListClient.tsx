@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Link from "next/link";
 import BlogCard from "@/components/blog/BlogCard";
 import { ChevronRight, ChevronLeft, Loader2 } from "lucide-react";
 import { type BlogPost, type ContentBlock } from "@/lib/data/blog";
@@ -66,6 +65,7 @@ export default function BlogListClient({
     let cancelled = false;
     setLoading(true);
     setError(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     fetchArticles({
       category: activeCategory === "Semua" ? undefined : activeCategory,
       page,

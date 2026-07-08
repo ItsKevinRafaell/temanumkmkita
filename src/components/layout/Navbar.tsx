@@ -70,7 +70,7 @@ export default function Navbar() {
     >
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <Logo variant={isDarkHero ? "light" : "dark"} />
+          <Logo variant="secondary" color={isDarkHero ? "white" : "yellow"} />
 
           {/* Desktop nav */}
           <div className="hidden md:flex items-center gap-1">

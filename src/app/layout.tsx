@@ -13,8 +13,6 @@ const poppins = Poppins({
 
 const DEFAULT_LOGO_PATH = "/brand/logo-secondary-yellow.png";
 const DEFAULT_LOGO_LIGHT_PATH = "/brand/logo-secondary-white.png";
-const DEFAULT_PRIMARY_PATH = "/brand/logo-primary-yellow.png";
-const DEFAULT_PRIMARY_LIGHT_PATH = "/brand/logo-primary-white.png";
 const DEFAULT_FOOTER_LOGO_PATH = "/brand/logo-footer-yellow.png";
 const DEFAULT_FAVICON_PATH = "/favicon.ico";
 const DEFAULT_OG_IMAGE_PATH = "/brand/og-image.png";
@@ -81,7 +79,7 @@ export default async function RootLayout({
 
   const proof = buildHomepageProof(settings);
   const logoCssUrl = settings?.logo_url?.trim() || DEFAULT_LOGO_PATH;
-  const logoLightCssUrl = settings?.logo_light_url?.trim() || logoCssUrl;
+  const logoLightCssUrl = settings?.logo_light_url?.trim() || DEFAULT_LOGO_LIGHT_PATH;
   const footerLogoCssUrl = DEFAULT_FOOTER_LOGO_PATH;
   const faviconHref = settings?.favicon_url?.trim() || DEFAULT_FAVICON_PATH;
   const logoUrl = settings?.logo_url?.trim()
