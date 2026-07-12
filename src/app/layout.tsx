@@ -18,7 +18,7 @@ const DEFAULT_OG_IMAGE_PATH = "/brand/og-image.png";
 const DEFAULT_LOGO_URL = `${SITE_URL}${DEFAULT_LOGO_PATH}`;
 // Bump tiap ganti asset brand agar browser re-fetch (cache-busting).
 // Tanpa ini, favicon lama tetap ke-cache di URL yang sama.
-const ASSET_VERSION = "v2";
+const ASSET_VERSION = "v3";
 
 function absoluteAssetUrl(value: string) {
   try {
