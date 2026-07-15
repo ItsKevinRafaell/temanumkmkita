@@ -6,7 +6,7 @@ import { SITE_URL } from "@/lib/seo/site";
 import { buildHomepageProof } from "@/lib/site-proof";
 import "./globals.css";
 
-const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_ID ?? "";
+const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_ID ?? "G-YPSBSMC0X1";
 const GSC_VERIFICATION = process.env.NEXT_PUBLIC_GSC_VERIFICATION ?? "";
 
 const poppins = Poppins({
