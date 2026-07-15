@@ -9,7 +9,15 @@ import BlogCard from "@/components/blog/BlogCard";
 import { extractHeadings, hasBlockType, type BlogPost, type ContentBlock } from "@/lib/data/blog";
 import { fetchArticleBySlug, fetchArticles, type Article } from "@/lib/api/blog";
 import { SITE_URL, extractFirstParagraph } from "@/lib/seo/site";
-import { Calendar, Clock, ChevronRight, Tag, UserCircle, ExternalLink } from "lucide-react";
+import {
+  Calendar,
+  Clock,
+  ChevronRight,
+  Tag,
+  UserCircle,
+  ExternalLink,
+  ArrowRight,
+} from "lucide-react";
 
 export const revalidate = 300;
 
@@ -22,6 +30,73 @@ const categoryColors: Record<string, string> = {
   Maintenance: "bg-cyan-50 text-cyan-700 border-cyan-100",
   "Tips Bisnis": "bg-amber-50 text-amber-700 border-amber-100",
 };
+
+const CATEGORY_SERVICE_MAP: Record<
+  string,
+  { slug: string; title: string; desc: string; icon: string }[]
+> = {
+  Website: [
+    { slug: "web-development", title: "Web Development", desc: "Website profesional untuk bisnismu.", icon: "🌐" },
+    { slug: "web-development-bulanan", title: "Web Dev Bulanan", desc: "Mulai dari Rp 120.000/bulan.", icon: "📅" },
+  ],
+  SEO: [
+    { slug: "seo-google-maps", title: "SEO & Google Maps", desc: "Bisnismu di halaman pertama Google.", icon: "📍" },
+  ],
+  "SEO & Google Maps": [
+    { slug: "seo-google-maps", title: "SEO & Google Maps", desc: "Bisnismu di halaman pertama Google.", icon: "📍" },
+  ],
+  "Sosial Media": [
+    { slug: "kelola-sosial-media", title: "Kelola Sosial Media", desc: "Konten rutin tanpa ribet.", icon: "📲" },
+  ],
+  Branding: [
+    { slug: "desain-logo", title: "Desain Logo", desc: "Identitas visual yang berkesan.", icon: "✏️" },
+  ],
+  Maintenance: [
+    { slug: "maintenance", title: "Maintenance Website", desc: "Website aman dan selalu update.", icon: "🔧" },
+  ],
+  "Tips Bisnis": [
+    { slug: "web-development", title: "Web Development", desc: "Website profesional untuk bisnismu.", icon: "🌐" },
+    { slug: "seo-google-maps", title: "SEO & Google Maps", desc: "Bisnismu di halaman pertama Google.", icon: "📍" },
+  ],
+};
+
+function LayananTerkait({ category }: { category: string }) {
+  const services = CATEGORY_SERVICE_MAP[category];
+  if (!services || services.length === 0) return null;
+
+  return (
+    <section className="not-prose pb-12">
+      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+        <div className="rounded-lg border border-accent/25 bg-accent/5 p-6">
+          <p className="mb-4 text-xs font-bold uppercase tracking-wider text-accent">
+            Layanan Terkait
+          </p>
+          <div className="grid gap-3 sm:grid-cols-2">
+            {services.map((svc) => (
+              <Link
+                key={svc.slug}
+                href={`/layanan/${svc.slug}`}
+                className="group flex items-center gap-3 rounded-lg border border-brand-dark/8 bg-white p-4 transition-all hover:border-accent/40 hover:shadow-md"
+              >
+                <span className="text-2xl">{svc.icon}</span>
+                <div className="min-w-0 flex-1">
+                  <p className="text-sm font-bold text-brand-dark group-hover:text-accent transition-colors">
+                    {svc.title}
+                  </p>
+                  <p className="text-xs text-brand-dark/50">{svc.desc}</p>
+                </div>
+                <ArrowRight
+                  size={14}
+                  className="flex-shrink-0 text-brand-dark/25 transition-all group-hover:text-accent group-hover:translate-x-1"
+                />
+              </Link>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
 
 function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString("id-ID", {
@@ -344,6 +419,9 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
             </div>
           </section>
         )}
+
+        {/* ── Layanan Terkait (internal links to service pages) ──── */}
+        <LayananTerkait category={post.category} />
 
         {/* ── Related posts ─────────────────────────────────────────── */}
         {related.length > 0 && (
