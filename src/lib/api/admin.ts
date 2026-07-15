@@ -26,9 +26,7 @@ function errorMessageFromDetail(detail: unknown, fallback: string): string {
   if (typeof detail === "string") return cleanApiErrorText(detail) || fallback;
 
   if (Array.isArray(detail)) {
-    const messages = detail
-      .map((item) => errorMessageFromDetail(item, ""))
-      .filter(Boolean);
+    const messages = detail.map((item) => errorMessageFromDetail(item, "")).filter(Boolean);
     return messages.length ? messages.join(" ") : fallback;
   }
 
@@ -67,7 +65,9 @@ export async function login(email: string, password: string): Promise<string> {
   return data.access_token;
 }
 
-export async function requestPasswordReset(email: string): Promise<{ ok: boolean; message: string }> {
+export async function requestPasswordReset(
+  email: string
+): Promise<{ ok: boolean; message: string }> {
   return req<{ ok: boolean; message: string }>("/api/auth/password/forgot", {
     method: "POST",
     body: JSON.stringify({ email }),
@@ -109,14 +109,18 @@ export interface ArticlePayload {
   author_id?: string | null;
 }
 
-export async function adminListArticles(page = 1, per_page = 20, opts?: {
-  status?: "draft" | "published";
-  year?: string;
-  month?: string;
-  date_from?: string;
-  date_to?: string;
-  sort?: "asc" | "desc";
-}) {
+export async function adminListArticles(
+  page = 1,
+  per_page = 20,
+  opts?: {
+    status?: "draft" | "published";
+    year?: string;
+    month?: string;
+    date_from?: string;
+    date_to?: string;
+    sort?: "asc" | "desc";
+  }
+) {
   const p = new URLSearchParams({ page: String(page), per_page: String(per_page) });
   if (opts?.status) p.set("status", opts.status);
   if (opts?.year) p.set("year", opts.year);
@@ -141,7 +145,10 @@ export async function adminCreateArticle(data: ArticlePayload): Promise<AdminArt
   return req<AdminArticle>("/api/articles", { method: "POST", body: JSON.stringify(data) });
 }
 
-export async function adminUpdateArticle(id: string, data: Partial<ArticlePayload>): Promise<AdminArticle> {
+export async function adminUpdateArticle(
+  id: string,
+  data: Partial<ArticlePayload>
+): Promise<AdminArticle> {
   return req<AdminArticle>(`/api/articles/${id}`, { method: "PUT", body: JSON.stringify(data) });
 }
 
@@ -178,7 +185,10 @@ export async function createCategory(data: { name: string; slug: string }): Prom
   return req<AdminCategory>("/api/categories", { method: "POST", body: JSON.stringify(data) });
 }
 
-export async function updateCategory(id: string, data: Partial<{ name: string; slug: string }>): Promise<AdminCategory> {
+export async function updateCategory(
+  id: string,
+  data: Partial<{ name: string; slug: string }>
+): Promise<AdminCategory> {
   return req<AdminCategory>(`/api/categories/${id}`, { method: "PUT", body: JSON.stringify(data) });
 }
 
@@ -252,7 +262,9 @@ export async function fetchAdminSettings(): Promise<SiteSettings> {
   return req<SiteSettings>("/api/settings");
 }
 
-export async function updateSettings(data: Partial<Omit<SiteSettings, "id" | "updated_at">>): Promise<SiteSettings> {
+export async function updateSettings(
+  data: Partial<Omit<SiteSettings, "id" | "updated_at">>
+): Promise<SiteSettings> {
   return req<SiteSettings>("/api/settings", { method: "PUT", body: JSON.stringify(data) });
 }
 
@@ -281,7 +293,10 @@ export async function createAuthor(data: Omit<Author, "id" | "created_at">): Pro
   return req<Author>("/api/authors", { method: "POST", body: JSON.stringify(data) });
 }
 
-export async function updateAuthor(id: string, data: Partial<Omit<Author, "id" | "created_at">>): Promise<Author> {
+export async function updateAuthor(
+  id: string,
+  data: Partial<Omit<Author, "id" | "created_at">>
+): Promise<Author> {
   return req<Author>(`/api/authors/${id}`, { method: "PUT", body: JSON.stringify(data) });
 }
 
@@ -301,8 +316,12 @@ export async function fetchIntegrationToken(): Promise<IntegrationTokenInfo | nu
   return req<IntegrationTokenInfo | null>("/api/integration/token");
 }
 
-export async function generateIntegrationToken(): Promise<IntegrationTokenInfo & { token: string }> {
-  return req<IntegrationTokenInfo & { token: string }>("/api/integration/token", { method: "POST" });
+export async function generateIntegrationToken(): Promise<
+  IntegrationTokenInfo & { token: string }
+> {
+  return req<IntegrationTokenInfo & { token: string }>("/api/integration/token", {
+    method: "POST",
+  });
 }
 
 export async function revokeIntegrationToken(): Promise<void> {
@@ -336,8 +355,14 @@ export async function adminCreatePortfolio(data: PortfolioPayload): Promise<Admi
   return req<AdminPortfolioItem>("/api/portfolios", { method: "POST", body: JSON.stringify(data) });
 }
 
-export async function adminUpdatePortfolio(id: string, data: Partial<PortfolioPayload>): Promise<AdminPortfolioItem> {
-  return req<AdminPortfolioItem>(`/api/portfolios/${id}`, { method: "PUT", body: JSON.stringify(data) });
+export async function adminUpdatePortfolio(
+  id: string,
+  data: Partial<PortfolioPayload>
+): Promise<AdminPortfolioItem> {
+  return req<AdminPortfolioItem>(`/api/portfolios/${id}`, {
+    method: "PUT",
+    body: JSON.stringify(data),
+  });
 }
 
 export async function adminDeletePortfolio(id: string): Promise<void> {

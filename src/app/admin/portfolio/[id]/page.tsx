@@ -38,19 +38,22 @@ export default function EditPortfolioPage() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    adminGetPortfolio(id).then((item) => {
-      const known = KNOWN_SLUGS.includes(item.service_slug);
-      if (known) {
-        setServiceSlug(item.service_slug);
-      } else {
-        setUseCustom(true);
-        setCustomSlug(item.service_slug);
-      }
-      setTitle(item.title);
-      setCategory(item.category ?? "");
-      setImageUrl(item.image_url);
-      setSortOrder(item.sort_order);
-    }).catch(() => router.push("/admin/portfolio")).finally(() => setLoading(false));
+    adminGetPortfolio(id)
+      .then((item) => {
+        const known = KNOWN_SLUGS.includes(item.service_slug);
+        if (known) {
+          setServiceSlug(item.service_slug);
+        } else {
+          setUseCustom(true);
+          setCustomSlug(item.service_slug);
+        }
+        setTitle(item.title);
+        setCategory(item.category ?? "");
+        setImageUrl(item.image_url);
+        setSortOrder(item.sort_order);
+      })
+      .catch(() => router.push("/admin/portfolio"))
+      .finally(() => setLoading(false));
   }, [id, router]);
 
   async function handleUpload(file: File) {
@@ -67,9 +70,18 @@ export default function EditPortfolioPage() {
 
   async function handleSave() {
     const slug = useCustom ? customSlug.trim() : serviceSlug;
-    if (!title.trim()) { setError("Judul wajib diisi."); return; }
-    if (!slug) { setError("Layanan wajib dipilih."); return; }
-    if (!imageUrl) { setError("Gambar wajib diupload."); return; }
+    if (!title.trim()) {
+      setError("Judul wajib diisi.");
+      return;
+    }
+    if (!slug) {
+      setError("Layanan wajib dipilih.");
+      return;
+    }
+    if (!imageUrl) {
+      setError("Gambar wajib diupload.");
+      return;
+    }
     setSaving(true);
     setError("");
     try {
@@ -90,7 +102,7 @@ export default function EditPortfolioPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#fcfaf7] flex items-center justify-center">
+      <div className="flex min-h-screen items-center justify-center bg-[#fcfaf7]">
         <Loader2 size={24} className="animate-spin text-[#f5a700]" />
       </div>
     );
@@ -98,9 +110,12 @@ export default function EditPortfolioPage() {
 
   return (
     <div className="min-h-screen bg-[#fcfaf7]">
-      <header className="bg-white border-b border-[#242423]/8 px-6 py-3.5 flex items-center justify-between sticky top-0 z-20 shadow-sm">
+      <header className="border-[#242423]/8 sticky top-0 z-20 flex items-center justify-between border-b bg-white px-6 py-3.5 shadow-sm">
         <div className="flex items-center gap-3">
-          <Link href="/admin/portfolio" className="flex items-center gap-1 text-xs text-[#242423]/50 hover:text-[#242423] transition">
+          <Link
+            href="/admin/portfolio"
+            className="flex items-center gap-1 text-xs text-[#242423]/50 transition hover:text-[#242423]"
+          >
             <ChevronLeft size={13} /> Portfolio
           </Link>
           <span className="text-[#242423]/20">/</span>
@@ -111,7 +126,7 @@ export default function EditPortfolioPage() {
           <button
             onClick={handleSave}
             disabled={saving}
-            className="flex items-center gap-1.5 bg-[#f5a700] text-white font-bold px-4 py-1.5 rounded-lg text-sm hover:bg-[#f5a700]/90 disabled:opacity-60 transition"
+            className="flex items-center gap-1.5 rounded-lg bg-[#f5a700] px-4 py-1.5 text-sm font-bold text-white transition hover:bg-[#f5a700]/90 disabled:opacity-60"
           >
             {saving ? <Loader2 size={13} className="animate-spin" /> : <Save size={13} />}
             {saving ? "Menyimpan..." : "Simpan"}
@@ -119,50 +134,77 @@ export default function EditPortfolioPage() {
         </div>
       </header>
 
-      <div className="max-w-xl mx-auto px-4 py-10 space-y-5">
-        <div className="bg-white border border-[#242423]/8 rounded-2xl p-6 space-y-4">
-
+      <div className="mx-auto max-w-xl space-y-5 px-4 py-10">
+        <div className="border-[#242423]/8 space-y-4 rounded-2xl border bg-white p-6">
           {/* Image */}
           <div>
-            <label className="block text-xs font-semibold text-[#242423]/55 mb-2">Gambar *</label>
+            <label className="mb-2 block text-xs font-semibold text-[#242423]/55">Gambar *</label>
             {imageUrl ? (
-              <div className="relative w-full aspect-video rounded-xl overflow-hidden border border-[#242423]/10">
+              <div className="relative aspect-video w-full overflow-hidden rounded-xl border border-[#242423]/10">
                 <Image src={imageUrl} alt="preview" fill className="object-cover" />
                 <button
                   onClick={() => setImageUrl("")}
-                  className="absolute top-2 right-2 w-6 h-6 bg-white border border-[#242423]/12 rounded-full flex items-center justify-center hover:bg-red-50 transition"
+                  className="border-[#242423]/12 absolute right-2 top-2 flex h-6 w-6 items-center justify-center rounded-full border bg-white transition hover:bg-red-50"
                 >
                   <X size={10} className="text-[#242423]/50" />
                 </button>
               </div>
             ) : (
-              <label className="flex flex-col items-center justify-center gap-2 cursor-pointer border border-dashed border-[#242423]/15 rounded-xl px-4 py-8 text-xs text-[#242423]/40 hover:border-[#f5a700]/50 hover:text-[#f5a700] transition">
+              <label className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-[#242423]/15 px-4 py-8 text-xs text-[#242423]/40 transition hover:border-[#f5a700]/50 hover:text-[#f5a700]">
                 {uploading ? <Loader2 size={20} className="animate-spin" /> : <Upload size={20} />}
                 {uploading ? "Mengupload..." : "Klik untuk upload gambar"}
                 <span className="text-[#242423]/25">JPG, PNG, WebP · Maks 5MB</span>
-                <input type="file" accept="image/*" className="hidden" onChange={(e) => { const f = e.target.files?.[0]; if (f) handleUpload(f); e.target.value = ""; }} />
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={(e) => {
+                    const f = e.target.files?.[0];
+                    if (f) handleUpload(f);
+                    e.target.value = "";
+                  }}
+                />
               </label>
             )}
           </div>
 
           {/* Layanan */}
           <div>
-            <label className="block text-xs font-semibold text-[#242423]/55 mb-2">Layanan *</label>
+            <label className="mb-2 block text-xs font-semibold text-[#242423]/55">Layanan *</label>
             {!useCustom ? (
               <div className="flex gap-2">
-                <select value={serviceSlug} onChange={(e) => setServiceSlug(e.target.value)} className={inputClass}>
+                <select
+                  value={serviceSlug}
+                  onChange={(e) => setServiceSlug(e.target.value)}
+                  className={inputClass}
+                >
                   {SERVICE_SLUGS.map((s) => (
-                    <option key={s.value} value={s.value}>{s.label}</option>
+                    <option key={s.value} value={s.value}>
+                      {s.label}
+                    </option>
                   ))}
                 </select>
-                <button type="button" onClick={() => setUseCustom(true)} className="flex-shrink-0 text-xs text-[#242423]/40 hover:text-[#242423] underline transition whitespace-nowrap">
+                <button
+                  type="button"
+                  onClick={() => setUseCustom(true)}
+                  className="flex-shrink-0 whitespace-nowrap text-xs text-[#242423]/40 underline transition hover:text-[#242423]"
+                >
                   Custom
                 </button>
               </div>
             ) : (
               <div className="flex gap-2">
-                <input value={customSlug} onChange={(e) => setCustomSlug(e.target.value)} placeholder="custom-service-slug" className={`${inputClass} font-mono`} />
-                <button type="button" onClick={() => setUseCustom(false)} className="flex-shrink-0 text-xs text-[#242423]/40 hover:text-[#242423] underline transition whitespace-nowrap">
+                <input
+                  value={customSlug}
+                  onChange={(e) => setCustomSlug(e.target.value)}
+                  placeholder="custom-service-slug"
+                  className={`${inputClass} font-mono`}
+                />
+                <button
+                  type="button"
+                  onClick={() => setUseCustom(false)}
+                  className="flex-shrink-0 whitespace-nowrap text-xs text-[#242423]/40 underline transition hover:text-[#242423]"
+                >
                   Pilih list
                 </button>
               </div>
@@ -171,21 +213,45 @@ export default function EditPortfolioPage() {
 
           {/* Title */}
           <div>
-            <label className="block text-xs font-semibold text-[#242423]/55 mb-1">Judul / Nama Klien *</label>
-            <input className={inputClass} value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Toko Batik Nusantara" />
+            <label className="mb-1 block text-xs font-semibold text-[#242423]/55">
+              Judul / Nama Klien *
+            </label>
+            <input
+              className={inputClass}
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="Toko Batik Nusantara"
+            />
           </div>
 
           {/* Category */}
           <div>
-            <label className="block text-xs font-semibold text-[#242423]/55 mb-1">Kategori Bisnis</label>
-            <input className={inputClass} value={category} onChange={(e) => setCategory(e.target.value)} placeholder="Fashion & Retail" />
+            <label className="mb-1 block text-xs font-semibold text-[#242423]/55">
+              Kategori Bisnis
+            </label>
+            <input
+              className={inputClass}
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              placeholder="Fashion & Retail"
+            />
           </div>
 
           {/* Sort order */}
           <div>
-            <label className="block text-xs font-semibold text-[#242423]/55 mb-1">Urutan Tampil</label>
-            <input type="number" className={inputClass} value={sortOrder} onChange={(e) => setSortOrder(Number(e.target.value))} min={0} />
-            <p className="text-xs text-[#242423]/35 mt-1">Angka kecil tampil duluan (0 = paling depan)</p>
+            <label className="mb-1 block text-xs font-semibold text-[#242423]/55">
+              Urutan Tampil
+            </label>
+            <input
+              type="number"
+              className={inputClass}
+              value={sortOrder}
+              onChange={(e) => setSortOrder(Number(e.target.value))}
+              min={0}
+            />
+            <p className="mt-1 text-xs text-[#242423]/35">
+              Angka kecil tampil duluan (0 = paling depan)
+            </p>
           </div>
         </div>
       </div>

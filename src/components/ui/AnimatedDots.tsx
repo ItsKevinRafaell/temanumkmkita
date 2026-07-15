@@ -92,7 +92,7 @@ export default function AnimatedDots() {
     <canvas
       ref={canvasRef}
       aria-hidden
-      className="fixed inset-0 pointer-events-none"
+      className="pointer-events-none fixed inset-0"
       style={{ zIndex: 0 }}
     />
   );

@@ -36,28 +36,28 @@ function LoginForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-white border border-[#242423]/8 rounded-2xl p-7 shadow-sm space-y-4"
+      className="border-[#242423]/8 space-y-4 rounded-2xl border bg-white p-7 shadow-sm"
     >
       <div>
-        <label className="block text-xs font-semibold text-[#242423]/60 mb-1.5">Email</label>
+        <label className="mb-1.5 block text-xs font-semibold text-[#242423]/60">Email</label>
         <input
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
           autoFocus
-          className="w-full border border-[#242423]/15 rounded-xl px-3.5 py-2.5 text-sm text-[#242423] bg-white focus:outline-none focus:ring-2 focus:ring-[#f5a700]/40 focus:border-[#f5a700] transition"
+          className="w-full rounded-xl border border-[#242423]/15 bg-white px-3.5 py-2.5 text-sm text-[#242423] transition focus:border-[#f5a700] focus:outline-none focus:ring-2 focus:ring-[#f5a700]/40"
         />
       </div>
       <div>
-        <label className="block text-xs font-semibold text-[#242423]/60 mb-1.5">Password</label>
+        <label className="mb-1.5 block text-xs font-semibold text-[#242423]/60">Password</label>
         <div className="relative">
           <input
             type={showPass ? "text" : "password"}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            className="w-full border border-[#242423]/15 rounded-xl px-3.5 py-2.5 pr-10 text-sm text-[#242423] bg-white focus:outline-none focus:ring-2 focus:ring-[#f5a700]/40 focus:border-[#f5a700] transition"
+            className="w-full rounded-xl border border-[#242423]/15 bg-white px-3.5 py-2.5 pr-10 text-sm text-[#242423] transition focus:border-[#f5a700] focus:outline-none focus:ring-2 focus:ring-[#f5a700]/40"
           />
           <button
             type="button"
@@ -70,7 +70,7 @@ function LoginForm() {
       </div>
 
       {error && (
-        <p className="text-xs text-red-600 bg-red-50 border border-red-100 rounded-lg px-3 py-2">
+        <p className="rounded-lg border border-red-100 bg-red-50 px-3 py-2 text-xs text-red-600">
           {error}
         </p>
       )}
@@ -78,11 +78,14 @@ function LoginForm() {
       <button
         type="submit"
         disabled={loading}
-        className="w-full bg-[#f5a700] text-white font-bold py-2.5 rounded-xl text-sm hover:bg-[#f5a700]/90 disabled:opacity-60 transition"
+        className="w-full rounded-xl bg-[#f5a700] py-2.5 text-sm font-bold text-white transition hover:bg-[#f5a700]/90 disabled:opacity-60"
       >
         {loading ? "Masuk..." : "Masuk"}
       </button>
-      <Link href="/admin/reset-password" className="block text-center text-xs font-semibold text-[#9a6a00] hover:text-[#242423]">
+      <Link
+        href="/admin/reset-password"
+        className="block text-center text-xs font-semibold text-[#9a6a00] hover:text-[#242423]"
+      >
         Lupa password?
       </Link>
     </form>
@@ -91,12 +94,19 @@ function LoginForm() {
 
 export default function AdminLoginPage() {
   return (
-    <div className="min-h-screen bg-[#fcfaf7] flex items-center justify-center px-4">
+    <div className="flex min-h-screen items-center justify-center bg-[#fcfaf7] px-4">
       <div className="w-full max-w-sm">
-        <div className="text-center mb-8">
-          <Image src="/brand/logo-secondary-yellow.png" alt="Teman UMKM Kita" width={320} height={76} className="mx-auto mb-4 h-16 w-auto object-contain" priority />
+        <div className="mb-8 text-center">
+          <Image
+            src="/brand/logo-secondary-yellow.png"
+            alt="Teman UMKM Kita"
+            width={320}
+            height={76}
+            className="mx-auto mb-4 h-16 w-auto object-contain"
+            priority
+          />
           <h1 className="text-2xl font-extrabold text-[#242423]">Admin Panel</h1>
-          <p className="text-sm text-[#242423]/50 mt-1">Teman UMKM Kita CMS</p>
+          <p className="mt-1 text-sm text-[#242423]/50">Teman UMKM Kita CMS</p>
         </div>
         <Suspense fallback={null}>
           <LoginForm />

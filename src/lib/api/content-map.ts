@@ -26,9 +26,7 @@ function errorMessageFromDetail(detail: unknown, fallback: string): string {
   if (typeof detail === "string") return cleanApiErrorText(detail) || fallback;
 
   if (Array.isArray(detail)) {
-    const messages = detail
-      .map((item) => errorMessageFromDetail(item, ""))
-      .filter(Boolean);
+    const messages = detail.map((item) => errorMessageFromDetail(item, "")).filter(Boolean);
     return messages.length ? messages.join(" ") : fallback;
   }
 
@@ -83,14 +81,26 @@ export async function fetchPillars(): Promise<ContentPillar[]> {
   return req<ContentPillar[]>("/api/pillars");
 }
 
-export async function createPillar(data: { niche: string; name: string; description?: string; focus_keyword?: string }): Promise<ContentPillar> {
+export async function createPillar(data: {
+  niche: string;
+  name: string;
+  description?: string;
+  focus_keyword?: string;
+}): Promise<ContentPillar> {
   return req<ContentPillar>("/api/pillars", { method: "POST", body: JSON.stringify(data) });
 }
 
-export async function updatePillar(id: string, data: Partial<{
-  niche: string; name: string; description: string; focus_keyword: string;
-  position_x: number; position_y: number;
-}>): Promise<ContentPillar> {
+export async function updatePillar(
+  id: string,
+  data: Partial<{
+    niche: string;
+    name: string;
+    description: string;
+    focus_keyword: string;
+    position_x: number;
+    position_y: number;
+  }>
+): Promise<ContentPillar> {
   return req<ContentPillar>(`/api/pillars/${id}`, { method: "PUT", body: JSON.stringify(data) });
 }
 
@@ -104,17 +114,31 @@ export async function fetchTopics(pillar_id?: string): Promise<ContentTopic[]> {
 }
 
 export async function createTopic(data: {
-  pillar_id?: string; title: string; focus_keyword?: string;
-  search_volume?: number; difficulty?: number; notes?: string; status?: string;
+  pillar_id?: string;
+  title: string;
+  focus_keyword?: string;
+  search_volume?: number;
+  difficulty?: number;
+  notes?: string;
+  status?: string;
 }): Promise<ContentTopic> {
   return req<ContentTopic>("/api/topics", { method: "POST", body: JSON.stringify(data) });
 }
 
-export async function updateTopic(id: string, data: Partial<{
-  pillar_id: string | null; title: string; focus_keyword: string;
-  search_volume: number; difficulty: number; notes: string; status: string;
-  position_x: number; position_y: number;
-}>): Promise<ContentTopic> {
+export async function updateTopic(
+  id: string,
+  data: Partial<{
+    pillar_id: string | null;
+    title: string;
+    focus_keyword: string;
+    search_volume: number;
+    difficulty: number;
+    notes: string;
+    status: string;
+    position_x: number;
+    position_y: number;
+  }>
+): Promise<ContentTopic> {
   return req<ContentTopic>(`/api/topics/${id}`, { method: "PUT", body: JSON.stringify(data) });
 }
 

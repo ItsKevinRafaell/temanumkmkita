@@ -4,7 +4,8 @@ import MaintenanceClient from "./Client";
 
 export const metadata: Metadata = {
   title: "Maintenance Website — Pemeliharaan Berkala | Teman UMKM Kita",
-  description: "Jasa maintenance website untuk UMKM. Backup rutin, security patch, update konten, dan monitoring uptime.",
+  description:
+    "Jasa maintenance website untuk UMKM. Backup rutin, security patch, update konten, dan monitoring uptime.",
   alternates: { canonical: `${SITE_URL}/layanan/maintenance` },
   openGraph: {
     title: "Maintenance Website untuk UMKM",
@@ -21,13 +22,17 @@ const jsonLd = {
   name: "Maintenance Website untuk UMKM",
   provider: { "@type": "Organization", name: "Teman UMKM Kita", url: SITE_URL },
   areaServed: { "@type": "Country", name: "Indonesia" },
-  description: "Layanan pemeliharaan website berkala untuk UMKM — backup, update, security, dan monitoring.",
+  description:
+    "Layanan pemeliharaan website berkala untuk UMKM — backup, update, security, dan monitoring.",
 };
 
 export default function Page() {
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <MaintenanceClient />
     </>
   );

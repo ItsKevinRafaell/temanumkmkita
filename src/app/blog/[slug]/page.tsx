@@ -33,7 +33,9 @@ function formatDate(iso: string) {
 
 function articleToPost(a: Article): BlogPost {
   let content: ContentBlock[] = [];
-  try { content = JSON.parse(a.content); } catch {}
+  try {
+    content = JSON.parse(a.content);
+  } catch {}
   return {
     slug: a.slug,
     title: a.title,
@@ -59,7 +61,8 @@ export async function generateMetadata({
     const article = await fetchArticleBySlug(slug);
     const url = `${SITE_URL}/blog/${article.slug}`;
     const metaTitle = article.seo_title ?? `${article.title} | Blog Teman UMKM Kita`;
-    const metaDesc = article.meta_description ?? article.excerpt ?? extractFirstParagraph(article.content);
+    const metaDesc =
+      article.meta_description ?? article.excerpt ?? extractFirstParagraph(article.content);
     const ogImages = article.cover_image
       ? [{ url: article.cover_image, width: 1200, height: 630 }]
       : undefined;
@@ -89,11 +92,7 @@ export async function generateMetadata({
   }
 }
 
-export default async function BlogDetailPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
+export default async function BlogDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
 
   let article: Article;
@@ -119,13 +118,15 @@ export default async function BlogDetailPage({
       .map(articleToPost);
   } catch {}
 
-  const authorSchema = post.author ? {
-    "@type": "Person",
-    name: post.author.name,
-    url: `${SITE_URL}/blog/author/${post.author.slug}`,
-    ...(post.author.linkedin_url ? { sameAs: [post.author.linkedin_url] } : {}),
-    ...(post.author.role ? { jobTitle: post.author.role } : {}),
-  } : { "@type": "Organization", name: "Teman UMKM Kita" };
+  const authorSchema = post.author
+    ? {
+        "@type": "Person",
+        name: post.author.name,
+        url: `${SITE_URL}/blog/author/${post.author.slug}`,
+        ...(post.author.linkedin_url ? { sameAs: [post.author.linkedin_url] } : {}),
+        ...(post.author.role ? { jobTitle: post.author.role } : {}),
+      }
+    : { "@type": "Organization", name: "Teman UMKM Kita" };
 
   const jsonLdGraph: object[] = [
     {
@@ -144,7 +145,12 @@ export default async function BlogDetailPage({
       itemListElement: [
         { "@type": "ListItem", position: 1, name: "Beranda", item: SITE_URL },
         { "@type": "ListItem", position: 2, name: "Artikel", item: `${SITE_URL}/blog` },
-        { "@type": "ListItem", position: 3, name: post.title, item: `${SITE_URL}/blog/${post.slug}` },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: post.title,
+          item: `${SITE_URL}/blog/${post.slug}`,
+        },
       ],
     },
   ];
@@ -153,7 +159,11 @@ export default async function BlogDetailPage({
     jsonLdGraph.push(authorSchema);
   }
 
-  if (hasBlockType(post.content, "faq")) {    const faqBlocks = post.content.filter((b) => b.type === "faq") as Extract<ContentBlock, { type: "faq" }>[];
+  if (hasBlockType(post.content, "faq")) {
+    const faqBlocks = post.content.filter((b) => b.type === "faq") as Extract<
+      ContentBlock,
+      { type: "faq" }
+    >[];
     const mainEntity = faqBlocks.flatMap((b) =>
       b.items.map((item) => ({
         "@type": "Question",
@@ -165,7 +175,10 @@ export default async function BlogDetailPage({
   }
 
   if (hasBlockType(post.content, "howto")) {
-    const howtoBlocks = post.content.filter((b) => b.type === "howto") as Extract<ContentBlock, { type: "howto" }>[];
+    const howtoBlocks = post.content.filter((b) => b.type === "howto") as Extract<
+      ContentBlock,
+      { type: "howto" }
+    >[];
     for (const hb of howtoBlocks) {
       jsonLdGraph.push({
         "@type": "HowTo",
@@ -186,7 +199,8 @@ export default async function BlogDetailPage({
     "@graph": jsonLdGraph,
   };
 
-  const colorClass = categoryColors[post.category] ?? "bg-brand-dark/5 text-brand-dark/60 border-brand-dark/10";
+  const colorClass =
+    categoryColors[post.category] ?? "bg-brand-dark/5 text-brand-dark/60 border-brand-dark/10";
 
   return (
     <>
@@ -196,61 +210,77 @@ export default async function BlogDetailPage({
       />
       <Navbar />
       <main className="pt-20">
-
         {/* ── Header ──────────────────────────────────────────────────── */}
-        <section className="relative overflow-hidden pt-12 pb-8">
+        <section className="relative overflow-hidden pb-8 pt-12">
           <div className="absolute inset-x-0 top-0 h-px bg-brand-dark/10" />
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center gap-1.5 text-xs text-brand-dark/40 font-medium mb-6 flex-wrap">
-              <Link href="/" className="hover:text-brand-dark transition-colors">Beranda</Link>
+          <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+            <div className="mb-6 flex flex-wrap items-center gap-1.5 text-xs font-medium text-brand-dark/40">
+              <Link href="/" className="transition-colors hover:text-brand-dark">
+                Beranda
+              </Link>
               <ChevronRight size={12} />
-              <Link href="/blog" className="hover:text-brand-dark transition-colors">Artikel</Link>
+              <Link href="/blog" className="transition-colors hover:text-brand-dark">
+                Artikel
+              </Link>
               <ChevronRight size={12} />
-              <span className="text-brand-dark/70 line-clamp-1">{post.title}</span>
+              <span className="line-clamp-1 text-brand-dark/70">{post.title}</span>
             </div>
 
             <div className="max-w-3xl">
-              <span className={`inline-flex items-center gap-1.5 text-xs font-bold px-2.5 py-1 rounded-md border mb-4 ${colorClass}`}>
+              <span
+                className={`mb-4 inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1 text-xs font-bold ${colorClass}`}
+              >
                 <Tag size={10} />
                 {post.category}
               </span>
-              <h1 className="text-3xl sm:text-4xl font-extrabold text-brand-dark leading-tight mb-4">
+              <h1 className="mb-4 text-3xl font-extrabold leading-tight text-brand-dark sm:text-4xl">
                 {post.title}
               </h1>
-              <p className="text-brand-dark/60 text-lg leading-relaxed mb-5">
-                {post.excerpt}
-              </p>
-              <div className="flex items-center gap-4 text-sm text-brand-dark/45 font-medium">
+              <p className="mb-5 text-lg leading-relaxed text-brand-dark/60">{post.excerpt}</p>
+              <div className="flex items-center gap-4 text-sm font-medium text-brand-dark/45">
                 <span className="flex items-center gap-1.5">
                   <Calendar size={13} />
                   {formatDate(post.date)}
                 </span>
-                <span className="w-1 h-1 rounded-sm bg-brand-dark/20" />
+                <span className="h-1 w-1 rounded-sm bg-brand-dark/20" />
                 <span className="flex items-center gap-1.5">
                   <Clock size={13} />
                   {post.readTime} menit baca
                 </span>
                 {post.updatedAt && post.updatedAt !== post.date && (
                   <>
-                    <span className="w-1 h-1 rounded-sm bg-brand-dark/20" />
-                    <span className="text-xs text-brand-dark/35">Diperbarui {formatDate(post.updatedAt)}</span>
+                    <span className="h-1 w-1 rounded-sm bg-brand-dark/20" />
+                    <span className="text-xs text-brand-dark/35">
+                      Diperbarui {formatDate(post.updatedAt)}
+                    </span>
                   </>
                 )}
               </div>
 
               {/* Author byline */}
               {post.author && (
-                <div className="flex items-center gap-2.5 mt-4">
+                <div className="mt-4 flex items-center gap-2.5">
                   {post.author.photo_url ? (
-                    <Image src={post.author.photo_url} alt={post.author.name} width={36} height={36} className="rounded-full object-cover border border-brand-dark/8 flex-shrink-0" />
+                    <Image
+                      src={post.author.photo_url}
+                      alt={post.author.name}
+                      width={36}
+                      height={36}
+                      className="border-brand-dark/8 flex-shrink-0 rounded-full border object-cover"
+                    />
                   ) : (
-                    <UserCircle size={36} className="text-brand-dark/25 flex-shrink-0" />
+                    <UserCircle size={36} className="flex-shrink-0 text-brand-dark/25" />
                   )}
                   <div>
-                    <Link href={`/blog/author/${post.author.slug}`} className="text-sm font-bold text-brand-dark hover:text-accent transition-colors">
+                    <Link
+                      href={`/blog/author/${post.author.slug}`}
+                      className="text-sm font-bold text-brand-dark transition-colors hover:text-accent"
+                    >
                       {post.author.name}
                     </Link>
-                    {post.author.role && <p className="text-xs text-brand-dark/45">{post.author.role}</p>}
+                    {post.author.role && (
+                      <p className="text-xs text-brand-dark/45">{post.author.role}</p>
+                    )}
                   </div>
                 </div>
               )}
@@ -260,7 +290,7 @@ export default async function BlogDetailPage({
 
         {/* ── Content ─────────────────────────────────────────────────── */}
         <section className="pb-20">
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
             <BlogDetailClient post={post} related={related} headings={headings} />
           </div>
         </section>
@@ -268,23 +298,44 @@ export default async function BlogDetailPage({
         {/* ── About Author ──────────────────────────────────────────── */}
         {post.author && (
           <section className="pb-10">
-            <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="border border-brand-dark/8 rounded-lg p-6 flex items-start gap-5">
+            <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+              <div className="border-brand-dark/8 flex items-start gap-5 rounded-lg border p-6">
                 {post.author.photo_url ? (
-                  <Image src={post.author.photo_url} alt={post.author.name} width={56} height={56} className="rounded-full object-cover border border-brand-dark/8 flex-shrink-0" />
+                  <Image
+                    src={post.author.photo_url}
+                    alt={post.author.name}
+                    width={56}
+                    height={56}
+                    className="border-brand-dark/8 flex-shrink-0 rounded-full border object-cover"
+                  />
                 ) : (
-                  <UserCircle size={56} className="text-brand-dark/20 flex-shrink-0" />
+                  <UserCircle size={56} className="flex-shrink-0 text-brand-dark/20" />
                 )}
-                <div className="flex-1 min-w-0">
-                  <p className="text-xs font-bold uppercase tracking-wider text-brand-dark/35 mb-1">Tentang Penulis</p>
-                  <Link href={`/blog/author/${post.author.slug}`} className="text-base font-extrabold text-brand-dark hover:text-accent transition-colors">
+                <div className="min-w-0 flex-1">
+                  <p className="mb-1 text-xs font-bold uppercase tracking-wider text-brand-dark/35">
+                    Tentang Penulis
+                  </p>
+                  <Link
+                    href={`/blog/author/${post.author.slug}`}
+                    className="text-base font-extrabold text-brand-dark transition-colors hover:text-accent"
+                  >
                     {post.author.name}
                   </Link>
-                  {post.author.role && <p className="text-sm text-brand-dark/50 mt-0.5">{post.author.role}</p>}
-                  {post.author.bio && <p className="text-sm text-brand-dark/65 mt-2 leading-relaxed max-w-lg">{post.author.bio}</p>}
+                  {post.author.role && (
+                    <p className="mt-0.5 text-sm text-brand-dark/50">{post.author.role}</p>
+                  )}
+                  {post.author.bio && (
+                    <p className="mt-2 max-w-lg text-sm leading-relaxed text-brand-dark/65">
+                      {post.author.bio}
+                    </p>
+                  )}
                   {post.author.linkedin_url && (
-                    <a href={post.author.linkedin_url} target="_blank" rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 mt-2 text-xs font-semibold text-brand-dark/40 hover:text-accent transition-colors">
+                    <a
+                      href={post.author.linkedin_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-2 inline-flex items-center gap-1 text-xs font-semibold text-brand-dark/40 transition-colors hover:text-accent"
+                    >
                       <ExternalLink size={11} /> LinkedIn
                     </a>
                   )}
@@ -296,18 +347,19 @@ export default async function BlogDetailPage({
 
         {/* ── Related posts ─────────────────────────────────────────── */}
         {related.length > 0 && (
-          <section className="hidden lg:block pb-20">
-            <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="border-t border-brand-dark/8 pt-12">
-                <h3 className="text-2xl font-extrabold text-brand-dark mb-8">Artikel Terkait</h3>
-                <div className="grid sm:grid-cols-3 gap-6">
-                  {related.map((p) => <BlogCard key={p.slug} post={p} />)}
+          <section className="hidden pb-20 lg:block">
+            <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+              <div className="border-brand-dark/8 border-t pt-12">
+                <h3 className="mb-8 text-2xl font-extrabold text-brand-dark">Artikel Terkait</h3>
+                <div className="grid gap-6 sm:grid-cols-3">
+                  {related.map((p) => (
+                    <BlogCard key={p.slug} post={p} />
+                  ))}
                 </div>
               </div>
             </div>
           </section>
         )}
-
       </main>
       <Footer />
     </>

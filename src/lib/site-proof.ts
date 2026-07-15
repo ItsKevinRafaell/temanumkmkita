@@ -26,7 +26,10 @@ function textOrDefault(value: string | null | undefined, fallback: string): stri
 export function buildHomepageProof(settings?: Partial<SiteSettings> | null): HomepageProof {
   return {
     clientsActive: textOrDefault(settings?.clients_active, DEFAULT_HOMEPAGE_PROOF.clientsActive),
-    projectsCompleted: textOrDefault(settings?.projects_completed, DEFAULT_HOMEPAGE_PROOF.projectsCompleted),
+    projectsCompleted: textOrDefault(
+      settings?.projects_completed,
+      DEFAULT_HOMEPAGE_PROOF.projectsCompleted
+    ),
     foundedYear: textOrDefault(settings?.founded_year, DEFAULT_HOMEPAGE_PROOF.foundedYear),
     primaryServiceAreas: textOrDefault(
       settings?.primary_service_areas,

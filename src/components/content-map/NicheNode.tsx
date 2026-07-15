@@ -8,10 +8,14 @@ type NicheNodeData = {
 export default function NicheNode({ data }: NodeProps) {
   const d = data as NicheNodeData;
   return (
-    <div className="bg-[#f5a700] text-white rounded-2xl px-4 py-3 min-w-[140px] shadow-md">
-      <div className="font-extrabold text-sm leading-tight">{d.label}</div>
-      <div className="text-[11px] text-white/75 mt-0.5">{d.pillarCount} pillar</div>
-      <Handle type="source" position={Position.Bottom} className="!bg-white/60 !border-white/40 !w-2 !h-2" />
+    <div className="min-w-[140px] rounded-2xl bg-[#f5a700] px-4 py-3 text-white shadow-md">
+      <div className="text-sm font-extrabold leading-tight">{d.label}</div>
+      <div className="mt-0.5 text-[11px] text-white/75">{d.pillarCount} pillar</div>
+      <Handle
+        type="source"
+        position={Position.Bottom}
+        className="!h-2 !w-2 !border-white/40 !bg-white/60"
+      />
     </div>
   );
 }

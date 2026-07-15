@@ -23,12 +23,37 @@ const SOCIAL_FIELDS: {
   placeholder: string;
   icon?: React.ReactNode;
 }[] = [
-  { key: "instagram_url", label: "Instagram", placeholder: "https://instagram.com/temanumkmkita", icon: <Link2 size={14} /> },
-  { key: "facebook_url", label: "Facebook", placeholder: "https://facebook.com/temanumkmkita", icon: <Link2 size={14} /> },
-  { key: "linkedin_url", label: "LinkedIn", placeholder: "https://linkedin.com/company/temanumkmkita", icon: <Link2 size={14} /> },
+  {
+    key: "instagram_url",
+    label: "Instagram",
+    placeholder: "https://instagram.com/temanumkmkita",
+    icon: <Link2 size={14} />,
+  },
+  {
+    key: "facebook_url",
+    label: "Facebook",
+    placeholder: "https://facebook.com/temanumkmkita",
+    icon: <Link2 size={14} />,
+  },
+  {
+    key: "linkedin_url",
+    label: "LinkedIn",
+    placeholder: "https://linkedin.com/company/temanumkmkita",
+    icon: <Link2 size={14} />,
+  },
   { key: "tiktok_url", label: "TikTok", placeholder: "https://tiktok.com/@temanumkmkita" },
-  { key: "youtube_url", label: "YouTube", placeholder: "https://youtube.com/@temanumkmkita", icon: <Link2 size={14} /> },
-  { key: "twitter_url", label: "X / Twitter", placeholder: "https://x.com/temanumkmkita", icon: <Link2 size={14} /> },
+  {
+    key: "youtube_url",
+    label: "YouTube",
+    placeholder: "https://youtube.com/@temanumkmkita",
+    icon: <Link2 size={14} />,
+  },
+  {
+    key: "twitter_url",
+    label: "X / Twitter",
+    placeholder: "https://x.com/temanumkmkita",
+    icon: <Link2 size={14} />,
+  },
 ];
 
 const BRAND_FIELDS: {
@@ -74,7 +99,11 @@ const PROOF_FIELDS: {
   { key: "clients_active", label: "Klien Aktif", placeholder: "3" },
   { key: "projects_completed", label: "Total Proyek", placeholder: "10+" },
   { key: "founded_year", label: "Tahun Berdiri", placeholder: "2025" },
-  { key: "primary_service_areas", label: "Area Layanan Utama", placeholder: "Kalimantan Timur & Jabodetabek" },
+  {
+    key: "primary_service_areas",
+    label: "Area Layanan Utama",
+    placeholder: "Kalimantan Timur & Jabodetabek",
+  },
   { key: "response_time", label: "Response Time", placeholder: "Berusaha membalas dalam 24 jam" },
 ];
 
@@ -106,7 +135,8 @@ export default function SettingsPage() {
           youtube_url: s.youtube_url ?? "",
           twitter_url: s.twitter_url ?? "",
           logo_url: s.logo_url ?? "https://www.temanumkmkita.com/brand/logo-secondary.png",
-          logo_light_url: s.logo_light_url ?? "https://www.temanumkmkita.com/brand/logo-secondary.png",
+          logo_light_url:
+            s.logo_light_url ?? "https://www.temanumkmkita.com/brand/logo-secondary.png",
           favicon_url: s.favicon_url ?? "https://www.temanumkmkita.com/brand/favicon.png",
           phone: s.phone ?? "",
           address: s.address ?? "",
@@ -123,7 +153,9 @@ export default function SettingsPage() {
 
     fetchIntegrationToken()
       .then((info) => setTokenInfo(info))
-      .catch(() => {/* silently ignore — token section will show empty state */});
+      .catch(() => {
+        /* silently ignore — token section will show empty state */
+      });
   }, []);
 
   async function handleSave() {
@@ -154,7 +186,11 @@ export default function SettingsPage() {
     try {
       const result = await generateIntegrationToken();
       setIntegrationToken(result.token);
-      setTokenInfo({ id: result.id, created_at: result.created_at, token_prefix: result.token_prefix });
+      setTokenInfo({
+        id: result.id,
+        created_at: result.created_at,
+        token_prefix: result.token_prefix,
+      });
     } catch (err) {
       setTokenError(err instanceof Error ? err.message : "Gagal membuat token");
     } finally {
@@ -163,7 +199,12 @@ export default function SettingsPage() {
   }
 
   async function handleRevokeToken() {
-    if (!confirm("Yakin ingin menghapus token integrasi? Semua sistem yang menggunakan token ini tidak akan bisa publish artikel.")) return;
+    if (
+      !confirm(
+        "Yakin ingin menghapus token integrasi? Semua sistem yang menggunakan token ini tidak akan bisa publish artikel."
+      )
+    )
+      return;
     setTokenError("");
     try {
       await revokeIntegrationToken();
@@ -198,9 +239,12 @@ export default function SettingsPage() {
 
   return (
     <div className="min-h-screen bg-[#fcfaf7]">
-      <header className="bg-white border-b border-[#242423]/8 px-6 py-3.5 flex items-center justify-between sticky top-0 z-20 shadow-sm">
+      <header className="border-[#242423]/8 sticky top-0 z-20 flex items-center justify-between border-b bg-white px-6 py-3.5 shadow-sm">
         <div className="flex items-center gap-3">
-          <Link href="/admin" className="flex items-center gap-1 text-xs text-[#242423]/50 hover:text-[#242423] transition">
+          <Link
+            href="/admin"
+            className="flex items-center gap-1 text-xs text-[#242423]/50 transition hover:text-[#242423]"
+          >
             <ChevronLeft size={13} /> Dashboard
           </Link>
           <span className="text-[#242423]/20">/</span>
@@ -208,11 +252,11 @@ export default function SettingsPage() {
         </div>
         <div className="flex items-center gap-2">
           {error && <span className="text-xs text-red-600">{error}</span>}
-          {saved && <span className="text-xs text-green-600 font-semibold">Tersimpan</span>}
+          {saved && <span className="text-xs font-semibold text-green-600">Tersimpan</span>}
           <button
             onClick={handleSave}
             disabled={saving || loading}
-            className="flex items-center gap-1.5 bg-[#f5a700] text-white font-bold px-4 py-1.5 rounded-lg text-sm hover:bg-[#f5a700]/90 disabled:opacity-60 transition"
+            className="flex items-center gap-1.5 rounded-lg bg-[#f5a700] px-4 py-1.5 text-sm font-bold text-white transition hover:bg-[#f5a700]/90 disabled:opacity-60"
           >
             {saving ? <Loader2 size={13} className="animate-spin" /> : <Save size={13} />}
             {saving ? "Menyimpan..." : "Simpan"}
@@ -220,7 +264,7 @@ export default function SettingsPage() {
         </div>
       </header>
 
-      <div className="max-w-2xl mx-auto px-4 py-10">
+      <div className="mx-auto max-w-2xl px-4 py-10">
         {loading ? (
           <div className="flex items-center justify-center py-20">
             <Loader2 size={24} className="animate-spin text-[#242423]/30" />
@@ -228,18 +272,20 @@ export default function SettingsPage() {
         ) : (
           <div className="space-y-6">
             {/* Social Media */}
-            <div className="bg-white border border-[#242423]/8 rounded-2xl p-6">
-              <p className="text-xs font-bold uppercase tracking-wider text-[#242423]/40 mb-4">Sosial Media</p>
+            <div className="border-[#242423]/8 rounded-2xl border bg-white p-6">
+              <p className="mb-4 text-xs font-bold uppercase tracking-wider text-[#242423]/40">
+                Sosial Media
+              </p>
               <div className="space-y-3">
                 {SOCIAL_FIELDS.map(({ key, label, placeholder, icon }) => (
                   <div key={key}>
-                    <label className="flex items-center gap-1.5 text-xs font-semibold text-[#242423]/55 mb-1">
+                    <label className="mb-1 flex items-center gap-1.5 text-xs font-semibold text-[#242423]/55">
                       {icon && <span className="text-[#242423]/35">{icon}</span>}
                       {label}
                     </label>
                     <input
                       type="url"
-                      className="w-full border border-[#242423]/12 rounded-lg px-3 py-2 text-sm text-[#242423] bg-white focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30 focus:border-[#f5a700]"
+                      className="border-[#242423]/12 w-full rounded-lg border bg-white px-3 py-2 text-sm text-[#242423] focus:border-[#f5a700] focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30"
                       placeholder={placeholder}
                       value={(form as Record<string, string>)[key as string] ?? ""}
                       onChange={(e) => setForm((prev) => ({ ...prev, [key]: e.target.value }))}
@@ -250,36 +296,47 @@ export default function SettingsPage() {
             </div>
 
             {/* Brand Assets */}
-            <div className="bg-white border border-[#242423]/8 rounded-2xl p-6">
-              <p className="text-xs font-bold uppercase tracking-wider text-[#242423]/40 mb-1">Brand Assets</p>
-              <p className="text-xs text-[#242423]/45 mb-4">
-                Logo ditampilkan dengan object-fit/contain supaya tidak gepeng. Kalau terlihat terlalu kecil, upload versi crop.
+            <div className="border-[#242423]/8 rounded-2xl border bg-white p-6">
+              <p className="mb-1 text-xs font-bold uppercase tracking-wider text-[#242423]/40">
+                Brand Assets
+              </p>
+              <p className="mb-4 text-xs text-[#242423]/45">
+                Logo ditampilkan dengan object-fit/contain supaya tidak gepeng. Kalau terlihat
+                terlalu kecil, upload versi crop.
               </p>
               <div className="space-y-4">
                 {BRAND_FIELDS.map(({ key, label, placeholder, hint }) => {
                   const value = (form as Record<string, string>)[key as string] ?? "";
                   return (
                     <div key={key}>
-                      <label className="block text-xs font-semibold text-[#242423]/55 mb-1">{label}</label>
-                      <div className="flex flex-col sm:flex-row gap-3">
+                      <label className="mb-1 block text-xs font-semibold text-[#242423]/55">
+                        {label}
+                      </label>
+                      <div className="flex flex-col gap-3 sm:flex-row">
                         <div className="flex-1 space-y-2">
                           <input
                             type="url"
-                            className="w-full border border-[#242423]/12 rounded-lg px-3 py-2 text-sm text-[#242423] bg-white focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30 focus:border-[#f5a700]"
+                            className="border-[#242423]/12 w-full rounded-lg border bg-white px-3 py-2 text-sm text-[#242423] focus:border-[#f5a700] focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30"
                             placeholder={placeholder}
                             value={value}
-                            onChange={(e) => setForm((prev) => ({ ...prev, [key]: e.target.value }))}
+                            onChange={(e) =>
+                              setForm((prev) => ({ ...prev, [key]: e.target.value }))
+                            }
                           />
                           <p className="text-xs text-[#242423]/40">{hint}</p>
                         </div>
                         <div className="flex items-center gap-3">
                           {value && (
-                            <div className="h-14 w-24 rounded-lg border border-[#242423]/8 bg-[#fcfaf7] p-2 flex items-center justify-center">
+                            <div className="border-[#242423]/8 flex h-14 w-24 items-center justify-center rounded-lg border bg-[#fcfaf7] p-2">
                               {/* eslint-disable-next-line @next/next/no-img-element */}
-                              <img src={value} alt="" className="max-h-full max-w-full object-contain" />
+                              <img
+                                src={value}
+                                alt=""
+                                className="max-h-full max-w-full object-contain"
+                              />
                             </div>
                           )}
-                          <label className="relative inline-flex cursor-pointer items-center justify-center rounded-lg border border-[#242423]/12 px-3 py-2 text-xs font-semibold text-[#242423]/60 hover:border-[#f5a700] hover:text-[#f5a700] transition">
+                          <label className="border-[#242423]/12 relative inline-flex cursor-pointer items-center justify-center rounded-lg border px-3 py-2 text-xs font-semibold text-[#242423]/60 transition hover:border-[#f5a700] hover:text-[#f5a700]">
                             {uploadingAsset === key ? "Upload..." : "Upload"}
                             <input
                               type="file"
@@ -298,15 +355,19 @@ export default function SettingsPage() {
             </div>
 
             {/* Contact */}
-            <div className="bg-white border border-[#242423]/8 rounded-2xl p-6">
-              <p className="text-xs font-bold uppercase tracking-wider text-[#242423]/40 mb-4">Kontak & Alamat</p>
+            <div className="border-[#242423]/8 rounded-2xl border bg-white p-6">
+              <p className="mb-4 text-xs font-bold uppercase tracking-wider text-[#242423]/40">
+                Kontak & Alamat
+              </p>
               <div className="space-y-3">
                 {CONTACT_FIELDS.map(({ key, label, placeholder }) => (
                   <div key={key}>
-                    <label className="block text-xs font-semibold text-[#242423]/55 mb-1">{label}</label>
+                    <label className="mb-1 block text-xs font-semibold text-[#242423]/55">
+                      {label}
+                    </label>
                     <input
                       type="text"
-                      className="w-full border border-[#242423]/12 rounded-lg px-3 py-2 text-sm text-[#242423] bg-white focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30 focus:border-[#f5a700]"
+                      className="border-[#242423]/12 w-full rounded-lg border bg-white px-3 py-2 text-sm text-[#242423] focus:border-[#f5a700] focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30"
                       placeholder={placeholder}
                       value={(form as Record<string, string>)[key as string] ?? ""}
                       onChange={(e) => setForm((prev) => ({ ...prev, [key]: e.target.value }))}
@@ -317,18 +378,30 @@ export default function SettingsPage() {
             </div>
 
             {/* Proof & positioning */}
-            <div className="bg-white border border-[#242423]/8 rounded-2xl p-6">
-              <p className="text-xs font-bold uppercase tracking-wider text-[#242423]/40 mb-1">Proof & Positioning</p>
-              <p className="text-xs text-[#242423]/45 mb-4">
-                Data ini dipakai di homepage, CTA, dan schema SEO. Isi hanya dengan angka yang bisa dipertanggungjawabkan.
+            <div className="border-[#242423]/8 rounded-2xl border bg-white p-6">
+              <p className="mb-1 text-xs font-bold uppercase tracking-wider text-[#242423]/40">
+                Proof & Positioning
               </p>
-              <div className="grid sm:grid-cols-2 gap-3">
+              <p className="mb-4 text-xs text-[#242423]/45">
+                Data ini dipakai di homepage, CTA, dan schema SEO. Isi hanya dengan angka yang bisa
+                dipertanggungjawabkan.
+              </p>
+              <div className="grid gap-3 sm:grid-cols-2">
                 {PROOF_FIELDS.map(({ key, label, placeholder }) => (
-                  <div key={key} className={key === "primary_service_areas" || key === "response_time" ? "sm:col-span-2" : ""}>
-                    <label className="block text-xs font-semibold text-[#242423]/55 mb-1">{label}</label>
+                  <div
+                    key={key}
+                    className={
+                      key === "primary_service_areas" || key === "response_time"
+                        ? "sm:col-span-2"
+                        : ""
+                    }
+                  >
+                    <label className="mb-1 block text-xs font-semibold text-[#242423]/55">
+                      {label}
+                    </label>
                     <input
                       type="text"
-                      className="w-full border border-[#242423]/12 rounded-lg px-3 py-2 text-sm text-[#242423] bg-white focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30 focus:border-[#f5a700]"
+                      className="border-[#242423]/12 w-full rounded-lg border bg-white px-3 py-2 text-sm text-[#242423] focus:border-[#f5a700] focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30"
                       placeholder={placeholder}
                       value={(form as Record<string, string>)[key as string] ?? ""}
                       onChange={(e) => setForm((prev) => ({ ...prev, [key]: e.target.value }))}
@@ -336,16 +409,20 @@ export default function SettingsPage() {
                   </div>
                 ))}
               </div>
-              <label className="mt-4 flex items-start gap-3 rounded-lg border border-[#242423]/8 bg-[#fcfaf7] px-3 py-3">
+              <label className="border-[#242423]/8 mt-4 flex items-start gap-3 rounded-lg border bg-[#fcfaf7] px-3 py-3">
                 <input
                   type="checkbox"
                   checked={Boolean(form.show_testimonials)}
-                  onChange={(e) => setForm((prev) => ({ ...prev, show_testimonials: e.target.checked }))}
+                  onChange={(e) =>
+                    setForm((prev) => ({ ...prev, show_testimonials: e.target.checked }))
+                  }
                   className="mt-0.5 h-4 w-4 accent-[#f5a700]"
                 />
                 <span>
-                  <span className="block text-sm font-semibold text-[#242423]">Tampilkan testimoni publik</span>
-                  <span className="block text-xs text-[#242423]/50 mt-0.5">
+                  <span className="block text-sm font-semibold text-[#242423]">
+                    Tampilkan testimoni publik
+                  </span>
+                  <span className="mt-0.5 block text-xs text-[#242423]/50">
                     Aktifkan setelah testimoni sudah dikonfirmasi dan boleh dipublikasikan.
                   </span>
                 </span>
@@ -353,28 +430,34 @@ export default function SettingsPage() {
             </div>
 
             {/* Integration Token */}
-            <div className="bg-white border border-[#242423]/8 rounded-2xl p-6">
-              <div className="flex items-center gap-2 mb-1">
+            <div className="border-[#242423]/8 rounded-2xl border bg-white p-6">
+              <div className="mb-1 flex items-center gap-2">
                 <KeyRound size={14} className="text-[#242423]/40" />
-                <p className="text-xs font-bold uppercase tracking-wider text-[#242423]/40">Integrasi API</p>
+                <p className="text-xs font-bold uppercase tracking-wider text-[#242423]/40">
+                  Integrasi API
+                </p>
               </div>
-              <p className="text-xs text-[#242423]/50 mb-4">Token untuk menghubungkan Kantorteman dengan CMS ini.</p>
+              <p className="mb-4 text-xs text-[#242423]/50">
+                Token untuk menghubungkan Kantorteman dengan CMS ini.
+              </p>
 
-              {tokenError && (
-                <p className="text-xs text-red-600 mb-3">{tokenError}</p>
-              )}
+              {tokenError && <p className="mb-3 text-xs text-red-600">{tokenError}</p>}
 
               {tokenInfo ? (
                 <div className="space-y-3">
-                  <div className="bg-[#fcfaf7] border border-[#242423]/8 rounded-lg px-3 py-2 text-xs text-[#242423]/60">
+                  <div className="border-[#242423]/8 rounded-lg border bg-[#fcfaf7] px-3 py-2 text-xs text-[#242423]/60">
                     <span className="font-semibold text-[#242423]/70">Token aktif</span> sejak{" "}
-                    {new Date(tokenInfo.created_at).toLocaleDateString("id-ID", { year: "numeric", month: "long", day: "numeric" })},{" "}
-                    prefix: <code className="font-mono">{tokenInfo.token_prefix}...</code>
+                    {new Date(tokenInfo.created_at).toLocaleDateString("id-ID", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })}
+                    , prefix: <code className="font-mono">{tokenInfo.token_prefix}...</code>
                   </div>
 
                   {integrationToken && (
                     <div className="space-y-1.5">
-                      <p className="text-xs font-semibold text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">
+                      <p className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs font-semibold text-amber-700">
                         Simpan token ini sekarang. Tidak bisa dilihat lagi.
                       </p>
                       <div className="flex gap-2">
@@ -382,13 +465,17 @@ export default function SettingsPage() {
                           type="text"
                           readOnly
                           value={integrationToken}
-                          className="flex-1 font-mono text-xs border border-[#242423]/12 rounded-lg px-3 py-2 bg-[#fcfaf7] text-[#242423] select-all"
+                          className="border-[#242423]/12 flex-1 select-all rounded-lg border bg-[#fcfaf7] px-3 py-2 font-mono text-xs text-[#242423]"
                         />
                         <button
                           onClick={handleCopyToken}
-                          className="flex items-center gap-1.5 border border-[#242423]/12 rounded-lg px-3 py-2 text-xs font-semibold text-[#242423]/60 hover:bg-[#242423]/5 transition"
+                          className="border-[#242423]/12 flex items-center gap-1.5 rounded-lg border px-3 py-2 text-xs font-semibold text-[#242423]/60 transition hover:bg-[#242423]/5"
                         >
-                          {copied ? <Check size={13} className="text-green-600" /> : <Copy size={13} />}
+                          {copied ? (
+                            <Check size={13} className="text-green-600" />
+                          ) : (
+                            <Copy size={13} />
+                          )}
                           {copied ? "Tersalin" : "Salin"}
                         </button>
                       </div>
@@ -399,14 +486,18 @@ export default function SettingsPage() {
                     <button
                       onClick={handleGenerateToken}
                       disabled={generatingToken}
-                      className="flex items-center gap-1.5 border border-[#242423]/12 rounded-lg px-3 py-1.5 text-xs font-semibold text-[#242423]/60 hover:bg-[#242423]/5 disabled:opacity-50 transition"
+                      className="border-[#242423]/12 flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-semibold text-[#242423]/60 transition hover:bg-[#242423]/5 disabled:opacity-50"
                     >
-                      {generatingToken ? <Loader2 size={12} className="animate-spin" /> : <KeyRound size={12} />}
+                      {generatingToken ? (
+                        <Loader2 size={12} className="animate-spin" />
+                      ) : (
+                        <KeyRound size={12} />
+                      )}
                       Generate ulang
                     </button>
                     <button
                       onClick={handleRevokeToken}
-                      className="flex items-center gap-1.5 border border-red-200 rounded-lg px-3 py-1.5 text-xs font-semibold text-red-600 hover:bg-red-50 transition"
+                      className="flex items-center gap-1.5 rounded-lg border border-red-200 px-3 py-1.5 text-xs font-semibold text-red-600 transition hover:bg-red-50"
                     >
                       <Trash2 size={12} />
                       Revoke
@@ -417,15 +508,19 @@ export default function SettingsPage() {
                 <button
                   onClick={handleGenerateToken}
                   disabled={generatingToken}
-                  className="flex items-center gap-1.5 bg-[#242423] text-white font-bold px-4 py-1.5 rounded-lg text-sm hover:bg-[#242423]/85 disabled:opacity-60 transition"
+                  className="flex items-center gap-1.5 rounded-lg bg-[#242423] px-4 py-1.5 text-sm font-bold text-white transition hover:bg-[#242423]/85 disabled:opacity-60"
                 >
-                  {generatingToken ? <Loader2 size={13} className="animate-spin" /> : <KeyRound size={13} />}
+                  {generatingToken ? (
+                    <Loader2 size={13} className="animate-spin" />
+                  ) : (
+                    <KeyRound size={13} />
+                  )}
                   {generatingToken ? "Membuat token..." : "Generate Token"}
                 </button>
               )}
             </div>
 
-            <p className="text-xs text-[#242423]/40 text-center">
+            <p className="text-center text-xs text-[#242423]/40">
               Data ini dipakai untuk Organization schema (Google SEO) dan footer website.
             </p>
           </div>

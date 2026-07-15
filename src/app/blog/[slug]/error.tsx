@@ -10,25 +10,25 @@ export default function BlogDetailError({ error, reset }: { error: Error; reset:
   }, [error]);
 
   return (
-    <div className="min-h-[60vh] flex items-center justify-center px-4">
-      <div className="text-center max-w-md">
-        <div className="flex justify-center mb-4">
+    <div className="flex min-h-[60vh] items-center justify-center px-4">
+      <div className="max-w-md text-center">
+        <div className="mb-4 flex justify-center">
           <AlertCircle size={40} className="text-brand-dark/25" />
         </div>
-        <h2 className="text-xl font-bold text-brand-dark mb-2">Artikel Tidak Dapat Dimuat</h2>
-        <p className="text-brand-dark/55 text-sm mb-6 leading-relaxed">
+        <h2 className="mb-2 text-xl font-bold text-brand-dark">Artikel Tidak Dapat Dimuat</h2>
+        <p className="mb-6 text-sm leading-relaxed text-brand-dark/55">
           Terjadi kesalahan saat mengambil artikel. Coba lagi atau kembali ke daftar artikel.
         </p>
         <div className="flex items-center justify-center gap-3">
           <button
             onClick={reset}
-            className="bg-accent text-white font-bold px-6 py-2.5 rounded-lg text-sm hover:bg-accent/90 transition-colors"
+            className="rounded-lg bg-accent px-6 py-2.5 text-sm font-bold text-white transition-colors hover:bg-accent/90"
           >
             Coba Lagi
           </button>
           <Link
             href="/blog"
-            className="border border-brand-dark/15 text-brand-dark/70 font-bold px-6 py-2.5 rounded-lg text-sm hover:border-accent hover:text-accent transition-colors"
+            className="rounded-lg border border-brand-dark/15 px-6 py-2.5 text-sm font-bold text-brand-dark/70 transition-colors hover:border-accent hover:text-accent"
           >
             Kembali
           </Link>

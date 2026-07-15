@@ -1,31 +1,64 @@
 "use client";
 
-import {
-  useState, useRef, useEffect, useCallback, useMemo,
-} from "react";
+import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import {
-  DndContext, DragEndEvent, PointerSensor, useSensor, useSensors, closestCenter,
+  DndContext,
+  DragEndEvent,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  closestCenter,
 } from "@dnd-kit/core";
 import {
-  SortableContext, verticalListSortingStrategy, useSortable, arrayMove,
+  SortableContext,
+  verticalListSortingStrategy,
+  useSortable,
+  arrayMove,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import {
-  adminCreateArticle, adminUpdateArticle, uploadImage, fetchCategories,
+  adminCreateArticle,
+  adminUpdateArticle,
+  uploadImage,
+  fetchCategories,
   fetchAuthors,
-  type ArticlePayload, type AdminCategory, type Author,
+  type ArticlePayload,
+  type AdminCategory,
+  type Author,
 } from "@/lib/api/admin";
 import { generateCover } from "@/lib/api/imaginer";
 import { type ContentBlock } from "@/lib/data/blog";
 import Link from "next/link";
 import {
-  ChevronLeft, Save, Globe, GripVertical, Trash2,
-  Heading1, Heading2, AlignLeft, List, ListOrdered,
-  Quote, Zap, Image as ImageIcon, Minus, Plus, X,
-  Loader2, Upload, Columns, Eye, HelpCircle, ListChecks,
-  ChevronDown, ChevronRight, Settings, BarChart2, Sparkles,
+  ChevronLeft,
+  Save,
+  Globe,
+  GripVertical,
+  Trash2,
+  Heading1,
+  Heading2,
+  AlignLeft,
+  List,
+  ListOrdered,
+  Quote,
+  Zap,
+  Image as ImageIcon,
+  Minus,
+  Plus,
+  X,
+  Loader2,
+  Upload,
+  Columns,
+  Eye,
+  HelpCircle,
+  ListChecks,
+  ChevronDown,
+  ChevronRight,
+  Settings,
+  BarChart2,
+  Sparkles,
 } from "lucide-react";
 import { checkSEO } from "@/lib/seo/checker";
 
@@ -39,21 +72,33 @@ interface BlockItem {
 /* ── Helpers ──────────────────────────────────────────────────────────────── */
 
 let _idCounter = 0;
-function genId() { return `blk-${Date.now()}-${++_idCounter}`; }
+function genId() {
+  return `blk-${Date.now()}-${++_idCounter}`;
+}
 
 function slugify(text: string): string {
-  return text.toLowerCase().replace(/[^a-z0-9\s-]/g, "").trim().replace(/\s+/g, "-");
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, "")
+    .trim()
+    .replace(/\s+/g, "-");
 }
 
 function getBlockText(block: ContentBlock): string | null {
-  if (block.type === "h2" || block.type === "h3" || block.type === "p" || block.type === "blockquote") {
+  if (
+    block.type === "h2" ||
+    block.type === "h3" ||
+    block.type === "p" ||
+    block.type === "blockquote"
+  ) {
     return block.text;
   }
   return null;
 }
 
 function setBlockText(block: ContentBlock, text: string): ContentBlock {
-  if (block.type === "h2" || block.type === "h3") return { ...block, text, id: slugify(text) || block.id };
+  if (block.type === "h2" || block.type === "h3")
+    return { ...block, text, id: slugify(text) || block.id };
   if (block.type === "p" || block.type === "blockquote") return { ...block, text };
   return block;
 }
@@ -62,26 +107,55 @@ function newBlockFromType(type: ContentBlock["type"], params?: Record<string, un
   const id = genId();
   let block: ContentBlock;
   switch (type) {
-    case "h2": block = { type, id: `h-${Date.now()}`, text: "" }; break;
-    case "h3": block = { type, id: `h-${Date.now()}`, text: "" }; break;
-    case "p": block = { type, text: "" }; break;
-    case "blockquote": block = { type, text: "" }; break;
-    case "ul": block = { type, items: [""] }; break;
-    case "ol": block = { type, items: [""] }; break;
-    case "image": block = { type, src: "", alt: "", caption: "" }; break;
-    case "divider": block = { type: "divider" }; break;
-    case "cta-inline": block = { type: "cta-inline" }; break;
+    case "h2":
+      block = { type, id: `h-${Date.now()}`, text: "" };
+      break;
+    case "h3":
+      block = { type, id: `h-${Date.now()}`, text: "" };
+      break;
+    case "p":
+      block = { type, text: "" };
+      break;
+    case "blockquote":
+      block = { type, text: "" };
+      break;
+    case "ul":
+      block = { type, items: [""] };
+      break;
+    case "ol":
+      block = { type, items: [""] };
+      break;
+    case "image":
+      block = { type, src: "", alt: "", caption: "" };
+      break;
+    case "divider":
+      block = { type: "divider" };
+      break;
+    case "cta-inline":
+      block = { type: "cta-inline" };
+      break;
     case "columns": {
       const count = (params?.count as 2 | 3) ?? 2;
       block = { type: "columns", count, columns: Array.from({ length: count }, () => []) };
       break;
     }
-    case "faq": block = { type: "faq", items: [{ question: "", answer: "" }] }; break;
-    case "howto": block = { type: "howto", steps: [{ name: "", text: "" }] }; break;
-    case "key-takeaway": block = { type: "key-takeaway", items: [""] }; break;
-    case "source": block = { type: "source", items: [{ label: "", url: "" }] }; break;
-    case "expert-quote": block = { type: "expert-quote", quote: "", author_name: "", author_title: "" }; break;
-    default: block = { type: "p", text: "" };
+    case "faq":
+      block = { type: "faq", items: [{ question: "", answer: "" }] };
+      break;
+    case "howto":
+      block = { type: "howto", steps: [{ name: "", text: "" }] };
+      break;
+    case "key-takeaway":
+      block = { type: "key-takeaway", items: [""] };
+      break;
+    case "source":
+      block = { type: "source", items: [{ label: "", url: "" }] };
+      break;
+    case "expert-quote":
+      block = { type: "expert-quote", quote: "", author_name: "", author_title: "" };
+      break;
+    default:
+      block = { type: "p", text: "" };
   }
   return { id, block };
 }
@@ -91,7 +165,9 @@ function parseBlockItems(raw?: string): BlockItem[] {
   try {
     const blocks = JSON.parse(raw) as ContentBlock[];
     return blocks.map((block) => ({ id: genId(), block }));
-  } catch { return []; }
+  } catch {
+    return [];
+  }
 }
 
 function detectSlash(value: string): string | null {
@@ -111,48 +187,162 @@ interface SlashCommand {
 }
 
 const SLASH_COMMANDS: SlashCommand[] = [
-  { keywords: ["h2", "heading", "judul"], label: "Heading H2", desc: "/h2", blockType: "h2", icon: <Heading1 size={13} /> },
-  { keywords: ["h3", "subheading", "subjudul"], label: "Heading H3", desc: "/h3", blockType: "h3", icon: <Heading2 size={13} /> },
-  { keywords: ["p", "paragraf", "teks"], label: "Paragraf", desc: "/p", blockType: "p", icon: <AlignLeft size={13} /> },
-  { keywords: ["gambar", "image", "foto"], label: "Gambar", desc: "/gambar", blockType: "image", icon: <ImageIcon size={13} /> },
-  { keywords: ["quote", "kutipan", "blockquote"], label: "Kutipan", desc: "/quote", blockType: "blockquote", icon: <Quote size={13} /> },
-  { keywords: ["ul", "list", "bullet"], label: "Bullet List", desc: "/ul", blockType: "ul", icon: <List size={13} /> },
-  { keywords: ["ol", "numbered", "nomor"], label: "Numbered List", desc: "/ol", blockType: "ol", icon: <ListOrdered size={13} /> },
-  { keywords: ["cta", "banner", "tombol"], label: "CTA Banner", desc: "/cta", blockType: "cta-inline", icon: <Zap size={13} /> },
-  { keywords: ["divider", "garis", "hr", "pemisah"], label: "Garis Pemisah", desc: "/divider", blockType: "divider", icon: <Minus size={13} /> },
-  { keywords: ["2col", "dua", "kolom"], label: "2 Kolom", desc: "/2col", blockType: "columns", params: { count: 2 }, icon: <Columns size={13} /> },
-  { keywords: ["3col", "tiga", "three"], label: "3 Kolom", desc: "/3col", blockType: "columns", params: { count: 3 }, icon: <Columns size={13} /> },
-  { keywords: ["faq", "pertanyaan", "qanda"], label: "FAQ", desc: "/faq", blockType: "faq", icon: <HelpCircle size={13} /> },
-  { keywords: ["howto", "cara", "langkah", "tutorial"], label: "How To", desc: "/howto", blockType: "howto", icon: <ListChecks size={13} /> },
-  { keywords: ["takeaway", "pelajari", "ringkasan", "tldr"], label: "Key Takeaway", desc: "/takeaway", blockType: "key-takeaway", icon: <Zap size={13} /> },
-  { keywords: ["source", "referensi", "sumber", "daftar"], label: "Referensi / Sumber", desc: "/source", blockType: "source", icon: <List size={13} /> },
-  { keywords: ["expertquote", "expert", "ahli", "narasumber"], label: "Expert Quote", desc: "/expertquote", blockType: "expert-quote", icon: <Quote size={13} /> },
+  {
+    keywords: ["h2", "heading", "judul"],
+    label: "Heading H2",
+    desc: "/h2",
+    blockType: "h2",
+    icon: <Heading1 size={13} />,
+  },
+  {
+    keywords: ["h3", "subheading", "subjudul"],
+    label: "Heading H3",
+    desc: "/h3",
+    blockType: "h3",
+    icon: <Heading2 size={13} />,
+  },
+  {
+    keywords: ["p", "paragraf", "teks"],
+    label: "Paragraf",
+    desc: "/p",
+    blockType: "p",
+    icon: <AlignLeft size={13} />,
+  },
+  {
+    keywords: ["gambar", "image", "foto"],
+    label: "Gambar",
+    desc: "/gambar",
+    blockType: "image",
+    icon: <ImageIcon size={13} />,
+  },
+  {
+    keywords: ["quote", "kutipan", "blockquote"],
+    label: "Kutipan",
+    desc: "/quote",
+    blockType: "blockquote",
+    icon: <Quote size={13} />,
+  },
+  {
+    keywords: ["ul", "list", "bullet"],
+    label: "Bullet List",
+    desc: "/ul",
+    blockType: "ul",
+    icon: <List size={13} />,
+  },
+  {
+    keywords: ["ol", "numbered", "nomor"],
+    label: "Numbered List",
+    desc: "/ol",
+    blockType: "ol",
+    icon: <ListOrdered size={13} />,
+  },
+  {
+    keywords: ["cta", "banner", "tombol"],
+    label: "CTA Banner",
+    desc: "/cta",
+    blockType: "cta-inline",
+    icon: <Zap size={13} />,
+  },
+  {
+    keywords: ["divider", "garis", "hr", "pemisah"],
+    label: "Garis Pemisah",
+    desc: "/divider",
+    blockType: "divider",
+    icon: <Minus size={13} />,
+  },
+  {
+    keywords: ["2col", "dua", "kolom"],
+    label: "2 Kolom",
+    desc: "/2col",
+    blockType: "columns",
+    params: { count: 2 },
+    icon: <Columns size={13} />,
+  },
+  {
+    keywords: ["3col", "tiga", "three"],
+    label: "3 Kolom",
+    desc: "/3col",
+    blockType: "columns",
+    params: { count: 3 },
+    icon: <Columns size={13} />,
+  },
+  {
+    keywords: ["faq", "pertanyaan", "qanda"],
+    label: "FAQ",
+    desc: "/faq",
+    blockType: "faq",
+    icon: <HelpCircle size={13} />,
+  },
+  {
+    keywords: ["howto", "cara", "langkah", "tutorial"],
+    label: "How To",
+    desc: "/howto",
+    blockType: "howto",
+    icon: <ListChecks size={13} />,
+  },
+  {
+    keywords: ["takeaway", "pelajari", "ringkasan", "tldr"],
+    label: "Key Takeaway",
+    desc: "/takeaway",
+    blockType: "key-takeaway",
+    icon: <Zap size={13} />,
+  },
+  {
+    keywords: ["source", "referensi", "sumber", "daftar"],
+    label: "Referensi / Sumber",
+    desc: "/source",
+    blockType: "source",
+    icon: <List size={13} />,
+  },
+  {
+    keywords: ["expertquote", "expert", "ahli", "narasumber"],
+    label: "Expert Quote",
+    desc: "/expertquote",
+    blockType: "expert-quote",
+    icon: <Quote size={13} />,
+  },
 ];
 
 /* ── Slash menu ───────────────────────────────────────────────────────────── */
 
 function SlashMenu({
-  query, onSelect, onClose,
+  query,
+  onSelect,
+  onClose,
 }: {
   query: string;
   onSelect: (cmd: SlashCommand) => void;
   onClose: () => void;
 }) {
   const q = query.toLowerCase();
-  const filtered = SLASH_COMMANDS.filter((c) =>
-    q === "" || c.keywords.some((k) => k.startsWith(q))
+  const filtered = SLASH_COMMANDS.filter(
+    (c) => q === "" || c.keywords.some((k) => k.startsWith(q))
   );
   const [active, setActive] = useState(0);
 
-  useEffect(() => { setActive(0); }, [query]);
+  useEffect(() => {
+    setActive(0);
+  }, [query]);
 
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
       if (!filtered.length) return;
-      if (e.key === "ArrowDown") { e.preventDefault(); setActive((a) => Math.min(a + 1, filtered.length - 1)); }
-      if (e.key === "ArrowUp") { e.preventDefault(); setActive((a) => Math.max(a - 1, 0)); }
-      if (e.key === "Enter" && filtered[active]) { e.preventDefault(); onSelect(filtered[active]); }
-      if (e.key === "Escape") { e.preventDefault(); onClose(); }
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        setActive((a) => Math.min(a + 1, filtered.length - 1));
+      }
+      if (e.key === "ArrowUp") {
+        e.preventDefault();
+        setActive((a) => Math.max(a - 1, 0));
+      }
+      if (e.key === "Enter" && filtered[active]) {
+        e.preventDefault();
+        onSelect(filtered[active]);
+      }
+      if (e.key === "Escape") {
+        e.preventDefault();
+        onClose();
+      }
     }
     window.addEventListener("keydown", onKey, true);
     return () => window.removeEventListener("keydown", onKey, true);
@@ -161,18 +351,23 @@ function SlashMenu({
   if (filtered.length === 0) return null;
 
   return (
-    <div className="absolute left-0 top-full mt-1 z-50 bg-white border border-[#242423]/12 rounded-xl shadow-xl p-1 min-w-[220px]">
+    <div className="border-[#242423]/12 absolute left-0 top-full z-50 mt-1 min-w-[220px] rounded-xl border bg-white p-1 shadow-xl">
       {filtered.map((cmd, i) => (
         <button
           key={`${cmd.blockType}-${cmd.desc}`}
-          onMouseDown={(e) => { e.preventDefault(); onSelect(cmd); }}
-          className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-left ${
-            i === active ? "bg-[#f5a700]/10 text-[#242423]" : "text-[#242423]/60 hover:bg-[#242423]/5"
+          onMouseDown={(e) => {
+            e.preventDefault();
+            onSelect(cmd);
+          }}
+          className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-sm transition-colors ${
+            i === active
+              ? "bg-[#f5a700]/10 text-[#242423]"
+              : "text-[#242423]/60 hover:bg-[#242423]/5"
           }`}
         >
           <span className="text-[#242423]/40">{cmd.icon}</span>
           <span className="font-medium">{cmd.label}</span>
-          <span className="ml-auto text-xs text-[#242423]/30 font-mono">{cmd.desc}</span>
+          <span className="ml-auto font-mono text-xs text-[#242423]/30">{cmd.desc}</span>
         </button>
       ))}
     </div>
@@ -196,7 +391,8 @@ function makeTextareaRef(id: string, registerRef: NotionBlockCallbacks["register
 /* ── Image block editor ───────────────────────────────────────────────────── */
 
 function ImageBlockEditor({
-  block, onChange,
+  block,
+  onChange,
 }: {
   block: Extract<ContentBlock, { type: "image" }>;
   onChange: (b: ContentBlock) => void;
@@ -220,10 +416,16 @@ function ImageBlockEditor({
     <div className="space-y-2">
       {block.src ? (
         <div className="relative">
-          <Image src={block.src} alt={block.alt} width={800} height={450} className="w-full rounded-lg object-cover max-h-72 border border-[#242423]/8" />
+          <Image
+            src={block.src}
+            alt={block.alt}
+            width={800}
+            height={450}
+            className="border-[#242423]/8 max-h-72 w-full rounded-lg border object-cover"
+          />
           <button
             onClick={() => onChange({ ...block, src: "" })}
-            className="absolute top-2 right-2 w-7 h-7 bg-white border border-[#242423]/12 rounded-full flex items-center justify-center hover:bg-red-50 hover:border-red-200 transition"
+            className="border-[#242423]/12 absolute right-2 top-2 flex h-7 w-7 items-center justify-center rounded-full border bg-white transition hover:border-red-200 hover:bg-red-50"
           >
             <X size={12} className="text-[#242423]/50" />
           </button>
@@ -232,10 +434,12 @@ function ImageBlockEditor({
         <button
           onClick={() => fileRef.current?.click()}
           disabled={uploading}
-          className="w-full border-2 border-dashed border-[#242423]/15 rounded-xl py-8 flex flex-col items-center gap-2 text-[#242423]/40 hover:border-[#f5a700]/50 hover:text-[#f5a700] transition-colors"
+          className="flex w-full flex-col items-center gap-2 rounded-xl border-2 border-dashed border-[#242423]/15 py-8 text-[#242423]/40 transition-colors hover:border-[#f5a700]/50 hover:text-[#f5a700]"
         >
           {uploading ? <Loader2 size={20} className="animate-spin" /> : <Upload size={20} />}
-          <span className="text-xs font-medium">{uploading ? "Mengupload..." : "Klik untuk upload gambar"}</span>
+          <span className="text-xs font-medium">
+            {uploading ? "Mengupload..." : "Klik untuk upload gambar"}
+          </span>
           <span className="text-xs opacity-60">jpeg, png, webp — maks 5MB</span>
         </button>
       )}
@@ -244,16 +448,20 @@ function ImageBlockEditor({
         type="file"
         accept="image/jpeg,image/png,image/webp"
         className="hidden"
-        onChange={(e) => { const f = e.target.files?.[0]; if (f) handleFile(f); e.target.value = ""; }}
+        onChange={(e) => {
+          const f = e.target.files?.[0];
+          if (f) handleFile(f);
+          e.target.value = "";
+        }}
       />
       <input
-        className="w-full border border-[#242423]/12 rounded-lg px-3 py-1.5 text-xs text-[#242423] bg-white focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30 focus:border-[#f5a700]"
+        className="border-[#242423]/12 w-full rounded-lg border bg-white px-3 py-1.5 text-xs text-[#242423] focus:border-[#f5a700] focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30"
         placeholder="Alt text (SEO & aksesibilitas)..."
         value={block.alt}
         onChange={(e) => onChange({ ...block, alt: e.target.value })}
       />
       <input
-        className="w-full border border-[#242423]/12 rounded-lg px-3 py-1.5 text-xs text-[#242423] bg-white focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30 focus:border-[#f5a700]"
+        className="border-[#242423]/12 w-full rounded-lg border bg-white px-3 py-1.5 text-xs text-[#242423] focus:border-[#f5a700] focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30"
         placeholder="Caption (opsional)..."
         value={block.caption ?? ""}
         onChange={(e) => onChange({ ...block, caption: e.target.value })}
@@ -265,13 +473,14 @@ function ImageBlockEditor({
 /* ── FAQ block editor ─────────────────────────────────────────────────────── */
 
 function FaqBlockEditor({
-  block, onChange,
+  block,
+  onChange,
 }: {
   block: Extract<ContentBlock, { type: "faq" }>;
   onChange: (b: ContentBlock) => void;
 }) {
   function updateItem(i: number, key: "question" | "answer", val: string) {
-    const items = block.items.map((item, j) => j === i ? { ...item, [key]: val } : item);
+    const items = block.items.map((item, j) => (j === i ? { ...item, [key]: val } : item));
     onChange({ ...block, items });
   }
   function addItem() {
@@ -286,32 +495,41 @@ function FaqBlockEditor({
     <div className="space-y-3">
       <p className="text-xs font-bold uppercase tracking-wider text-[#242423]/35">FAQ Block</p>
       {block.items.map((item, i) => (
-        <div key={i} className="border border-[#242423]/10 rounded-xl p-3 space-y-2 bg-[#242423]/1">
+        <div key={i} className="bg-[#242423]/1 space-y-2 rounded-xl border border-[#242423]/10 p-3">
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold text-[#242423]/40">Q{i + 1}</span>
             {block.items.length > 1 && (
-              <button onClick={() => removeItem(i)} className="text-[#242423]/30 hover:text-red-500 transition">
+              <button
+                onClick={() => removeItem(i)}
+                className="text-[#242423]/30 transition hover:text-red-500"
+              >
                 <X size={11} />
               </button>
             )}
           </div>
           <input
-            className="w-full outline-none text-sm font-semibold text-[#242423] placeholder:text-[#242423]/25 bg-transparent border-b border-[#242423]/10 pb-1"
+            className="w-full border-b border-[#242423]/10 bg-transparent pb-1 text-sm font-semibold text-[#242423] outline-none placeholder:text-[#242423]/25"
             placeholder="Pertanyaan..."
             value={item.question}
             onChange={(e) => updateItem(i, "question", e.target.value)}
           />
           <textarea
-            className="w-full outline-none text-sm text-[#242423]/70 placeholder:text-[#242423]/25 bg-transparent resize-none"
+            className="w-full resize-none bg-transparent text-sm text-[#242423]/70 outline-none placeholder:text-[#242423]/25"
             placeholder="Jawaban..."
             rows={2}
             value={item.answer}
-            onChange={(e) => { autoResize(e.currentTarget); updateItem(i, "answer", e.target.value); }}
+            onChange={(e) => {
+              autoResize(e.currentTarget);
+              updateItem(i, "answer", e.target.value);
+            }}
           />
         </div>
       ))}
       <button
-        onMouseDown={(e) => { e.preventDefault(); addItem(); }}
+        onMouseDown={(e) => {
+          e.preventDefault();
+          addItem();
+        }}
         className="flex items-center gap-1.5 text-xs font-semibold text-[#f5a700] hover:underline"
       >
         <Plus size={11} /> Tambah pertanyaan
@@ -323,7 +541,8 @@ function FaqBlockEditor({
 /* ── HowTo block editor ───────────────────────────────────────────────────── */
 
 function HowToBlockEditor({
-  block, onChange,
+  block,
+  onChange,
 }: {
   block: Extract<ContentBlock, { type: "howto" }>;
   onChange: (b: ContentBlock) => void;
@@ -332,7 +551,7 @@ function HowToBlockEditor({
   const fileRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   function updateStep(i: number, key: "name" | "text" | "image", val: string) {
-    const steps = block.steps.map((s, j) => j === i ? { ...s, [key]: val } : s);
+    const steps = block.steps.map((s, j) => (j === i ? { ...s, [key]: val } : s));
     onChange({ ...block, steps });
   }
   function addStep() {
@@ -358,32 +577,49 @@ function HowToBlockEditor({
     <div className="space-y-3">
       <p className="text-xs font-bold uppercase tracking-wider text-[#242423]/35">How To Block</p>
       {block.steps.map((step, i) => (
-        <div key={i} className="border border-[#242423]/10 rounded-xl p-3 space-y-2 bg-[#242423]/1">
+        <div key={i} className="bg-[#242423]/1 space-y-2 rounded-xl border border-[#242423]/10 p-3">
           <div className="flex items-center justify-between">
-            <span className="w-5 h-5 rounded-full bg-[#f5a700] flex items-center justify-center text-white text-[10px] font-bold flex-shrink-0">{i + 1}</span>
+            <span className="flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-[#f5a700] text-[10px] font-bold text-white">
+              {i + 1}
+            </span>
             {block.steps.length > 1 && (
-              <button onClick={() => removeStep(i)} className="text-[#242423]/30 hover:text-red-500 transition">
+              <button
+                onClick={() => removeStep(i)}
+                className="text-[#242423]/30 transition hover:text-red-500"
+              >
                 <X size={11} />
               </button>
             )}
           </div>
           <input
-            className="w-full outline-none text-sm font-semibold text-[#242423] placeholder:text-[#242423]/25 bg-transparent border-b border-[#242423]/10 pb-1"
+            className="w-full border-b border-[#242423]/10 bg-transparent pb-1 text-sm font-semibold text-[#242423] outline-none placeholder:text-[#242423]/25"
             placeholder="Nama langkah..."
             value={step.name}
             onChange={(e) => updateStep(i, "name", e.target.value)}
           />
           <textarea
-            className="w-full outline-none text-sm text-[#242423]/70 placeholder:text-[#242423]/25 bg-transparent resize-none"
+            className="w-full resize-none bg-transparent text-sm text-[#242423]/70 outline-none placeholder:text-[#242423]/25"
             placeholder="Penjelasan langkah..."
             rows={2}
             value={step.text}
-            onChange={(e) => { autoResize(e.currentTarget); updateStep(i, "text", e.target.value); }}
+            onChange={(e) => {
+              autoResize(e.currentTarget);
+              updateStep(i, "text", e.target.value);
+            }}
           />
           {step.image ? (
             <div className="relative">
-              <Image src={step.image} alt={step.name} width={600} height={128} className="w-full rounded-lg object-cover max-h-32 border border-[#242423]/8" />
-              <button onClick={() => updateStep(i, "image", "")} className="absolute top-1 right-1 w-6 h-6 bg-white border border-[#242423]/12 rounded-full flex items-center justify-center hover:bg-red-50 transition">
+              <Image
+                src={step.image}
+                alt={step.name}
+                width={600}
+                height={128}
+                className="border-[#242423]/8 max-h-32 w-full rounded-lg border object-cover"
+              />
+              <button
+                onClick={() => updateStep(i, "image", "")}
+                className="border-[#242423]/12 absolute right-1 top-1 flex h-6 w-6 items-center justify-center rounded-full border bg-white transition hover:bg-red-50"
+              >
                 <X size={10} className="text-[#242423]/50" />
               </button>
             </div>
@@ -391,23 +627,36 @@ function HowToBlockEditor({
             <button
               onClick={() => fileRefs.current[i]?.click()}
               disabled={uploading === i}
-              className="w-full border border-dashed border-[#242423]/12 rounded-lg py-2 text-xs text-[#242423]/35 hover:border-[#f5a700]/40 hover:text-[#f5a700] transition flex items-center justify-center gap-1.5"
+              className="border-[#242423]/12 flex w-full items-center justify-center gap-1.5 rounded-lg border border-dashed py-2 text-xs text-[#242423]/35 transition hover:border-[#f5a700]/40 hover:text-[#f5a700]"
             >
-              {uploading === i ? <Loader2 size={11} className="animate-spin" /> : <Upload size={11} />}
+              {uploading === i ? (
+                <Loader2 size={11} className="animate-spin" />
+              ) : (
+                <Upload size={11} />
+              )}
               {uploading === i ? "Uploading..." : "Gambar opsional"}
             </button>
           )}
           <input
-            ref={(el) => { fileRefs.current[i] = el; }}
+            ref={(el) => {
+              fileRefs.current[i] = el;
+            }}
             type="file"
             accept="image/jpeg,image/png,image/webp"
             className="hidden"
-            onChange={(e) => { const f = e.target.files?.[0]; if (f) handleFile(i, f); e.target.value = ""; }}
+            onChange={(e) => {
+              const f = e.target.files?.[0];
+              if (f) handleFile(i, f);
+              e.target.value = "";
+            }}
           />
         </div>
       ))}
       <button
-        onMouseDown={(e) => { e.preventDefault(); addStep(); }}
+        onMouseDown={(e) => {
+          e.preventDefault();
+          addStep();
+        }}
         className="flex items-center gap-1.5 text-xs font-semibold text-[#f5a700] hover:underline"
       >
         <Plus size={11} /> Tambah langkah
@@ -429,27 +678,34 @@ interface NotionBlockCallbacks {
   level: number;
 }
 
-function NotionBlock({
-  item, callbacks,
-}: {
-  item: BlockItem;
-  callbacks: NotionBlockCallbacks;
-}) {
-  const { onUpdate, onDelete, onInsertAfter, onMergeWithPrev, onFocusPrev, onFocusNext, registerRef, level } = callbacks;
+function NotionBlock({ item, callbacks }: { item: BlockItem; callbacks: NotionBlockCallbacks }) {
+  const {
+    onUpdate,
+    onDelete,
+    onInsertAfter,
+    onMergeWithPrev,
+    onFocusPrev,
+    onFocusNext,
+    registerRef,
+    level,
+  } = callbacks;
   const [slashQuery, setSlashQuery] = useState<string | null>(null);
 
   const textValue = getBlockText(item.block) ?? "";
 
-  const handleSlashSelect = useCallback((cmd: SlashCommand) => {
-    setSlashQuery(null);
-    // Remove /query from current block text
-    const currentText = getBlockText(item.block) ?? "";
-    const cleanText = currentText.replace(/\/[a-z0-9]*$/, "");
-    onUpdate(item.id, setBlockText(item.block, cleanText));
-    // Insert new block below
-    const newBlock = newBlockFromType(cmd.blockType, cmd.params);
-    onInsertAfter(item.id, newBlock);
-  }, [item, onUpdate, onInsertAfter]);
+  const handleSlashSelect = useCallback(
+    (cmd: SlashCommand) => {
+      setSlashQuery(null);
+      // Remove /query from current block text
+      const currentText = getBlockText(item.block) ?? "";
+      const cleanText = currentText.replace(/\/[a-z0-9]*$/, "");
+      onUpdate(item.id, setBlockText(item.block, cleanText));
+      // Insert new block below
+      const newBlock = newBlockFromType(cmd.blockType, cmd.params);
+      onInsertAfter(item.id, newBlock);
+    },
+    [item, onUpdate, onInsertAfter]
+  );
 
   const handleSlashClose = useCallback(() => {
     setSlashQuery(null);
@@ -542,9 +798,10 @@ function NotionBlock({
     }
   }
 
-  const displayValue = slashQuery !== null
-    ? (getBlockText(item.block) ?? "").replace(/\/[a-z0-9]*$/, "") + "/" + slashQuery
-    : textValue;
+  const displayValue =
+    slashQuery !== null
+      ? (getBlockText(item.block) ?? "").replace(/\/[a-z0-9]*$/, "") + "/" + slashQuery
+      : textValue;
 
   /* Render by block type */
 
@@ -553,14 +810,16 @@ function NotionBlock({
       <div className="relative">
         <input
           ref={(el) => registerRef(item.id, el)}
-          className="w-full outline-none text-2xl font-bold text-[#242423] placeholder:text-[#242423]/20 bg-transparent py-0.5"
+          className="w-full bg-transparent py-0.5 text-2xl font-bold text-[#242423] outline-none placeholder:text-[#242423]/20"
           placeholder="Heading H2..."
           value={displayValue}
           onChange={(e) => handleTextChange(e.target.value)}
           onKeyDown={handleInputKeyDown}
         />
         {item.block.text && (
-          <p className="text-xs text-[#242423]/25 mt-0.5">ID: <code className="font-mono">{item.block.id}</code></p>
+          <p className="mt-0.5 text-xs text-[#242423]/25">
+            ID: <code className="font-mono">{item.block.id}</code>
+          </p>
         )}
         {slashQuery !== null && (
           <SlashMenu query={slashQuery} onSelect={handleSlashSelect} onClose={handleSlashClose} />
@@ -574,14 +833,16 @@ function NotionBlock({
       <div className="relative">
         <input
           ref={(el) => registerRef(item.id, el)}
-          className="w-full outline-none text-lg font-bold text-[#242423] placeholder:text-[#242423]/20 bg-transparent py-0.5"
+          className="w-full bg-transparent py-0.5 text-lg font-bold text-[#242423] outline-none placeholder:text-[#242423]/20"
           placeholder="Heading H3..."
           value={displayValue}
           onChange={(e) => handleTextChange(e.target.value)}
           onKeyDown={handleInputKeyDown}
         />
         {item.block.text && (
-          <p className="text-xs text-[#242423]/25 mt-0.5">ID: <code className="font-mono">{item.block.id}</code></p>
+          <p className="mt-0.5 text-xs text-[#242423]/25">
+            ID: <code className="font-mono">{item.block.id}</code>
+          </p>
         )}
         {slashQuery !== null && (
           <SlashMenu query={slashQuery} onSelect={handleSlashSelect} onClose={handleSlashClose} />
@@ -595,11 +856,14 @@ function NotionBlock({
       <div className="relative">
         <textarea
           ref={makeTextareaRef(item.id, registerRef)}
-          className="w-full outline-none text-sm text-[#242423] placeholder:text-[#242423]/25 bg-transparent resize-none leading-relaxed"
+          className="w-full resize-none bg-transparent text-sm leading-relaxed text-[#242423] outline-none placeholder:text-[#242423]/25"
           placeholder={'Ketik teks... atau ketik "/" untuk insert blok baru'}
           rows={1}
           value={displayValue}
-          onChange={(e) => { autoResize(e.currentTarget); handleTextChange(e.target.value); }}
+          onChange={(e) => {
+            autoResize(e.currentTarget);
+            handleTextChange(e.target.value);
+          }}
           onKeyDown={handleTextareaKeyDown}
         />
         {slashQuery !== null && (
@@ -614,11 +878,14 @@ function NotionBlock({
       <div className="relative border-l-4 border-[#f5a700]/50 pl-3">
         <textarea
           ref={makeTextareaRef(item.id, registerRef)}
-          className="w-full outline-none text-sm text-[#242423]/70 italic placeholder:text-[#242423]/25 bg-transparent resize-none leading-relaxed"
+          className="w-full resize-none bg-transparent text-sm italic leading-relaxed text-[#242423]/70 outline-none placeholder:text-[#242423]/25"
           placeholder="Teks kutipan..."
           rows={1}
           value={displayValue}
-          onChange={(e) => { autoResize(e.currentTarget); handleTextChange(e.target.value); }}
+          onChange={(e) => {
+            autoResize(e.currentTarget);
+            handleTextChange(e.target.value);
+          }}
           onKeyDown={handleTextareaKeyDown}
         />
         {slashQuery !== null && (
@@ -634,11 +901,11 @@ function NotionBlock({
       <div className="space-y-1">
         {listBlock.items.map((itm, i) => (
           <div key={i} className="flex items-center gap-2">
-            <span className="text-xs text-[#242423]/40 w-5 text-right flex-shrink-0 mt-0.5">
+            <span className="mt-0.5 w-5 flex-shrink-0 text-right text-xs text-[#242423]/40">
               {listBlock.type === "ul" ? "•" : `${i + 1}.`}
             </span>
             <input
-              className="flex-1 outline-none text-sm text-[#242423] placeholder:text-[#242423]/25 bg-transparent"
+              className="flex-1 bg-transparent text-sm text-[#242423] outline-none placeholder:text-[#242423]/25"
               placeholder="Item..."
               value={itm}
               onChange={(e) => {
@@ -654,7 +921,9 @@ function NotionBlock({
                   onUpdate(item.id, { ...listBlock, items });
                   // focus next item — needs a timeout
                   setTimeout(() => {
-                    const inputs = document.querySelectorAll<HTMLInputElement>(`[data-list-item="${item.id}"]`);
+                    const inputs = document.querySelectorAll<HTMLInputElement>(
+                      `[data-list-item="${item.id}"]`
+                    );
                     inputs[i + 1]?.focus();
                   }, 0);
                 }
@@ -665,7 +934,6 @@ function NotionBlock({
                   } else {
                     const items = listBlock.items.filter((_, j) => j !== i);
                     onUpdate(item.id, { ...listBlock, items });
-
                   }
                 }
               }}
@@ -678,7 +946,7 @@ function NotionBlock({
             e.preventDefault();
             onUpdate(item.id, { ...listBlock, items: [...listBlock.items, ""] });
           }}
-          className="ml-7 text-xs text-[#f5a700] font-semibold hover:underline flex items-center gap-1"
+          className="ml-7 flex items-center gap-1 text-xs font-semibold text-[#f5a700] hover:underline"
         >
           <Plus size={10} /> Tambah item
         </button>
@@ -692,7 +960,7 @@ function NotionBlock({
 
   if (item.block.type === "cta-inline") {
     return (
-      <div className="bg-[#f5a700]/8 border border-[#f5a700]/25 rounded-lg px-4 py-3 text-xs text-[#242423]/55 font-medium">
+      <div className="bg-[#f5a700]/8 rounded-lg border border-[#f5a700]/25 px-4 py-3 text-xs font-medium text-[#242423]/55">
         CTA Banner — otomatis tampil saat artikel dibuka.
       </div>
     );
@@ -701,9 +969,9 @@ function NotionBlock({
   if (item.block.type === "divider") {
     return (
       <div className="flex items-center gap-3 py-2">
-        <div className="flex-1 h-px bg-[#242423]/15" />
+        <div className="h-px flex-1 bg-[#242423]/15" />
         <span className="text-xs text-[#242423]/30">divider</span>
-        <div className="flex-1 h-px bg-[#242423]/15" />
+        <div className="h-px flex-1 bg-[#242423]/15" />
       </div>
     );
   }
@@ -711,11 +979,7 @@ function NotionBlock({
   if (item.block.type === "columns") {
     const colBlock = item.block;
     return (
-      <ColumnsBlockEditor
-        block={colBlock}
-        onChange={(b) => onUpdate(item.id, b)}
-        level={level}
-      />
+      <ColumnsBlockEditor block={colBlock} onChange={(b) => onUpdate(item.id, b)} level={level} />
     );
   }
 
@@ -730,13 +994,15 @@ function NotionBlock({
   if (item.block.type === "key-takeaway") {
     const ktBlock = item.block;
     return (
-      <div className="bg-[#f5a700]/8 border border-[#f5a700]/30 rounded-xl p-3 space-y-2">
-        <p className="text-xs font-bold uppercase tracking-wider text-[#f5a700]">Yang akan kamu pelajari</p>
+      <div className="bg-[#f5a700]/8 space-y-2 rounded-xl border border-[#f5a700]/30 p-3">
+        <p className="text-xs font-bold uppercase tracking-wider text-[#f5a700]">
+          Yang akan kamu pelajari
+        </p>
         {ktBlock.items.map((itm, i) => (
           <div key={i} className="flex items-center gap-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#f5a700] flex-shrink-0" />
+            <span className="h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[#f5a700]" />
             <input
-              className="flex-1 outline-none text-sm text-[#242423] placeholder:text-[#242423]/25 bg-transparent"
+              className="flex-1 bg-transparent text-sm text-[#242423] outline-none placeholder:text-[#242423]/25"
               placeholder="Poin pembelajaran..."
               value={itm}
               onChange={(e) => {
@@ -756,21 +1022,31 @@ function NotionBlock({
                   if (ktBlock.items.length === 1) {
                     onDelete(item.id);
                   } else {
-                    onUpdate(item.id, { ...ktBlock, items: ktBlock.items.filter((_, j) => j !== i) });
+                    onUpdate(item.id, {
+                      ...ktBlock,
+                      items: ktBlock.items.filter((_, j) => j !== i),
+                    });
                   }
                 }
               }}
             />
             {ktBlock.items.length > 1 && (
-              <button onClick={() => onUpdate(item.id, { ...ktBlock, items: ktBlock.items.filter((_, j) => j !== i) })}
-                className="text-[#242423]/25 hover:text-red-500 transition flex-shrink-0">
+              <button
+                onClick={() =>
+                  onUpdate(item.id, { ...ktBlock, items: ktBlock.items.filter((_, j) => j !== i) })
+                }
+                className="flex-shrink-0 text-[#242423]/25 transition hover:text-red-500"
+              >
                 <X size={11} />
               </button>
             )}
           </div>
         ))}
         <button
-          onMouseDown={(e) => { e.preventDefault(); onUpdate(item.id, { ...ktBlock, items: [...ktBlock.items, ""] }); }}
+          onMouseDown={(e) => {
+            e.preventDefault();
+            onUpdate(item.id, { ...ktBlock, items: [...ktBlock.items, ""] });
+          }}
           className="flex items-center gap-1.5 text-xs font-semibold text-[#f5a700] hover:underline"
         >
           <Plus size={11} /> Tambah poin
@@ -782,41 +1058,59 @@ function NotionBlock({
   if (item.block.type === "source") {
     const srcBlock = item.block;
     return (
-      <div className="border border-[#242423]/10 rounded-xl p-3 space-y-2">
-        <p className="text-xs font-bold uppercase tracking-wider text-[#242423]/35">Referensi / Sumber</p>
+      <div className="space-y-2 rounded-xl border border-[#242423]/10 p-3">
+        <p className="text-xs font-bold uppercase tracking-wider text-[#242423]/35">
+          Referensi / Sumber
+        </p>
         {srcBlock.items.map((src, i) => (
           <div key={i} className="flex items-start gap-2">
-            <span className="text-xs text-[#242423]/35 font-mono mt-1 flex-shrink-0">[{i + 1}]</span>
+            <span className="mt-1 flex-shrink-0 font-mono text-xs text-[#242423]/35">
+              [{i + 1}]
+            </span>
             <div className="flex-1 space-y-1">
               <input
-                className="w-full outline-none text-xs text-[#242423] placeholder:text-[#242423]/25 bg-transparent border-b border-[#242423]/10 pb-0.5"
+                className="w-full border-b border-[#242423]/10 bg-transparent pb-0.5 text-xs text-[#242423] outline-none placeholder:text-[#242423]/25"
                 placeholder="Judul / nama sumber..."
                 value={src.label}
                 onChange={(e) => {
-                  const items = srcBlock.items.map((s, j) => j === i ? { ...s, label: e.target.value } : s);
+                  const items = srcBlock.items.map((s, j) =>
+                    j === i ? { ...s, label: e.target.value } : s
+                  );
                   onUpdate(item.id, { ...srcBlock, items });
                 }}
               />
               <input
-                className="w-full outline-none text-xs text-[#242423]/60 placeholder:text-[#242423]/20 bg-transparent font-mono"
+                className="w-full bg-transparent font-mono text-xs text-[#242423]/60 outline-none placeholder:text-[#242423]/20"
                 placeholder="https://..."
                 value={src.url}
                 onChange={(e) => {
-                  const items = srcBlock.items.map((s, j) => j === i ? { ...s, url: e.target.value } : s);
+                  const items = srcBlock.items.map((s, j) =>
+                    j === i ? { ...s, url: e.target.value } : s
+                  );
                   onUpdate(item.id, { ...srcBlock, items });
                 }}
               />
             </div>
             {srcBlock.items.length > 1 && (
-              <button onClick={() => onUpdate(item.id, { ...srcBlock, items: srcBlock.items.filter((_, j) => j !== i) })}
-                className="text-[#242423]/25 hover:text-red-500 transition flex-shrink-0 mt-1">
+              <button
+                onClick={() =>
+                  onUpdate(item.id, {
+                    ...srcBlock,
+                    items: srcBlock.items.filter((_, j) => j !== i),
+                  })
+                }
+                className="mt-1 flex-shrink-0 text-[#242423]/25 transition hover:text-red-500"
+              >
                 <X size={11} />
               </button>
             )}
           </div>
         ))}
         <button
-          onMouseDown={(e) => { e.preventDefault(); onUpdate(item.id, { ...srcBlock, items: [...srcBlock.items, { label: "", url: "" }] }); }}
+          onMouseDown={(e) => {
+            e.preventDefault();
+            onUpdate(item.id, { ...srcBlock, items: [...srcBlock.items, { label: "", url: "" }] });
+          }}
           className="flex items-center gap-1.5 text-xs font-semibold text-[#242423]/40 hover:text-[#242423] hover:underline"
         >
           <Plus size={11} /> Tambah sumber
@@ -828,33 +1122,38 @@ function NotionBlock({
   if (item.block.type === "expert-quote") {
     const eqBlock = item.block;
     return (
-      <div className="border-l-4 border-[#242423]/20 pl-4 space-y-2 py-1">
+      <div className="space-y-2 border-l-4 border-[#242423]/20 py-1 pl-4">
         <p className="text-xs font-bold uppercase tracking-wider text-[#242423]/35">Expert Quote</p>
         <textarea
-          className="w-full outline-none text-sm text-[#242423]/75 italic placeholder:text-[#242423]/20 bg-transparent resize-none leading-relaxed"
+          className="w-full resize-none bg-transparent text-sm italic leading-relaxed text-[#242423]/75 outline-none placeholder:text-[#242423]/20"
           placeholder="Kutipan dari ahli / narasumber..."
           rows={2}
           value={eqBlock.quote}
-          onChange={(e) => { autoResize(e.currentTarget); onUpdate(item.id, { ...eqBlock, quote: e.target.value }); }}
+          onChange={(e) => {
+            autoResize(e.currentTarget);
+            onUpdate(item.id, { ...eqBlock, quote: e.target.value });
+          }}
         />
         <div className="flex gap-2">
           <input
-            className="flex-1 outline-none text-xs font-semibold text-[#242423] placeholder:text-[#242423]/25 bg-transparent border-b border-[#242423]/10 pb-0.5"
+            className="flex-1 border-b border-[#242423]/10 bg-transparent pb-0.5 text-xs font-semibold text-[#242423] outline-none placeholder:text-[#242423]/25"
             placeholder="Nama narasumber"
             value={eqBlock.author_name}
             onChange={(e) => onUpdate(item.id, { ...eqBlock, author_name: e.target.value })}
           />
           <input
-            className="flex-1 outline-none text-xs text-[#242423]/55 placeholder:text-[#242423]/20 bg-transparent border-b border-[#242423]/10 pb-0.5"
+            className="flex-1 border-b border-[#242423]/10 bg-transparent pb-0.5 text-xs text-[#242423]/55 outline-none placeholder:text-[#242423]/20"
             placeholder="Jabatan"
             value={eqBlock.author_title}
             onChange={(e) => onUpdate(item.id, { ...eqBlock, author_title: e.target.value })}
           />
           <input
-            className="flex-1 outline-none text-xs text-[#242423]/40 placeholder:text-[#242423]/20 bg-transparent border-b border-[#242423]/10 pb-0.5"
+            className="flex-1 border-b border-[#242423]/10 bg-transparent pb-0.5 text-xs text-[#242423]/40 outline-none placeholder:text-[#242423]/20"
             placeholder="Perusahaan (opsional)"
             value={eqBlock.author_company ?? ""}
-            onChange={(e) => onUpdate(item.id, { ...eqBlock, author_company: e.target.value || undefined })}
+            onChange={(e) =>
+              onUpdate(item.id, { ...eqBlock, author_company: e.target.value || undefined })
+            }
           />
         </div>
       </div>
@@ -865,7 +1164,9 @@ function NotionBlock({
 /* ── Columns block editor ─────────────────────────────────────────────────── */
 
 function ColumnsBlockEditor({
-  block, onChange, level,
+  block,
+  onChange,
+  level,
 }: {
   block: Extract<ContentBlock, { type: "columns" }>;
   onChange: (b: ContentBlock) => void;
@@ -876,7 +1177,7 @@ function ColumnsBlockEditor({
   );
 
   function updateCol(colIdx: number, newItems: BlockItem[]) {
-    const next = colItems.map((col, i) => i === colIdx ? newItems : col);
+    const next = colItems.map((col, i) => (i === colIdx ? newItems : col));
     setColItems(next);
     onChange({ ...block, columns: next.map((col) => col.map((item) => item.block)) });
   }
@@ -886,8 +1187,11 @@ function ColumnsBlockEditor({
   return (
     <div className={`grid ${gridClass} gap-3`}>
       {colItems.map((col, ci) => (
-        <div key={ci} className="border border-[#242423]/10 rounded-xl p-3 bg-[#242423]/1 min-h-[80px]">
-          <p className="text-[10px] font-bold uppercase tracking-wider text-[#242423]/25 mb-2">
+        <div
+          key={ci}
+          className="bg-[#242423]/1 min-h-[80px] rounded-xl border border-[#242423]/10 p-3"
+        >
+          <p className="mb-2 text-[10px] font-bold uppercase tracking-wider text-[#242423]/25">
             Kolom {ci + 1}
           </p>
           <NotionEditor
@@ -905,47 +1209,63 @@ function ColumnsBlockEditor({
 /* ── Sortable block wrapper ───────────────────────────────────────────────── */
 
 function SortableNotionBlock({
-  item, callbacks,
+  item,
+  callbacks,
 }: {
   item: BlockItem;
   callbacks: NotionBlockCallbacks;
 }) {
-  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: item.id });
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
+    id: item.id,
+  });
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
     opacity: isDragging ? 0.4 : 1,
   };
 
-  const isNonText = item.block.type === "image" || item.block.type === "columns" ||
-    item.block.type === "cta-inline" || item.block.type === "divider" ||
-    item.block.type === "ul" || item.block.type === "ol" ||
-    item.block.type === "faq" || item.block.type === "howto" ||
-    item.block.type === "key-takeaway" || item.block.type === "source" ||
+  const isNonText =
+    item.block.type === "image" ||
+    item.block.type === "columns" ||
+    item.block.type === "cta-inline" ||
+    item.block.type === "divider" ||
+    item.block.type === "ul" ||
+    item.block.type === "ol" ||
+    item.block.type === "faq" ||
+    item.block.type === "howto" ||
+    item.block.type === "key-takeaway" ||
+    item.block.type === "source" ||
     item.block.type === "expert-quote";
 
   return (
-    <div ref={setNodeRef} style={style} className="group relative flex items-start gap-1 px-1 py-0.5 rounded-lg hover:bg-[#242423]/3 transition-colors">
+    <div
+      ref={setNodeRef}
+      style={style}
+      className="hover:bg-[#242423]/3 group relative flex items-start gap-1 rounded-lg px-1 py-0.5 transition-colors"
+    >
       {/* Drag handle */}
       <button
         {...attributes}
         {...listeners}
         tabIndex={-1}
-        className="flex-shrink-0 mt-1 p-1 opacity-0 group-hover:opacity-100 text-[#242423]/30 hover:text-[#242423]/60 cursor-grab active:cursor-grabbing transition touch-none rounded"
+        className="mt-1 flex-shrink-0 cursor-grab touch-none rounded p-1 text-[#242423]/30 opacity-0 transition hover:text-[#242423]/60 active:cursor-grabbing group-hover:opacity-100"
       >
         <GripVertical size={13} />
       </button>
 
       {/* Block content */}
-      <div className={`flex-1 min-w-0 ${isNonText ? "py-1" : ""}`}>
+      <div className={`min-w-0 flex-1 ${isNonText ? "py-1" : ""}`}>
         <NotionBlock item={item} callbacks={callbacks} />
       </div>
 
       {/* Delete */}
       <button
         tabIndex={-1}
-        onMouseDown={(e) => { e.preventDefault(); callbacks.onDelete(item.id); }}
-        className="flex-shrink-0 mt-1 p-1 opacity-0 group-hover:opacity-100 text-[#242423]/25 hover:text-red-500 transition rounded"
+        onMouseDown={(e) => {
+          e.preventDefault();
+          callbacks.onDelete(item.id);
+        }}
+        className="mt-1 flex-shrink-0 rounded p-1 text-[#242423]/25 opacity-0 transition hover:text-red-500 group-hover:opacity-100"
       >
         <Trash2 size={13} />
       </button>
@@ -990,60 +1310,87 @@ function NotionEditor({
     }
   }
 
-  const insertAfter = useCallback((afterId: string, newItem: BlockItem) => {
-    onBlocksChange((() => {
-      const idx = blocks.findIndex((b) => b.id === afterId);
-      const next = [...blocks];
-      next.splice(idx + 1, 0, newItem);
-      return next;
-    })());
-    focusBlock(newItem.id);
-  }, [blocks, onBlocksChange]);
+  const insertAfter = useCallback(
+    (afterId: string, newItem: BlockItem) => {
+      onBlocksChange(
+        (() => {
+          const idx = blocks.findIndex((b) => b.id === afterId);
+          const next = [...blocks];
+          next.splice(idx + 1, 0, newItem);
+          return next;
+        })()
+      );
+      focusBlock(newItem.id);
+    },
+    [blocks, onBlocksChange]
+  );
 
-  const deleteBlock = useCallback((id: string) => {
-    const idx = blocks.findIndex((b) => b.id === id);
-    const prevId = idx > 0 ? blocks[idx - 1].id : null;
-    const prevText = idx > 0 ? getBlockText(blocks[idx - 1].block) : null;
-    onBlocksChange(blocks.filter((b) => b.id !== id));
-    if (prevId) focusBlock(prevId, prevText?.length);
-  }, [blocks, onBlocksChange]);
+  const deleteBlock = useCallback(
+    (id: string) => {
+      const idx = blocks.findIndex((b) => b.id === id);
+      const prevId = idx > 0 ? blocks[idx - 1].id : null;
+      const prevText = idx > 0 ? getBlockText(blocks[idx - 1].block) : null;
+      onBlocksChange(blocks.filter((b) => b.id !== id));
+      if (prevId) focusBlock(prevId, prevText?.length);
+    },
+    [blocks, onBlocksChange]
+  );
 
-  const mergeWithPrev = useCallback((id: string, textToAppend: string) => {
-    const idx = blocks.findIndex((b) => b.id === id);
-    if (idx <= 0) return;
-    const prev = blocks[idx - 1];
-    const prevText = getBlockText(prev.block);
-    if (prevText === null) return;
-    const mergePos = prevText.length;
-    onBlocksChange(
-      blocks
-        .map((b) => b.id === prev.id ? { ...b, block: setBlockText(prev.block, prevText + textToAppend) } : b)
-        .filter((b) => b.id !== id)
-    );
-    focusBlock(prev.id, mergePos);
-  }, [blocks, onBlocksChange]);
+  const mergeWithPrev = useCallback(
+    (id: string, textToAppend: string) => {
+      const idx = blocks.findIndex((b) => b.id === id);
+      if (idx <= 0) return;
+      const prev = blocks[idx - 1];
+      const prevText = getBlockText(prev.block);
+      if (prevText === null) return;
+      const mergePos = prevText.length;
+      onBlocksChange(
+        blocks
+          .map((b) =>
+            b.id === prev.id
+              ? { ...b, block: setBlockText(prev.block, prevText + textToAppend) }
+              : b
+          )
+          .filter((b) => b.id !== id)
+      );
+      focusBlock(prev.id, mergePos);
+    },
+    [blocks, onBlocksChange]
+  );
 
-  const updateBlock = useCallback((id: string, block: ContentBlock) => {
-    onBlocksChange(blocks.map((b) => b.id === id ? { ...b, block } : b));
-  }, [blocks, onBlocksChange]);
+  const updateBlock = useCallback(
+    (id: string, block: ContentBlock) => {
+      onBlocksChange(blocks.map((b) => (b.id === id ? { ...b, block } : b)));
+    },
+    [blocks, onBlocksChange]
+  );
 
-  const focusPrev = useCallback((id: string) => {
-    const i = blocks.findIndex((b) => b.id === id);
-    if (i > 0) {
-      const prev = blocks[i - 1];
-      focusBlock(prev.id, getBlockText(prev.block)?.length);
-    }
-  }, [blocks]);
+  const focusPrev = useCallback(
+    (id: string) => {
+      const i = blocks.findIndex((b) => b.id === id);
+      if (i > 0) {
+        const prev = blocks[i - 1];
+        focusBlock(prev.id, getBlockText(prev.block)?.length);
+      }
+    },
+    [blocks]
+  );
 
-  const focusNext = useCallback((id: string) => {
-    const i = blocks.findIndex((b) => b.id === id);
-    if (i < blocks.length - 1) focusBlock(blocks[i + 1].id, 0);
-  }, [blocks]);
+  const focusNext = useCallback(
+    (id: string) => {
+      const i = blocks.findIndex((b) => b.id === id);
+      if (i < blocks.length - 1) focusBlock(blocks[i + 1].id, 0);
+    },
+    [blocks]
+  );
 
-  const registerRef = useCallback((id: string, el: HTMLTextAreaElement | HTMLInputElement | null) => {
-    if (el) blockRefs.current.set(id, el);
-    else blockRefs.current.delete(id);
-  }, []);
+  const registerRef = useCallback(
+    (id: string, el: HTMLTextAreaElement | HTMLInputElement | null) => {
+      if (el) blockRefs.current.set(id, el);
+      else blockRefs.current.delete(id);
+    },
+    []
+  );
 
   const callbacks: NotionBlockCallbacks = {
     onUpdate: updateBlock,
@@ -1062,14 +1409,14 @@ function NotionEditor({
         <div>
           {blocks.length === 0 && (
             <div
-              className="py-2 px-7 cursor-text"
+              className="cursor-text px-7 py-2"
               onClick={() => {
                 const newItem = newBlockFromType("p");
                 onBlocksChange([newItem]);
                 focusBlock(newItem.id);
               }}
             >
-              <p className="text-sm text-[#242423]/25 select-none">{placeholder}</p>
+              <p className="select-none text-sm text-[#242423]/25">{placeholder}</p>
             </div>
           )}
           {blocks.map((item) => (
@@ -1094,19 +1441,27 @@ function ScoreRing({ score, grade }: { score: number; grade: string }) {
       <svg width="52" height="52" viewBox="0 0 52 52">
         <circle cx="26" cy="26" r={r} fill="none" stroke="#e5e7eb" strokeWidth="6" />
         <circle
-          cx="26" cy="26" r={r} fill="none"
-          stroke={color} strokeWidth="6"
+          cx="26"
+          cy="26"
+          r={r}
+          fill="none"
+          stroke={color}
+          strokeWidth="6"
           strokeDasharray={circ}
           strokeDashoffset={offset}
           strokeLinecap="round"
           transform="rotate(-90 26 26)"
           style={{ transition: "stroke-dashoffset 0.5s ease" }}
         />
-        <text x="26" y="30" textAnchor="middle" fontSize="11" fontWeight="700" fill="#242423">{score}</text>
+        <text x="26" y="30" textAnchor="middle" fontSize="11" fontWeight="700" fill="#242423">
+          {score}
+        </text>
       </svg>
       <div>
-        <div className="text-lg font-extrabold" style={{ color }}>{grade}</div>
-        <div className="text-[10px] text-[#242423]/40 font-medium">SEO Score</div>
+        <div className="text-lg font-extrabold" style={{ color }}>
+          {grade}
+        </div>
+        <div className="text-[10px] font-medium text-[#242423]/40">SEO Score</div>
       </div>
     </div>
   );
@@ -1115,7 +1470,8 @@ function ScoreRing({ score, grade }: { score: number; grade: string }) {
 /* ── Featured image upload ────────────────────────────────────────────────── */
 
 function FeaturedImageUpload({
-  value, onChange,
+  value,
+  onChange,
 }: {
   value: string;
   onChange: (url: string) => void;
@@ -1137,13 +1493,21 @@ function FeaturedImageUpload({
 
   return (
     <div>
-      <label className="block text-xs font-semibold text-[#242423]/55 mb-1.5">Thumbnail / Featured Image</label>
+      <label className="mb-1.5 block text-xs font-semibold text-[#242423]/55">
+        Thumbnail / Featured Image
+      </label>
       {value ? (
-        <div className="relative rounded-xl overflow-hidden border border-[#242423]/10">
-          <Image src={value} alt="Featured" width={800} height={112} className="w-full h-28 object-cover" />
+        <div className="relative overflow-hidden rounded-xl border border-[#242423]/10">
+          <Image
+            src={value}
+            alt="Featured"
+            width={800}
+            height={112}
+            className="h-28 w-full object-cover"
+          />
           <button
             onClick={() => onChange("")}
-            className="absolute top-1.5 right-1.5 w-6 h-6 bg-white border border-[#242423]/12 rounded-full flex items-center justify-center hover:bg-red-50 transition"
+            className="border-[#242423]/12 absolute right-1.5 top-1.5 flex h-6 w-6 items-center justify-center rounded-full border bg-white transition hover:bg-red-50"
           >
             <X size={10} className="text-[#242423]/50" />
           </button>
@@ -1152,10 +1516,12 @@ function FeaturedImageUpload({
         <button
           onClick={() => fileRef.current?.click()}
           disabled={uploading}
-          className="w-full border-2 border-dashed border-[#242423]/12 rounded-xl py-4 flex flex-col items-center gap-1.5 text-[#242423]/35 hover:border-[#f5a700]/40 hover:text-[#f5a700] transition-colors"
+          className="border-[#242423]/12 flex w-full flex-col items-center gap-1.5 rounded-xl border-2 border-dashed py-4 text-[#242423]/35 transition-colors hover:border-[#f5a700]/40 hover:text-[#f5a700]"
         >
           {uploading ? <Loader2 size={16} className="animate-spin" /> : <Upload size={16} />}
-          <span className="text-xs font-medium">{uploading ? "Mengupload..." : "Upload thumbnail"}</span>
+          <span className="text-xs font-medium">
+            {uploading ? "Mengupload..." : "Upload thumbnail"}
+          </span>
         </button>
       )}
       <input
@@ -1163,7 +1529,11 @@ function FeaturedImageUpload({
         type="file"
         accept="image/jpeg,image/png,image/webp"
         className="hidden"
-        onChange={(e) => { const f = e.target.files?.[0]; if (f) handleFile(f); e.target.value = ""; }}
+        onChange={(e) => {
+          const f = e.target.files?.[0];
+          if (f) handleFile(f);
+          e.target.value = "";
+        }}
       />
     </div>
   );
@@ -1226,21 +1596,39 @@ export default function PostEditor({ initial = {} }: PostEditorProps) {
   const isEdit = Boolean(initial.id);
 
   useEffect(() => {
-    fetchCategories().then(setCategories).catch(() => {});
-    fetchAuthors().then(setAuthors).catch(() => {});
+    fetchCategories()
+      .then(setCategories)
+      .catch(() => {});
+    fetchAuthors()
+      .then(setAuthors)
+      .catch(() => {});
   }, []);
 
-  const seoResult = useMemo(() => checkSEO({
-    title,
-    seoTitle,
-    metaDescription,
-    focusKeyword,
-    slug,
-    excerpt,
-    coverImage,
-    blocks: blockItems.map((i) => i.block),
-    hasAuthor: Boolean(authorId),
-  }), [title, seoTitle, metaDescription, focusKeyword, slug, excerpt, coverImage, blockItems, authorId]);
+  const seoResult = useMemo(
+    () =>
+      checkSEO({
+        title,
+        seoTitle,
+        metaDescription,
+        focusKeyword,
+        slug,
+        excerpt,
+        coverImage,
+        blocks: blockItems.map((i) => i.block),
+        hasAuthor: Boolean(authorId),
+      }),
+    [
+      title,
+      seoTitle,
+      metaDescription,
+      focusKeyword,
+      slug,
+      excerpt,
+      coverImage,
+      blockItems,
+      authorId,
+    ]
+  );
 
   /* ── Quick-add handler ──────────────────────────────────────────────────── */
 
@@ -1310,25 +1698,29 @@ export default function PostEditor({ initial = {} }: PostEditorProps) {
   return (
     <div className="min-h-screen bg-[#fcfaf7]">
       {/* Top bar */}
-      <header className="bg-white border-b border-[#242423]/8 px-4 sm:px-6 py-3.5 flex items-center justify-between sticky top-0 z-20 shadow-sm">
+      <header className="border-[#242423]/8 sticky top-0 z-20 flex items-center justify-between border-b bg-white px-4 py-3.5 shadow-sm sm:px-6">
         <div className="flex items-center gap-3">
           <Link
             href="/admin/posts"
-            className="flex items-center gap-1 text-xs text-[#242423]/50 hover:text-[#242423] transition"
+            className="flex items-center gap-1 text-xs text-[#242423]/50 transition hover:text-[#242423]"
           >
             <ChevronLeft size={13} /> Kembali
           </Link>
-          <span className="hidden sm:inline text-[#242423]/20">/</span>
-          <span className="hidden sm:inline text-sm font-bold text-[#242423]">{isEdit ? "Edit Artikel" : "Artikel Baru"}</span>
+          <span className="hidden text-[#242423]/20 sm:inline">/</span>
+          <span className="hidden text-sm font-bold text-[#242423] sm:inline">
+            {isEdit ? "Edit Artikel" : "Artikel Baru"}
+          </span>
         </div>
 
         <div className="flex items-center gap-2">
-          {error && <span className="hidden sm:block text-xs text-red-600 max-w-xs truncate">{error}</span>}
+          {error && (
+            <span className="hidden max-w-xs truncate text-xs text-red-600 sm:block">{error}</span>
+          )}
           {isEdit && initial.id && (
             <Link
               href={`/preview/${initial.id}`}
               target="_blank"
-              className="flex items-center gap-1.5 border border-[#242423]/12 text-[#242423]/55 font-semibold px-3 py-1.5 rounded-lg text-xs hover:border-[#242423]/25 hover:text-[#242423] transition"
+              className="border-[#242423]/12 flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-semibold text-[#242423]/55 transition hover:border-[#242423]/25 hover:text-[#242423]"
             >
               <Eye size={12} /> <span className="hidden sm:inline">Preview</span>
             </Link>
@@ -1336,7 +1728,7 @@ export default function PostEditor({ initial = {} }: PostEditorProps) {
           <select
             value={status}
             onChange={(e) => setStatus(e.target.value as "draft" | "published")}
-            className="border border-[#242423]/12 rounded-lg px-3 py-1.5 text-xs text-[#242423] bg-white focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30"
+            className="border-[#242423]/12 rounded-lg border bg-white px-3 py-1.5 text-xs text-[#242423] focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30"
           >
             <option value="draft">Draft</option>
             <option value="published">Tayang</option>
@@ -1344,7 +1736,7 @@ export default function PostEditor({ initial = {} }: PostEditorProps) {
           <button
             onClick={() => handleSave()}
             disabled={saving || savingDraft}
-            className="flex items-center gap-1.5 bg-[#f5a700] text-white font-bold px-4 py-1.5 rounded-lg text-sm hover:bg-[#f5a700]/90 disabled:opacity-60 transition"
+            className="flex items-center gap-1.5 rounded-lg bg-[#f5a700] px-4 py-1.5 text-sm font-bold text-white transition hover:bg-[#f5a700]/90 disabled:opacity-60"
           >
             {saving ? <Loader2 size={13} className="animate-spin" /> : <Save size={13} />}
             {saving ? "Menyimpan..." : "Simpan"}
@@ -1352,23 +1744,26 @@ export default function PostEditor({ initial = {} }: PostEditorProps) {
         </div>
       </header>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex flex-col lg:flex-row gap-5 items-start">
-
+      <div className="mx-auto flex max-w-7xl flex-col items-start gap-5 px-4 py-8 sm:px-6 lg:flex-row">
         {/* ── Left: SEO sidebar ───────────────────────────────────────── */}
-        <div className={`w-full lg:flex-shrink-0 lg:sticky lg:top-20 lg:max-h-[calc(100vh-6rem)] transition-all duration-200 order-3 lg:order-1 ${showSeo ? "lg:w-48" : "lg:w-8"}`}>
+        <div
+          className={`order-3 w-full transition-all duration-200 lg:sticky lg:top-20 lg:order-1 lg:max-h-[calc(100vh-6rem)] lg:flex-shrink-0 ${showSeo ? "lg:w-48" : "lg:w-8"}`}
+        >
           {showSeo ? (
-            <div className="overflow-y-auto lg:max-h-[calc(100vh-6rem)] pb-4">
-              <div className="bg-white border border-[#242423]/8 rounded-2xl p-4 space-y-3">
+            <div className="overflow-y-auto pb-4 lg:max-h-[calc(100vh-6rem)]">
+              <div className="border-[#242423]/8 space-y-3 rounded-2xl border bg-white p-4">
                 {/* Panel header */}
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-1.5">
                     <BarChart2 size={11} className="text-[#f5a700]" />
-                    <span className="text-[10px] font-bold text-[#242423]/40 uppercase tracking-wider">SEO</span>
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#242423]/40">
+                      SEO
+                    </span>
                   </div>
                   <button
                     onClick={() => setShowSeo(false)}
                     title="Sembunyikan SEO panel"
-                    className="hidden lg:block text-[#242423]/25 hover:text-[#242423]/60 transition rounded p-0.5 hover:bg-[#242423]/5"
+                    className="hidden rounded p-0.5 text-[#242423]/25 transition hover:bg-[#242423]/5 hover:text-[#242423]/60 lg:block"
                   >
                     <ChevronLeft size={13} />
                   </button>
@@ -1377,9 +1772,11 @@ export default function PostEditor({ initial = {} }: PostEditorProps) {
                 <ScoreRing score={seoResult.totalScore} grade={seoResult.grade} />
 
                 <div>
-                  <label className="block text-xs font-semibold text-[#242423]/50 mb-1">Focus Keyword</label>
+                  <label className="mb-1 block text-xs font-semibold text-[#242423]/50">
+                    Focus Keyword
+                  </label>
                   <input
-                    className="w-full border border-[#242423]/12 rounded-lg px-3 py-2 text-xs text-[#242423] bg-white focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30 focus:border-[#f5a700]"
+                    className="border-[#242423]/12 w-full rounded-lg border bg-white px-3 py-2 text-xs text-[#242423] focus:border-[#f5a700] focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30"
                     placeholder="kata kunci..."
                     value={focusKeyword}
                     onChange={(e) => setFocusKeyword(e.target.value)}
@@ -1395,17 +1792,27 @@ export default function PostEditor({ initial = {} }: PostEditorProps) {
                       {failing.map((rule) => {
                         const dot = rule.status === "improve" ? "bg-amber-400" : "bg-red-400";
                         return (
-                          <div key={rule.id} className="flex items-center gap-2" title={rule.description}>
-                            <span className={`w-2 h-2 rounded-full flex-shrink-0 ${dot}`} />
-                            <span className="text-xs text-[#242423]/60 flex-1 leading-snug truncate">{rule.label}</span>
-                            <span className="text-[10px] text-[#242423]/30 font-mono flex-shrink-0">{rule.score}/{rule.maxScore}</span>
+                          <div
+                            key={rule.id}
+                            className="flex items-center gap-2"
+                            title={rule.description}
+                          >
+                            <span className={`h-2 w-2 flex-shrink-0 rounded-full ${dot}`} />
+                            <span className="flex-1 truncate text-xs leading-snug text-[#242423]/60">
+                              {rule.label}
+                            </span>
+                            <span className="flex-shrink-0 font-mono text-[10px] text-[#242423]/30">
+                              {rule.score}/{rule.maxScore}
+                            </span>
                           </div>
                         );
                       })}
                       {passCount > 0 && (
                         <div className="flex items-center gap-2">
-                          <span className="w-2 h-2 rounded-full flex-shrink-0 bg-green-500" />
-                          <span className="text-[10px] text-[#242423]/35">{passCount} lainnya ok</span>
+                          <span className="h-2 w-2 flex-shrink-0 rounded-full bg-green-500" />
+                          <span className="text-[10px] text-[#242423]/35">
+                            {passCount} lainnya ok
+                          </span>
                         </div>
                       )}
                     </div>
@@ -1414,43 +1821,50 @@ export default function PostEditor({ initial = {} }: PostEditorProps) {
 
                 <button
                   onClick={() => setSeoOpen((v) => !v)}
-                  className="flex items-center gap-1.5 text-xs font-semibold text-[#242423]/45 hover:text-[#242423] transition w-full"
+                  className="flex w-full items-center gap-1.5 text-xs font-semibold text-[#242423]/45 transition hover:text-[#242423]"
                 >
-                  <ChevronDown size={12} className={`transition-transform ${seoOpen ? "rotate-180" : ""}`} />
+                  <ChevronDown
+                    size={12}
+                    className={`transition-transform ${seoOpen ? "rotate-180" : ""}`}
+                  />
                   Advanced SEO
                 </button>
 
                 {seoOpen && (
                   <div className="space-y-3 pt-1">
                     <div>
-                      <div className="flex items-center justify-between mb-1">
+                      <div className="mb-1 flex items-center justify-between">
                         <label className="text-xs font-semibold text-[#242423]/50">SEO Title</label>
-                        <span className={`text-[10px] font-mono ${seoTitle.length > 60 ? "text-red-500" : "text-[#242423]/30"}`}>
+                        <span
+                          className={`font-mono text-[10px] ${seoTitle.length > 60 ? "text-red-500" : "text-[#242423]/30"}`}
+                        >
                           {seoTitle.length}/60
                         </span>
                       </div>
                       <input
-                        className="w-full border border-[#242423]/12 rounded-lg px-3 py-2 text-xs text-[#242423] bg-white focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30 focus:border-[#f5a700]"
+                        className="border-[#242423]/12 w-full rounded-lg border bg-white px-3 py-2 text-xs text-[#242423] focus:border-[#f5a700] focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30"
                         placeholder={title || "SEO title..."}
                         value={seoTitle}
                         onChange={(e) => setSeoTitle(e.target.value)}
                       />
                     </div>
                     <div>
-                      <div className="flex items-center justify-between mb-1">
+                      <div className="mb-1 flex items-center justify-between">
                         <label className="text-xs font-semibold text-[#242423]/50">Meta Desc</label>
-                        <span className={`text-[10px] font-mono ${
-                          metaDescription.length >= 120 && metaDescription.length <= 160
-                            ? "text-green-600"
-                            : metaDescription.length > 180
-                            ? "text-red-500"
-                            : "text-[#242423]/30"
-                        }`}>
+                        <span
+                          className={`font-mono text-[10px] ${
+                            metaDescription.length >= 120 && metaDescription.length <= 160
+                              ? "text-green-600"
+                              : metaDescription.length > 180
+                                ? "text-red-500"
+                                : "text-[#242423]/30"
+                          }`}
+                        >
                           {metaDescription.length}/160
                         </span>
                       </div>
                       <textarea
-                        className="w-full border border-[#242423]/12 rounded-lg px-3 py-2 text-xs text-[#242423] bg-white focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30 focus:border-[#f5a700] resize-none"
+                        className="border-[#242423]/12 w-full resize-none rounded-lg border bg-white px-3 py-2 text-xs text-[#242423] focus:border-[#f5a700] focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30"
                         placeholder={excerpt || "Meta description..."}
                         rows={3}
                         value={metaDescription}
@@ -1465,27 +1879,32 @@ export default function PostEditor({ initial = {} }: PostEditorProps) {
             <button
               onClick={() => setShowSeo(true)}
               title="Tampilkan SEO panel"
-              className="hidden lg:flex h-36 w-full bg-white border border-[#242423]/8 rounded-xl flex-col items-center justify-center gap-2 hover:border-[#f5a700]/40 hover:bg-[#f5a700]/4 transition group"
+              className="border-[#242423]/8 hover:bg-[#f5a700]/4 group hidden h-36 w-full flex-col items-center justify-center gap-2 rounded-xl border bg-white transition hover:border-[#f5a700]/40 lg:flex"
             >
-              <BarChart2 size={13} className="text-[#242423]/30 group-hover:text-[#f5a700] transition" />
+              <BarChart2
+                size={13}
+                className="text-[#242423]/30 transition group-hover:text-[#f5a700]"
+              />
               <span
-                className="text-[10px] font-bold text-[#242423]/30 group-hover:text-[#f5a700] transition"
+                className="text-[10px] font-bold text-[#242423]/30 transition group-hover:text-[#f5a700]"
                 style={{ writingMode: "vertical-rl", letterSpacing: "0.05em" }}
               >
                 SEO
               </span>
-              <ChevronRight size={11} className="text-[#242423]/20 group-hover:text-[#f5a700] transition" />
+              <ChevronRight
+                size={11}
+                className="text-[#242423]/20 transition group-hover:text-[#f5a700]"
+              />
             </button>
           )}
         </div>
 
         {/* ── Center: Main editor ──────────────────────────────────────── */}
-        <div className="flex-1 min-w-0 space-y-0 order-1 lg:order-2">
-
+        <div className="order-1 min-w-0 flex-1 space-y-0 lg:order-2">
           {/* Title */}
           <div className="mb-2">
             <input
-              className="w-full outline-none text-3xl font-extrabold text-[#242423] placeholder:text-[#242423]/20 bg-transparent py-1"
+              className="w-full bg-transparent py-1 text-3xl font-extrabold text-[#242423] outline-none placeholder:text-[#242423]/20"
               placeholder="Judul artikel..."
               value={title}
               onChange={(e) => {
@@ -1498,7 +1917,7 @@ export default function PostEditor({ initial = {} }: PostEditorProps) {
           {/* Excerpt */}
           <div className="mb-4">
             <textarea
-              className="w-full outline-none text-base text-[#242423]/60 placeholder:text-[#242423]/25 bg-transparent resize-none leading-relaxed"
+              className="w-full resize-none bg-transparent text-base leading-relaxed text-[#242423]/60 outline-none placeholder:text-[#242423]/25"
               placeholder="Deskripsi singkat artikel (excerpt)..."
               rows={2}
               value={excerpt}
@@ -1507,26 +1926,22 @@ export default function PostEditor({ initial = {} }: PostEditorProps) {
           </div>
 
           {/* Divider */}
-          <div className="border-t border-[#242423]/8 mb-4" />
+          <div className="border-[#242423]/8 mb-4 border-t" />
 
           {/* Notion editor */}
           <div className="min-h-[300px]">
-            <NotionEditor
-              blocks={blockItems}
-              onBlocksChange={setBlockItems}
-              level={0}
-            />
+            <NotionEditor blocks={blockItems} onBlocksChange={setBlockItems} level={0} />
           </div>
 
           {/* Quick add bar */}
-          <div className="mt-4 pt-4 border-t border-[#242423]/8">
-            <p className="text-xs text-[#242423]/30 font-medium mb-2 px-7">Tambah blok:</p>
+          <div className="border-[#242423]/8 mt-4 border-t pt-4">
+            <p className="mb-2 px-7 text-xs font-medium text-[#242423]/30">Tambah blok:</p>
             <div className="flex flex-wrap gap-1.5 px-7">
               {SLASH_COMMANDS.map((cmd) => (
                 <button
                   key={cmd.desc}
                   onClick={() => addBlock(cmd.blockType, cmd.params)}
-                  className="flex items-center gap-1.5 text-xs font-medium border border-[#242423]/10 text-[#242423]/45 px-2.5 py-1.5 rounded-lg hover:border-[#f5a700]/50 hover:text-[#f5a700] hover:bg-[#f5a700]/5 transition"
+                  className="flex items-center gap-1.5 rounded-lg border border-[#242423]/10 px-2.5 py-1.5 text-xs font-medium text-[#242423]/45 transition hover:border-[#f5a700]/50 hover:bg-[#f5a700]/5 hover:text-[#f5a700]"
                 >
                   <span className="text-[#242423]/30">{cmd.icon}</span>
                   {cmd.label}
@@ -1537,22 +1952,25 @@ export default function PostEditor({ initial = {} }: PostEditorProps) {
         </div>
 
         {/* ── Right: Settings sidebar ──────────────────────────────────── */}
-        <div className={`w-full lg:flex-shrink-0 lg:sticky lg:top-20 lg:max-h-[calc(100vh-6rem)] transition-all duration-200 order-2 lg:order-3 ${showSettings ? "lg:w-52" : "lg:w-8"}`}>
+        <div
+          className={`order-2 w-full transition-all duration-200 lg:sticky lg:top-20 lg:order-3 lg:max-h-[calc(100vh-6rem)] lg:flex-shrink-0 ${showSettings ? "lg:w-52" : "lg:w-8"}`}
+        >
           {showSettings ? (
-            <div className="overflow-y-auto max-h-[calc(100vh-6rem)] pb-4 space-y-4 pr-0.5">
-
+            <div className="max-h-[calc(100vh-6rem)] space-y-4 overflow-y-auto pb-4 pr-0.5">
               {/* Panel header */}
-              <div className="bg-white border border-[#242423]/8 rounded-2xl px-4 pt-4 pb-2">
-                <div className="flex items-center justify-between mb-3">
+              <div className="border-[#242423]/8 rounded-2xl border bg-white px-4 pb-2 pt-4">
+                <div className="mb-3 flex items-center justify-between">
                   <button
                     onClick={() => setShowSettings(false)}
                     title="Sembunyikan Settings panel"
-                    className="hidden lg:block text-[#242423]/25 hover:text-[#242423]/60 transition rounded p-0.5 hover:bg-[#242423]/5"
+                    className="hidden rounded p-0.5 text-[#242423]/25 transition hover:bg-[#242423]/5 hover:text-[#242423]/60 lg:block"
                   >
                     <ChevronRight size={13} />
                   </button>
                   <div className="flex items-center gap-1.5">
-                    <span className="text-[10px] font-bold text-[#242423]/40 uppercase tracking-wider">Pengaturan</span>
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#242423]/40">
+                      Pengaturan
+                    </span>
                     <Settings size={11} className="text-[#242423]/35" />
                   </div>
                 </div>
@@ -1561,7 +1979,7 @@ export default function PostEditor({ initial = {} }: PostEditorProps) {
                   <button
                     onClick={handleGenerateCover}
                     disabled={generating}
-                    className="mt-2 w-full flex items-center justify-center gap-2 border border-[#f5a700]/30 bg-[#f5a700]/5 text-[#9b6a00] font-semibold px-3 py-2 rounded-xl text-xs hover:bg-[#f5a700]/15 disabled:opacity-50 disabled:pointer-events-none transition"
+                    className="mt-2 flex w-full items-center justify-center gap-2 rounded-xl border border-[#f5a700]/30 bg-[#f5a700]/5 px-3 py-2 text-xs font-semibold text-[#9b6a00] transition hover:bg-[#f5a700]/15 disabled:pointer-events-none disabled:opacity-50"
                   >
                     {generating ? (
                       <>
@@ -1579,13 +1997,17 @@ export default function PostEditor({ initial = {} }: PostEditorProps) {
               </div>
 
               {/* Settings fields */}
-              <div className="bg-white border border-[#242423]/8 rounded-2xl p-4 space-y-3">
-                <p className="text-xs font-bold uppercase tracking-wider text-[#242423]/35">Artikel</p>
+              <div className="border-[#242423]/8 space-y-3 rounded-2xl border bg-white p-4">
+                <p className="text-xs font-bold uppercase tracking-wider text-[#242423]/35">
+                  Artikel
+                </p>
 
                 <div>
-                  <label className="block text-xs font-semibold text-[#242423]/50 mb-1">Slug URL</label>
+                  <label className="mb-1 block text-xs font-semibold text-[#242423]/50">
+                    Slug URL
+                  </label>
                   <input
-                    className="w-full border border-[#242423]/12 rounded-lg px-3 py-2 text-xs text-[#242423] font-mono bg-white focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30 focus:border-[#f5a700]"
+                    className="border-[#242423]/12 w-full rounded-lg border bg-white px-3 py-2 font-mono text-xs text-[#242423] focus:border-[#f5a700] focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30"
                     value={slug}
                     onChange={(e) => setSlug(slugify(e.target.value))}
                     placeholder="url-artikel"
@@ -1593,52 +2015,68 @@ export default function PostEditor({ initial = {} }: PostEditorProps) {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-[#242423]/50 mb-1">Kategori</label>
+                  <label className="mb-1 block text-xs font-semibold text-[#242423]/50">
+                    Kategori
+                  </label>
                   <select
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
-                    className="w-full border border-[#242423]/12 rounded-lg px-3 py-2 text-xs text-[#242423] bg-white focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30"
+                    className="border-[#242423]/12 w-full rounded-lg border bg-white px-3 py-2 text-xs text-[#242423] focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30"
                   >
                     <option value="">Pilih kategori</option>
-                    {categories.map((c) => <option key={c.id} value={c.name}>{c.name}</option>)}
+                    {categories.map((c) => (
+                      <option key={c.id} value={c.name}>
+                        {c.name}
+                      </option>
+                    ))}
                   </select>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-[#242423]/50 mb-1">Penulis</label>
+                  <label className="mb-1 block text-xs font-semibold text-[#242423]/50">
+                    Penulis
+                  </label>
                   <select
                     value={authorId}
                     onChange={(e) => setAuthorId(e.target.value)}
-                    className="w-full border border-[#242423]/12 rounded-lg px-3 py-2 text-xs text-[#242423] bg-white focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30"
+                    className="border-[#242423]/12 w-full rounded-lg border bg-white px-3 py-2 text-xs text-[#242423] focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30"
                   >
                     <option value="">Tanpa penulis</option>
-                    {authors.map((a) => <option key={a.id} value={a.id}>{a.name}</option>)}
+                    {authors.map((a) => (
+                      <option key={a.id} value={a.id}>
+                        {a.name}
+                      </option>
+                    ))}
                   </select>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-[#242423]/50 mb-1">Estimasi Baca (menit)</label>
+                  <label className="mb-1 block text-xs font-semibold text-[#242423]/50">
+                    Estimasi Baca (menit)
+                  </label>
                   <input
                     type="number"
                     min={1}
                     max={60}
                     value={readTime}
                     onChange={(e) => setReadTime(Number(e.target.value))}
-                    className="w-full border border-[#242423]/12 rounded-lg px-3 py-2 text-xs text-[#242423] bg-white focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30"
+                    className="border-[#242423]/12 w-full rounded-lg border bg-white px-3 py-2 text-xs text-[#242423] focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-[#242423]/50 mb-1">Tanggal Rencana/Tayang</label>
+                  <label className="mb-1 block text-xs font-semibold text-[#242423]/50">
+                    Tanggal Rencana/Tayang
+                  </label>
                   <input
                     type="date"
                     value={publishedAt}
                     onChange={(e) => setPublishedAt(e.target.value)}
-                    className="w-full border border-[#242423]/12 rounded-lg px-3 py-2 text-xs text-[#242423] bg-white focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30"
+                    className="border-[#242423]/12 w-full rounded-lg border bg-white px-3 py-2 text-xs text-[#242423] focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30"
                   />
                 </div>
 
-                <label className="flex items-center gap-2 cursor-pointer">
+                <label className="flex cursor-pointer items-center gap-2">
                   <input
                     type="checkbox"
                     checked={featured}
@@ -1653,7 +2091,7 @@ export default function PostEditor({ initial = {} }: PostEditorProps) {
                 <Link
                   href={`/blog/${initial.slug}`}
                   target="_blank"
-                  className="flex items-center justify-center gap-2 w-full border border-[#242423]/12 text-[#242423]/50 text-xs font-semibold py-2.5 rounded-xl hover:border-[#f5a700] hover:text-[#f5a700] transition"
+                  className="border-[#242423]/12 flex w-full items-center justify-center gap-2 rounded-xl border py-2.5 text-xs font-semibold text-[#242423]/50 transition hover:border-[#f5a700] hover:text-[#f5a700]"
                 >
                   <Globe size={12} /> Lihat di website
                 </Link>
@@ -1663,20 +2101,25 @@ export default function PostEditor({ initial = {} }: PostEditorProps) {
             <button
               onClick={() => setShowSettings(true)}
               title="Tampilkan Settings panel"
-              className="hidden lg:flex h-36 w-full bg-white border border-[#242423]/8 rounded-xl flex-col items-center justify-center gap-2 hover:border-[#242423]/25 hover:bg-[#242423]/3 transition group"
+              className="border-[#242423]/8 hover:bg-[#242423]/3 group hidden h-36 w-full flex-col items-center justify-center gap-2 rounded-xl border bg-white transition hover:border-[#242423]/25 lg:flex"
             >
-              <ChevronLeft size={11} className="text-[#242423]/20 group-hover:text-[#242423]/50 transition" />
+              <ChevronLeft
+                size={11}
+                className="text-[#242423]/20 transition group-hover:text-[#242423]/50"
+              />
               <span
-                className="text-[10px] font-bold text-[#242423]/30 group-hover:text-[#242423]/55 transition"
+                className="text-[10px] font-bold text-[#242423]/30 transition group-hover:text-[#242423]/55"
                 style={{ writingMode: "vertical-rl", letterSpacing: "0.05em" }}
               >
                 Pengaturan
               </span>
-              <Settings size={13} className="text-[#242423]/30 group-hover:text-[#242423]/50 transition" />
+              <Settings
+                size={13}
+                className="text-[#242423]/30 transition group-hover:text-[#242423]/50"
+              />
             </button>
           )}
         </div>
-
       </div>
     </div>
   );

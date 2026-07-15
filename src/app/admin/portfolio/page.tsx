@@ -5,7 +5,9 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import {
-  adminListPortfolios, adminDeletePortfolio, logout,
+  adminListPortfolios,
+  adminDeletePortfolio,
+  logout,
   type AdminPortfolioItem,
 } from "@/lib/api/admin";
 import ConfirmModal from "@/components/ui/ConfirmModal";
@@ -42,7 +44,9 @@ export default function AdminPortfolioPage() {
     }
   }, [router, slugFilter]);
 
-  useEffect(() => { load(); }, [load]);
+  useEffect(() => {
+    load();
+  }, [load]);
 
   async function confirmDelete() {
     if (!modal) return;
@@ -66,26 +70,28 @@ export default function AdminPortfolioPage() {
 
   return (
     <div className="min-h-screen bg-[#fcfaf7]">
-      <header className="bg-white border-b border-[#242423]/8 px-4 sm:px-6 py-4 flex items-center justify-between">
+      <header className="border-[#242423]/8 flex items-center justify-between border-b bg-white px-4 py-4 sm:px-6">
         <div className="flex items-center gap-2 sm:gap-3">
-          <div className="w-7 h-7 bg-[#f5a700] rounded-lg flex items-center justify-center flex-shrink-0">
+          <div className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-lg bg-[#f5a700]">
             <FileText size={13} className="text-white" />
           </div>
-          <span className="hidden sm:inline font-extrabold text-[#242423] text-base">Teman UMKM Kita</span>
-          <span className="hidden sm:inline text-[#242423]/20 text-sm">/ Admin</span>
+          <span className="hidden text-base font-extrabold text-[#242423] sm:inline">
+            Teman UMKM Kita
+          </span>
+          <span className="hidden text-sm text-[#242423]/20 sm:inline">/ Admin</span>
         </div>
         <button
           onClick={handleLogout}
-          className="flex items-center gap-1.5 text-xs text-[#242423]/50 hover:text-[#242423] transition"
+          className="flex items-center gap-1.5 text-xs text-[#242423]/50 transition hover:text-[#242423]"
         >
           <LogOut size={13} /> Keluar
         </button>
       </header>
 
-      <main className="max-w-5xl mx-auto px-6 py-8">
-        <div className="flex items-center justify-between mb-6">
+      <main className="mx-auto max-w-5xl px-6 py-8">
+        <div className="mb-6 flex items-center justify-between">
           <div>
-            <div className="flex items-center gap-2 mb-1">
+            <div className="mb-1 flex items-center gap-2">
               <Images size={16} className="text-[#f5a700]" />
               <h1 className="text-xl font-extrabold text-[#242423]">Portfolio</h1>
             </div>
@@ -94,13 +100,13 @@ export default function AdminPortfolioPage() {
           <div className="flex items-center gap-2">
             <Link
               href="/admin/posts"
-              className="flex items-center gap-2 border border-[#242423]/12 text-[#242423]/55 font-semibold px-3 py-2.5 rounded-xl text-sm hover:border-[#242423]/25 hover:text-[#242423] transition"
+              className="border-[#242423]/12 flex items-center gap-2 rounded-xl border px-3 py-2.5 text-sm font-semibold text-[#242423]/55 transition hover:border-[#242423]/25 hover:text-[#242423]"
             >
               Artikel
             </Link>
             <Link
               href="/admin/portfolio/new"
-              className="flex items-center gap-2 bg-[#f5a700] text-white font-bold px-4 py-2.5 rounded-xl text-sm hover:bg-[#f5a700]/90 transition"
+              className="flex items-center gap-2 rounded-xl bg-[#f5a700] px-4 py-2.5 text-sm font-bold text-white transition hover:bg-[#f5a700]/90"
             >
               <Plus size={14} /> Tambah Portfolio
             </Link>
@@ -108,21 +114,23 @@ export default function AdminPortfolioPage() {
         </div>
 
         {/* Filter */}
-        <div className="flex items-center gap-2 mb-4">
+        <div className="mb-4 flex items-center gap-2">
           <select
             value={slugFilter}
             onChange={(e) => setSlugFilter(e.target.value)}
-            className="border border-[#242423]/12 rounded-lg px-3 py-1.5 text-xs text-[#242423] bg-white focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30"
+            className="border-[#242423]/12 rounded-lg border bg-white px-3 py-1.5 text-xs text-[#242423] focus:outline-none focus:ring-2 focus:ring-[#f5a700]/30"
           >
             <option value="">Semua layanan</option>
             {SERVICE_SLUGS.map((s) => (
-              <option key={s} value={s}>{SERVICE_LABELS[s]}</option>
+              <option key={s} value={s}>
+                {SERVICE_LABELS[s]}
+              </option>
             ))}
           </select>
           {slugFilter && (
             <button
               onClick={() => setSlugFilter("")}
-              className="text-xs text-[#242423]/40 hover:text-[#242423] underline transition"
+              className="text-xs text-[#242423]/40 underline transition hover:text-[#242423]"
             >
               Reset
             </button>
@@ -130,7 +138,7 @@ export default function AdminPortfolioPage() {
         </div>
 
         {/* Table */}
-        <div className="bg-white border border-[#242423]/8 rounded-2xl overflow-hidden shadow-sm">
+        <div className="border-[#242423]/8 overflow-hidden rounded-2xl border bg-white shadow-sm">
           {loading ? (
             <div className="py-20 text-center text-sm text-[#242423]/40">Memuat...</div>
           ) : items.length === 0 ? (
@@ -138,54 +146,70 @@ export default function AdminPortfolioPage() {
           ) : (
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-[#242423]/6 bg-[#242423]/2">
-                  <th className="text-left px-5 py-3 text-xs font-bold uppercase tracking-wider text-[#242423]/40">Gambar</th>
-                  <th className="text-left px-4 py-3 text-xs font-bold uppercase tracking-wider text-[#242423]/40">Judul</th>
-                  <th className="text-left px-4 py-3 text-xs font-bold uppercase tracking-wider text-[#242423]/40 hidden sm:table-cell">Layanan</th>
-                  <th className="text-left px-4 py-3 text-xs font-bold uppercase tracking-wider text-[#242423]/40 hidden md:table-cell">Kategori</th>
-                  <th className="text-left px-4 py-3 text-xs font-bold uppercase tracking-wider text-[#242423]/40 hidden md:table-cell">Urutan</th>
-                  <th className="px-4 py-3 w-20" />
+                <tr className="border-[#242423]/6 bg-[#242423]/2 border-b">
+                  <th className="px-5 py-3 text-left text-xs font-bold uppercase tracking-wider text-[#242423]/40">
+                    Gambar
+                  </th>
+                  <th className="px-4 py-3 text-left text-xs font-bold uppercase tracking-wider text-[#242423]/40">
+                    Judul
+                  </th>
+                  <th className="hidden px-4 py-3 text-left text-xs font-bold uppercase tracking-wider text-[#242423]/40 sm:table-cell">
+                    Layanan
+                  </th>
+                  <th className="hidden px-4 py-3 text-left text-xs font-bold uppercase tracking-wider text-[#242423]/40 md:table-cell">
+                    Kategori
+                  </th>
+                  <th className="hidden px-4 py-3 text-left text-xs font-bold uppercase tracking-wider text-[#242423]/40 md:table-cell">
+                    Urutan
+                  </th>
+                  <th className="w-20 px-4 py-3" />
                 </tr>
               </thead>
               <tbody>
                 {items.map((item, i) => (
                   <tr
                     key={item.id}
-                    className={`border-b border-[#242423]/5 last:border-0 hover:bg-[#242423]/1 transition ${
+                    className={`hover:bg-[#242423]/1 border-b border-[#242423]/5 transition last:border-0 ${
                       i % 2 !== 0 ? "bg-[#242423]/1" : ""
                     }`}
                   >
                     <td className="px-5 py-3">
-                      <div className="w-12 h-9 rounded-lg overflow-hidden border border-[#242423]/8 bg-[#242423]/4 relative flex-shrink-0">
-                        <Image src={item.image_url} alt={item.title} fill className="object-cover" sizes="48px" />
+                      <div className="border-[#242423]/8 bg-[#242423]/4 relative h-9 w-12 flex-shrink-0 overflow-hidden rounded-lg border">
+                        <Image
+                          src={item.image_url}
+                          alt={item.title}
+                          fill
+                          className="object-cover"
+                          sizes="48px"
+                        />
                       </div>
                     </td>
                     <td className="px-4 py-3">
-                      <div className="font-semibold text-[#242423] line-clamp-1">{item.title}</div>
+                      <div className="line-clamp-1 font-semibold text-[#242423]">{item.title}</div>
                     </td>
-                    <td className="px-4 py-3 hidden sm:table-cell">
-                      <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-[#f5a700]/10 text-[#f5a700]">
+                    <td className="hidden px-4 py-3 sm:table-cell">
+                      <span className="rounded-full bg-[#f5a700]/10 px-2 py-0.5 text-xs font-semibold text-[#f5a700]">
                         {SERVICE_LABELS[item.service_slug] ?? item.service_slug}
                       </span>
                     </td>
-                    <td className="px-4 py-3 text-xs text-[#242423]/50 hidden md:table-cell">
+                    <td className="hidden px-4 py-3 text-xs text-[#242423]/50 md:table-cell">
                       {item.category ?? "—"}
                     </td>
-                    <td className="px-4 py-3 text-xs text-[#242423]/50 hidden md:table-cell">
+                    <td className="hidden px-4 py-3 text-xs text-[#242423]/50 md:table-cell">
                       {item.sort_order}
                     </td>
                     <td className="px-4 py-3">
-                      <div className="flex items-center gap-2 justify-end">
+                      <div className="flex items-center justify-end gap-2">
                         <Link
                           href={`/admin/portfolio/${item.id}`}
-                          className="flex items-center justify-center w-8 h-8 rounded-lg border border-[#242423]/10 text-[#242423]/50 hover:text-[#242423] hover:border-[#242423]/25 transition"
+                          className="flex h-8 w-8 items-center justify-center rounded-lg border border-[#242423]/10 text-[#242423]/50 transition hover:border-[#242423]/25 hover:text-[#242423]"
                         >
                           <PenLine size={13} />
                         </Link>
                         <button
                           onClick={() => setModal({ id: item.id, title: item.title })}
                           disabled={deleting === item.id}
-                          className="flex items-center justify-center w-8 h-8 rounded-lg border border-[#242423]/10 text-[#242423]/50 hover:text-red-600 hover:border-red-200 disabled:opacity-40 transition"
+                          className="flex h-8 w-8 items-center justify-center rounded-lg border border-[#242423]/10 text-[#242423]/50 transition hover:border-red-200 hover:text-red-600 disabled:opacity-40"
                         >
                           <Trash2 size={13} />
                         </button>

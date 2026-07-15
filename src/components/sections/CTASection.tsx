@@ -13,33 +13,33 @@ export default function CTASection({ proof = DEFAULT_HOMEPAGE_PROOF }: Props) {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
 
   return (
-    <section ref={ref} className="relative py-24 bg-canvas">
-      <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section ref={ref} className="relative bg-canvas py-24">
+      <div className="relative mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5 }}
-          className="grid lg:grid-cols-[1fr_auto] gap-10 items-center rounded-lg border border-accent/25 bg-white p-6 sm:p-8 lg:p-10 shadow-card"
+          className="grid items-center gap-10 rounded-lg border border-accent/25 bg-white p-6 shadow-card sm:p-8 lg:grid-cols-[1fr_auto] lg:p-10"
         >
           <div>
-            <span className="text-accent font-bold text-sm uppercase tracking-wider">
+            <span className="text-sm font-bold uppercase tracking-wider text-accent">
               Audit gratis
             </span>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-brand-dark mt-3 leading-tight max-w-3xl">
+            <h2 className="mt-3 max-w-3xl text-3xl font-extrabold leading-tight text-brand-dark sm:text-4xl lg:text-5xl">
               Cari Tahu Dulu Kenapa Bisnismu Belum Cukup Kelihatan Online.
             </h2>
-            <p className="text-brand-dark/60 text-lg mt-5 max-w-2xl leading-relaxed">
-              Ceritakan kondisi bisnismu. Kami bantu petakan masalah paling prioritas
-              sebelum bicara paket, supaya keputusanmu tidak asal ikut-ikutan.
+            <p className="mt-5 max-w-2xl text-lg leading-relaxed text-brand-dark/60">
+              Ceritakan kondisi bisnismu. Kami bantu petakan masalah paling prioritas sebelum bicara
+              paket, supaya keputusanmu tidak asal ikut-ikutan.
             </p>
           </div>
 
-          <div className="lg:min-w-[320px] rounded-lg border border-brand-dark/10 bg-canvas p-5">
+          <div className="rounded-lg border border-brand-dark/10 bg-canvas p-5 lg:min-w-[320px]">
             <a
               href="https://wa.me/6289501925395?text=Halo%2C+saya+ingin+audit+gratis+untuk+bisnis+saya"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex w-full items-center justify-center gap-2 bg-accent text-white font-bold px-6 py-3.5 rounded-lg text-base hover:bg-accent/90 transition-colors"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-accent px-6 py-3.5 text-base font-bold text-white transition-colors hover:bg-accent/90"
             >
               <MessageCircle size={18} />
               Minta audit via WhatsApp

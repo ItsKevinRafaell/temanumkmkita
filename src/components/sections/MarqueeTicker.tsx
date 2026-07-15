@@ -16,11 +16,14 @@ export default function MarqueeTicker({ proof }: Props) {
   const repeated = [...items, ...items];
 
   return (
-    <div className="py-3 bg-accent overflow-hidden relative">
+    <div className="relative overflow-hidden bg-accent py-3">
       <div className="flex animate-marquee whitespace-nowrap">
         {repeated.map((item, i) => (
-          <span key={i} className="inline-flex items-center gap-3 mx-8 text-white font-semibold text-sm">
-            <span className="w-1 h-1 rounded-sm bg-white/70 flex-shrink-0" />
+          <span
+            key={i}
+            className="mx-8 inline-flex items-center gap-3 text-sm font-semibold text-white"
+          >
+            <span className="h-1 w-1 flex-shrink-0 rounded-sm bg-white/70" />
             {item}
           </span>
         ))}

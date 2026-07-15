@@ -97,15 +97,18 @@ export const servicesData: ServiceData[] = [
     faqs: [
       {
         question: "Berapa lama waktu pengerjaan?",
-        answer: "Paket Starter 5–7 hari, Pro 2–3 minggu, Expert 4–6 minggu tergantung kompleksitas.",
+        answer:
+          "Paket Starter 5–7 hari, Pro 2–3 minggu, Expert 4–6 minggu tergantung kompleksitas.",
       },
       {
         question: "Apakah saya bisa update konten sendiri?",
-        answer: "Ya, paket Pro ke atas dilengkapi CMS yang mudah digunakan tanpa keahlian teknikal.",
+        answer:
+          "Ya, paket Pro ke atas dilengkapi CMS yang mudah digunakan tanpa keahlian teknikal.",
       },
       {
         question: "Bagaimana jika tidak puas dengan hasilnya?",
-        answer: "Kami berikan garansi revisi sesuai paket. Kalau masih belum sesuai, kami diskusikan sampai kamu puas.",
+        answer:
+          "Kami berikan garansi revisi sesuai paket. Kalau masih belum sesuai, kami diskusikan sampai kamu puas.",
       },
       {
         question: "Domain dan hosting termasuk?",
@@ -170,27 +173,40 @@ export const servicesData: ServiceData[] = [
       },
     ],
     process: [
-      { title: "Audit & Riset", desc: "Analisis kondisi SEO saat ini dan riset kata kunci potensial." },
+      {
+        title: "Audit & Riset",
+        desc: "Analisis kondisi SEO saat ini dan riset kata kunci potensial.",
+      },
       { title: "Optimasi Awal", desc: "Setup Google Business Profile dan perbaikan on-page SEO." },
-      { title: "Konten & Backlink", desc: "Produksi artikel SEO dan pembangunan backlink berkualitas." },
-      { title: "Monitor & Laporan", desc: "Pantau ranking setiap minggu, laporan bulanan ke kamu." },
+      {
+        title: "Konten & Backlink",
+        desc: "Produksi artikel SEO dan pembangunan backlink berkualitas.",
+      },
+      {
+        title: "Monitor & Laporan",
+        desc: "Pantau ranking setiap minggu, laporan bulanan ke kamu.",
+      },
     ],
     faqs: [
       {
         question: "Berapa lama sampai terlihat hasilnya?",
-        answer: "SEO adalah investasi jangka panjang. Biasanya terlihat perbaikan dalam 1–3 bulan, hasil signifikan dalam 3–6 bulan.",
+        answer:
+          "SEO adalah investasi jangka panjang. Biasanya terlihat perbaikan dalam 1–3 bulan, hasil signifikan dalam 3–6 bulan.",
       },
       {
         question: "Apakah ranking dijamin halaman 1?",
-        answer: "Tidak ada yang bisa menjamin ranking pasti — itu adalah praktik tidak jujur. Kami jamin proses yang benar dan hasil yang terukur.",
+        answer:
+          "Tidak ada yang bisa menjamin ranking pasti — itu adalah praktik tidak jujur. Kami jamin proses yang benar dan hasil yang terukur.",
       },
       {
         question: "Apa bedanya dengan Google Ads?",
-        answer: "Google Ads bayar per klik dan berhenti saat budget habis. SEO adalah trafik organik yang terus mengalir tanpa bayar per klik.",
+        answer:
+          "Google Ads bayar per klik dan berhenti saat budget habis. SEO adalah trafik organik yang terus mengalir tanpa bayar per klik.",
       },
       {
         question: "Apakah bisa dibatalkan kapan saja?",
-        answer: "Ya, tidak ada kontrak jangka panjang yang memaksa. Kami percaya hasil kerja kami yang akan membuat kamu bertahan.",
+        answer:
+          "Ya, tidak ada kontrak jangka panjang yang memaksa. Kami percaya hasil kerja kami yang akan membuat kamu bertahan.",
       },
     ],
   },
@@ -255,13 +271,17 @@ export const servicesData: ServiceData[] = [
     process: [
       { title: "Brand Audit", desc: "Pelajari brand, target audience, dan kompetitor bisnismu." },
       { title: "Content Plan", desc: "Buat rencana konten sebulan ke depan untuk di-approve." },
-      { title: "Produksi & Jadwal", desc: "Desain, tulis caption, jadwalkan posting di waktu terbaik." },
+      {
+        title: "Produksi & Jadwal",
+        desc: "Desain, tulis caption, jadwalkan posting di waktu terbaik.",
+      },
       { title: "Monitor & Laporan", desc: "Pantau engagement dan kirim laporan performa bulanan." },
     ],
     faqs: [
       {
         question: "Platform apa saja yang bisa dikelola?",
-        answer: "Instagram, Facebook, TikTok, Twitter/X, dan LinkedIn. Platform disesuaikan dengan target pasar bisnismu.",
+        answer:
+          "Instagram, Facebook, TikTok, Twitter/X, dan LinkedIn. Platform disesuaikan dengan target pasar bisnismu.",
       },
       {
         question: "Apakah saya bisa approve konten sebelum di-posting?",
@@ -269,11 +289,13 @@ export const servicesData: ServiceData[] = [
       },
       {
         question: "Bagaimana dengan konten foto produk?",
-        answer: "Kamu kirimkan foto/video produk, kami yang olah dan desain menjadi konten yang menarik.",
+        answer:
+          "Kamu kirimkan foto/video produk, kami yang olah dan desain menjadi konten yang menarik.",
       },
       {
         question: "Apakah termasuk iklan berbayar?",
-        answer: "Paket ini untuk konten organik. Untuk iklan berbayar (Meta Ads, TikTok Ads), tersedia sebagai add-on terpisah.",
+        answer:
+          "Paket ini untuk konten organik. Untuk iklan berbayar (Meta Ads, TikTok Ads), tersedia sebagai add-on terpisah.",
       },
     ],
   },

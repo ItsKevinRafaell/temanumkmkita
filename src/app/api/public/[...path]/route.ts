@@ -6,10 +6,7 @@ const ALLOWED_RESOURCES = new Set(["articles", "authors", "categories", "portfol
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { path?: string[] } }
-) {
+export async function GET(request: NextRequest, { params }: { params: { path?: string[] } }) {
   const path = params.path ?? [];
 
   if (path.length === 0 || !ALLOWED_RESOURCES.has(path[0])) {

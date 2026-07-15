@@ -10,7 +10,9 @@ import { Calendar, Clock, Tag, ChevronLeft } from "lucide-react";
 
 function articleToPost(a: AdminArticle): BlogPost {
   let content: ContentBlock[] = [];
-  try { content = JSON.parse(a.content); } catch {}
+  try {
+    content = JSON.parse(a.content);
+  } catch {}
   return {
     slug: a.slug,
     title: a.title,
@@ -35,7 +37,9 @@ const categoryColors: Record<string, string> = {
 
 function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString("id-ID", {
-    day: "numeric", month: "long", year: "numeric",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
   });
 }
 
@@ -52,9 +56,12 @@ export default function PreviewPage() {
 
   if (error) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center gap-4">
+      <div className="flex min-h-screen flex-col items-center justify-center gap-4">
         <p className="text-sm text-red-600">{error}</p>
-        <Link href="/admin/posts" className="text-xs text-brand-dark/50 hover:text-brand-dark transition">
+        <Link
+          href="/admin/posts"
+          className="text-xs text-brand-dark/50 transition hover:text-brand-dark"
+        >
           ← Kembali ke admin
         </Link>
       </div>
@@ -63,7 +70,7 @@ export default function PreviewPage() {
 
   if (!article) {
     return (
-      <div className="min-h-screen flex items-center justify-center text-sm text-[#242423]/40">
+      <div className="flex min-h-screen items-center justify-center text-sm text-[#242423]/40">
         Memuat...
       </div>
     );
@@ -76,18 +83,20 @@ export default function PreviewPage() {
   return (
     <>
       {/* Preview banner */}
-      <div className="bg-amber-50 border-b border-amber-200 px-4 py-2.5 flex items-center justify-between sticky top-0 z-50">
-        <div className="flex items-center gap-2 text-sm text-amber-800 font-semibold">
-          <span className="inline-flex items-center gap-1.5 bg-amber-200/60 px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider">
+      <div className="sticky top-0 z-50 flex items-center justify-between border-b border-amber-200 bg-amber-50 px-4 py-2.5">
+        <div className="flex items-center gap-2 text-sm font-semibold text-amber-800">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-200/60 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider">
             Mode Preview
           </span>
           {article.status === "draft" && (
-            <span className="text-xs text-amber-700/70 font-normal">— artikel ini masih draft, belum tayang</span>
+            <span className="text-xs font-normal text-amber-700/70">
+              — artikel ini masih draft, belum tayang
+            </span>
           )}
         </div>
         <Link
           href={`/admin/posts/${id}`}
-          className="flex items-center gap-1.5 text-xs text-amber-800 font-semibold hover:text-amber-900 transition"
+          className="flex items-center gap-1.5 text-xs font-semibold text-amber-800 transition hover:text-amber-900"
         >
           <ChevronLeft size={13} /> Kembali ke Editor
         </Link>
@@ -95,25 +104,25 @@ export default function PreviewPage() {
 
       <main className="pt-8">
         {/* Header */}
-        <section className="relative pt-8 pb-6">
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="relative pb-6 pt-8">
+          <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl">
-              <span className={`inline-flex items-center gap-1.5 text-xs font-bold px-2.5 py-1 rounded-full border mb-4 ${colorClass}`}>
+              <span
+                className={`mb-4 inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-bold ${colorClass}`}
+              >
                 <Tag size={10} />
                 {post.category}
               </span>
-              <h1 className="text-3xl sm:text-4xl font-extrabold text-[#242423] leading-tight mb-4">
+              <h1 className="mb-4 text-3xl font-extrabold leading-tight text-[#242423] sm:text-4xl">
                 {post.title}
               </h1>
-              <p className="text-[#242423]/60 text-lg leading-relaxed mb-5">
-                {post.excerpt}
-              </p>
-              <div className="flex items-center gap-4 text-sm text-[#242423]/45 font-medium">
+              <p className="mb-5 text-lg leading-relaxed text-[#242423]/60">{post.excerpt}</p>
+              <div className="flex items-center gap-4 text-sm font-medium text-[#242423]/45">
                 <span className="flex items-center gap-1.5">
                   <Calendar size={13} />
                   {formatDate(post.date)}
                 </span>
-                <span className="w-1 h-1 rounded-full bg-[#242423]/20" />
+                <span className="h-1 w-1 rounded-full bg-[#242423]/20" />
                 <span className="flex items-center gap-1.5">
                   <Clock size={13} />
                   {post.readTime} menit baca
@@ -125,7 +134,7 @@ export default function PreviewPage() {
 
         {/* Content */}
         <section className="pb-20">
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
             <BlogDetailClient post={post} related={[]} headings={headings} />
           </div>
         </section>

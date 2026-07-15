@@ -39,7 +39,9 @@ export default function PortfolioSlider({ items }: { items: PortfolioItem[] }) {
 
   useEffect(() => {
     resetTimer();
-    return () => { if (timerRef.current) clearInterval(timerRef.current); };
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
   }, [resetTimer]);
 
   function handleClick(dir: "left" | "right") {
@@ -60,7 +62,7 @@ export default function PortfolioSlider({ items }: { items: PortfolioItem[] }) {
       {/* Track */}
       <div
         ref={trackRef}
-        className="flex-1 flex gap-6 overflow-x-auto scrollbar-hide pb-2"
+        className="scrollbar-hide flex flex-1 gap-6 overflow-x-auto pb-2"
         style={{ scrollSnapType: "x mandatory" }}
       >
         {items.map((item, i) => (
@@ -69,10 +71,12 @@ export default function PortfolioSlider({ items }: { items: PortfolioItem[] }) {
             initial={{ opacity: 0, y: 24 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: i * 0.08, duration: 0.5 }}
-            className="flex-shrink-0 w-72 bg-white border border-brand-dark/8 card-shadow rounded-lg overflow-hidden"
+            className="border-brand-dark/8 card-shadow w-72 flex-shrink-0 overflow-hidden rounded-lg border bg-white"
             style={{ scrollSnapAlign: "start" }}
           >
-            <div className={`h-44 ${item.accent ?? "bg-orange-50 border-orange-100"} border-b border-brand-dark/6 flex items-center justify-center relative overflow-hidden`}>
+            <div
+              className={`h-44 ${item.accent ?? "border-orange-100 bg-orange-50"} border-brand-dark/6 relative flex items-center justify-center overflow-hidden border-b`}
+            >
               {item.image_url ? (
                 <Image
                   src={item.image_url}
@@ -85,15 +89,17 @@ export default function PortfolioSlider({ items }: { items: PortfolioItem[] }) {
                 <Globe size={36} className="text-brand-dark/15" />
               )}
               {item.plan && (
-                <div className="absolute top-3 right-3">
-                  <span className="bg-white/80 backdrop-blur-sm text-brand-dark/50 text-xs font-semibold px-2.5 py-1 rounded-md border border-brand-dark/8">
+                <div className="absolute right-3 top-3">
+                  <span className="border-brand-dark/8 rounded-md border bg-white/80 px-2.5 py-1 text-xs font-semibold text-brand-dark/50 backdrop-blur-sm">
                     {item.plan}
                   </span>
                 </div>
               )}
             </div>
             <div className="p-5">
-              <div className="text-xs text-accent font-bold uppercase tracking-wider mb-1">{item.category}</div>
+              <div className="mb-1 text-xs font-bold uppercase tracking-wider text-accent">
+                {item.category}
+              </div>
               <div className="font-bold text-brand-dark">{item.name}</div>
             </div>
           </motion.div>

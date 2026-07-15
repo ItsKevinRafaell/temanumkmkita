@@ -11,7 +11,9 @@ const PER_PAGE = 6;
 
 function articleToPost(a: Article): BlogPost {
   let content: ContentBlock[] = [];
-  try { content = JSON.parse(a.content); } catch {}
+  try {
+    content = JSON.parse(a.content);
+  } catch {}
   return {
     slug: a.slug,
     title: a.title,
@@ -85,7 +87,9 @@ export default function BlogListClient({
           setError(true);
         }
       });
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, [activeCategory, page]);
 
   function handleCategory(cat: string) {
@@ -112,23 +116,26 @@ export default function BlogListClient({
         setTotal(data.total);
         setLoading(false);
       })
-      .catch(() => { setLoading(false); setError(true); });
+      .catch(() => {
+        setLoading(false);
+        setError(true);
+      });
   }
 
   return (
     <>
       {/* ── Category Filter ──────────────────────────────────────── */}
       <section className="pb-8">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-wrap gap-2">
             {categories.map((cat) => (
               <button
                 key={cat}
                 onClick={() => handleCategory(cat)}
-                className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 ${
+                className={`rounded-lg px-4 py-2 text-sm font-semibold transition-all duration-200 ${
                   activeCategory === cat
                     ? "bg-accent text-white shadow-md shadow-accent/20"
-                    : "bg-white/80 border border-brand-dark/10 text-brand-dark/60 hover:border-accent hover:text-accent"
+                    : "border border-brand-dark/10 bg-white/80 text-brand-dark/60 hover:border-accent hover:text-accent"
                 }`}
               >
                 {cat}
@@ -140,24 +147,26 @@ export default function BlogListClient({
 
       {/* ── Post Grid ─────────────────────────────────────────────── */}
       <section className="pb-20">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
           {loading ? (
-            <div className="py-24 flex items-center justify-center gap-3 text-brand-dark/40">
+            <div className="flex items-center justify-center gap-3 py-24 text-brand-dark/40">
               <Loader2 size={20} className="animate-spin" />
               <span className="text-sm font-medium">Memuat artikel...</span>
             </div>
           ) : error ? (
             <div className="py-24 text-center">
-              <p className="text-brand-dark/55 font-medium mb-4">Gagal memuat artikel. Coba lagi.</p>
+              <p className="mb-4 font-medium text-brand-dark/55">
+                Gagal memuat artikel. Coba lagi.
+              </p>
               <button
                 onClick={retry}
-                className="bg-accent text-white font-bold px-6 py-2.5 rounded-lg text-sm hover:bg-accent/90 transition-colors"
+                className="rounded-lg bg-accent px-6 py-2.5 text-sm font-bold text-white transition-colors hover:bg-accent/90"
               >
                 Coba Lagi
               </button>
             </div>
           ) : posts.length === 0 ? (
-            <div className="py-24 text-center text-brand-dark/40 font-medium">
+            <div className="py-24 text-center font-medium text-brand-dark/40">
               Belum ada artikel di kategori ini.
             </div>
           ) : (
@@ -168,7 +177,7 @@ export default function BlogListClient({
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -8 }}
                 transition={{ duration: 0.25 }}
-                className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
+                className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
               >
                 {posts.map((post, i) => (
                   <motion.div
@@ -186,11 +195,11 @@ export default function BlogListClient({
 
           {/* ── Pagination ───────────────────────────────────────────── */}
           {!loading && totalPages > 1 && (
-            <div className="flex items-center justify-center gap-1.5 mt-12">
+            <div className="mt-12 flex items-center justify-center gap-1.5">
               <button
                 onClick={() => goPage(page - 1)}
                 disabled={page === 1}
-                className="flex items-center justify-center w-9 h-9 rounded-xl border border-brand-dark/12 text-brand-dark/50 hover:border-accent hover:text-accent disabled:opacity-30 disabled:pointer-events-none transition-all duration-200"
+                className="border-brand-dark/12 flex h-9 w-9 items-center justify-center rounded-xl border text-brand-dark/50 transition-all duration-200 hover:border-accent hover:text-accent disabled:pointer-events-none disabled:opacity-30"
                 aria-label="Halaman sebelumnya"
               >
                 <ChevronLeft size={15} />
@@ -198,17 +207,20 @@ export default function BlogListClient({
 
               {buildPages(totalPages, page).map((p, i) =>
                 p === "..." ? (
-                  <span key={`ellipsis-${i}`} className="w-9 text-center text-sm text-brand-dark/30 font-medium">
+                  <span
+                    key={`ellipsis-${i}`}
+                    className="w-9 text-center text-sm font-medium text-brand-dark/30"
+                  >
                     …
                   </span>
                 ) : (
                   <button
                     key={p}
                     onClick={() => goPage(p as number)}
-                    className={`w-9 h-9 rounded-xl text-sm font-bold transition-all duration-200 ${
+                    className={`h-9 w-9 rounded-xl text-sm font-bold transition-all duration-200 ${
                       page === p
                         ? "bg-accent text-white shadow-md shadow-accent/25"
-                        : "border border-brand-dark/12 text-brand-dark/55 hover:border-accent hover:text-accent"
+                        : "border-brand-dark/12 border text-brand-dark/55 hover:border-accent hover:text-accent"
                     }`}
                   >
                     {p}
@@ -219,7 +231,7 @@ export default function BlogListClient({
               <button
                 onClick={() => goPage(page + 1)}
                 disabled={page === totalPages}
-                className="flex items-center justify-center w-9 h-9 rounded-xl border border-brand-dark/12 text-brand-dark/50 hover:border-accent hover:text-accent disabled:opacity-30 disabled:pointer-events-none transition-all duration-200"
+                className="border-brand-dark/12 flex h-9 w-9 items-center justify-center rounded-xl border text-brand-dark/50 transition-all duration-200 hover:border-accent hover:text-accent disabled:pointer-events-none disabled:opacity-30"
                 aria-label="Halaman berikutnya"
               >
                 <ChevronRight size={15} />
@@ -228,8 +240,9 @@ export default function BlogListClient({
           )}
 
           {!loading && total > 0 && totalPages > 1 && (
-            <p className="text-center text-xs text-brand-dark/35 font-medium mt-4">
-              Menampilkan {(page - 1) * PER_PAGE + 1}–{Math.min(page * PER_PAGE, total)} dari {total} artikel
+            <p className="mt-4 text-center text-xs font-medium text-brand-dark/35">
+              Menampilkan {(page - 1) * PER_PAGE + 1}–{Math.min(page * PER_PAGE, total)} dari{" "}
+              {total} artikel
             </p>
           )}
         </div>

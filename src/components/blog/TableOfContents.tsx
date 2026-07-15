@@ -44,11 +44,11 @@ export default function TableOfContents({ headings }: TableOfContentsProps) {
   }
 
   return (
-    <div className="bg-white border border-brand-dark/8 card-shadow rounded-lg overflow-hidden">
+    <div className="border-brand-dark/8 card-shadow overflow-hidden rounded-lg border bg-white">
       {/* Header — always visible */}
       <button
         onClick={() => setMobileOpen((v) => !v)}
-        className="w-full flex items-center justify-between px-5 py-4 lg:pointer-events-none"
+        className="flex w-full items-center justify-between px-5 py-4 lg:pointer-events-none"
       >
         <span className="text-xs font-bold uppercase tracking-wider text-brand-dark/70">
           Daftar Isi
@@ -60,7 +60,7 @@ export default function TableOfContents({ headings }: TableOfContentsProps) {
       </button>
 
       {/* Items */}
-      <div className={`${mobileOpen ? "block" : "hidden"} lg:block px-3 pb-4`}>
+      <div className={`${mobileOpen ? "block" : "hidden"} px-3 pb-4 lg:block`}>
         <ul className="space-y-0.5">
           {headings.map((h) => {
             const isActive = activeId === h.id;
@@ -68,16 +68,16 @@ export default function TableOfContents({ headings }: TableOfContentsProps) {
               <li key={h.id}>
                 <button
                   onClick={() => scrollTo(h.id)}
-                  className={`w-full text-left px-3 py-2 rounded-xl text-sm leading-snug transition-all duration-150 ${
+                  className={`w-full rounded-xl px-3 py-2 text-left text-sm leading-snug transition-all duration-150 ${
                     h.level === 3 ? "pl-6" : ""
                   } ${
                     isActive
-                      ? "bg-accent/10 text-accent font-semibold"
-                      : "text-brand-dark/75 hover:text-brand-dark hover:bg-brand-dark/4"
+                      ? "bg-accent/10 font-semibold text-accent"
+                      : "hover:bg-brand-dark/4 text-brand-dark/75 hover:text-brand-dark"
                   }`}
                 >
                   {isActive && (
-                    <span className="inline-block w-1.5 h-1.5 rounded-sm bg-accent mr-2 -mt-0.5 align-middle" />
+                    <span className="-mt-0.5 mr-2 inline-block h-1.5 w-1.5 rounded-sm bg-accent align-middle" />
                   )}
                   {h.text}
                 </button>

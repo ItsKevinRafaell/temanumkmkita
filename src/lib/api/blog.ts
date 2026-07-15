@@ -46,7 +46,8 @@ export async function fetchArticles(params: {
   per_page?: number;
 }): Promise<PaginatedArticles> {
   const url = buildPublicApiUrl("articles");
-  if (params.category && params.category !== "Semua") url.searchParams.set("category", params.category);
+  if (params.category && params.category !== "Semua")
+    url.searchParams.set("category", params.category);
   if (params.page) url.searchParams.set("page", String(params.page));
   if (params.per_page) url.searchParams.set("per_page", String(params.per_page));
 
@@ -61,10 +62,13 @@ export async function fetchArticleBySlug(slug: string): Promise<Article> {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 8000);
     try {
-      const res = await fetch(buildPublicApiUrl(`articles/${encodeURIComponent(slug)}`).toString(), {
-        next: { revalidate: 300 },
-        signal: controller.signal,
-      });
+      const res = await fetch(
+        buildPublicApiUrl(`articles/${encodeURIComponent(slug)}`).toString(),
+        {
+          next: { revalidate: 300 },
+          signal: controller.signal,
+        }
+      );
       if (res.status === 404) throw new Error("Article not found");
       if (!res.ok) throw new Error(`API error ${res.status}`);
       return res.json();

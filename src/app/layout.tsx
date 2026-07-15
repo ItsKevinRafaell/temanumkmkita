@@ -55,8 +55,16 @@ export const metadata: Metadata = {
       { url: `/brand/favicon-96.png?${ASSET_VERSION}`, sizes: "96x96", type: "image/png" },
       { url: `/brand/favicon-32.png?${ASSET_VERSION}`, sizes: "32x32", type: "image/png" },
       { url: `/brand/favicon-16.png?${ASSET_VERSION}`, sizes: "16x16", type: "image/png" },
-      { url: `/brand/android-chrome-192x192.png?${ASSET_VERSION}`, sizes: "192x192", type: "image/png" },
-      { url: `/brand/android-chrome-512x512.png?${ASSET_VERSION}`, sizes: "512x512", type: "image/png" },
+      {
+        url: `/brand/android-chrome-192x192.png?${ASSET_VERSION}`,
+        sizes: "192x192",
+        type: "image/png",
+      },
+      {
+        url: `/brand/android-chrome-512x512.png?${ASSET_VERSION}`,
+        sizes: "512x512",
+        type: "image/png",
+      },
     ],
     apple: `/brand/apple-touch-icon.png?${ASSET_VERSION}`,
   },
@@ -83,7 +91,9 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   let settings = null;
-  try { settings = await fetchSiteSettings(); } catch {}
+  try {
+    settings = await fetchSiteSettings();
+  } catch {}
 
   const sameAs = [
     settings?.instagram_url,
@@ -116,26 +126,31 @@ export default async function RootLayout({
         name: "Teman UMKM Kita",
         url: SITE_URL,
         logo: logoUrl,
-        description: "Solusi digital untuk UMKM Indonesia — web development, SEO, sosial media, branding.",
+        description:
+          "Solusi digital untuk UMKM Indonesia — web development, SEO, sosial media, branding.",
         areaServed,
         foundingDate: proof.foundedYear,
-        ...(settings?.phone ? {
-          telephone: settings.phone,
-          contactPoint: {
-            "@type": "ContactPoint",
-            telephone: settings.phone,
-            contactType: "customer service",
-            areaServed: "ID",
-            availableLanguage: "Indonesian",
-          },
-        } : {}),
-        ...(settings?.address ? {
-          address: {
-            "@type": "PostalAddress",
-            streetAddress: settings.address,
-            addressCountry: "ID",
-          },
-        } : {}),
+        ...(settings?.phone
+          ? {
+              telephone: settings.phone,
+              contactPoint: {
+                "@type": "ContactPoint",
+                telephone: settings.phone,
+                contactType: "customer service",
+                areaServed: "ID",
+                availableLanguage: "Indonesian",
+              },
+            }
+          : {}),
+        ...(settings?.address
+          ? {
+              address: {
+                "@type": "PostalAddress",
+                streetAddress: settings.address,
+                addressCountry: "ID",
+              },
+            }
+          : {}),
         ...(sameAs.length > 0 ? { sameAs } : {}),
       },
       {
@@ -153,9 +168,7 @@ export default async function RootLayout({
     <html lang="id">
       <head>
         <link rel="preconnect" href="https://api.temanumkmkita.com" />
-        {GSC_VERIFICATION && (
-          <meta name="google-site-verification" content={GSC_VERIFICATION} />
-        )}
+        {GSC_VERIFICATION && <meta name="google-site-verification" content={GSC_VERIFICATION} />}
         <link rel="alternate" hrefLang="id-ID" href={SITE_URL} />
         {/* CMS favicon override (admin settings). Default icon sudah di-handle metadata.icons.
             Hanya render kalau admin benar-benar set favicon_url, supaya gak duplikat link. */}
@@ -168,7 +181,7 @@ export default async function RootLayout({
           }}
         />
       </head>
-      <body className={`${poppins.variable} font-sans antialiased bg-canvas text-brand-dark noise`}>
+      <body className={`${poppins.variable} noise bg-canvas font-sans text-brand-dark antialiased`}>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

@@ -68,7 +68,7 @@ function ServiceCard({
       } ${className ?? ""}`}
     >
       <div className="mb-5 flex items-center justify-between gap-4">
-        <div className="h-11 w-11 rounded-md bg-accent/10 flex items-center justify-center">
+        <div className="flex h-11 w-11 items-center justify-center rounded-md bg-accent/10">
           <IconComponent size={21} className="text-accent" />
         </div>
         {service.featured && (
@@ -77,18 +77,16 @@ function ServiceCard({
           </span>
         )}
       </div>
-      <p className="text-xs font-bold uppercase tracking-wider text-accent mb-2">
-        {service.label}
-      </p>
-      <h3 className={`font-extrabold text-brand-dark leading-tight mb-3 ${
-        service.featured ? "text-2xl" : "text-xl"
-      }`}>
+      <p className="mb-2 text-xs font-bold uppercase tracking-wider text-accent">{service.label}</p>
+      <h3
+        className={`mb-3 font-extrabold leading-tight text-brand-dark ${
+          service.featured ? "text-2xl" : "text-xl"
+        }`}
+      >
         {service.title}
       </h3>
-      <p className="text-brand-dark/60 leading-relaxed flex-1 text-sm">
-        {service.desc}
-      </p>
-      <span className="mt-5 inline-flex items-center gap-2 text-brand-dark font-bold text-sm group-hover:text-accent transition-colors">
+      <p className="flex-1 text-sm leading-relaxed text-brand-dark/60">{service.desc}</p>
+      <span className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-brand-dark transition-colors group-hover:text-accent">
         Lihat detail
         <ArrowRight size={15} />
       </span>
@@ -101,8 +99,8 @@ export default function LayananSection() {
   const rest = services.slice(1);
 
   return (
-    <section className="py-24 bg-canvas">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="bg-canvas py-24">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -110,18 +108,17 @@ export default function LayananSection() {
           transition={{ duration: 0.5 }}
           className="mb-12 max-w-3xl"
         >
-          <span className="text-accent font-bold text-sm uppercase tracking-wider">
-            Layanan
-          </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-brand-dark mt-3 leading-tight">
+          <span className="text-sm font-bold uppercase tracking-wider text-accent">Layanan</span>
+          <h2 className="mt-3 text-3xl font-extrabold leading-tight text-brand-dark sm:text-4xl lg:text-5xl">
             Pilih Titik Yang Paling Bikin Bisnismu Tertinggal Online.
           </h2>
-          <p className="text-brand-dark/60 text-lg mt-4 max-w-2xl">
-            Mulai dari yang paling urgent dulu. Setelah audit, kami bantu tentukan apakah kamu butuh website, Maps, konten, maintenance, atau identitas brand.
+          <p className="mt-4 max-w-2xl text-lg text-brand-dark/60">
+            Mulai dari yang paling urgent dulu. Setelah audit, kami bantu tentukan apakah kamu butuh
+            website, Maps, konten, maintenance, atau identitas brand.
           </p>
         </motion.div>
 
-        <div className="hidden lg:grid lg:grid-cols-3 lg:grid-rows-2 gap-4 auto-rows-fr">
+        <div className="hidden auto-rows-fr gap-4 lg:grid lg:grid-cols-3 lg:grid-rows-2">
           <motion.div
             className="lg:col-span-1 lg:row-span-2"
             initial={{ opacity: 0, y: 24 }}
@@ -144,7 +141,7 @@ export default function LayananSection() {
           ))}
         </div>
 
-        <div className="lg:hidden grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:hidden">
           {services.map((service, i) => (
             <motion.div
               key={service.href}
@@ -167,7 +164,7 @@ export default function LayananSection() {
         >
           <Link
             href="/layanan"
-            className="inline-flex items-center gap-2 border border-brand-dark/15 bg-white text-brand-dark font-bold px-5 py-3 rounded-lg hover:border-accent/45 hover:text-accent transition-colors"
+            className="inline-flex items-center gap-2 rounded-lg border border-brand-dark/15 bg-white px-5 py-3 font-bold text-brand-dark transition-colors hover:border-accent/45 hover:text-accent"
           >
             Bandingkan semua layanan
             <ArrowRight size={16} />

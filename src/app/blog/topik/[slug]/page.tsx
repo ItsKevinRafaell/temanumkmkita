@@ -25,7 +25,7 @@ const TOPIC_SLUGS = [
 
 function topicLabel(slug: string): string {
   const map: Record<string, string> = {
-    "website": "Website",
+    website: "Website",
     "seo-google-maps": "SEO & Google Maps",
     "sosial-media": "Sosial Media",
     branding: "Branding",
@@ -37,7 +37,9 @@ function topicLabel(slug: string): string {
 
 function articleToPost(a: Article): BlogPost {
   let content: ContentBlock[] = [];
-  try { content = JSON.parse(a.content); } catch {}
+  try {
+    content = JSON.parse(a.content);
+  } catch {}
   return {
     slug: a.slug,
     title: a.title,
@@ -76,19 +78,18 @@ export async function generateMetadata({
   };
 }
 
-export default async function TopicPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
+export default async function TopicPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const label = topicLabel(slug);
 
   let posts: BlogPost[] = [];
   try {
-    const res = await fetch(`${API_BASE}/api/articles?category=${encodeURIComponent(label)}&per_page=${PER_PAGE}`, {
-      next: { revalidate: 300 },
-    });
+    const res = await fetch(
+      `${API_BASE}/api/articles?category=${encodeURIComponent(label)}&per_page=${PER_PAGE}`,
+      {
+        next: { revalidate: 300 },
+      }
+    );
     if (res.ok) {
       const data = await res.json();
       posts = (data.items as Article[]).map(articleToPost);
@@ -119,39 +120,41 @@ export default async function TopicPage({
       />
       <Navbar />
       <main className="pt-20">
-        <section className="relative overflow-hidden pt-12 pb-10">
+        <section className="relative overflow-hidden pb-10 pt-12">
           <div className="absolute inset-x-0 top-0 h-px bg-brand-dark/10" />
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center gap-1.5 text-xs text-brand-dark/40 font-medium mb-8">
-              <Link href="/" className="hover:text-brand-dark transition-colors">Beranda</Link>
+          <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+            <div className="mb-8 flex items-center gap-1.5 text-xs font-medium text-brand-dark/40">
+              <Link href="/" className="transition-colors hover:text-brand-dark">
+                Beranda
+              </Link>
               <ChevronRight size={12} />
-              <Link href="/blog" className="hover:text-brand-dark transition-colors">Artikel</Link>
+              <Link href="/blog" className="transition-colors hover:text-brand-dark">
+                Artikel
+              </Link>
               <ChevronRight size={12} />
               <span className="text-brand-dark/70">{label}</span>
             </div>
             <div className="max-w-2xl">
-              <p className="text-accent font-bold text-sm uppercase tracking-wider mb-4">
-                Topik
-              </p>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-brand-dark leading-tight mb-5">
+              <p className="mb-4 text-sm font-bold uppercase tracking-wider text-accent">Topik</p>
+              <h1 className="mb-5 text-4xl font-extrabold leading-tight text-brand-dark sm:text-5xl lg:text-6xl">
                 Semua Tentang {label}
               </h1>
-              <p className="text-brand-dark/60 text-lg leading-relaxed">
-                Pusat panduan {label} untuk UMKM. Dari langkah dasar sampai
-                strategi yang bikin bisnis kamu lebih terlihat dan dipercaya.
+              <p className="text-lg leading-relaxed text-brand-dark/60">
+                Pusat panduan {label} untuk UMKM. Dari langkah dasar sampai strategi yang bikin
+                bisnis kamu lebih terlihat dan dipercaya.
               </p>
             </div>
           </div>
         </section>
 
         <section className="pb-20">
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
             {posts.length === 0 ? (
-              <div className="py-20 text-center text-brand-dark/40 font-medium">
+              <div className="py-20 text-center font-medium text-brand-dark/40">
                 Belum ada artikel di topik ini.
               </div>
             ) : (
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {posts.map((post, i) => (
                   <BlogCard key={post.slug} post={post} index={i} priority={i < 3} />
                 ))}

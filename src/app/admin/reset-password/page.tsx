@@ -41,10 +41,15 @@ function ResetPasswordForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 rounded-2xl border border-[#242423]/8 bg-white p-7 shadow-sm">
+    <form
+      onSubmit={handleSubmit}
+      className="border-[#242423]/8 space-y-4 rounded-2xl border bg-white p-7 shadow-sm"
+    >
       {token ? (
         <div>
-          <label className="mb-1.5 block text-xs font-semibold text-[#242423]/60">Password Baru</label>
+          <label className="mb-1.5 block text-xs font-semibold text-[#242423]/60">
+            Password Baru
+          </label>
           <input
             type="password"
             minLength={8}
@@ -56,7 +61,9 @@ function ResetPasswordForm() {
         </div>
       ) : (
         <div>
-          <label className="mb-1.5 block text-xs font-semibold text-[#242423]/60">Email Admin</label>
+          <label className="mb-1.5 block text-xs font-semibold text-[#242423]/60">
+            Email Admin
+          </label>
           <input
             type="email"
             required
@@ -67,8 +74,16 @@ function ResetPasswordForm() {
         </div>
       )}
 
-      {error && <p className="rounded-lg border border-red-100 bg-red-50 px-3 py-2 text-xs text-red-600">{error}</p>}
-      {message && <p className="rounded-lg border border-green-100 bg-green-50 px-3 py-2 text-xs text-green-700">{message}</p>}
+      {error && (
+        <p className="rounded-lg border border-red-100 bg-red-50 px-3 py-2 text-xs text-red-600">
+          {error}
+        </p>
+      )}
+      {message && (
+        <p className="rounded-lg border border-green-100 bg-green-50 px-3 py-2 text-xs text-green-700">
+          {message}
+        </p>
+      )}
 
       <button
         type="submit"
@@ -78,7 +93,10 @@ function ResetPasswordForm() {
         {loading && <Loader2 size={14} className="animate-spin" />}
         {token ? "Ganti Password" : "Kirim Link Reset"}
       </button>
-      <Link href="/admin/login" className="block text-center text-xs font-semibold text-[#9a6a00] hover:text-[#242423]">
+      <Link
+        href="/admin/login"
+        className="block text-center text-xs font-semibold text-[#9a6a00] hover:text-[#242423]"
+      >
         Kembali ke login
       </Link>
     </form>

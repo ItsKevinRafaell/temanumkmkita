@@ -9,40 +9,41 @@ export default function NotFound() {
   return (
     <>
       <Navbar />
-      <main className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
+      <main className="relative flex min-h-screen items-center justify-center overflow-hidden pt-16">
         <div className="absolute inset-x-0 top-16 h-px bg-brand-dark/10" />
 
-        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="mx-auto max-w-2xl px-4 text-center sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <p className="text-accent font-bold text-sm uppercase tracking-wider mb-5">
+            <p className="mb-5 text-sm font-bold uppercase tracking-wider text-accent">
               Halaman Tidak Ditemukan
             </p>
 
-            <div className="text-[160px] sm:text-[200px] font-extrabold text-brand-dark/6 leading-none select-none">
+            <div className="text-brand-dark/6 select-none text-[160px] font-extrabold leading-none sm:text-[200px]">
               404
             </div>
 
-            <h1 className="text-4xl sm:text-5xl font-extrabold text-brand-dark mt-2 mb-4">
+            <h1 className="mb-4 mt-2 text-4xl font-extrabold text-brand-dark sm:text-5xl">
               Waduh, Salah Jalan!
             </h1>
-            <p className="text-brand-dark/60 text-lg mb-10 max-w-md mx-auto">
-              Halaman yang kamu cari tidak ada atau sudah dipindahkan. Yuk balik ke jalur yang benar.
+            <p className="mx-auto mb-10 max-w-md text-lg text-brand-dark/60">
+              Halaman yang kamu cari tidak ada atau sudah dipindahkan. Yuk balik ke jalur yang
+              benar.
             </p>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
               <Link
                 href="/"
-                className="bg-accent text-white font-bold px-6 py-3.5 rounded-lg text-base hover:bg-accent/90 transition-colors shadow-lg shadow-accent/20"
+                className="rounded-lg bg-accent px-6 py-3.5 text-base font-bold text-white shadow-lg shadow-accent/20 transition-colors hover:bg-accent/90"
               >
                 Kembali ke Beranda
               </Link>
               <Link
                 href="/layanan/web-development"
-                className="text-brand-dark font-semibold px-6 py-3.5 rounded-lg border border-brand-dark/20 hover:border-brand-dark/40 transition-colors"
+                className="rounded-lg border border-brand-dark/20 px-6 py-3.5 font-semibold text-brand-dark transition-colors hover:border-brand-dark/40"
               >
                 Lihat Layanan
               </Link>

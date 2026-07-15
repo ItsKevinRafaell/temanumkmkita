@@ -13,7 +13,13 @@ export type ContentBlock =
   | { type: "howto"; steps: { name: string; text: string; image?: string }[] }
   | { type: "key-takeaway"; items: string[] }
   | { type: "source"; items: { label: string; url: string; accessed?: string }[] }
-  | { type: "expert-quote"; quote: string; author_name: string; author_title: string; author_company?: string };
+  | {
+      type: "expert-quote";
+      quote: string;
+      author_name: string;
+      author_title: string;
+      author_company?: string;
+    };
 
 export interface BlogPost {
   slug: string;
@@ -57,8 +63,12 @@ export const categories = [
 
 export type Category = (typeof categories)[number];
 
-export function extractHeadings(content: ContentBlock[]): { id: string; text: string; level: 2 | 3 }[] {
+export function extractHeadings(
+  content: ContentBlock[]
+): { id: string; text: string; level: 2 | 3 }[] {
   return content
-    .filter((b): b is Extract<ContentBlock, { type: "h2" | "h3" }> => b.type === "h2" || b.type === "h3")
+    .filter(
+      (b): b is Extract<ContentBlock, { type: "h2" | "h3" }> => b.type === "h2" || b.type === "h3"
+    )
     .map((b) => ({ id: b.id, text: b.text, level: b.type === "h2" ? 2 : 3 }));
 }

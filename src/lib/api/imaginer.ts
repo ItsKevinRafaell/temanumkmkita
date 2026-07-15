@@ -37,14 +37,11 @@ async function withRetry<T>(fn: () => Promise<T>, attempts = 4, baseDelayMs = 80
   throw last;
 }
 
-export async function generateCover(
-  articleId: string
-): Promise<GenerateCoverResponse> {
+export async function generateCover(articleId: string): Promise<GenerateCoverResponse> {
   return withRetry(() =>
-    req<GenerateCoverResponse>(
-      `/api/admin/articles/${articleId}/generate-cover`,
-      { method: "POST" }
-    )
+    req<GenerateCoverResponse>(`/api/admin/articles/${articleId}/generate-cover`, {
+      method: "POST",
+    })
   );
 }
 

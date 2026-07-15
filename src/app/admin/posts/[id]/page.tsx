@@ -20,7 +20,7 @@ export default function EditPostPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#fcfaf7] flex items-center justify-center text-sm text-[#242423]/40">
+      <div className="flex min-h-screen items-center justify-center bg-[#fcfaf7] text-sm text-[#242423]/40">
         Memuat...
       </div>
     );

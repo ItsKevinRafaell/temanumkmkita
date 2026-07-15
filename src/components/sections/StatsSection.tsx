@@ -42,14 +42,14 @@ function useCountUp(end: number, duration: number, active: boolean) {
 
 export default function StatsSection() {
   return (
-    <section className="py-16 bg-accent relative overflow-hidden">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+    <section className="relative overflow-hidden bg-accent py-16">
+      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
           {stats.map((stat, i) => (
             <div key={i} className="relative text-center">
               <StatCard stat={stat} />
               {i < stats.length - 1 && (
-                <div className="hidden md:block absolute right-0 top-1/4 bottom-1/4 w-px bg-white/20" />
+                <div className="absolute bottom-1/4 right-0 top-1/4 hidden w-px bg-white/20 md:block" />
               )}
             </div>
           ))}
@@ -66,14 +66,14 @@ function StatCard({ stat }: { stat: StatItem }) {
 
   return (
     <div ref={ref}>
-      <div className="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center mb-3 mx-auto">
+      <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-white/20">
         <Icon size={22} className="text-white" />
       </div>
-      <div className="text-4xl sm:text-5xl font-extrabold text-white">
+      <div className="text-4xl font-extrabold text-white sm:text-5xl">
         {count}
         <span className="text-white/80">{stat.suffix}</span>
       </div>
-      <div className="text-sm font-medium text-white/70 mt-1">{stat.label}</div>
+      <div className="mt-1 text-sm font-medium text-white/70">{stat.label}</div>
     </div>
   );
 }

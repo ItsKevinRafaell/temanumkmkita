@@ -29,7 +29,7 @@ export default function BlobDecoration({
   return (
     <div
       aria-hidden
-      className={`absolute pointer-events-none ${positions[position]} ${className}`}
+      className={`pointer-events-none absolute ${positions[position]} ${className}`}
       style={{
         width: size,
         height: size,

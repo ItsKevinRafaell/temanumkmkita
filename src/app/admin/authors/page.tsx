@@ -36,9 +36,12 @@ export default function AuthorsPage() {
 
   return (
     <div className="min-h-screen bg-[#fcfaf7]">
-      <header className="bg-white border-b border-[#242423]/8 px-6 py-3.5 flex items-center justify-between sticky top-0 z-20 shadow-sm">
+      <header className="border-[#242423]/8 sticky top-0 z-20 flex items-center justify-between border-b bg-white px-6 py-3.5 shadow-sm">
         <div className="flex items-center gap-3">
-          <Link href="/admin/posts" className="flex items-center gap-1 text-xs text-[#242423]/50 hover:text-[#242423] transition">
+          <Link
+            href="/admin/posts"
+            className="flex items-center gap-1 text-xs text-[#242423]/50 transition hover:text-[#242423]"
+          >
             <ChevronLeft size={13} /> Artikel
           </Link>
           <span className="text-[#242423]/20">/</span>
@@ -46,47 +49,56 @@ export default function AuthorsPage() {
         </div>
         <Link
           href="/admin/authors/new"
-          className="flex items-center gap-1.5 bg-[#f5a700] text-white font-bold px-4 py-1.5 rounded-lg text-sm hover:bg-[#f5a700]/90 transition"
+          className="flex items-center gap-1.5 rounded-lg bg-[#f5a700] px-4 py-1.5 text-sm font-bold text-white transition hover:bg-[#f5a700]/90"
         >
           <Plus size={13} /> Tambah Penulis
         </Link>
       </header>
 
-      <main className="max-w-3xl mx-auto px-6 py-8">
+      <main className="mx-auto max-w-3xl px-6 py-8">
         {loading ? (
           <div className="flex items-center justify-center py-20">
             <Loader2 size={24} className="animate-spin text-[#242423]/30" />
           </div>
         ) : authors.length === 0 ? (
-          <div className="text-center py-20">
-            <Users size={32} className="text-[#242423]/20 mx-auto mb-3" />
+          <div className="py-20 text-center">
+            <Users size={32} className="mx-auto mb-3 text-[#242423]/20" />
             <p className="text-sm text-[#242423]/40">Belum ada penulis. Tambah penulis pertama.</p>
           </div>
         ) : (
           <div className="space-y-3">
             {authors.map((author) => (
-              <div key={author.id} className="bg-white border border-[#242423]/8 rounded-2xl p-4 flex items-center gap-4">
+              <div
+                key={author.id}
+                className="border-[#242423]/8 flex items-center gap-4 rounded-2xl border bg-white p-4"
+              >
                 {author.photo_url ? (
-                  <Image src={author.photo_url} alt={author.name} width={48} height={48} className="rounded-full object-cover border border-[#242423]/8 flex-shrink-0" />
+                  <Image
+                    src={author.photo_url}
+                    alt={author.name}
+                    width={48}
+                    height={48}
+                    className="border-[#242423]/8 flex-shrink-0 rounded-full border object-cover"
+                  />
                 ) : (
-                  <div className="w-12 h-12 rounded-full bg-[#f5a700]/15 flex items-center justify-center flex-shrink-0">
-                    <span className="text-[#f5a700] font-extrabold text-lg">{author.name[0]}</span>
+                  <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-[#f5a700]/15">
+                    <span className="text-lg font-extrabold text-[#f5a700]">{author.name[0]}</span>
                   </div>
                 )}
-                <div className="flex-1 min-w-0">
+                <div className="min-w-0 flex-1">
                   <p className="font-bold text-[#242423]">{author.name}</p>
-                  {author.role && <p className="text-xs text-[#242423]/50 mt-0.5">{author.role}</p>}
+                  {author.role && <p className="mt-0.5 text-xs text-[#242423]/50">{author.role}</p>}
                 </div>
                 <div className="flex items-center gap-1.5">
                   <Link
                     href={`/admin/authors/${author.id}`}
-                    className="p-2 text-[#242423]/40 hover:text-[#242423] hover:bg-[#242423]/5 rounded-lg transition"
+                    className="rounded-lg p-2 text-[#242423]/40 transition hover:bg-[#242423]/5 hover:text-[#242423]"
                   >
                     <PenLine size={14} />
                   </Link>
                   <button
                     onClick={() => setModal({ id: author.id, name: author.name })}
-                    className="p-2 text-[#242423]/40 hover:text-red-500 hover:bg-red-50 rounded-lg transition"
+                    className="rounded-lg p-2 text-[#242423]/40 transition hover:bg-red-50 hover:text-red-500"
                   >
                     <Trash2 size={14} />
                   </button>

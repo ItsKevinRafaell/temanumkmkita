@@ -86,9 +86,7 @@ export default function BulkGenerateModal({
       setResumed(true);
       return;
     }
-    const allDone = persisted.results.every(
-      (r) => r.status === "done" || r.status === "error"
-    );
+    const allDone = persisted.results.every((r) => r.status === "done" || r.status === "error");
     if (allDone) {
       setBatchSize(articles.length); // approximation
       setCurrentBatch(persisted.currentBatch);
@@ -117,10 +115,7 @@ export default function BulkGenerateModal({
   }
 
   const totalBatches = Math.ceil(articles.length / batchSize);
-  const currentArticles = articles.slice(
-    currentBatch * batchSize,
-    (currentBatch + 1) * batchSize
-  );
+  const currentArticles = articles.slice(currentBatch * batchSize, (currentBatch + 1) * batchSize);
 
   async function startGenerate() {
     setPhase("generating");
@@ -130,18 +125,13 @@ export default function BulkGenerateModal({
     for (let i = 0; i < currentArticles.length; i++) {
       const article = currentArticles[i];
       setCurrentIdx(i);
-      setResults((prev) => [
-        ...prev,
-        { article, result: null, status: "generating" },
-      ]);
+      setResults((prev) => [...prev, { article, result: null, status: "generating" }]);
 
       try {
         const result = await generateCover(article.id);
         setResults((prev) =>
           prev.map((r) =>
-            r.article.id === article.id
-              ? { ...r, result, status: "done" as const }
-              : r
+            r.article.id === article.id ? { ...r, result, status: "done" as const } : r
           )
         );
       } catch (err) {
@@ -174,9 +164,7 @@ export default function BulkGenerateModal({
 
     setResults((prev) =>
       prev.map((r) =>
-        r.article.id === articleId
-          ? { ...r, status: "generating" as const, error: undefined }
-          : r
+        r.article.id === articleId ? { ...r, status: "generating" as const, error: undefined } : r
       )
     );
 
@@ -184,9 +172,7 @@ export default function BulkGenerateModal({
       const result = await generateCover(articleId);
       setResults((prev) =>
         prev.map((r) =>
-          r.article.id === articleId
-            ? { ...r, result, status: "done" as const }
-            : r
+          r.article.id === articleId ? { ...r, result, status: "done" as const } : r
         )
       );
     } catch (err) {
@@ -224,23 +210,20 @@ export default function BulkGenerateModal({
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-3xl max-h-[85vh] flex flex-col overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm">
+      <div className="flex max-h-[85vh] w-full max-w-3xl flex-col overflow-hidden rounded-2xl bg-white shadow-2xl">
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-[#242423]/8">
+        <div className="border-[#242423]/8 flex items-center justify-between border-b px-6 py-4">
           <div>
-            <h2 className="text-lg font-extrabold text-[#242423]">
-              Generate Cover Images
-            </h2>
-            <p className="text-xs text-[#242423]/50 mt-0.5">
+            <h2 className="text-lg font-extrabold text-[#242423]">Generate Cover Images</h2>
+            <p className="mt-0.5 text-xs text-[#242423]/50">
               {articles.length} artikel belum punya cover
-              {totalBatches > 1 &&
-                ` · Batch ${currentBatch + 1} dari ${totalBatches}`}
+              {totalBatches > 1 && ` · Batch ${currentBatch + 1} dari ${totalBatches}`}
             </p>
           </div>
           <button
             onClick={onClose}
-            className="w-8 h-8 rounded-full flex items-center justify-center text-[#242423]/40 hover:bg-[#242423]/5 hover:text-[#242423] transition"
+            className="flex h-8 w-8 items-center justify-center rounded-full text-[#242423]/40 transition hover:bg-[#242423]/5 hover:text-[#242423]"
           >
             <X size={16} />
           </button>
@@ -252,7 +235,7 @@ export default function BulkGenerateModal({
           {phase === "select" && (
             <div className="space-y-6">
               <div>
-                <label className="block text-sm font-semibold text-[#242423]/70 mb-2">
+                <label className="mb-2 block text-sm font-semibold text-[#242423]/70">
                   Jumlah artikel per batch
                 </label>
                 <div className="flex gap-2">
@@ -260,7 +243,7 @@ export default function BulkGenerateModal({
                     <button
                       key={size}
                       onClick={() => setBatchSize(size)}
-                      className={`px-4 py-2 rounded-xl text-sm font-semibold border transition ${
+                      className={`rounded-xl border px-4 py-2 text-sm font-semibold transition ${
                         batchSize === size
                           ? "border-[#f5a700] bg-[#f5a700] text-white"
                           : "border-[#242423]/12 text-[#242423]/60 hover:border-[#f5a700]/50"
@@ -273,19 +256,14 @@ export default function BulkGenerateModal({
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-[#242423]/70 mb-2">
+                <label className="mb-2 block text-sm font-semibold text-[#242423]/70">
                   Artikel di batch ini
                 </label>
-                <div className="bg-[#242423]/3 rounded-xl p-4 space-y-2 max-h-60 overflow-y-auto">
+                <div className="bg-[#242423]/3 max-h-60 space-y-2 overflow-y-auto rounded-xl p-4">
                   {currentArticles.map((article) => (
-                    <div
-                      key={article.id}
-                      className="flex items-center gap-3 text-sm"
-                    >
-                      <div className="w-5 h-5 rounded-full border-2 border-[#242423]/15 flex-shrink-0" />
-                      <span className="text-[#242423]/80 line-clamp-1">
-                        {article.title}
-                      </span>
+                    <div key={article.id} className="flex items-center gap-3 text-sm">
+                      <div className="h-5 w-5 flex-shrink-0 rounded-full border-2 border-[#242423]/15" />
+                      <span className="line-clamp-1 text-[#242423]/80">{article.title}</span>
                     </div>
                   ))}
                 </div>
@@ -307,31 +285,20 @@ export default function BulkGenerateModal({
                 {results.map((r) => (
                   <div
                     key={r.article.id}
-                    className="flex items-center gap-4 p-3 rounded-xl border border-[#242423]/8"
+                    className="border-[#242423]/8 flex items-center gap-4 rounded-xl border p-3"
                   >
-                    <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0">
+                    <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full">
                       {r.status === "generating" && (
-                        <Loader2
-                          size={14}
-                          className="animate-spin text-[#f5a700]"
-                        />
+                        <Loader2 size={14} className="animate-spin text-[#f5a700]" />
                       )}
-                      {r.status === "done" && (
-                        <Check size={14} className="text-green-600" />
-                      )}
-                      {r.status === "error" && (
-                        <X size={14} className="text-red-500" />
-                      )}
+                      {r.status === "done" && <Check size={14} className="text-green-600" />}
+                      {r.status === "error" && <X size={14} className="text-red-500" />}
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-[#242423] line-clamp-1">
+                    <div className="min-w-0 flex-1">
+                      <p className="line-clamp-1 text-sm font-medium text-[#242423]">
                         {r.article.title}
                       </p>
-                      {r.error && (
-                        <p className="text-xs text-red-500 mt-0.5">
-                          {r.error}
-                        </p>
-                      )}
+                      {r.error && <p className="mt-0.5 text-xs text-red-500">{r.error}</p>}
                     </div>
                     {r.status === "done" && r.result && (
                       <Image
@@ -339,7 +306,7 @@ export default function BulkGenerateModal({
                         alt={r.article.title}
                         width={80}
                         height={45}
-                        className="rounded-lg object-cover border border-[#242423]/8"
+                        className="border-[#242423]/8 rounded-lg border object-cover"
                       />
                     )}
                   </div>
@@ -351,11 +318,11 @@ export default function BulkGenerateModal({
           {/* Phase: Preview */}
           {phase === "preview" && (
             <div className="space-y-6">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 {results.map((r) => (
                   <div
                     key={r.article.id}
-                    className="border border-[#242423]/8 rounded-xl overflow-hidden"
+                    className="border-[#242423]/8 overflow-hidden rounded-xl border"
                   >
                     <div className="relative aspect-video bg-[#242423]/5">
                       {r.result?.cover_image_url ? (
@@ -366,27 +333,24 @@ export default function BulkGenerateModal({
                           className="object-cover"
                         />
                       ) : (
-                        <div className="flex items-center justify-center h-full text-xs text-[#242423]/30">
+                        <div className="flex h-full items-center justify-center text-xs text-[#242423]/30">
                           Gagal generate
                         </div>
                       )}
                       {r.status === "generating" && (
                         <div className="absolute inset-0 flex items-center justify-center bg-black/30">
-                          <Loader2
-                            size={20}
-                            className="animate-spin text-white"
-                          />
+                          <Loader2 size={20} className="animate-spin text-white" />
                         </div>
                       )}
                     </div>
-                    <div className="p-3 flex items-center justify-between">
-                      <p className="text-xs font-medium text-[#242423] line-clamp-1 flex-1 mr-2">
+                    <div className="flex items-center justify-between p-3">
+                      <p className="mr-2 line-clamp-1 flex-1 text-xs font-medium text-[#242423]">
                         {r.article.title}
                       </p>
                       <button
                         onClick={() => handleRegenerate(r.article.id)}
                         disabled={r.status === "generating"}
-                        className="flex items-center gap-1 text-xs text-[#242423]/50 hover:text-[#f5a700] disabled:opacity-50 transition"
+                        className="flex items-center gap-1 text-xs text-[#242423]/50 transition hover:text-[#f5a700] disabled:opacity-50"
                       >
                         <RefreshCw size={12} />
                         Ulang
@@ -400,18 +364,18 @@ export default function BulkGenerateModal({
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-between px-6 py-4 border-t border-[#242423]/8 bg-[#fcfaf7]">
+        <div className="border-[#242423]/8 flex items-center justify-between border-t bg-[#fcfaf7] px-6 py-4">
           {phase === "select" && (
             <>
               <button
                 onClick={onClose}
-                className="px-4 py-2 text-sm font-semibold text-[#242423]/50 hover:text-[#242423] transition"
+                className="px-4 py-2 text-sm font-semibold text-[#242423]/50 transition hover:text-[#242423]"
               >
                 Batal
               </button>
               <button
                 onClick={startGenerate}
-                className="flex items-center gap-2 px-5 py-2.5 bg-[#f5a700] text-white font-bold text-sm rounded-xl hover:bg-[#f5a700]/90 transition"
+                className="flex items-center gap-2 rounded-xl bg-[#f5a700] px-5 py-2.5 text-sm font-bold text-white transition hover:bg-[#f5a700]/90"
               >
                 <Sparkles size={14} />
                 Generate Batch {currentBatch + 1}
@@ -429,14 +393,14 @@ export default function BulkGenerateModal({
             <>
               <button
                 onClick={handleDone}
-                className="px-4 py-2 text-sm font-semibold text-[#242423]/50 hover:text-[#242423] transition"
+                className="px-4 py-2 text-sm font-semibold text-[#242423]/50 transition hover:text-[#242423]"
               >
                 Selesai
               </button>
               {currentBatch < totalBatches - 1 && (
                 <button
                   onClick={handleNextBatch}
-                  className="flex items-center gap-2 px-5 py-2.5 bg-[#f5a700] text-white font-bold text-sm rounded-xl hover:bg-[#f5a700]/90 transition"
+                  className="flex items-center gap-2 rounded-xl bg-[#f5a700] px-5 py-2.5 text-sm font-bold text-white transition hover:bg-[#f5a700]/90"
                 >
                   Batch Berikutnya
                   <ChevronRight size={14} />

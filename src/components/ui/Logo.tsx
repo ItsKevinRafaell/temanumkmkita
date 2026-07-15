@@ -40,7 +40,7 @@ export default function Logo({
     >
       <span
         aria-hidden="true"
-        className={`block ${imageSize} bg-left bg-contain bg-no-repeat`}
+        className={`block ${imageSize} bg-contain bg-left bg-no-repeat`}
         style={{ backgroundImage: imageVar }}
       />
       <span className="sr-only">Teman UMKM Kita</span>

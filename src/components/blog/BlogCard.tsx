@@ -42,16 +42,19 @@ interface BlogCardProps {
 
 export default function BlogCard({ post, priority }: BlogCardProps) {
   const [imgError, setImgError] = useState(false);
-  const colorClass = categoryColors[post.category] ?? "bg-brand-dark/5 text-brand-dark/60 border-brand-dark/10";
+  const colorClass =
+    categoryColors[post.category] ?? "bg-brand-dark/5 text-brand-dark/60 border-brand-dark/10";
   const bgClass = categoryBg[post.category] ?? "bg-brand-dark/5";
 
   return (
     <Link
       href={`/blog/${post.slug}`}
-      className="group flex flex-col bg-white border border-brand-dark/8 card-shadow rounded-lg overflow-hidden hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200"
+      className="border-brand-dark/8 card-shadow group flex flex-col overflow-hidden rounded-lg border bg-white transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg"
     >
       {/* Thumbnail */}
-      <div className={`h-44 ${bgClass} border-b border-brand-dark/6 flex items-center justify-center relative overflow-hidden`}>
+      <div
+        className={`h-44 ${bgClass} border-brand-dark/6 relative flex items-center justify-center overflow-hidden border-b`}
+      >
         {post.cover_image && !imgError ? (
           <Image
             src={post.cover_image}
@@ -63,13 +66,13 @@ export default function BlogCard({ post, priority }: BlogCardProps) {
             onError={() => setImgError(true)}
           />
         ) : (
-          <div className="text-4xl font-black text-brand-dark/10 select-none uppercase tracking-widest">
+          <div className="select-none text-4xl font-black uppercase tracking-widest text-brand-dark/10">
             {post.category.slice(0, 3)}
           </div>
         )}
         {post.featured && (
-          <div className="absolute top-3 left-3">
-            <span className="bg-accent text-white text-xs font-bold px-2.5 py-1 rounded-md">
+          <div className="absolute left-3 top-3">
+            <span className="rounded-md bg-accent px-2.5 py-1 text-xs font-bold text-white">
               Featured
             </span>
           </div>
@@ -77,23 +80,23 @@ export default function BlogCard({ post, priority }: BlogCardProps) {
       </div>
 
       {/* Body */}
-      <div className="p-5 flex flex-col gap-3 flex-1">
+      <div className="flex flex-1 flex-col gap-3 p-5">
         <span
-          className={`self-start text-xs font-bold px-2.5 py-1 rounded-md border ${colorClass}`}
+          className={`self-start rounded-md border px-2.5 py-1 text-xs font-bold ${colorClass}`}
         >
           {post.category}
         </span>
 
-        <h3 className="font-bold text-brand-dark leading-snug group-hover:text-accent transition-colors duration-200 line-clamp-2">
+        <h3 className="line-clamp-2 font-bold leading-snug text-brand-dark transition-colors duration-200 group-hover:text-accent">
           {post.title}
         </h3>
 
-        <p className="text-sm text-brand-dark/55 leading-relaxed line-clamp-3 flex-1">
+        <p className="line-clamp-3 flex-1 text-sm leading-relaxed text-brand-dark/55">
           {post.excerpt}
         </p>
 
-        <div className="flex items-center justify-between pt-2 border-t border-brand-dark/5">
-          <div className="flex items-center gap-3 text-xs text-brand-dark/40 font-medium">
+        <div className="flex items-center justify-between border-t border-brand-dark/5 pt-2">
+          <div className="flex items-center gap-3 text-xs font-medium text-brand-dark/40">
             <span className="flex items-center gap-1.5">
               <Calendar size={11} />
               {formatDate(post.date)}
@@ -105,7 +108,7 @@ export default function BlogCard({ post, priority }: BlogCardProps) {
           </div>
           <ArrowRight
             size={14}
-            className="text-brand-dark/25 group-hover:text-accent group-hover:translate-x-1 transition-all duration-200"
+            className="text-brand-dark/25 transition-all duration-200 group-hover:translate-x-1 group-hover:text-accent"
           />
         </div>
       </div>

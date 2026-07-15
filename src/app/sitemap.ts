@@ -21,7 +21,11 @@ const STATIC_PAGES = [
   { url: `${SITE_URL}/blog/topik/sosial-media`, priority: 0.7, changeFrequency: "weekly" },
   { url: `${SITE_URL}/blog/topik/branding`, priority: 0.7, changeFrequency: "weekly" },
   { url: `${SITE_URL}/layanan/web-development`, priority: 0.8, changeFrequency: "monthly" },
-  { url: `${SITE_URL}/layanan/web-development-bulanan`, priority: 0.75, changeFrequency: "monthly" },
+  {
+    url: `${SITE_URL}/layanan/web-development-bulanan`,
+    priority: 0.75,
+    changeFrequency: "monthly",
+  },
   { url: `${SITE_URL}/layanan/seo-google-maps`, priority: 0.8, changeFrequency: "monthly" },
   { url: `${SITE_URL}/layanan/kelola-sosial-media`, priority: 0.75, changeFrequency: "monthly" },
   { url: `${SITE_URL}/layanan/desain-logo`, priority: 0.7, changeFrequency: "monthly" },
@@ -37,7 +41,9 @@ function articlePriority(publishedAt: string | null, featured: boolean): number 
   return 0.7;
 }
 
-async function fetchAllPublishedArticles(): Promise<Awaited<ReturnType<typeof fetchArticles>>["items"]> {
+async function fetchAllPublishedArticles(): Promise<
+  Awaited<ReturnType<typeof fetchArticles>>["items"]
+> {
   const PAGE_SIZE = 500;
   const first = await fetchArticles({ per_page: PAGE_SIZE, page: 1 });
   if (first.pages <= 1) return first.items;
@@ -50,17 +56,21 @@ async function fetchAllPublishedArticles(): Promise<Awaited<ReturnType<typeof fe
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const staticEntries: MetadataRoute.Sitemap = STATIC_PAGES.map(({ url, priority, changeFrequency }) => ({
-    url,
-    changeFrequency,
-    priority,
-  }));
+  const staticEntries: MetadataRoute.Sitemap = STATIC_PAGES.map(
+    ({ url, priority, changeFrequency }) => ({
+      url,
+      changeFrequency,
+      priority,
+    })
+  );
 
   let articleEntries: MetadataRoute.Sitemap = [];
   try {
     const articles = await fetchAllPublishedArticles();
     articleEntries = articles.map((a) => {
-      const days = a.published_at ? (Date.now() - new Date(a.published_at).getTime()) / 86400000 : 999;
+      const days = a.published_at
+        ? (Date.now() - new Date(a.published_at).getTime()) / 86400000
+        : 999;
       return {
         url: `${SITE_URL}/blog/${a.slug}`,
         lastModified: a.updated_at ? new Date(a.updated_at) : new Date(a.created_at),

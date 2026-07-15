@@ -93,7 +93,17 @@ function gradeFromScore(score: number): "A" | "B" | "C" | "D" | "F" {
 }
 
 export function checkSEO(input: SEOInput): SEOResult {
-  const { title, seoTitle, metaDescription, focusKeyword, slug, excerpt, coverImage, blocks, hasAuthor } = input;
+  const {
+    title,
+    seoTitle,
+    metaDescription,
+    focusKeyword,
+    slug,
+    excerpt,
+    coverImage,
+    blocks,
+    hasAuthor,
+  } = input;
   const kw = focusKeyword.trim().toLowerCase();
   const effectiveTitle = (seoTitle || title).toLowerCase();
   const effectiveMeta = (metaDescription || excerpt).toLowerCase();
@@ -161,7 +171,9 @@ export function checkSEO(input: SEOInput): SEOResult {
   // kw-in-heading (8)
   {
     const headings = blocks
-      .filter((b): b is Extract<ContentBlock, { type: "h2" | "h3" }> => b.type === "h2" || b.type === "h3")
+      .filter(
+        (b): b is Extract<ContentBlock, { type: "h2" | "h3" }> => b.type === "h2" || b.type === "h3"
+      )
       .map((b) => b.text.toLowerCase());
     const pass = kw ? headings.some((h) => h.includes(kw)) : false;
     rules.push({
@@ -176,7 +188,9 @@ export function checkSEO(input: SEOInput): SEOResult {
 
   // kw-in-alt (5)
   {
-    const images = blocks.filter((b): b is Extract<ContentBlock, { type: "image" }> => b.type === "image");
+    const images = blocks.filter(
+      (b): b is Extract<ContentBlock, { type: "image" }> => b.type === "image"
+    );
     let status: RuleStatus;
     let score: number;
     if (images.length === 0) {
@@ -341,7 +355,10 @@ export function checkSEO(input: SEOInput): SEOResult {
       score = 0;
       description = "Isi focus keyword dan konten untuk cek keyword density.";
     } else {
-      const kwOccurrences = (allText.toLowerCase().match(new RegExp(kw.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g")) ?? []).length;
+      const kwOccurrences = (
+        allText.toLowerCase().match(new RegExp(kw.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g")) ??
+        []
+      ).length;
       const density = (kwOccurrences / wordCount) * 100;
       description = `Keyword density: ${density.toFixed(1)}% (${kwOccurrences}× dari ${wordCount} kata). Ideal: 0.5%–2.5%.`;
       if (density >= 0.5 && density <= 2.5) {
@@ -358,10 +375,20 @@ export function checkSEO(input: SEOInput): SEOResult {
         score = 0;
       }
     }
-    rules.push({ id: "kw-density", label: "Keyword density", description, status, score, maxScore: 8 });
+    rules.push({
+      id: "kw-density",
+      label: "Keyword density",
+      description,
+      status,
+      score,
+      maxScore: 8,
+    });
   }
 
-  const totalScore = Math.min(100, rules.reduce((s, r) => s + r.score, 0));
+  const totalScore = Math.min(
+    100,
+    rules.reduce((s, r) => s + r.score, 0)
+  );
 
   return {
     totalScore,

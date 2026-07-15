@@ -50,7 +50,6 @@ export default function Navbar() {
     lastScrollY.current = latest;
   });
 
-
   const linkColor = isDarkHero
     ? "text-white/60 hover:text-white"
     : "text-brand-dark/60 hover:text-brand-dark";
@@ -62,18 +61,18 @@ export default function Navbar() {
       animate={{ y: hidden ? "-100%" : "0%" }}
       transition={{ duration: 0.3, ease: "easeInOut" }}
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+        "fixed left-0 right-0 top-0 z-50 transition-all duration-300",
         scrolled
-          ? "bg-canvas/90 backdrop-blur-md border-b border-brand-dark/8 shadow-sm"
-          : "bg-canvas/60 backdrop-blur-sm md:bg-transparent md:backdrop-blur-none md:border-transparent md:shadow-none"
+          ? "border-brand-dark/8 border-b bg-canvas/90 shadow-sm backdrop-blur-md"
+          : "bg-canvas/60 backdrop-blur-sm md:border-transparent md:bg-transparent md:shadow-none md:backdrop-blur-none"
       )}
     >
-      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+      <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="flex h-16 items-center justify-between">
           <Logo variant="secondary" color={isDarkHero ? "white" : "yellow"} />
 
           {/* Desktop nav — only at lg (1024px+) */}
-          <div className="hidden lg:flex items-center gap-1">
+          <div className="hidden items-center gap-1 lg:flex">
             {/* Beranda */}
             {navLinks.slice(0, 1).map((link) => {
               const active = pathname === link.href;
@@ -82,7 +81,7 @@ export default function Navbar() {
                   key={link.href}
                   href={link.href}
                   className={cn(
-                    "nav-link-hover px-3 py-2 text-sm font-medium rounded-lg transition-colors relative whitespace-nowrap",
+                    "nav-link-hover relative whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium transition-colors",
                     active ? activeLinkColor : linkColor
                   )}
                 >
@@ -90,7 +89,7 @@ export default function Navbar() {
                   {active && (
                     <motion.div
                       layoutId="nav-indicator"
-                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-accent rounded-sm"
+                      className="absolute bottom-0 left-0 right-0 h-0.5 rounded-sm bg-accent"
                     />
                   )}
                 </Link>
@@ -109,7 +108,7 @@ export default function Navbar() {
                 href="/layanan"
                 onClick={() => setLayananOpen(false)}
                 className={cn(
-                  "nav-link-hover px-3 py-2 text-sm font-medium rounded-lg transition-colors flex items-center gap-1 relative whitespace-nowrap",
+                  "nav-link-hover relative flex items-center gap-1 whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium transition-colors",
                   pathname.startsWith("/layanan") ? activeLinkColor : linkColor
                 )}
               >
@@ -121,7 +120,7 @@ export default function Navbar() {
                 {pathname.startsWith("/layanan") && (
                   <motion.div
                     layoutId="nav-indicator"
-                    className="absolute bottom-0 left-0 right-0 h-0.5 bg-accent rounded-sm"
+                    className="absolute bottom-0 left-0 right-0 h-0.5 rounded-sm bg-accent"
                   />
                 )}
               </Link>
@@ -133,7 +132,7 @@ export default function Navbar() {
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: -8, scale: 0.97 }}
                     transition={{ duration: 0.15 }}
-                    className="absolute top-full left-0 mt-2 bg-white border border-brand-dark/10 rounded-lg shadow-lg p-2 min-w-[220px] z-50"
+                    className="absolute left-0 top-full z-50 mt-2 min-w-[220px] rounded-lg border border-brand-dark/10 bg-white p-2 shadow-lg"
                   >
                     {layananLinks.map((item) => {
                       const Icon = item.icon;
@@ -144,13 +143,16 @@ export default function Navbar() {
                           href={item.href}
                           onClick={() => setLayananOpen(false)}
                           className={cn(
-                            "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors",
+                            "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
                             active
                               ? "bg-accent/10 text-brand-dark"
-                              : "text-brand-dark/60 hover:text-brand-dark hover:bg-accent/8"
+                              : "hover:bg-accent/8 text-brand-dark/60 hover:text-brand-dark"
                           )}
                         >
-                          <Icon size={15} className={active ? "text-accent" : "text-brand-dark/40"} />
+                          <Icon
+                            size={15}
+                            className={active ? "text-accent" : "text-brand-dark/40"}
+                          />
                           {item.label}
                         </Link>
                       );
@@ -168,7 +170,7 @@ export default function Navbar() {
                   key={link.href}
                   href={link.href}
                   className={cn(
-                    "nav-link-hover px-3 py-2 text-sm font-medium rounded-lg transition-colors relative whitespace-nowrap",
+                    "nav-link-hover relative whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium transition-colors",
                     active ? activeLinkColor : linkColor
                   )}
                 >
@@ -176,13 +178,12 @@ export default function Navbar() {
                   {active && (
                     <motion.div
                       layoutId="nav-indicator"
-                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-accent rounded-sm"
+                      className="absolute bottom-0 left-0 right-0 h-0.5 rounded-sm bg-accent"
                     />
                   )}
                 </Link>
               );
             })}
-
           </div>
 
           {/* CTA — desktop only */}
@@ -191,7 +192,7 @@ export default function Navbar() {
               href="https://wa.me/6289501925395?text=Halo%2C+saya+ingin+konsultasi+gratis"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-accent text-white font-bold text-sm px-5 py-2.5 rounded-lg hover:bg-accent/90 hover:shadow-md transition-all duration-200 whitespace-nowrap"
+              className="whitespace-nowrap rounded-lg bg-accent px-5 py-2.5 text-sm font-bold text-white transition-all duration-200 hover:bg-accent/90 hover:shadow-md"
             >
               Konsultasi Gratis
             </a>
@@ -199,18 +200,32 @@ export default function Navbar() {
 
           {/* Hamburger — visible below lg (tablet + mobile) */}
           <button
-            className={cn("lg:hidden p-2", isDarkHero ? "text-white" : "text-brand-dark")}
+            className={cn("p-2 lg:hidden", isDarkHero ? "text-white" : "text-brand-dark")}
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Toggle menu"
           >
-            <div className="w-5 flex flex-col gap-1.5">
-              <span className={cn("h-0.5 bg-current transition-all duration-200", mobileOpen && "rotate-45 translate-y-2")} />
-              <span className={cn("h-0.5 bg-current transition-all duration-200", mobileOpen && "opacity-0")} />
-              <span className={cn("h-0.5 bg-current transition-all duration-200", mobileOpen && "-rotate-45 -translate-y-2")} />
+            <div className="flex w-5 flex-col gap-1.5">
+              <span
+                className={cn(
+                  "h-0.5 bg-current transition-all duration-200",
+                  mobileOpen && "translate-y-2 rotate-45"
+                )}
+              />
+              <span
+                className={cn(
+                  "h-0.5 bg-current transition-all duration-200",
+                  mobileOpen && "opacity-0"
+                )}
+              />
+              <span
+                className={cn(
+                  "h-0.5 bg-current transition-all duration-200",
+                  mobileOpen && "-translate-y-2 -rotate-45"
+                )}
+              />
             </div>
           </button>
         </div>
-
       </nav>
 
       {/* Mobile menu — outside nav so bg covers full viewport width */}
@@ -221,18 +236,18 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.2 }}
-            className="lg:hidden bg-canvas border-t border-brand-dark/8"
+            className="border-brand-dark/8 border-t bg-canvas lg:hidden"
           >
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 space-y-1">
+            <div className="mx-auto max-w-7xl space-y-1 px-4 py-4 sm:px-6">
               {navLinks.slice(0, 1).map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
                   className={cn(
-                    "block px-3 py-2.5 rounded-lg text-sm font-medium transition-colors",
+                    "block rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
                     pathname === link.href
                       ? "bg-accent/10 text-brand-dark"
-                      : "text-brand-dark/60 hover:text-brand-dark hover:bg-brand-dark/5"
+                      : "text-brand-dark/60 hover:bg-brand-dark/5 hover:text-brand-dark"
                   )}
                   onClick={() => setMobileOpen(false)}
                 >
@@ -245,28 +260,34 @@ export default function Navbar() {
                 <button
                   onClick={() => setLayananMobileOpen(!layananMobileOpen)}
                   className={cn(
-                    "w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium transition-colors",
+                    "flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
                     pathname.startsWith("/layanan")
                       ? "bg-accent/10 text-brand-dark"
-                      : "text-brand-dark/60 hover:text-brand-dark hover:bg-brand-dark/5"
+                      : "text-brand-dark/60 hover:bg-brand-dark/5 hover:text-brand-dark"
                   )}
                 >
                   Layanan
                   <ChevronDown
                     size={14}
-                    className={cn("transition-transform duration-200", layananMobileOpen && "rotate-180")}
+                    className={cn(
+                      "transition-transform duration-200",
+                      layananMobileOpen && "rotate-180"
+                    )}
                   />
                 </button>
                 {layananMobileOpen && (
-                  <div className="pl-4 mt-1 space-y-0.5">
+                  <div className="mt-1 space-y-0.5 pl-4">
                     {layananLinks.map((item) => {
                       const Icon = item.icon;
                       return (
                         <Link
                           key={item.href}
                           href={item.href}
-                          className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-brand-dark/60 hover:text-brand-dark hover:bg-brand-dark/5 transition-colors"
-                          onClick={() => { setMobileOpen(false); setLayananMobileOpen(false); }}
+                          className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm text-brand-dark/60 transition-colors hover:bg-brand-dark/5 hover:text-brand-dark"
+                          onClick={() => {
+                            setMobileOpen(false);
+                            setLayananMobileOpen(false);
+                          }}
                         >
                           <Icon size={14} className="text-brand-dark/30" />
                           {item.label}
@@ -282,10 +303,10 @@ export default function Navbar() {
                   key={link.href}
                   href={link.href}
                   className={cn(
-                    "block px-3 py-2.5 rounded-lg text-sm font-medium transition-colors",
+                    "block rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
                     pathname === link.href
                       ? "bg-accent/10 text-brand-dark"
-                      : "text-brand-dark/60 hover:text-brand-dark hover:bg-brand-dark/5"
+                      : "text-brand-dark/60 hover:bg-brand-dark/5 hover:text-brand-dark"
                   )}
                   onClick={() => setMobileOpen(false)}
                 >
@@ -298,7 +319,7 @@ export default function Navbar() {
                   href="https://wa.me/6289501925395?text=Halo%2C+saya+ingin+konsultasi+gratis"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block text-center bg-accent text-white font-bold text-sm px-4 py-3 rounded-lg"
+                  className="block rounded-lg bg-accent px-4 py-3 text-center text-sm font-bold text-white"
                 >
                   Konsultasi Gratis
                 </a>

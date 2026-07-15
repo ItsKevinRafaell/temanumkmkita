@@ -12,14 +12,14 @@ Dibangun oleh [Kevin Rafaell](https://github.com/ItsKevinRafaell).
 
 ## Tech Stack
 
-| Layer | Teknologi |
-|-------|-----------|
-| Frontend | Next.js 14 (App Router), TypeScript 5, Tailwind CSS 3, Framer Motion |
-| Backend API | FastAPI (Python 3.13), SQLAlchemy 2.0, bcrypt, JWT |
-| Database | MySQL (shared hosting) |
-| Frontend Hosting | Vercel |
-| Backend Hosting | LiteSpeed + Passenger WSGI (shared hosting) |
-| Domains | temanumkmkita.com / api.temanumkmkita.com |
+| Layer            | Teknologi                                                            |
+| ---------------- | -------------------------------------------------------------------- |
+| Frontend         | Next.js 14 (App Router), TypeScript 5, Tailwind CSS 3, Framer Motion |
+| Backend API      | FastAPI (Python 3.13), SQLAlchemy 2.0, bcrypt, JWT                   |
+| Database         | MySQL (shared hosting)                                               |
+| Frontend Hosting | Vercel                                                               |
+| Backend Hosting  | LiteSpeed + Passenger WSGI (shared hosting)                          |
+| Domains          | temanumkmkita.com / api.temanumkmkita.com                            |
 
 Line count: ~8,000 lines frontend TypeScript, ~1,350 lines backend Python.
 
@@ -86,6 +86,7 @@ chore: maintenance, deps, config
 - Backend di shared hosting di-deploy manual via rsync/SFTP
 
 ### Larangan keras
+
 - JANGAN commit langsung ke `main` — selalu lewat feature branch
 - JANGAN rebase
 - JANGAN force push
@@ -213,6 +214,7 @@ touch tmp/restart.txt
 ```
 
 ### Tone
+
 Bahasa Indonesia, hangat, membumi, percaya diri — tidak korporat.
 
 ---
@@ -220,6 +222,7 @@ Bahasa Indonesia, hangat, membumi, percaya diri — tidak korporat.
 ## Coding Conventions
 
 ### TypeScript/React
+
 - Semua komponen pakai TypeScript strict mode
 - Gunakan `"use client"` directive hanya untuk komponen interaktif
 - Komponen server (RSC) sebisa mungkin untuk SEO
@@ -227,6 +230,7 @@ Bahasa Indonesia, hangat, membumi, percaya diri — tidak korporat.
 - Tailwind classes langsung di JSX (jangan pakai CSS modules)
 
 ### Python/FastAPI
+
 - Modular imports: `from app.core.database import get_db`
 - Tidak import langsung antar router — gunakan shared `app/core/` atau `app/models/`
 - Password: bcrypt via `bcrypt` library langsung (NOT passlib — broken di Python 3.13)
@@ -234,6 +238,7 @@ Bahasa Indonesia, hangat, membumi, percaya diri — tidak korporat.
 - Auth: JWT dengan `python-jose`, scheme `HTTPBearer`
 
 ### Naming
+
 - camelCase untuk variabel/fungsi TypeScript
 - PascalCase untuk komponen React
 - kebab-case untuk file/folder TypeScript

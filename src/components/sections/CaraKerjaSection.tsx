@@ -16,28 +16,32 @@ const steps: {
     number: "01",
     title: "Konsultasi",
     desc: "Ceritakan kebutuhan bisnismu. Gratis, tanpa syarat.",
-    detail: "Kami dengarkan dulu. Tidak ada tekanan, tidak ada biaya. Cukup ceritakan bisnis kamu dan apa yang ingin dicapai — kami bantu analisis dan rekomendasikan solusi terbaik.",
+    detail:
+      "Kami dengarkan dulu. Tidak ada tekanan, tidak ada biaya. Cukup ceritakan bisnis kamu dan apa yang ingin dicapai — kami bantu analisis dan rekomendasikan solusi terbaik.",
     IconComponent: MessageCircle,
   },
   {
     number: "02",
     title: "DP & Mulai",
     desc: "Setuju dengan paket? Bayar DP, kami langsung mulai.",
-    detail: "Setelah sepakat dengan paket dan timeline, kamu cukup bayar DP. Tidak ada biaya tersembunyi. Kontrak jelas, scope jelas, ekspektasi jelas.",
+    detail:
+      "Setelah sepakat dengan paket dan timeline, kamu cukup bayar DP. Tidak ada biaya tersembunyi. Kontrak jelas, scope jelas, ekspektasi jelas.",
     IconComponent: CreditCard,
   },
   {
     number: "03",
     title: "Eksekusi",
     desc: "Tim kami kerjakan proyekmu dengan update berkala.",
-    detail: "Kamu bisa pantau progress kapan saja. Kami kirimkan update rutin, terbuka terhadap masukan, dan siap melakukan penyesuaian selama proses berlangsung.",
+    detail:
+      "Kamu bisa pantau progress kapan saja. Kami kirimkan update rutin, terbuka terhadap masukan, dan siap melakukan penyesuaian selama proses berlangsung.",
     IconComponent: Zap,
   },
   {
     number: "04",
     title: "Go-Live",
     desc: "Hasil final dikirim, revisi gratis, bisnis hadir online.",
-    detail: "Setelah kamu approve hasil akhir, kami bantu proses go-live. Revisi gratis disertakan. Tidak selesai sebelum kamu puas.",
+    detail:
+      "Setelah kamu approve hasil akhir, kami bantu proses go-live. Revisi gratis disertakan. Tidak selesai sebelum kamu puas.",
     IconComponent: Rocket,
   },
 ];
@@ -129,14 +133,18 @@ function DesktopSteps() {
   const { IconComponent } = step;
 
   return (
-    <div ref={sectionRef} className="hidden lg:flex items-center h-screen max-w-6xl mx-auto px-8 gap-16">
+    <div
+      ref={sectionRef}
+      className="mx-auto hidden h-screen max-w-6xl items-center gap-16 px-8 lg:flex"
+    >
       {/* Left nav */}
       <div className="w-2/5 space-y-1">
         <div className="mb-8">
-          <span className="text-accent font-bold text-sm uppercase tracking-wider">Proses Kerja</span>
-          <h2 className="text-4xl font-extrabold text-brand-dark mt-2">
-            Sederhana, Transparan,{" "}
-            <span className="text-accent">Tanpa Ribet</span>
+          <span className="text-sm font-bold uppercase tracking-wider text-accent">
+            Proses Kerja
+          </span>
+          <h2 className="mt-2 text-4xl font-extrabold text-brand-dark">
+            Sederhana, Transparan, <span className="text-accent">Tanpa Ribet</span>
           </h2>
         </div>
         {steps.map((s, i) => {
@@ -148,27 +156,37 @@ function DesktopSteps() {
               animate={{ opacity: active ? 1 : 0.38, x: active ? 6 : 0 }}
               transition={{ duration: 0.25 }}
               onClick={() => goTo(i)}
-              className="w-full text-left flex items-center gap-4 p-4 rounded-lg transition-colors"
+              className="flex w-full items-center gap-4 rounded-lg p-4 text-left transition-colors"
               style={{ background: active ? "rgba(245,167,0,0.09)" : "transparent" }}
             >
               <div
-                className="w-10 h-10 rounded-md flex items-center justify-center flex-shrink-0 transition-colors"
+                className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-md transition-colors"
                 style={{ background: active ? "rgba(245,167,0,0.15)" : "rgba(36,36,35,0.05)" }}
               >
                 <IC size={17} className={active ? "text-accent" : "text-brand-dark/40"} />
               </div>
               <div>
-                <div className={`font-bold text-base ${active ? "text-brand-dark" : "text-brand-dark/50"}`}>{s.title}</div>
-                <div className="text-xs text-brand-dark/40 mt-0.5">{s.desc}</div>
+                <div
+                  className={`text-base font-bold ${active ? "text-brand-dark" : "text-brand-dark/50"}`}
+                >
+                  {s.title}
+                </div>
+                <div className="mt-0.5 text-xs text-brand-dark/40">{s.desc}</div>
               </div>
             </motion.button>
           );
         })}
 
         {/* Scroll hint */}
-        <div className="pt-4 flex items-center gap-2 text-brand-dark/30 text-xs">
+        <div className="flex items-center gap-2 pt-4 text-xs text-brand-dark/30">
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-            <path d="M7 2v10M4 9l3 3 3-3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path
+              d="M7 2v10M4 9l3 3 3-3"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
           </svg>
           Scroll untuk melihat langkah berikutnya
         </div>
@@ -183,20 +201,22 @@ function DesktopSteps() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -28 }}
             transition={{ duration: 0.38, ease: "easeOut" }}
-            className="bg-white rounded-lg p-10 border border-brand-dark/8 card-shadow"
+            className="border-brand-dark/8 card-shadow rounded-lg border bg-white p-10"
           >
-            <div className="w-16 h-16 rounded-md bg-accent/10 flex items-center justify-center mb-6">
+            <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-md bg-accent/10">
               <IconComponent size={30} className="text-accent" />
             </div>
-            <span className="text-accent font-bold text-sm uppercase tracking-widest">Langkah {step.number}</span>
-            <h3 className="text-3xl font-extrabold text-brand-dark mt-2 mb-4">{step.title}</h3>
-            <p className="text-brand-dark/60 text-lg leading-relaxed">{step.detail}</p>
+            <span className="text-sm font-bold uppercase tracking-widest text-accent">
+              Langkah {step.number}
+            </span>
+            <h3 className="mb-4 mt-2 text-3xl font-extrabold text-brand-dark">{step.title}</h3>
+            <p className="text-lg leading-relaxed text-brand-dark/60">{step.detail}</p>
             <div className="mt-8 flex gap-2">
               {steps.map((_, i) => (
                 <div
                   key={i}
                   className={`h-1 rounded-md transition-all duration-500 ${
-                    i === activeStep ? "bg-accent flex-1" : "bg-brand-dark/10 w-6"
+                    i === activeStep ? "flex-1 bg-accent" : "w-6 bg-brand-dark/10"
                   }`}
                 />
               ))}
@@ -211,17 +231,20 @@ function DesktopSteps() {
 function MobileSteps() {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.05 });
   return (
-    <div ref={ref} className="lg:hidden py-20 bg-transparent">
-      <div className="max-w-2xl mx-auto px-4 sm:px-6">
+    <div ref={ref} className="bg-transparent py-20 lg:hidden">
+      <div className="mx-auto max-w-2xl px-4 sm:px-6">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-14"
+          className="mb-14 text-center"
         >
-          <span className="text-accent font-bold text-sm uppercase tracking-wider">Proses Kerja</span>
-          <h2 className="text-4xl font-extrabold text-brand-dark mt-3">
-            Sederhana, Transparan,<br />
+          <span className="text-sm font-bold uppercase tracking-wider text-accent">
+            Proses Kerja
+          </span>
+          <h2 className="mt-3 text-4xl font-extrabold text-brand-dark">
+            Sederhana, Transparan,
+            <br />
             <span className="text-accent">Tanpa Ribet</span>
           </h2>
         </motion.div>
@@ -237,15 +260,19 @@ function MobileSteps() {
                 className="flex gap-4"
               >
                 <div className="flex flex-col items-center">
-                  <div className="w-10 h-10 rounded-md bg-accent/10 flex items-center justify-center flex-shrink-0 border border-accent/20">
+                  <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-md border border-accent/20 bg-accent/10">
                     <IconComponent size={17} className="text-accent" />
                   </div>
-                  {i < steps.length - 1 && <div className="w-0.5 flex-1 mt-2 bg-accent/20 min-h-[28px]" />}
+                  {i < steps.length - 1 && (
+                    <div className="mt-2 min-h-[28px] w-0.5 flex-1 bg-accent/20" />
+                  )}
                 </div>
-                <div className="pb-8 flex-1">
-                  <span className="text-accent text-xs font-bold uppercase tracking-widest">{step.number}</span>
-                  <h3 className="font-bold text-brand-dark text-xl mt-1 mb-2">{step.title}</h3>
-                  <p className="text-brand-dark/60 text-sm leading-relaxed">{step.detail}</p>
+                <div className="flex-1 pb-8">
+                  <span className="text-xs font-bold uppercase tracking-widest text-accent">
+                    {step.number}
+                  </span>
+                  <h3 className="mb-2 mt-1 text-xl font-bold text-brand-dark">{step.title}</h3>
+                  <p className="text-sm leading-relaxed text-brand-dark/60">{step.detail}</p>
                 </div>
               </motion.div>
             );

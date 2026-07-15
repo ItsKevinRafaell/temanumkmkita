@@ -29,8 +29,7 @@ const config: Config = {
         "card-hover": "0 4px 12px rgba(36,36,35,0.10), 0 16px 40px rgba(36,36,35,0.08)",
       },
       backgroundImage: {
-        "dot-pattern":
-          "radial-gradient(circle, rgba(36,36,35,0.07) 1px, transparent 1px)",
+        "dot-pattern": "radial-gradient(circle, rgba(36,36,35,0.07) 1px, transparent 1px)",
       },
       backgroundSize: {
         "dot-sm": "24px 24px",
@@ -38,8 +37,8 @@ const config: Config = {
       animation: {
         "float-slow": "float 8s ease-in-out infinite",
         "float-medium": "float 6s ease-in-out infinite reverse",
-        "shimmer": "shimmer 2.5s linear infinite",
-        "marquee": "marquee 28s linear infinite",
+        shimmer: "shimmer 2.5s linear infinite",
+        marquee: "marquee 28s linear infinite",
       },
       keyframes: {
         float: {

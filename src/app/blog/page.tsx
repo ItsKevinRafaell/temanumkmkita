@@ -12,7 +12,9 @@ const PER_PAGE = 6;
 
 function articleToPost(a: Article): BlogPost {
   let content: ContentBlock[] = [];
-  try { content = JSON.parse(a.content); } catch {}
+  try {
+    content = JSON.parse(a.content);
+  } catch {}
   return {
     slug: a.slug,
     title: a.title,
@@ -50,25 +52,27 @@ export default async function BlogPage() {
     <>
       <Navbar />
       <main className="pt-20">
-
         {/* ── Header ──────────────────────────────────────────────── */}
-        <section className="relative overflow-hidden pt-12 pb-10">
+        <section className="relative overflow-hidden pb-10 pt-12">
           <div className="absolute inset-x-0 top-0 h-px bg-brand-dark/10" />
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center gap-1.5 text-xs text-brand-dark/40 font-medium mb-8">
-              <Link href="/" className="hover:text-brand-dark transition-colors">Beranda</Link>
+          <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+            <div className="mb-8 flex items-center gap-1.5 text-xs font-medium text-brand-dark/40">
+              <Link href="/" className="transition-colors hover:text-brand-dark">
+                Beranda
+              </Link>
               <ChevronRight size={12} />
               <span className="text-brand-dark/70">Artikel</span>
             </div>
             <div className="max-w-2xl">
-              <p className="text-accent font-bold text-sm uppercase tracking-wider mb-4">
+              <p className="mb-4 text-sm font-bold uppercase tracking-wider text-accent">
                 Artikel Dan Panduan
               </p>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-brand-dark leading-tight mb-5">
+              <h1 className="mb-5 text-4xl font-extrabold leading-tight text-brand-dark sm:text-5xl lg:text-6xl">
                 Tips Dan Panduan Digital Untuk UMKM.
               </h1>
-              <p className="text-brand-dark/60 text-lg leading-relaxed">
-                Strategi praktis yang bisa langsung diterapkan — tanpa jargon teknis yang membingungkan.
+              <p className="text-lg leading-relaxed text-brand-dark/60">
+                Strategi praktis yang bisa langsung diterapkan — tanpa jargon teknis yang
+                membingungkan.
               </p>
             </div>
           </div>
@@ -81,7 +85,6 @@ export default async function BlogPage() {
           initialTotalPages={initialTotalPages}
           categories={categories}
         />
-
       </main>
       <Footer />
     </>
