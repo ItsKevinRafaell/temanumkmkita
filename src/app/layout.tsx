@@ -1,9 +1,13 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Poppins } from "next/font/google";
 import { fetchSiteSettings } from "@/lib/api/blog";
 import { SITE_URL } from "@/lib/seo/site";
 import { buildHomepageProof } from "@/lib/site-proof";
 import "./globals.css";
+
+const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_ID ?? "";
+const GSC_VERIFICATION = process.env.NEXT_PUBLIC_GSC_VERIFICATION ?? "";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -34,8 +38,16 @@ export const metadata: Metadata = {
   description:
     "Kami bantu UMKM kamu hadir dan berkembang secara online. Web development, SEO Google Maps, kelola sosial media, dan lebih banyak lagi.",
   keywords: ["UMKM", "web development", "SEO", "sosial media", "digital marketing", "Indonesia"],
-  alternates: { canonical: SITE_URL },
+  alternates: {
+    canonical: SITE_URL,
+    languages: {
+      "id-ID": SITE_URL,
+    },
+  },
   manifest: `/brand/site.webmanifest?${ASSET_VERSION}`,
+  verification: {
+    google: GSC_VERIFICATION,
+  },
   icons: {
     icon: [
       { url: `/favicon.ico?${ASSET_VERSION}`, sizes: "any" },
@@ -141,6 +153,10 @@ export default async function RootLayout({
     <html lang="id">
       <head>
         <link rel="preconnect" href="https://api.temanumkmkita.com" />
+        {GSC_VERIFICATION && (
+          <meta name="google-site-verification" content={GSC_VERIFICATION} />
+        )}
+        <link rel="alternate" hrefLang="id-ID" href={SITE_URL} />
         {/* CMS favicon override (admin settings). Default icon sudah di-handle metadata.icons.
             Hanya render kalau admin benar-benar set favicon_url, supaya gak duplikat link. */}
         {settings?.favicon_url?.trim() ? (
@@ -161,6 +177,23 @@ export default async function RootLayout({
           {children}
         </div>
       </body>
+      {GA_MEASUREMENT_ID && (
+        <>
+          <Script
+            src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+            strategy="afterInteractive"
+          />
+          <Script id="gtag-init" strategy="afterInteractive">
+            {`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '${GA_MEASUREMENT_ID}', {
+  page_path: window.location.pathname + window.location.search,
+  send_page_view: true,
+});`}
+          </Script>
+        </>
+      )}
     </html>
   );
 }

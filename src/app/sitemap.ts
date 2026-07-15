@@ -4,14 +4,22 @@ import { SITE_URL } from "@/lib/seo/site";
 
 export const revalidate = 3600;
 
-const LAST_MAJOR_UPDATE = "2026-05-25";
-
 const STATIC_PAGES = [
   { url: SITE_URL, priority: 1.0, changeFrequency: "weekly" },
   { url: `${SITE_URL}/blog`, priority: 0.9, changeFrequency: "daily" },
   { url: `${SITE_URL}/layanan`, priority: 0.8, changeFrequency: "monthly" },
   { url: `${SITE_URL}/tentang-kami`, priority: 0.7, changeFrequency: "monthly" },
   { url: `${SITE_URL}/kontak`, priority: 0.7, changeFrequency: "monthly" },
+  { url: `${SITE_URL}/blog/kategori/website`, priority: 0.75, changeFrequency: "weekly" },
+  { url: `${SITE_URL}/blog/kategori/seo-google-maps`, priority: 0.75, changeFrequency: "weekly" },
+  { url: `${SITE_URL}/blog/kategori/sosial-media`, priority: 0.75, changeFrequency: "weekly" },
+  { url: `${SITE_URL}/blog/kategori/branding`, priority: 0.7, changeFrequency: "weekly" },
+  { url: `${SITE_URL}/blog/kategori/maintenance`, priority: 0.7, changeFrequency: "weekly" },
+  { url: `${SITE_URL}/blog/kategori/tips-bisnis`, priority: 0.7, changeFrequency: "weekly" },
+  { url: `${SITE_URL}/blog/topik/website`, priority: 0.75, changeFrequency: "weekly" },
+  { url: `${SITE_URL}/blog/topik/seo-google-maps`, priority: 0.75, changeFrequency: "weekly" },
+  { url: `${SITE_URL}/blog/topik/sosial-media`, priority: 0.7, changeFrequency: "weekly" },
+  { url: `${SITE_URL}/blog/topik/branding`, priority: 0.7, changeFrequency: "weekly" },
   { url: `${SITE_URL}/layanan/web-development`, priority: 0.8, changeFrequency: "monthly" },
   { url: `${SITE_URL}/layanan/web-development-bulanan`, priority: 0.75, changeFrequency: "monthly" },
   { url: `${SITE_URL}/layanan/seo-google-maps`, priority: 0.8, changeFrequency: "monthly" },
@@ -44,7 +52,6 @@ async function fetchAllPublishedArticles(): Promise<Awaited<ReturnType<typeof fe
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticEntries: MetadataRoute.Sitemap = STATIC_PAGES.map(({ url, priority, changeFrequency }) => ({
     url,
-    lastModified: new Date(LAST_MAJOR_UPDATE),
     changeFrequency,
     priority,
   }));
@@ -71,7 +78,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const slugs = await fetchAllAuthorSlugs();
     authorEntries = slugs.map((slug) => ({
       url: `${SITE_URL}/blog/author/${slug}`,
-      lastModified: new Date(LAST_MAJOR_UPDATE),
       changeFrequency: "monthly" as const,
       priority: 0.6,
     }));

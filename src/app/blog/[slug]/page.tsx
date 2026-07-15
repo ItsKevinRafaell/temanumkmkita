@@ -11,7 +11,7 @@ import { fetchArticleBySlug, fetchArticles, type Article } from "@/lib/api/blog"
 import { SITE_URL, extractFirstParagraph } from "@/lib/seo/site";
 import { Calendar, Clock, ChevronRight, Tag, UserCircle, ExternalLink } from "lucide-react";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 300;
 
 const categoryColors: Record<string, string> = {
   Website: "bg-blue-50 text-blue-700 border-blue-100",

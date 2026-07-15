@@ -247,6 +247,9 @@ export default function WebDevelopmentBulananPage() {
                       </li>
                     ))}
                   </ul>
+                  <div className="text-xs text-brand-dark/40 font-medium border-t border-brand-dark/6 pt-3">
+                    Bisa berhenti kapan saja — tidak ada biaya penalti.
+                  </div>
 
                   <a
                     href={plan.wa}

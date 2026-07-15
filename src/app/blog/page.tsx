@@ -6,7 +6,7 @@ import BlogListClient from "@/components/blog/BlogListClient";
 import { type BlogPost, type ContentBlock } from "@/lib/data/blog";
 import { fetchArticles, fetchPublicCategories, type Article } from "@/lib/api/blog";
 
-export const revalidate = 60;
+export const revalidate = 300;
 
 const PER_PAGE = 6;
 

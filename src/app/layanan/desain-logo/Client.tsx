@@ -220,6 +220,9 @@ export default function DesainLogoPage() {
                       </li>
                     ))}
                   </ul>
+                  <div className="text-xs text-brand-dark/40 font-medium border-t border-brand-dark/6 pt-3">
+                    Garansi revisi 2× — file jadi milik Anda selamanya.
+                  </div>
                   <a
                     href={plan.wa}
                     target="_blank"

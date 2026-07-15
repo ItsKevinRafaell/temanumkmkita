@@ -226,6 +226,11 @@ export default function MaintenancePage() {
                       </li>
                     ))}
                   </ul>
+                  {plan.name === "Maintenance Starter" && (
+                    <div className="text-xs text-brand-dark/40 font-medium border-t border-brand-dark/6 pt-3">
+                      Backup mingguan + malware scan — website aman tanpa ribet.
+                    </div>
+                  )}
                   <a
                     href={plan.wa}
                     target="_blank"

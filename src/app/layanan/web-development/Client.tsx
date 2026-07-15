@@ -266,6 +266,12 @@ export default function WebDevelopmentPage() {
                     ))}
                   </ul>
 
+                  {plan.name === "Web Starter" && (
+                    <div className="text-xs text-brand-dark/40 font-medium border-t border-brand-dark/6 pt-3">
+                      ⚡ Garansi revisi 2× — belum puas? diskusikan sampai cocok.
+                    </div>
+                  )}
+
                   {/* CTA */}
                   <a
                     href={plan.wa}

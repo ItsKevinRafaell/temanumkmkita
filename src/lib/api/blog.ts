@@ -50,7 +50,7 @@ export async function fetchArticles(params: {
   if (params.page) url.searchParams.set("page", String(params.page));
   if (params.per_page) url.searchParams.set("per_page", String(params.per_page));
 
-  const res = await fetch(url.toString(), { cache: "no-store" });
+  const res = await fetch(url.toString(), { next: { revalidate: 300 } });
   if (!res.ok) throw new Error("Failed to fetch articles");
   return res.json();
 }
@@ -62,7 +62,7 @@ export async function fetchArticleBySlug(slug: string): Promise<Article> {
     const timeout = setTimeout(() => controller.abort(), 8000);
     try {
       const res = await fetch(buildPublicApiUrl(`articles/${encodeURIComponent(slug)}`).toString(), {
-        cache: "no-store",
+        next: { revalidate: 300 },
         signal: controller.signal,
       });
       if (res.status === 404) throw new Error("Article not found");

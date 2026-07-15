@@ -11,6 +11,17 @@ from app.core.utils import now_iso
 router = APIRouter(prefix="/api/topics", tags=["topics"])
 
 
+@router.get("/public", response_model=list[TopicOut])
+def list_topics_public(
+    pillar_id: str | None = Query(None),
+    db: Session = Depends(get_db),
+):
+    q = db.query(ContentTopic)
+    if pillar_id:
+        q = q.filter(ContentTopic.pillar_id == pillar_id)
+    return q.order_by(ContentTopic.created_at.asc()).all()
+
+
 @router.get("", response_model=list[TopicOut], dependencies=[Depends(require_auth)])
 def list_topics(
     pillar_id: str | None = Query(None),

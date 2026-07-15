@@ -244,6 +244,11 @@ export default function SEOPage() {
                       </li>
                     ))}
                   </ul>
+                  {plan.name === "SEO Starter" && (
+                    <div className="text-xs text-brand-dark/40 font-medium border-t border-brand-dark/6 pt-3">
+                      Bisa upgrade kapan saja — mulai dari yang dasar, lanjut pakai yang pas.
+                    </div>
+                  )}
 
                   <a
                     href={plan.wa}

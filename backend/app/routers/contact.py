@@ -1,4 +1,5 @@
 import os
+import asyncio
 import uuid
 import httpx
 from fastapi import APIRouter, BackgroundTasks, Depends, Request
@@ -40,13 +41,22 @@ def lead_intake_status():
     }
 
 
-def _forward_to_crm(submission_id: str, payload: dict):
+def _forward_to_crm_sync(submission_id: str, payload: dict):
+    """Sync wrapper for FastAPI BackgroundTasks — runs async coroutine via asyncio.run."""
+    try:
+        asyncio.run(_forward_to_crm(submission_id, payload))
+    except Exception as e:
+        print(f"[CONTACT] CRM sync wrapper failed: {e}", flush=True)
+
+
+async def _forward_to_crm(submission_id: str, payload: dict):
     if not CRM_API_URL or not CRM_API_KEY:
+        print(f"[CONTACT] CRM not configured — lead {submission_id} saved but NOT forwarded. Set CRM_API_URL + CRM_API_KEY.", flush=True)
         return
     db = SessionLocal()
     try:
-        with httpx.Client(timeout=15) as client:
-            resp = client.post(
+        async with httpx.AsyncClient(timeout=15) as client:
+            resp = await client.post(
                 f"{CRM_API_URL.rstrip('/')}/api/leads/external",
                 json=payload,
                 headers={"X-API-Key": CRM_API_KEY},
@@ -93,6 +103,6 @@ def submit_contact_form(
         "product_interest": body.service,
         "source": "website_temanumkmkita",
     }
-    background_tasks.add_task(_forward_to_crm, submission.id, payload)
+    background_tasks.add_task(_forward_to_crm_sync, submission.id, payload)
 
     return {"success": True, "submission_id": submission.id}

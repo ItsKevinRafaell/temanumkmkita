@@ -224,6 +224,11 @@ export default function SosmedPage() {
                       </li>
                     ))}
                   </ul>
+                  {plan.name === "Sosmed Starter" && (
+                    <div className="text-xs text-brand-dark/40 font-medium border-t border-brand-dark/6 pt-3">
+                      Cocok untuk mulai — semua konten di-review oleh Anda sebelum tayang.
+                    </div>
+                  )}
                   <a
                     href={plan.wa}
                     target="_blank"
