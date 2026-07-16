@@ -35,8 +35,10 @@ const nextConfig = {
         headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }],
       },
       {
-        source: "/(favicon|favicon-v4|favicon-16|favicon-32|favicon-96|favicon-48).ico",
-        headers: [{ key: "Cache-Control", value: "public, max-age=86400, must-revalidate" }],
+        source: "/(favicon|favicon-v4|favicon-v5|favicon-16|favicon-32|favicon-96|favicon-48).ico",
+        headers: [
+          { key: "Cache-Control", value: "public, max-age=0, must-revalidate" },
+        ],
       },
       {
         source: "/brand/(favicon|android-chrome|apple-touch-icon).*",
