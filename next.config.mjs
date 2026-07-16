@@ -41,8 +41,10 @@ const nextConfig = {
         ],
       },
       {
-        source: "/brand/(favicon|android-chrome|apple-touch-icon).*",
-        headers: [{ key: "Cache-Control", value: "public, max-age=86400, must-revalidate" }],
+        source: "/brand/:path*",
+        headers: [
+          { key: "Cache-Control", value: "public, max-age=300, must-revalidate" },
+        ],
       },
     ];
   },

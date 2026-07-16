@@ -21,10 +21,8 @@ const DEFAULT_FOOTER_LOGO_PATH = "/brand/logo-footer-yellow.png";
 const DEFAULT_OG_IMAGE_PATH = "/brand/og-image.png";
 const DEFAULT_LOGO_URL = `${SITE_URL}${DEFAULT_LOGO_PATH}`;
 // Bump tiap ganti asset brand agar browser re-fetch (cache-busting).
-// Tanpa ini, favicon lama tetap ke-cache di URL yang sama.
-// Rename file juga perlu kalau query string di-ignore browser (terutama favicon).
-// v5: ganti URL favicon dari /favicon-v4.ico -> /favicon-v5.ico supaya laptop
-// yang sudah ke-cache Vercel default di /favicon-v4.ico mau re-fetch.
+// Primary favicon di-handle via /api/favicon (force-dynamic, revalidate=0)
+// agar tidak tersandar pada Vercel static CDN cache.
 const ASSET_VERSION = "v5";
 
 function absoluteAssetUrl(value: string) {
@@ -53,7 +51,7 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: `/favicon-v5.ico?${ASSET_VERSION}`, sizes: "any" },
+      { url: `/api/favicon`, sizes: "any" },
       { url: `/brand/favicon.svg?${ASSET_VERSION}`, type: "image/svg+xml" },
       { url: `/brand/favicon-96.png?${ASSET_VERSION}`, sizes: "96x96", type: "image/png" },
       { url: `/brand/favicon-32.png?${ASSET_VERSION}`, sizes: "32x32", type: "image/png" },
