@@ -394,10 +394,10 @@ export default function KontakPage() {
       <AnimatePresence>
         {toast && (
           <motion.div
-            initial={{ opacity: 0, y: 24, scale: 0.95 }}
+            initial={{ opacity: 0, y: -20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 24, scale: 0.95 }}
-            className={`fixed bottom-6 left-1/2 z-50 max-w-md -translate-x-1/2 rounded-xl px-5 py-3 shadow-lg ${
+            exit={{ opacity: 0, y: -20, scale: 0.95 }}
+            className={`fixed left-1/2 top-24 z-50 max-w-md -translate-x-1/2 rounded-xl px-5 py-3 shadow-lg ${
               toast.type === "success"
                 ? "border-2 border-green-400 bg-green-50 text-green-800"
                 : "border-2 border-red-400 bg-red-50 text-red-800"

@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
   fetchCategories,
@@ -11,7 +10,8 @@ import {
   type AdminCategory,
 } from "@/lib/api/admin";
 import ConfirmModal from "@/components/ui/ConfirmModal";
-import { FileText, Plus, Pencil, Trash2, Check, X, ChevronLeft, Loader2 } from "lucide-react";
+import AdminHeader from "@/components/admin/AdminHeader";
+import { Plus, Pencil, Trash2, Check, X, Loader2 } from "lucide-react";
 
 function slugify(text: string): string {
   return text
@@ -110,23 +110,7 @@ export default function CategoriesPage() {
 
   return (
     <div className="min-h-screen bg-[#fcfaf7]">
-      <header className="border-[#242423]/8 flex items-center justify-between border-b bg-white px-4 py-4 sm:px-6">
-        <div className="flex items-center gap-2 sm:gap-3">
-          <div className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-lg bg-[#f5a700]">
-            <FileText size={13} className="text-white" />
-          </div>
-          <span className="hidden text-base font-extrabold text-[#242423] sm:inline">
-            Teman UMKM Kita
-          </span>
-          <span className="hidden text-sm text-[#242423]/20 sm:inline">/ Admin</span>
-        </div>
-        <Link
-          href="/admin/posts"
-          className="flex items-center gap-1.5 text-xs text-[#242423]/50 transition hover:text-[#242423]"
-        >
-          <ChevronLeft size={13} /> Artikel
-        </Link>
-      </header>
+      <AdminHeader title="Kategori" backHref="/admin" />
 
       <main className="mx-auto max-w-2xl px-6 py-8">
         <div className="mb-6">

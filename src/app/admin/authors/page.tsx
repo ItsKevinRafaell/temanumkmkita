@@ -4,9 +4,10 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { Plus, Trash2, PenLine, ChevronLeft, Loader2, Users } from "lucide-react";
+import { Trash2, PenLine, Loader2, Users } from "lucide-react";
 import { fetchAuthors, deleteAuthor, type Author } from "@/lib/api/admin";
 import ConfirmModal from "@/components/ui/ConfirmModal";
+import AdminHeader from "@/components/admin/AdminHeader";
 
 export default function AuthorsPage() {
   const router = useRouter();
@@ -36,24 +37,7 @@ export default function AuthorsPage() {
 
   return (
     <div className="min-h-screen bg-[#fcfaf7]">
-      <header className="border-[#242423]/8 sticky top-0 z-20 flex items-center justify-between border-b bg-white px-6 py-3.5 shadow-sm">
-        <div className="flex items-center gap-3">
-          <Link
-            href="/admin/posts"
-            className="flex items-center gap-1 text-xs text-[#242423]/50 transition hover:text-[#242423]"
-          >
-            <ChevronLeft size={13} /> Artikel
-          </Link>
-          <span className="text-[#242423]/20">/</span>
-          <span className="text-sm font-bold text-[#242423]">Penulis</span>
-        </div>
-        <Link
-          href="/admin/authors/new"
-          className="flex items-center gap-1.5 rounded-lg bg-[#f5a700] px-4 py-1.5 text-sm font-bold text-white transition hover:bg-[#f5a700]/90"
-        >
-          <Plus size={13} /> Tambah Penulis
-        </Link>
-      </header>
+      <AdminHeader title="Penulis" backHref="/admin" />
 
       <main className="mx-auto max-w-3xl px-6 py-8">
         {loading ? (

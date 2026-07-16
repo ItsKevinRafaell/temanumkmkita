@@ -114,7 +114,7 @@ const notes = [
   {
     icon: Check,
     title: "Kontrak",
-    text: "Tidak ada kontrak jangka panjang. Bisa berhenti kapan saja dengan notifikasi 30 hari sebelumnya.",
+    text: "Minimal kontrak 6 bulan. Hasil SEO butuh waktu — investasi jangka panjang yang terukur.",
   },
   {
     icon: BarChart2,
@@ -433,7 +433,7 @@ export default function SEOPage() {
                 href={
                   WA_BASE +
                   encodeURIComponent(
-                    "Halo, saya ingin konsultasi pilihan paket SEO yang cocok untuk bisnis saya."
+                    "Halo Teman UMKM Kita, saya tertarik dengan layanan SEO & Google Maps. Saya ingin konsultasi paket mana yang cocok untuk bisnis saya."
                   )
                 }
                 target="_blank"

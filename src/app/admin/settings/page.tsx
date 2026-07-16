@@ -1,8 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Link from "next/link";
-import { Save, ChevronLeft, Loader2, Link2, Copy, Check, KeyRound, Trash2 } from "lucide-react";
+import { Save, Loader2, Link2, Copy, Check, KeyRound, Trash2 } from "lucide-react";
 import {
   fetchAdminSettings,
   updateSettings,
@@ -13,6 +12,7 @@ import {
   type SiteSettings,
   type IntegrationTokenInfo,
 } from "@/lib/api/admin";
+import AdminHeader from "@/components/admin/AdminHeader";
 
 type EditableSettings = Omit<SiteSettings, "id" | "updated_at">;
 type TextFieldKey = Exclude<keyof EditableSettings, "show_testimonials">;
@@ -239,30 +239,21 @@ export default function SettingsPage() {
 
   return (
     <div className="min-h-screen bg-[#fcfaf7]">
-      <header className="border-[#242423]/8 sticky top-0 z-20 flex items-center justify-between border-b bg-white px-6 py-3.5 shadow-sm">
-        <div className="flex items-center gap-3">
-          <Link
-            href="/admin"
-            className="flex items-center gap-1 text-xs text-[#242423]/50 transition hover:text-[#242423]"
-          >
-            <ChevronLeft size={13} /> Dashboard
-          </Link>
-          <span className="text-[#242423]/20">/</span>
-          <span className="text-sm font-bold text-[#242423]">Pengaturan Website</span>
-        </div>
-        <div className="flex items-center gap-2">
-          {error && <span className="text-xs text-red-600">{error}</span>}
-          {saved && <span className="text-xs font-semibold text-green-600">Tersimpan</span>}
-          <button
-            onClick={handleSave}
-            disabled={saving || loading}
-            className="flex items-center gap-1.5 rounded-lg bg-[#f5a700] px-4 py-1.5 text-sm font-bold text-white transition hover:bg-[#f5a700]/90 disabled:opacity-60"
-          >
-            {saving ? <Loader2 size={13} className="animate-spin" /> : <Save size={13} />}
-            {saving ? "Menyimpan..." : "Simpan"}
-          </button>
-        </div>
-      </header>
+      <AdminHeader title="Pengaturan Website" backHref="/admin" />
+
+      {/* Save button bar */}
+      <div className="border-[#242423]/8 flex items-center justify-end gap-2 border-b bg-white px-6 py-3">
+        {error && <span className="text-xs text-red-600">{error}</span>}
+        {saved && <span className="text-xs font-semibold text-green-600">Tersimpan</span>}
+        <button
+          onClick={handleSave}
+          disabled={saving || loading}
+          className="flex items-center gap-1.5 rounded-lg bg-[#f5a700] px-4 py-1.5 text-sm font-bold text-white transition hover:bg-[#f5a700]/90 disabled:opacity-60"
+        >
+          {saving ? <Loader2 size={13} className="animate-spin" /> : <Save size={13} />}
+          {saving ? "Menyimpan..." : "Simpan"}
+        </button>
+      </div>
 
       <div className="mx-auto max-w-2xl px-4 py-10">
         {loading ? (

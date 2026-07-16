@@ -388,7 +388,7 @@ export default function SosmedPage() {
                 href={
                   WA_BASE +
                   encodeURIComponent(
-                    "Halo, saya ingin konsultasi pilihan paket Kelola Sosial Media yang cocok untuk bisnis saya."
+                    "Halo Teman UMKM Kita, saya tertarik dengan layanan Kelola Sosial Media. Saya ingin konsultasi paket mana yang cocok untuk bisnis saya."
                   )
                 }
                 target="_blank"

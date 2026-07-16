@@ -416,7 +416,7 @@ export default function WebDevelopmentBulananPage() {
                 href={
                   WA_BASE +
                   encodeURIComponent(
-                    "Halo, saya ingin konsultasi pilihan paket website bulanan yang cocok untuk bisnis saya."
+                    "Halo Teman UMKM Kita, saya tertarik dengan layanan Web Development Bulanan. Saya ingin konsultasi paket mana yang cocok untuk bisnis saya."
                   )
                 }
                 target="_blank"

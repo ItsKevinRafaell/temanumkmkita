@@ -6,18 +6,16 @@ import { useRouter } from "next/navigation";
 import {
   adminListArticles,
   adminDeleteArticle,
-  logout,
   adminBulkPublish,
   type AdminArticle,
 } from "@/lib/api/admin";
 import ConfirmModal from "@/components/ui/ConfirmModal";
 import BulkGenerateModal from "@/components/ui/BulkGenerateModal";
+import AdminHeader from "@/components/admin/AdminHeader";
 import {
   PenLine,
   Trash2,
   Plus,
-  LogOut,
-  FileText,
   CheckCircle,
   Clock,
   ChevronLeft,
@@ -161,12 +159,6 @@ export default function AdminPostsPage() {
     }
   }
 
-  function handleLogout() {
-    logout();
-    document.cookie = "admin_token=; path=/; max-age=0";
-    router.push("/admin/login");
-  }
-
   async function openBulkModal() {
     try {
       const data = await adminListArticles(1, 500, {
@@ -244,26 +236,7 @@ export default function AdminPostsPage() {
 
   return (
     <div className="min-h-screen bg-[#fcfaf7]">
-      {/* ── Top bar ─────────────────────────────────────────────────── */}
-      <header className="border-[#242423]/8 flex items-center justify-between border-b bg-white px-4 py-4 sm:px-6">
-        <div className="flex items-center gap-2 sm:gap-3">
-          <div className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-lg bg-[#f5a700]">
-            <FileText size={13} className="text-white" />
-          </div>
-          <span className="hidden text-base font-extrabold text-[#242423] sm:inline">
-            Teman UMKM Kita
-          </span>
-          <span className="hidden text-sm text-[#242423]/20 sm:inline">/ Admin</span>
-        </div>
-        <button
-          onClick={handleLogout}
-          className="flex items-center gap-1.5 text-xs text-[#242423]/50 transition hover:text-[#242423]"
-        >
-          <LogOut size={13} /> Keluar
-        </button>
-      </header>
-
-      {/* Mobile nav dropdown */}
+      <AdminHeader title="Artikel" backHref="/admin" />
       {navOpen && (
         <div className="border-[#242423]/8 flex flex-col gap-0.5 border-b bg-white px-4 py-2 sm:hidden">
           <Link

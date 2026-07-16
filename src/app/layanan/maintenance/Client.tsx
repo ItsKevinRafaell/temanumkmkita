@@ -390,7 +390,7 @@ export default function MaintenancePage() {
                 href={
                   WA_BASE +
                   encodeURIComponent(
-                    "Halo, saya ingin konsultasi paket maintenance website untuk bisnis saya."
+                    "Halo Teman UMKM Kita, saya tertarik dengan layanan Maintenance Website. Saya ingin konsultasi paket mana yang cocok untuk website bisnis saya."
                   )
                 }
                 target="_blank"

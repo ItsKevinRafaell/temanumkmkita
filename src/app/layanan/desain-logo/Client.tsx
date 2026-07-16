@@ -374,7 +374,7 @@ export default function DesainLogoPage() {
                 href={
                   WA_BASE +
                   encodeURIComponent(
-                    "Halo, saya ingin konsultasi paket desain logo yang cocok untuk bisnis saya."
+                    "Halo Teman UMKM Kita, saya tertarik dengan layanan Desain Logo. Saya ingin konsultasi paket mana yang cocok untuk bisnis saya."
                   )
                 }
                 target="_blank"
