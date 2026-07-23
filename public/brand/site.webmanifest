@@ -9,13 +9,13 @@
   "theme_color": "#f5a700",
   "icons": [
     {
-      "src": "/brand/android-chrome-192x192.png?v2",
+      "src": "/brand/android-chrome-192x192.png?v6",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/brand/android-chrome-512x512.png?v2",
+      "src": "/brand/android-chrome-512x512.png?v6",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
