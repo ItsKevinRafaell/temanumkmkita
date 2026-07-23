@@ -23,7 +23,7 @@ const DEFAULT_LOGO_URL = `${SITE_URL}${DEFAULT_LOGO_PATH}`;
 // Bump tiap ganti asset brand agar browser re-fetch (cache-busting).
 // Primary favicon di-handle via /api/favicon (force-dynamic, revalidate=0)
 // agar tidak tersandar pada Vercel static CDN cache.
-const ASSET_VERSION = "v5";
+const ASSET_VERSION = "v6";
 
 function absoluteAssetUrl(value: string) {
   try {

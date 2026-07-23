@@ -10,7 +10,7 @@ import fs from "node:fs/promises";
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
-const FAVICON_PATHS = ["favicon-v5.ico", "favicon.ico", "brand/favicon-96.png"];
+const FAVICON_PATHS = ["favicon.ico", "favicon-v5.ico", "brand/favicon-96.png"];
 
 export async function GET() {
   const cc = "public, max-age=300, must-revalidate";
