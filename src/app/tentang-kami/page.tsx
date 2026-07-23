@@ -9,6 +9,29 @@ export const metadata: Metadata = {
   alternates: { canonical: `${SITE_URL}/tentang-kami` },
 };
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  mainEntity: {
+    "@type": "Organization",
+    name: "Teman UMKM Kita",
+    url: SITE_URL,
+    founder: {
+      "@type": "Person",
+      name: "Kevin Pierre Rafael Sabran",
+      jobTitle: "Founder & Digital Strategist",
+    },
+  },
+};
+
 export default function Page() {
-  return <TentangKamiPage />;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <TentangKamiPage />
+    </>
+  );
 }

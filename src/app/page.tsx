@@ -5,6 +5,7 @@ import HeroSection from "@/components/sections/HeroSection";
 import MarqueeTicker from "@/components/sections/MarqueeTicker";
 import ProblemSection from "@/components/sections/ProblemSection";
 import LayananSection from "@/components/sections/LayananSection";
+import ToolsHighlightSection from "@/components/sections/ToolsHighlightSection";
 import CaraKerjaSection from "@/components/sections/CaraKerjaSection";
 import CTASection from "@/components/sections/CTASection";
 import { SITE_URL } from "@/lib/seo/site";
@@ -31,6 +32,7 @@ export default async function HomePage() {
         <MarqueeTicker proof={proof} />
         <ProblemSection />
         <LayananSection />
+        <ToolsHighlightSection />
         <CaraKerjaSection />
         <CTASection proof={proof} />
       </main>

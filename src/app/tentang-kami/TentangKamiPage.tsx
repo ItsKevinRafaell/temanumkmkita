@@ -333,7 +333,7 @@ function TimSection() {
                 K
               </div>
               <div>
-                <div className="text-2xl font-bold text-brand-dark">Kevin</div>
+                <div className="text-2xl font-bold text-brand-dark">Kevin Pierre Rafael Sabran</div>
                 <div className="mt-1 text-sm font-semibold text-accent">
                   Founder & Digital Strategist
                 </div>
@@ -360,8 +360,8 @@ function TimSection() {
               </p>
               <p>
                 Setelah melihat langsung bagaimana banyak bisnis lokal yang berkualitas kalah
-                bersaing hanya karena tidak &ldquo;terlihat&rdquo; di Google, Kevin mendirikan Teman
-                UMKM Kita sebagai jawaban praktisnya.
+                bersaing hanya karena tidak &ldquo;terlihat&rdquo; di Google, Kevin Pierre Rafael
+                Sabran mendirikan Teman UMKM Kita sebagai jawaban praktisnya.
               </p>
               <p>
                 Bukan sebagai agensi yang transaksional — tapi sebagai teman yang benar-benar hadir,
