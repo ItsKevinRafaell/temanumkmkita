@@ -18,6 +18,7 @@ from app.routers import (
     contact,
     office,
     imaginer,
+    tools,
 )
 
 Base.metadata.create_all(bind=engine)
@@ -68,6 +69,7 @@ app.include_router(portfolios.router)
 app.include_router(contact.router)
 app.include_router(office.router)
 app.include_router(imaginer.router)
+app.include_router(tools.router)
 
 _uploads_dir = os.path.join(os.path.dirname(__file__), "..", "..", "public", "uploads")
 os.makedirs(_uploads_dir, exist_ok=True)

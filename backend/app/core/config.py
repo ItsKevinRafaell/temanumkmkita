@@ -22,6 +22,11 @@ HERMES_GATEWAY_TOKEN = os.getenv("HERMES_GATEWAY_TOKEN", "").strip()
 IMAGINER_API_KEY = os.getenv("IMAGINER_API_KEY", "").strip()
 IMAGINER_BASE_URL = os.getenv("IMAGINER_BASE_URL", "https://imaginer.mirava.studio").rstrip("/")
 
+# 9router (OpenAI-compatible) untuk tool AI teks (Generator Profil Google, dll).
+ROUTER_BASE_URL = os.getenv("ROUTER_BASE_URL", "https://9router.kantorteman.my.id/v1").rstrip("/")
+ROUTER_API_KEY = os.getenv("ROUTER_API_KEY", "").strip()
+ROUTER_MODEL = os.getenv("ROUTER_MODEL", "mimo").strip()
+
 FRONTEND_URL = os.getenv("FRONTEND_URL", "https://www.temanumkmkita.com").rstrip("/")
 SMTP_HOST = os.getenv("SMTP_HOST", "").strip()
 SMTP_PORT = int(os.getenv("SMTP_PORT", "587") or "587")
