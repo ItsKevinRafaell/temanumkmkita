@@ -181,7 +181,7 @@ export default function SosmedPage() {
                   <span className="text-sm font-bold text-brand-dark">Retainer Bulanan</span>
                 </div>
                 <p className="text-xs font-medium text-brand-dark/40">
-                  Tanpa kontrak panjang · Bisa berhenti kapan saja
+                  Kontrak retainer minimal 3 bulan · Syarat &amp; ketentuan berlaku
                 </p>
               </motion.div>
             </div>

@@ -204,9 +204,9 @@ export const servicesData: ServiceData[] = [
           "Google Ads bayar per klik dan berhenti saat budget habis. SEO adalah trafik organik yang terus mengalir tanpa bayar per klik.",
       },
       {
-        question: "Apakah bisa dibatalkan kapan saja?",
+        question: "Apakah ada minimum kontrak?",
         answer:
-          "Ya, tidak ada kontrak jangka panjang yang memaksa. Kami percaya hasil kerja kami yang akan membuat kamu bertahan.",
+          "Ya. Layanan SEO adalah retainer dengan kontrak minimal 6 bulan, karena SEO butuh waktu untuk menunjukkan hasil yang terukur. Detail lengkap diatur dalam syarat & ketentuan layanan.",
       },
     ],
   },

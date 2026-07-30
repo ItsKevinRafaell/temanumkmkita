@@ -5,7 +5,7 @@ import WebDevelopmentBulananClient from "./Client";
 export const metadata: Metadata = {
   title: "Web Development Bulanan — Website Tanpa Bayar Besar di Awal | Teman UMKM Kita",
   description:
-    "Website profesional UMKM dengan biaya bulanan. Mulai dari Rp 120.000/bulan, tanpa kontrak tahunan.",
+    "Website profesional UMKM dengan biaya bulanan. Mulai dari Rp 120.000/bulan, tanpa biaya setup besar di awal.",
   alternates: { canonical: `${SITE_URL}/layanan/web-development-bulanan` },
   openGraph: {
     title: "Web Development Bulanan untuk UMKM",

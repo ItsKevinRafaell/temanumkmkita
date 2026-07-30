@@ -211,7 +211,7 @@ export default function SEOPage() {
                   <span className="text-sm font-bold text-brand-dark">Retainer Bulanan</span>
                 </div>
                 <p className="text-xs font-medium text-brand-dark/40">
-                  Tanpa kontrak panjang · Bisa berhenti kapan saja
+                  Kontrak retainer minimal 6 bulan · Syarat &amp; ketentuan berlaku
                 </p>
               </motion.div>
             </div>

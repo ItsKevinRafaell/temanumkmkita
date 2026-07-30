@@ -93,7 +93,7 @@ const notes = [
   {
     icon: Globe,
     title: "Domain & Hosting",
-    text: "Domain & Hosting termasuk tahun pertama. Pembayaran bulanan — bisa berhenti kapan saja.",
+    text: "Domain & Hosting termasuk tahun pertama. Pembayaran bulanan dengan kontrak retainer minimal 6 bulan. Syarat & ketentuan berlaku.",
   },
 ];
 
@@ -274,7 +274,7 @@ export default function WebDevelopmentBulananPage() {
                     ))}
                   </ul>
                   <div className="border-brand-dark/6 border-t pt-3 text-xs font-medium text-brand-dark/40">
-                    Bisa berhenti kapan saja — tidak ada biaya penalti.
+                    Kontrak retainer minimal 6 bulan · Syarat &amp; ketentuan berlaku.
                   </div>
 
                   <a

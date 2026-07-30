@@ -94,7 +94,7 @@ const notes = [
   {
     icon: Check,
     title: "Kontrak",
-    text: "Tidak ada kontrak minimum — bisa mulai dan berhenti kapan saja.",
+    text: "Retainer bulanan dengan kontrak minimal 6 bulan. Syarat & ketentuan layanan berlaku.",
   },
   {
     icon: Shield,
@@ -182,7 +182,7 @@ export default function MaintenancePage() {
                   <span className="text-sm font-bold text-brand-dark">Retainer Bulanan</span>
                 </div>
                 <p className="text-xs font-medium text-brand-dark/40">
-                  Tanpa kontrak minimum · Mulai kapan saja
+                  Kontrak retainer minimal 6 bulan · Syarat &amp; ketentuan berlaku
                 </p>
               </motion.div>
             </div>
