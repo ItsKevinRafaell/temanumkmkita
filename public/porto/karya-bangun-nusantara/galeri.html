@@ -9,83 +9,76 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/css/palette.css" />
-  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="/porto/_ds/design-system.css" />
+  <link rel="stylesheet" href="/porto/karya-bangun-nusantara/assets/css/brand.css" />
+  <link rel="stylesheet" href="/porto/karya-bangun-nusantara/assets/css/layout.css" />
+  <link rel="stylesheet" href="/porto/karya-bangun-nusantara/assets/css/bento.css" />
 </head>
 <body>
 
   <header class="site-nav" data-include="nav"></header>
 
-  <!-- PAGE HEADER -->
-  <section class="pagehead">
-    <img class="pagehead__img" src="assets/img/gen/project-house.jpg" alt="" aria-hidden="true" />
-    <div class="pagehead__inner">
+  <!-- HERO -->
+  <section class="hero-fb" style="min-height:60vh;">
+    <img class="hero-fb__img" src="/porto/karya-bangun-nusantara/assets/img/gen/project-house.jpg" alt="Rumah modern hasil karya kami" fetchpriority="high" onerror="this.src='/porto/karya-bangun-nusantara/assets/img/gen/hero.jpg'" />
+    <div class="hero-fb__scrim"></div>
+    <div class="hero-fb__inner">
       <div class="container">
-        <span class="hero__eyebrow">Portofolio</span>
-        <h1>Karya yang Berdiri Kokoh</h1>
-        <p>Cuplikan proyek yang telah kami selesaikan bersama kepercayaan para klien.</p>
+        <span class="hero-fb__eyebrow reveal">Proyek Kami</span>
+        <h1 class="hero-fb__title reveal">Bukan render — <span class="accent">bangunan yang beneran berdiri.</span></h1>
+        <p class="hero-fb__lede reveal">Cuplikan proyek yang kuncinya sudah pindah tangan ke pemiliknya. Rumah, ruko, sampai struktur skala besar.</p>
       </div>
     </div>
   </section>
 
-  <!-- GALLERY GRID EDITORIAL -->
-  <section>
+  <!-- PROOF GALLERY editorial -->
+  <section class="gfx-grid">
     <div class="container">
-      <div class="gallery">
-        <div class="gal gal--a reveal">
-          <img class="gal__img" src="assets/img/gen/hero-crane.jpg" alt="Proyek struktur gedung dengan crane" />
-          <div class="gal__scrim"></div>
-          <span class="gal__cap">Struktur Gedung &middot; Skala Besar</span>
-        </div>
-        <div class="gal gal--b reveal">
-          <img class="gal__img" src="assets/img/gen/project-house.jpg" alt="Rumah modern selesai" />
-          <div class="gal__scrim"></div>
-          <span class="gal__cap">Rumah Modern &middot; Bekasi</span>
-        </div>
-
-        <div class="gal gal--c reveal">
-          <img class="gal__img" src="assets/img/gen/project-commercial.jpg" alt="Gedung komersial kaca dan baja" />
-          <div class="gal__scrim"></div>
-          <span class="gal__cap">Gedung Komersial</span>
-        </div>
-        <div class="gal gal--d reveal">
-          <img class="gal__img" src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1200&q=80" alt="Pengerjaan struktur konstruksi" onerror="this.parentElement.classList.add('gal--solid');this.remove();" />
-          <div class="gal__scrim"></div>
-          <span class="gal__ph">Struktur &amp; Rangka</span>
-          <span class="gal__cap">Pekerjaan Struktur</span>
-        </div>
-        <div class="gal gal--e reveal">
-          <img class="gal__img" src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1200&q=80" alt="Fasad gedung arsitektur modern" onerror="this.parentElement.classList.add('gal--solid');this.remove();" />
-          <div class="gal__scrim"></div>
-          <span class="gal__ph">Fasad Modern</span>
-          <span class="gal__cap">Fasad &amp; Arsitektur</span>
-        </div>
-
-        <div class="gal gal--f reveal">
-          <img class="gal__img" src="https://images.unsplash.com/photo-1590274853856-f22d5ee3d228?w=1200&q=80" alt="Proyek konstruksi bangunan bertingkat" onerror="this.parentElement.classList.add('gal--solid');this.remove();" />
-          <div class="gal__scrim"></div>
-          <span class="gal__ph">Bangunan Bertingkat</span>
-          <span class="gal__cap">Ruko &amp; Kantor</span>
-        </div>
-        <div class="gal gal--g reveal">
-          <img class="gal__img" src="https://images.unsplash.com/photo-1517089152318-42ec560349c0?w=1200&q=80" alt="Detail interior dan finishing bangunan" onerror="this.parentElement.classList.add('gal--solid');this.remove();" />
-          <div class="gal__scrim"></div>
-          <span class="gal__ph">Interior &amp; Finishing</span>
-          <span class="gal__cap">Interior &amp; Finishing</span>
-        </div>
+      <div class="section-head kb-head reveal" style="position:relative;">
+        <span class="ghost-num" aria-hidden="true">120</span>
+        <span class="pill">Portofolio</span>
+        <h2>Karya yang berdiri kokoh</h2>
+        <p>Setiap foto di bawah ini adalah proyek nyata yang sudah kami serahkan ke pemiliknya.</p>
+      </div>
+      <div class="proof">
+        <a class="proof__item proof__a reveal" href="/porto/karya-bangun-nusantara/kontak.html">
+          <img src="/porto/karya-bangun-nusantara/assets/img/gen/hero-crane.jpg" alt="Struktur gedung skala besar" onerror="this.src='/porto/karya-bangun-nusantara/assets/img/gen/hero.jpg'" />
+          <div class="cap"><div class="c">Borongan · Struktur</div><div class="t">Gedung &amp; Struktur Skala Besar</div></div>
+        </a>
+        <a class="proof__item proof__b reveal" href="/porto/karya-bangun-nusantara/kontak.html">
+          <img src="/porto/karya-bangun-nusantara/assets/img/gen/project-house.jpg" alt="Rumah modern" onerror="this.src='/porto/karya-bangun-nusantara/assets/img/gen/proj-1.jpg'" />
+          <div class="cap"><div class="c">Rumah Modern</div><div class="t">Hunian 2 Lantai, Bekasi</div></div>
+        </a>
+        <a class="proof__item proof__c reveal" href="/porto/karya-bangun-nusantara/kontak.html">
+          <img src="/porto/karya-bangun-nusantara/assets/img/gen/project-commercial.jpg" alt="Gedung komersial" onerror="this.src='/porto/karya-bangun-nusantara/assets/img/gen/proj-2.jpg'" />
+          <div class="cap"><div class="c">Komersial</div><div class="t">Gedung Kaca &amp; Baja</div></div>
+        </a>
+        <a class="proof__item proof__d reveal" href="/porto/karya-bangun-nusantara/kontak.html">
+          <img src="/porto/karya-bangun-nusantara/assets/img/gen/proj-3.jpg" alt="Detail struktur" />
+          <div class="cap"><div class="c">Detail</div><div class="t">Presisi Struktur</div></div>
+        </a>
+        <a class="proof__item proof__e reveal" href="/porto/karya-bangun-nusantara/kontak.html">
+          <img src="/porto/karya-bangun-nusantara/assets/img/gen/project-detail.jpg" alt="Interior finishing" onerror="this.src='/porto/karya-bangun-nusantara/assets/img/gen/detail.jpg'" />
+          <div class="cap"><div class="c">Interior</div><div class="t">Finishing &amp; Interior Rapi</div></div>
+        </a>
+        <a class="proof__item proof__f reveal" href="/porto/karya-bangun-nusantara/kontak.html">
+          <img src="/porto/karya-bangun-nusantara/assets/img/gen/proj-2.jpg" alt="Ruko dan kantor" />
+          <div class="cap"><div class="c">Komersial</div><div class="t">Ruko &amp; Kantor</div></div>
+        </a>
       </div>
     </div>
   </section>
 
-  <!-- CTA -->
+  <!-- CTA full-bleed -->
   <section>
     <div class="container">
-      <div class="cta reveal">
-        <div>
-          <h2>Proyek Anda Karya Berikutnya?</h2>
-          <p>Mari mulai membangun bersama tim berpengalaman kami.</p>
+      <div class="cta-fb reveal">
+        <img src="/porto/karya-bangun-nusantara/assets/img/gen/hero.jpg" alt="Proyek konstruksi" />
+        <div class="cta-fb__in">
+          <h2>Proyek Anda karya berikutnya?</h2>
+          <p>Mari mulai membangun bersama tim yang mengerjakan sendiri dari awal sampai akhir.</p>
+          <a class="btn btn-primary" href="/porto/karya-bangun-nusantara/kontak.html">Mulai Proyek Anda</a>
         </div>
-        <a class="btn btn-primary" href="kontak.html">Mulai Proyek Anda</a>
       </div>
     </div>
   </section>
@@ -96,7 +89,7 @@
     <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.9-4.45 9.9-9.91C21.95 6.45 17.5 2 12.04 2zm5.8 14.12c-.24.68-1.42 1.31-1.95 1.35-.5.04-.5.4-3.16-.66-2.67-1.05-4.35-3.77-4.48-3.94-.13-.18-1.07-1.42-1.07-2.71 0-1.29.68-1.92.92-2.19.24-.26.53-.33.7-.33.18 0 .35 0 .5.01.16.01.38-.06.59.45.24.58.81 2 .88 2.14.07.13.12.29.02.47-.09.18-.14.29-.27.44-.13.16-.28.35-.4.47-.13.13-.27.28-.12.54.15.26.66 1.09 1.42 1.76.98.87 1.8 1.14 2.06 1.27.26.13.41.11.56-.07.15-.18.65-.76.82-1.02.17-.26.35-.22.59-.13.24.09 1.52.72 1.78.85.26.13.43.19.5.3.06.11.06.66-.18 1.34z"/></svg>
   </a>
 
-  <script src="assets/js/include.js"></script>
-  <script src="assets/js/main.js"></script>
+  <script src="/porto/karya-bangun-nusantara/assets/js/include.js"></script>
+  <script src="/porto/karya-bangun-nusantara/assets/js/main.js"></script>
 </body>
 </html>

@@ -9,73 +9,117 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/css/palette.css" />
-  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="/porto/_ds/design-system.css" />
+  <link rel="stylesheet" href="/porto/karya-bangun-nusantara/assets/css/brand.css" />
+  <link rel="stylesheet" href="/porto/karya-bangun-nusantara/assets/css/layout.css" />
+  <link rel="stylesheet" href="/porto/karya-bangun-nusantara/assets/css/bento.css" />
 </head>
 <body>
 
   <header class="site-nav" data-include="nav"></header>
 
-  <!-- PAGE HEADER -->
-  <section class="pagehead">
-    <img class="pagehead__img" src="assets/img/gen/project-commercial.jpg" alt="" aria-hidden="true" />
-    <div class="pagehead__inner">
+  <!-- ============ HERO FULL-BLEED ============ -->
+  <section class="hero-fb" style="min-height:64vh;">
+    <img class="hero-fb__img" src="/porto/karya-bangun-nusantara/assets/img/gen/project-commercial.jpg" alt="Proyek komersial Karya Bangun Nusantara" fetchpriority="high" />
+    <div class="hero-fb__scrim"></div>
+    <div class="hero-fb__inner">
       <div class="container">
-        <span class="hero__eyebrow">Tentang Kami</span>
-        <h1>Membangun Sejak 2011</h1>
-        <p>Perjalanan kami adalah kumpulan bangunan yang berdiri kokoh dan klien yang kembali percaya.</p>
+        <span class="hero-fb__eyebrow reveal">Tentang Kami</span>
+        <h1 class="hero-fb__title reveal">Lima belas tahun, <span class="accent">satu janji yang sama.</span></h1>
+        <p class="hero-fb__lede reveal">Bukan soal berapa banyak bangunan yang berdiri — tapi berapa banyak pemilik yang balik lagi dan ngajak temannya.</p>
+      </div>
+    </div>
+  </section>
+  <div class="hero-fb__stats">
+    <div class="hero-fb__stat"><div class="n">2011</div><div class="l">Mulai berdiri</div></div>
+    <div class="hero-fb__stat"><div class="n">120+</div><div class="l">Proyek selesai</div></div>
+    <div class="hero-fb__stat"><div class="n">40</div><div class="l">Tenaga ahli tetap</div></div>
+  </div>
+
+  <!-- ============ BENTO CERITA KAMI ============ -->
+  <section class="gfx-grid">
+    <div class="container">
+      <div class="section-head kb-head reveal" style="position:relative;">
+        <span class="ghost-num" aria-hidden="true">15</span>
+        <span class="pill">Siapa Kami</span>
+        <h2>Kontraktor yang menepati janji</h2>
+        <p>Karya Bangun Nusantara berdiri sejak 2011 dengan satu prinsip: bangunan yang baik dibangun dari kepercayaan. Selama 15 tahun kami menyelesaikan puluhan proyek hunian dan komersial di Jabodetabek.</p>
+      </div>
+      <div class="bento">
+        <div class="bento__cell is-photo b-a reveal">
+          <img src="/porto/karya-bangun-nusantara/assets/img/gen/project-house.jpg" alt="Rumah modern hasil karya kami" />
+          <div class="lbl">Dari pondasi sampai cat terakhir — kami awasi sendiri</div>
+        </div>
+        <div class="bento__cell is-stat b-b reveal">
+          <div class="big">15</div>
+          <div class="cap">Tahun pengalaman</div>
+        </div>
+        <div class="bento__cell b-c reveal">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" aria-hidden="true"><path d="M20 7h-9"/><path d="M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg></div>
+          <h4>Satu Tim</h4>
+          <p>Bukan subkon lepas tangan.</p>
+        </div>
+        <div class="bento__cell b-d reveal">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" aria-hidden="true"><path d="M9 2h6a2 2 0 0 1 2 2v0a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2v0a2 2 0 0 1 2-2z"/><path d="M9 4H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-4"/><path d="M9 12h6"/><path d="M9 16h6"/></svg></div>
+          <h4>RAB Transparan</h4>
+          <p>Anggaran rinci, tanpa biaya siluman di tengah jalan.</p>
+        </div>
+        <div class="bento__cell is-stat is-amber b-e reveal">
+          <div class="big">98%</div>
+          <div class="cap">Tepat waktu</div>
+        </div>
+        <div class="bento__cell is-quote b-f reveal">
+          <div class="q">"Membangun bukan sekadar menyusun bata — kami mewujudkan tempat keluarga tumbuh dan usaha berkembang."</div>
+          <div class="by">— Filosofi kerja kami</div>
+        </div>
+        <div class="bento__cell is-photo b-g reveal">
+          <img src="/porto/karya-bangun-nusantara/assets/img/gen/team.jpg" alt="Tim Karya Bangun Nusantara" />
+          <div class="lbl">Tim arsitek &amp; mandor bersertifikat</div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- SPLIT -->
+  <!-- ============ PRINSIP (timeline foto) ============ -->
+  <section class="band-tint gfx-grid">
+    <div class="container">
+      <div class="section-head kb-head reveal" style="position:relative;">
+        <span class="ghost-num" aria-hidden="true">04</span>
+        <span class="pill">Prinsip Kami</span>
+        <h2>Fondasi setiap proyek</h2>
+        <p>Empat hal yang ga pernah kami tawar, dari proyek pertama sampai sekarang.</p>
+      </div>
+      <div class="flow">
+        <div class="flow__step reveal">
+          <div class="flow__thumb"><span class="flow__n">01</span><img src="/porto/karya-bangun-nusantara/assets/img/gen/project-detail.jpg" alt="Visi" onerror="this.src='/porto/karya-bangun-nusantara/assets/img/gen/proj-3.jpg'" /></div>
+          <div class="flow__body"><h3>Jadi Rujukan</h3><p>Jadi kontraktor pilihan utama yang mengutamakan mutu, kejujuran, dan ketepatan waktu.</p></div>
+        </div>
+        <div class="flow__step reveal">
+          <div class="flow__thumb"><span class="flow__n">02</span><img src="/porto/karya-bangun-nusantara/assets/img/gen/materials.jpg" alt="Misi" onerror="this.src='/porto/karya-bangun-nusantara/assets/img/gen/proj-2.jpg'" /></div>
+          <div class="flow__body"><h3>Hasil Nyata</h3><p>Menghadirkan bangunan berkualitas dengan proses transparan dan pelayanan memuaskan.</p></div>
+        </div>
+        <div class="flow__step reveal">
+          <div class="flow__thumb"><span class="flow__n">03</span><img src="/porto/karya-bangun-nusantara/assets/img/gen/detail.jpg" alt="Nilai" onerror="this.src='/porto/karya-bangun-nusantara/assets/img/gen/proj-1.jpg'" /></div>
+          <div class="flow__body"><h3>Presisi</h3><p>Kokoh dalam mutu, jujur dalam anggaran, disiplin dalam waktu.</p></div>
+        </div>
+        <div class="flow__step reveal">
+          <div class="flow__thumb"><span class="flow__n">04</span><img src="/porto/karya-bangun-nusantara/assets/img/gen/project-house.jpg" alt="Janji" onerror="this.src='/porto/karya-bangun-nusantara/assets/img/gen/hero.jpg'" /></div>
+          <div class="flow__body"><h3>Tepat Kontrak</h3><p>Serah terima sesuai jadwal, dengan garansi struktur dan dukungan purnaproyek.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CTA full-bleed ============ -->
   <section>
     <div class="container">
-      <div class="split">
-        <div class="split__media reveal">
-          <img src="assets/img/gen/project-house.jpg" alt="Rumah modern hasil karya Karya Bangun Nusantara" />
+      <div class="cta-fb reveal">
+        <img src="/porto/karya-bangun-nusantara/assets/img/gen/hero.jpg" alt="Proyek konstruksi" />
+        <div class="cta-fb__in">
+          <h2>Wujudkan bangunan impian Anda</h2>
+          <p>Ceritakan rencana proyek Anda, kami bantu dari perencanaan sampai serah terima kunci.</p>
+          <a class="btn btn-primary" href="/porto/karya-bangun-nusantara/kontak.html">Hubungi Kami</a>
         </div>
-        <div class="split__text reveal">
-          <span class="eyebrow">Siapa Kami</span>
-          <h2>Kontraktor yang Menepati Janji</h2>
-          <p>Karya Bangun Nusantara berdiri sejak 2011 dengan satu prinsip: bangunan yang baik dibangun dari kepercayaan. Selama 15 tahun kami menyelesaikan puluhan proyek hunian dan komersial di Jabodetabek.</p>
-          <p>Membangun bukan sekadar menyusun bata — kami mewujudkan tempat keluarga tumbuh dan usaha berkembang. Karena itu setiap detail kami awasi, dari pondasi hingga cat terakhir.</p>
-          <ul class="checklist">
-            <li><span class="tick">&#10003;</span><span>Tim arsitek &amp; mandor bersertifikat dan berpengalaman.</span></li>
-            <li><span class="tick">&#10003;</span><span>RAB transparan dengan laporan progres berkala.</span></li>
-            <li><span class="tick">&#10003;</span><span>Material berkualitas dengan garansi struktur.</span></li>
-            <li><span class="tick">&#10003;</span><span>Pengerjaan sesuai kontrak, tanpa biaya tersembunyi.</span></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- VISI MISI NILAI (timeline) -->
-  <section class="bg-dark">
-    <div class="container">
-      <div class="section-head reveal">
-        <span class="eyebrow">Prinsip Kami</span>
-        <h2>Fondasi Setiap Proyek</h2>
-      </div>
-      <div class="timeline">
-        <div class="tl-step reveal"><div class="tl-step__num">Visi</div><h3>Jadi Rujukan</h3><p>Menjadi kontraktor pilihan utama yang mengutamakan mutu, kejujuran, dan ketepatan waktu.</p></div>
-        <div class="tl-step reveal"><div class="tl-step__num">Misi</div><h3>Hasil Nyata</h3><p>Menghadirkan bangunan berkualitas dengan proses transparan dan pelayanan memuaskan.</p></div>
-        <div class="tl-step reveal"><div class="tl-step__num">Nilai</div><h3>Presisi</h3><p>Kokoh dalam mutu, jujur dalam anggaran, disiplin dalam waktu.</p></div>
-        <div class="tl-step reveal"><div class="tl-step__num">Janji</div><h3>Tepat Kontrak</h3><p>Serah terima sesuai jadwal, dengan garansi struktur dan dukungan purnaproyek.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA -->
-  <section>
-    <div class="container">
-      <div class="cta reveal">
-        <div>
-          <h2>Wujudkan Bangunan Impian Anda</h2>
-          <p>Ceritakan rencana proyek Anda, kami bantu dari perencanaan hingga serah terima.</p>
-        </div>
-        <a class="btn btn-primary" href="kontak.html">Hubungi Kami</a>
       </div>
     </div>
   </section>
@@ -86,7 +130,7 @@
     <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.9-4.45 9.9-9.91C21.95 6.45 17.5 2 12.04 2zm5.8 14.12c-.24.68-1.42 1.31-1.95 1.35-.5.04-.5.4-3.16-.66-2.67-1.05-4.35-3.77-4.48-3.94-.13-.18-1.07-1.42-1.07-2.71 0-1.29.68-1.92.92-2.19.24-.26.53-.33.7-.33.18 0 .35 0 .5.01.16.01.38-.06.59.45.24.58.81 2 .88 2.14.07.13.12.29.02.47-.09.18-.14.29-.27.44-.13.16-.28.35-.4.47-.13.13-.27.28-.12.54.15.26.66 1.09 1.42 1.76.98.87 1.8 1.14 2.06 1.27.26.13.41.11.56-.07.15-.18.65-.76.82-1.02.17-.26.35-.22.59-.13.24.09 1.52.72 1.78.85.26.13.43.19.5.3.06.11.06.66-.18 1.34z"/></svg>
   </a>
 
-  <script src="assets/js/include.js"></script>
-  <script src="assets/js/main.js"></script>
+  <script src="/porto/karya-bangun-nusantara/assets/js/include.js"></script>
+  <script src="/porto/karya-bangun-nusantara/assets/js/main.js"></script>
 </body>
 </html>
