@@ -1,0 +1,74 @@
+/* brand.css — HELAI STUDIO. Fashion lokal modern. Plum + cream dingin.
+   Font: Cormorant (serif elegan tinggi). Karakter: editorial, aspiratif, tenang. */
+:root {
+  --brand:      #4A2740;   /* plum gelap — teks aksen & judul struktural */
+  --brand-2:    #331A2C;
+  --brand-tint: #F1E9EF;
+  --brand-ink:  #FFFFFF;
+
+  /* SATU warna aksi: plum. Tombol & highlight. Text di atasnya = PUTIH. */
+  --accent:     #7A3B63;   /* plum mauve — elegan */
+  --accent-2:   #5E2B4B;
+  --accent-ink: #FFFFFF;
+
+  /* aksen sekunder */
+  --olive:      #9A8FA0;   /* abu ungu redup — badge alt */
+
+  /* Font serif elegan */
+  --font-display: "Cormorant Garamond", "Cormorant", Georgia, serif;
+  --font-body: "Inter", system-ui, sans-serif;
+
+  --r-sm: 4px;
+  --r-md: 8px;
+  --r-lg: 14px;
+
+  /* alias buat menu-cards.css yg pakai --dr-* (biar carousel/kartu ikut warna Helai) */
+  --dr-cream: #F6F1F4;
+  --dr-cream-2: #ECE2E9;
+  --dr-terra: #7A3B63;
+  --dr-terra-dk: #5E2B4B;
+  --dr-ink: #2A1E26;
+  --dr-muted: #6E5F69;
+  --dr-line: #E4D6DF;
+}
+
+/* base tokens netral dingin (cream keunguan, bukan hangat) */
+:root {
+  --bg:        #F8F4F7;
+  --surface:   #FFFFFF;
+  --ink:       #241820;
+  --ink-soft:  #6E5F69;
+  --line:      #E7DCE3;
+}
+
+body { background: var(--bg); color: var(--ink); }
+
+/* Semua tombol = plum */
+.btn-primary { background: var(--accent); color: var(--accent-ink); }
+.btn-primary:hover { background: var(--accent-2); }
+.btn-accent { background: var(--accent); color: #fff; border-color: var(--accent); }
+.btn-accent:hover { background: var(--accent-2); border-color: var(--accent-2); }
+.btn-ghost { background: transparent; color: var(--brand); border-color: var(--brand); }
+.btn-ghost:hover { background: var(--brand); color: #fff; }
+
+/* judul serif Cormorant — elegan tinggi */
+h1,h2,h3,h4 { font-family: var(--font-display); }
+
+/* FASHION: heading TIDAK uppercase, weight lebih tinggi (Cormorant butuh berat lebih) */
+.cta-fb__in h2,
+.hero-fb__title,
+.section-head h2,
+.kb-head h2,
+.ab-intro__text h2,
+.ab-team__text h2,
+.sv-card__body h3,
+.cs-card__body h3,
+.ab-assure__item h4,
+.info-item h4,
+.bento__cell h4 { text-transform: none; }
+
+/* Cormorant perlu weight & size lebih besar biar elegan, bukan tipis lemah */
+.hero-fb__title { font-weight: 600; letter-spacing: -0.01em; }
+.section-head h2, .kb-head h2 { font-weight: 600; letter-spacing: -0.005em; }
+.cta-fb__in h2 { font-weight: 600; }
+.mc-card__top h3, .mn-card__top h3, .dr-story__text h2 { font-family: var(--font-display); font-weight: 600; }
