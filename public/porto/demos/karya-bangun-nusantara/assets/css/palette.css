@@ -1,0 +1,51 @@
+/* ============================================================
+   palette.css — Token warna & tipografi KARYA BANGUN NUSANTARA
+   Industrial-Premium. Charcoal + Steel Navy + Concrete + Off-white.
+   Semua warna & font WAJIB via token ini (no mid-render hex).
+   ============================================================ */
+
+:root {
+  /* --- PAPER / SURFACE --- */
+  --paper:        #F5F4F0;   /* off-white lega (bg utama light) */
+  --paper-2:      #ECEAE3;   /* off-white sedikit lebih gelap (panel) */
+  --paper-3:      #E1DED4;   /* border hairline di area light */
+
+  /* --- INK / CHARCOAL --- */
+  --charcoal:     #1A1A1A;   /* dasar gelap, hero, footer */
+  --charcoal-2:   #232323;   /* panel gelap sekunder */
+  --charcoal-3:   #2E2E2E;   /* border di area gelap */
+  --ink:          #1A1A1A;   /* teks utama di bg terang */
+  --ink-soft:     #3A3A3A;   /* teks paragraf di bg terang */
+
+  /* --- CONCRETE GRAY (sekunder) --- */
+  --concrete:     #6B7280;   /* teks sekunder / muted */
+  --concrete-2:   #9AA0A8;   /* muted di bg gelap */
+
+  /* --- AKSEN UTAMA: STEEL BLUE (dinaikin terang, no more mati) --- */
+  --accent:       #2B5C8A;   /* steel blue lebih hidup, bukan navy pekat */
+  --accent-2:     #3D77AE;   /* blue hover lebih cerah */
+  --accent-ink:   #F5F4F0;   /* teks di atas blue */
+  --accent-tint:  #E7F0F8;   /* biru sangat muda buat panel cerah */
+
+  /* --- AKSEN ENERGI: dipakai BERANI, bukan kepelit --- */
+  --safety:       #F26419;   /* safety orange terang, warna hidup utama */
+  --safety-2:     #FF7A2E;   /* orange hover lebih cerah */
+  --safety-ink:   #1A1A1A;
+  --safety-tint:  #FFEEE3;   /* oranye sangat muda buat panel cerah */
+
+  /* --- AKSEN SEKUNDER CERAH: amber hangat --- */
+  --amber:        #FFB020;   /* kuning-amber konstruksi, cerah */
+  --amber-tint:   #FFF4DA;   /* amber muda buat bg section cerah */
+
+  /* --- Teks di atas charcoal --- */
+  --on-dark:      #F5F4F0;
+  --on-dark-soft: #B8BCC2;
+}
+
+/* ============================================================
+   GOOGLE FONTS — Archivo (display, struktural) + Inter (body)
+   ============================================================ */
+:root {
+  --font-display: "Archivo", "Arial Black", system-ui, sans-serif;
+  --font-body:    "Inter", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+}

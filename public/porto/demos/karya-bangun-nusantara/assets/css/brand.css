@@ -1,0 +1,27 @@
+/* brand.css — KARYA BANGUN NUSANTARA. Steel Blue base, AMBER as the single action color.
+   Layout signature: full-bleed proof hero + big project gallery. Font: Archivo (industrial). */
+:root {
+  --brand:      #223A52;   /* deep steel navy — struktur, dipakai utk teks/aksen struktural */
+  --brand-2:    #172A3D;
+  --brand-tint: #EDF1F5;
+  --brand-ink:  #FFFFFF;
+
+  /* SATU warna aksi: amber. Semua tombol & highlight = amber. Text di atas amber = PUTIH. */
+  --accent:     #E59500;   /* amber sedikit dipekatin biar teks putih kebaca */
+  --accent-2:   #C67F00;
+  --accent-ink: #FFFFFF;   /* teks di atas amber WAJIB putih (aturan Kevin) */
+
+  /* Font industri: Archivo tegas */
+  --font-display: "Archivo", "Space Grotesk", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+
+  --r-sm: 4px;   /* sudut lebih tegas utk konstruksi */
+  --r-md: 6px;
+  --r-lg: 10px;
+}
+
+/* Semua tombol = amber (konsistensi warna aksi) */
+.btn-primary { background: var(--accent); color: var(--accent-ink); }
+.btn-primary:hover { background: var(--accent-2); }
+.btn-ghost { background: transparent; color: var(--brand); border-color: var(--brand); }
+.btn-ghost:hover { background: var(--brand); color: #fff; }

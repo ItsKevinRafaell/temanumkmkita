@@ -1,0 +1,101 @@
+/* ============================================================
+   layout.css — SIGNATURE LAYOUT: Karya Bangun (kontraktor)
+   Konsep: FULL-BLEED PROOF HERO + editorial project gallery.
+   Beda total dari demo lain (yang split L/R). Foto proyek = bintang.
+   ============================================================ */
+
+/* ---- HERO full-bleed: foto proyek penuh, teks overlay kiri-bawah ---- */
+.hero-fb {
+  position: relative;
+  min-height: 90vh;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  background: var(--brand-2);
+}
+.hero-fb__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
+.hero-fb__scrim {
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(90deg, rgba(15,25,35,.82) 0%, rgba(15,25,35,.5) 42%, rgba(15,25,35,.12) 78%),
+              linear-gradient(0deg, rgba(15,25,35,.7) 0%, rgba(15,25,35,0) 45%);
+}
+.hero-fb__inner { position: relative; z-index: 2; width: 100%; padding-block: clamp(48px, 8vw, 96px); }
+.hero-fb__eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--font-display); font-weight: 700; font-size: 0.8rem;
+  letter-spacing: .18em; text-transform: uppercase; color: var(--accent);
+  border-left: 3px solid var(--accent); padding-left: 12px; margin-bottom: 22px;
+}
+.hero-fb__title {
+  font-family: var(--font-display); font-weight: 800;
+  font-size: clamp(2.8rem, 6.5vw, 5.6rem); line-height: 0.98;
+  letter-spacing: -0.02em; text-transform: uppercase; color: #fff; max-width: 15ch;
+}
+.hero-fb__title .accent { color: var(--accent); }
+.hero-fb__lede { margin-top: 22px; color: rgba(255,255,255,.85); font-size: 1.15rem; max-width: 48ch; line-height: 1.6; }
+.hero-fb__cta { margin-top: 32px; display: flex; gap: 14px; flex-wrap: wrap; }
+
+/* strip angka nempel di bawah hero, tumpang tindih (overlap) — signature */
+.hero-fb__stats {
+  position: relative; z-index: 3; margin-top: -1px;
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  background: var(--accent);
+}
+.hero-fb__stat { padding: 26px 28px; border-right: 1px solid rgba(23,35,46,.15); }
+.hero-fb__stat:last-child { border-right: 0; }
+.hero-fb__stat .n { font-family: var(--font-display); font-weight: 800; font-size: clamp(1.8rem,4vw,2.8rem); line-height: 1; color: var(--accent-ink); }
+.hero-fb__stat .l { margin-top: 8px; font-size: 0.78rem; letter-spacing: .12em; text-transform: uppercase; color: rgba(23,35,46,.7); font-weight: 600; }
+
+/* ---- PROOF GALLERY: grid editorial asimetris, foto GEDE ---- */
+.proof { display: grid; grid-template-columns: repeat(12, 1fr); grid-auto-rows: 220px; gap: 14px; }
+.proof__item { position: relative; overflow: hidden; border-radius: var(--r-md); background: var(--brand-tint); }
+.proof__item img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .6s var(--ease); }
+.proof__item:hover img { transform: scale(1.06); }
+.proof__item .cap {
+  position: absolute; left: 0; right: 0; bottom: 0; z-index: 2;
+  padding: 22px 22px 18px;
+  background: linear-gradient(0deg, rgba(15,25,35,.9), rgba(15,25,35,0));
+  color: #fff;
+}
+.proof__item .cap .c { font-family: var(--font-display); font-weight: 700; font-size: .72rem; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); }
+.proof__item .cap .t { font-family: var(--font-display); font-weight: 700; font-size: 1.25rem; margin-top: 4px; text-transform: uppercase; letter-spacing: -0.01em; }
+/* spans editorial */
+.proof__a { grid-column: span 7; grid-row: span 2; }
+.proof__b { grid-column: span 5; grid-row: span 1; }
+.proof__c { grid-column: span 5; grid-row: span 1; }
+.proof__d { grid-column: span 4; grid-row: span 1; }
+.proof__e { grid-column: span 4; grid-row: span 1; }
+.proof__f { grid-column: span 4; grid-row: span 1; }
+
+/* ---- LAYANAN: baris tegas dgn nomor gede kiri (bukan kartu 2-col) ---- */
+.svc-rows { border-top: 2px solid var(--brand); }
+.svc-row {
+  display: grid; grid-template-columns: 90px 1fr auto; gap: 28px; align-items: center;
+  padding: 30px 8px; border-bottom: 1px solid var(--line);
+  transition: background-color .2s var(--ease), padding-left .2s var(--ease);
+}
+.svc-row:hover { background: var(--brand-tint); padding-left: 20px; }
+.svc-row__n { font-family: var(--font-display); font-weight: 800; font-size: 2.4rem; color: var(--accent); line-height: 1; }
+.svc-row__body h3 { font-family: var(--font-display); font-weight: 700; font-size: 1.4rem; text-transform: uppercase; letter-spacing: -0.01em; }
+.svc-row__body p { margin-top: 6px; color: var(--ink-soft); max-width: 60ch; }
+.svc-row__arrow { color: var(--brand); font-size: 1.6rem; opacity: 0; transform: translateX(-8px); transition: opacity .2s var(--ease), transform .2s var(--ease); }
+.svc-row:hover .svc-row__arrow { opacity: 1; transform: translateX(0); }
+
+/* ---- Section head style kontraktor: garis aksen tebal ---- */
+.kb-head h2 { text-transform: uppercase; letter-spacing: -0.01em; }
+
+/* ---- Animasi masuk (fade+slide) sudah dari .reveal design-system ---- */
+
+@media (max-width: 860px) {
+  .hero-fb__stats { grid-template-columns: 1fr; }
+  .hero-fb__stat { border-right: 0; border-bottom: 1px solid rgba(23,35,46,.15); }
+  .proof { grid-auto-rows: 180px; }
+  .proof__a { grid-column: span 12; grid-row: span 2; }
+  .proof__b, .proof__c { grid-column: span 12; }
+  .proof__d, .proof__e, .proof__f { grid-column: span 6; }
+  .svc-row { grid-template-columns: 60px 1fr; }
+  .svc-row__arrow { display: none; }
+}
+@media (max-width: 520px) {
+  .proof__d, .proof__e, .proof__f { grid-column: span 12; }
+}

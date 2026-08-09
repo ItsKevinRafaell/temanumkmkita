@@ -1,0 +1,32 @@
+/* brand.css — HELAI STUDIO. Plum as single action color. Cormorant elegant serif. */
+:root {
+  --brand:      #4A2E3A;   /* deep plum — dipakai utk teks display & tombol */
+  --brand-2:    #38222C;
+  --brand-tint: #F6EAEC;
+  --brand-ink:  #FFFFFF;
+
+  /* SATU warna aksi: plum. Semua tombol plum. */
+  --accent:     #4A2E3A;
+  --accent-2:   #38222C;
+  --accent-ink: #FFFFFF;
+
+  /* dusty rose sbg warna sekunder lembut (bukan tombol) */
+  --rose:       #B36A73;
+  --rose-tint:  #F6EAEC;
+
+  --font-display: "Cormorant Garamond", "Georgia", serif;
+  --font-body: "Inter", system-ui, sans-serif;
+
+  --bg: #FAF6F5;
+  --r-sm: 2px;    /* fashion = sudut tajam minimal, editorial */
+  --r-md: 3px;
+  --r-lg: 4px;
+}
+
+/* Semua tombol plum (konsistensi 1 warna aksi) */
+.btn-primary { background: var(--brand); color: #fff; }
+.btn-primary:hover { background: var(--brand-2); }
+.btn-ghost { background: transparent; color: var(--brand); border-color: var(--brand); }
+.btn-ghost:hover { background: var(--brand); color: #fff; }
+.btn-accent { background: var(--brand); color: #fff; }
+.btn-accent:hover { background: var(--brand-2); }

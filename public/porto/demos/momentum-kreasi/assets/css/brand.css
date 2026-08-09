@@ -1,0 +1,30 @@
+/* brand.css — MOMENTUM KREASI. Gold as single action color. Playfair Display serif. */
+:root {
+  --brand:      #5E6B4F;   /* sage tua utk teks */
+  --brand-2:    #4C5740;
+  --brand-tint: #EDF1E7;
+  --brand-ink:  #FFFFFF;
+
+  /* SATU warna aksi: gold. Semua tombol gold. */
+  --accent:     #B8912E;
+  --accent-2:   #9E7B22;
+  --accent-ink: #FFFFFF;
+
+  --sage:       #7C8A6B;
+
+  --font-display: "Playfair Display", "Georgia", serif;
+  --font-body: "Inter", system-ui, sans-serif;
+
+  --bg: #F7F6F1;
+  --r-sm: 3px;
+  --r-md: 6px;
+  --r-lg: 10px;
+}
+
+/* Semua tombol gold (konsistensi 1 warna aksi) */
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-primary:hover { background: var(--accent-2); }
+.btn-ghost { background: transparent; color: var(--brand); border-color: var(--accent); }
+.btn-ghost:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+.btn-accent { background: var(--accent); color: #fff; }
+.btn-accent:hover { background: var(--accent-2); }

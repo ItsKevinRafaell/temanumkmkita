@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kontak — Dapur Rasa Nusantara</title>
+  <meta name="description" content="Hubungi Dapur Rasa Nusantara untuk pemesanan, reservasi, atau pesanan acara. WhatsApp, alamat, peta lokasi, dan jam buka lengkap di sini." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/palette.css" />
+</head>
+<body>
+
+  <header class="site-nav" data-include="nav"></header>
+
+  <!-- ============ PAGE HERO ============ -->
+  <section class="page-hero">
+    <div class="container">
+      <span class="eyebrow">Kontak</span>
+      <h1>Mau pesan atau <span class="accent-text">reservasi?</span></h1>
+      <p>Untuk pesanan harian, reservasi meja, maupun paket nasi box acara, tim kami siap membantu. Balasan tercepat lewat WhatsApp.</p>
+    </div>
+  </section>
+
+  <!-- ============ KONTAK GRID ============ -->
+  <section>
+    <div class="container">
+      <div class="contact-grid">
+        <!-- FORM -->
+        <form class="contact-form reveal" id="contact-form">
+          <div class="form-group">
+            <label for="nama">Nama</label>
+            <input type="text" id="nama" name="nama" placeholder="Nama lengkap Anda" required />
+          </div>
+          <div class="form-group">
+            <label for="telp">Nomor WhatsApp</label>
+            <input type="tel" id="telp" name="telp" placeholder="08xx-xxxx-xxxx" required />
+          </div>
+          <div class="form-group">
+            <label for="pesan">Pesan / Detail Pesanan</label>
+            <textarea id="pesan" name="pesan" placeholder="Contoh: mau pesan 20 nasi box untuk acara hari Sabtu..." required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Kirim Pesan</button>
+          <p class="form-status" style="margin-top:14px;font-size:0.88rem;"></p>
+        </form>
+
+        <!-- INFO -->
+        <div class="contact-info reveal">
+          <div class="info-item">
+            <div class="info-ic">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.9-4.45 9.9-9.91C21.95 6.45 17.5 2 12.04 2z"/></svg>
+            </div>
+            <div>
+              <h4>WhatsApp</h4>
+              <p><a href="https://wa.me/6281234567890" target="_blank" rel="noopener">0812-3456-7890</a> &mdash; pesan &amp; reservasi</p>
+            </div>
+          </div>
+          <div class="info-item">
+            <div class="info-ic">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" stroke-linejoin="round"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div>
+              <h4>Alamat</h4>
+              <p>Jl. Rempah Nusantara No. 21, Antapani, Bandung, Jawa Barat 40291</p>
+            </div>
+          </div>
+          <div class="info-item">
+            <div class="info-ic">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2" stroke-linecap="round"/></svg>
+            </div>
+            <div>
+              <h4>Jam Buka</h4>
+              <p>Senin&ndash;Jumat 10.00&ndash;22.00 · Sabtu&ndash;Minggu 09.00&ndash;22.30</p>
+            </div>
+          </div>
+          <div class="info-item">
+            <div class="info-ic">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z" stroke-linejoin="round"/><path d="M4 9h16M9 4v16" /></svg>
+            </div>
+            <div>
+              <h4>Layanan</h4>
+              <p>Makan di tempat · Bungkus/Take away · Pesanan acara (nasi box &amp; prasmanan)</p>
+            </div>
+          </div>
+
+          <div class="map-box">
+            <iframe title="Lokasi Dapur Rasa Nusantara" src="https://www.openstreetmap.org/export/embed.html?bbox=107.65%2C-6.92%2C107.67%2C-6.90&layer=mapnik"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer" data-include="footer"></footer>
+
+  <a class="wa-float" href="https://wa.me/6281234567890?text=Halo%20Dapur%20Rasa%20Nusantara" target="_blank" rel="noopener" aria-label="Chat WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.9-4.45 9.9-9.91C21.95 6.45 17.5 2 12.04 2zm5.8 14.12c-.24.68-1.42 1.31-1.95 1.35-.5.04-.5.4-3.16-.66-2.67-1.05-4.35-3.77-4.48-3.94-.13-.18-1.07-1.42-1.07-2.71 0-1.29.68-1.92.92-2.19.24-.26.53-.33.7-.33.18 0 .35 0 .5.01.16.01.38-.06.59.45.24.58.81 2 .88 2.14.07.13.12.29.02.47-.09.18-.14.29-.27.44-.13.16-.28.35-.4.47-.13.13-.27.28-.12.54.15.26.66 1.09 1.42 1.76.98.87 1.8 1.14 2.06 1.27.26.13.41.11.56-.07.15-.18.65-.76.82-1.02.17-.26.35-.22.59-.13.24.09 1.52.72 1.78.85.26.13.43.19.5.3.06.11.06.66-.18 1.34z"/></svg>
+  </a>
+
+  <script src="assets/js/include.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

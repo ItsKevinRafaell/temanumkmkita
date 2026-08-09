@@ -1,0 +1,28 @@
+/* brand.css — DAPUR RASA NUSANTARA. Terracotta as single action color. Fraunces warm serif. */
+:root {
+  --brand:      #B24A24;   /* terracotta pekat */
+  --brand-2:    #963B18;
+  --brand-tint: #FBEEE6;
+  --brand-ink:  #FFFFFF;
+
+  /* SATU warna aksi: terracotta. Semua tombol terracotta. */
+  --accent:     #B24A24;
+  --accent-2:   #963B18;
+  --accent-ink: #FFFFFF;
+
+  --font-display: "Fraunces", "Georgia", serif;
+  --font-body: "Inter", system-ui, sans-serif;
+
+  --bg: #FBF7F1;         /* krem lebih hangat utk kuliner */
+  --r-sm: 10px;
+  --r-md: 18px;          /* radius lebih bulat = ramah/homey */
+  --r-lg: 28px;
+}
+
+/* Semua tombol terracotta (konsistensi 1 warna aksi) */
+.btn-primary { background: var(--brand); color: #fff; }
+.btn-primary:hover { background: var(--brand-2); }
+.btn-ghost { background: transparent; color: var(--brand); border-color: var(--brand); }
+.btn-ghost:hover { background: var(--brand); color: #fff; }
+.btn-accent { background: var(--brand); color: #fff; }
+.btn-accent:hover { background: var(--brand-2); }

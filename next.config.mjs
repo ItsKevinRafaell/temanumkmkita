@@ -46,6 +46,12 @@ const nextConfig = {
           { key: "Cache-Control", value: "public, max-age=300, must-revalidate" },
         ],
       },
+      {
+        source: "/porto/:path*",
+        headers: [
+          { key: "Cache-Control", value: "public, max-age=0, stale-while-revalidate=60" },
+        ],
+      },
     ];
   },
 };

@@ -1,0 +1,66 @@
+/* ============================================================
+   palette.css — MOMENTUM KREASI · Wedding Elegan (custom theme)
+   Token block. Setiap warna/font/spacing di style.css merujuk ke sini.
+   Riset arah: The Bridal Planner / Andrea Freeman — romantis, timeless.
+   ============================================================ */
+:root {
+  /* --- Surface / paper --- */
+  --paper: #F7F3EC;        /* cream base */
+  --offwhite: #FDFBF7;     /* off-white kartu */
+  --sage-wash: #EEF0E9;    /* sage sangat muda utk band testimoni */
+
+  /* --- Ink (charcoal hangat, BUKAN hitam pekat) --- */
+  --ink: #2E2A26;
+  --ink-soft: #6A625A;     /* teks sekunder hangat */
+  --hairline: #E4DCCF;     /* garis tipis di atas cream */
+  --ink-hairline: #C9BFB1;
+
+  /* --- Accent mewah --- */
+  --gold: #C6A15B;         /* gold muted */
+  --gold-deep: #A9843F;    /* hover gold */
+  --gold-ink: #2E2A26;     /* teks di atas gold (kontras aman) */
+
+  /* --- Accent natural --- */
+  --sage: #9CA88F;         /* sage / dusty green */
+  --sage-deep: #6F7C63;    /* sage gelap utk teks aksen */
+
+  /* --- Blush --- */
+  --blush: #E8D3CE;
+
+  /* --- Fonts --- */
+  --font-display: "Playfair Display", Georgia, "Times New Roman", serif;
+  --font-body: "Jost", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-script: "Playfair Display", Georgia, serif; /* aksen: Playfair italic weight ringan */
+
+  /* --- Type scale --- */
+  --fs-hero: clamp(2.6rem, 7.2vw, 5.6rem);
+  --fs-display: clamp(2.4rem, 6vw, 4.6rem);
+  --fs-h1: clamp(2.2rem, 5vw, 3.8rem);
+  --fs-h2: clamp(1.8rem, 3.6vw, 2.9rem);
+
+  /* --- Spacing (4pt scale) --- */
+  --space-2xs: 4px;
+  --space-xs: 8px;
+  --space-sm: 16px;
+  --space-md: 24px;
+  --space-lg: 32px;
+  --space-xl: 48px;
+  --space-2xl: 72px;
+  --space-3xl: 104px;
+  --space-4xl: 140px;
+
+  /* --- Motion --- */
+  --dur: 0.22s;
+  --dur-lg: 0.55s;
+  --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-in: cubic-bezier(0.55, 0.06, 0.68, 0.19);
+  --ease-in-out: cubic-bezier(0.65, 0.05, 0.36, 1);
+}
+
+/* Script accent pakai Playfair italic ringan supaya tetap elegan tanpa font ke-4 */
+.eyebrow, .hero__eyebrow, .pagehead__eyebrow, .cta__eyebrow,
+.intro__label, .svc-row__num, .gal-item__overlay .cat,
+.gal-featured .gf__cap, .footer-brand .script, .story .values .num {
+  font-style: italic;
+  font-weight: 500;
+}

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kontak — Karya Bangun Nusantara</title>
+  <meta name="description" content="Hubungi Karya Bangun Nusantara untuk konsultasi proyek, survei lokasi, dan penawaran RAB gratis." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/palette.css" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+
+  <header class="site-nav" data-include="nav"></header>
+
+  <!-- PAGE HEADER -->
+  <section class="pagehead">
+    <img class="pagehead__img" src="assets/img/gen/project-commercial.jpg" alt="" aria-hidden="true" />
+    <div class="pagehead__inner">
+      <div class="container">
+        <span class="hero__eyebrow">Kontak</span>
+        <h1>Mari Bicarakan Proyek Anda</h1>
+        <p>Konsultasi, survei lokasi, dan estimasi biaya awal kami berikan tanpa biaya.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- KONTAK -->
+  <section>
+    <div class="container">
+      <div class="contact">
+        <form class="contact-form reveal" id="contact-form" action="#" method="post" novalidate>
+          <div class="form-group">
+            <label for="nama">Nama Lengkap</label>
+            <input type="text" id="nama" name="nama" placeholder="Nama Anda" required />
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="email@contoh.com" required />
+          </div>
+          <div class="form-group">
+            <label for="pesan">Ceritakan Rencana Proyek Anda</label>
+            <textarea id="pesan" name="pesan" placeholder="Contoh: ingin membangun rumah 2 lantai di lahan 8x15 m..." required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Kirim Permintaan</button>
+          <p class="form-status" role="status" aria-live="polite"></p>
+        </form>
+
+        <div class="contact-info">
+          <div class="info-item reveal">
+            <div class="info-ic">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div><h4>Kantor &amp; Workshop</h4><p>Jl. Konstruksi Raya No. 45, Bekasi Selatan, Jawa Barat 17147</p></div>
+          </div>
+          <div class="info-item reveal">
+            <div class="info-ic">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>
+            </div>
+            <div><h4>Telepon / WhatsApp</h4><p>0812-3456-7890</p></div>
+          </div>
+          <div class="info-item reveal">
+            <div class="info-ic">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
+            </div>
+            <div><h4>Email</h4><p>proyek@karyabangun.co.id</p></div>
+          </div>
+          <div class="info-item reveal">
+            <div class="info-ic">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2" stroke-linecap="round"/></svg>
+            </div>
+            <div><h4>Jam Operasional</h4><p>Senin&ndash;Sabtu, 08.00&ndash;17.00 WIB</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="map-box reveal">
+        <iframe
+          title="Lokasi Kantor Karya Bangun Nusantara"
+          src="https://www.openstreetmap.org/export/embed.html?bbox=106.98%2C-6.30%2C107.03%2C-6.24&amp;layer=mapnik"
+         
+          referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer" data-include="footer"></footer>
+
+  <a class="wa-float" href="https://wa.me/6281234567890?text=Halo%20Karya%20Bangun%20Nusantara" target="_blank" rel="noopener" aria-label="Chat WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.9-4.45 9.9-9.91C21.95 6.45 17.5 2 12.04 2zm5.8 14.12c-.24.68-1.42 1.31-1.95 1.35-.5.04-.5.4-3.16-.66-2.67-1.05-4.35-3.77-4.48-3.94-.13-.18-1.07-1.42-1.07-2.71 0-1.29.68-1.92.92-2.19.24-.26.53-.33.7-.33.18 0 .35 0 .5.01.16.01.38-.06.59.45.24.58.81 2 .88 2.14.07.13.12.29.02.47-.09.18-.14.29-.27.44-.13.16-.28.35-.4.47-.13.13-.27.28-.12.54.15.26.66 1.09 1.42 1.76.98.87 1.8 1.14 2.06 1.27.26.13.41.11.56-.07.15-.18.65-.76.82-1.02.17-.26.35-.22.59-.13.24.09 1.52.72 1.78.85.26.13.43.19.5.3.06.11.06.66-.18 1.34z"/></svg>
+  </a>
+
+  <script src="assets/js/include.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

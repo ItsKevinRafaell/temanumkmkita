@@ -1,0 +1,60 @@
+/* ============================================================
+   layout.css — SIGNATURE LAYOUT: Helai Studio (fashion)
+   Konsep: EDITORIAL hero overlap (foto besar + teks tumpang tindih)
+   + LOOKBOOK masonry. Elegan, banyak whitespace, serif gede.
+   ============================================================ */
+
+/* ---- HERO editorial: foto kanan besar, teks overlap dari kiri ---- */
+.hero-ed { position: relative; padding-block: clamp(40px,6vw,80px) clamp(56px,8vw,110px); background: var(--bg); overflow: hidden; }
+.hero-ed__grid { display: grid; grid-template-columns: 1fr 1fr; align-items: center; }
+.hero-ed__text { position: relative; z-index: 2; }
+.hero-ed__eyebrow { font-family: var(--font-body); font-weight:600; font-size:.74rem; letter-spacing:.28em; text-transform:uppercase; color: var(--rose); margin-bottom: 20px; display:block; }
+.hero-ed__title { font-family: var(--font-display); font-weight:500; font-size: clamp(3.2rem,7.5vw,6.5rem); line-height:0.98; letter-spacing:-0.01em; color: var(--brand); }
+.hero-ed__title em { font-style: italic; }
+.hero-ed__lede { margin-top:26px; color: var(--ink-soft); font-size:1.12rem; line-height:1.7; max-width: 40ch; }
+.hero-ed__cta { margin-top:34px; display:flex; gap:16px; flex-wrap:wrap; }
+.hero-ed__media { position: relative; }
+/* foto overlap ke kiri masuk area teks */
+.hero-ed__media img { width: 118%; max-width:118%; margin-left:-18%; aspect-ratio: 3/4; object-fit: cover; box-shadow: var(--sh-3); }
+.hero-ed__tag { position:absolute; left: -6%; bottom: 28px; background: var(--surface); padding: 14px 22px; box-shadow: var(--sh-2); font-family: var(--font-display); font-style:italic; font-size:1.2rem; color: var(--brand); }
+
+/* ---- ribbon marquee tipis (fashion touch) ---- */
+.ribbon { background: var(--brand); color:#fff; overflow:hidden; padding: 14px 0; }
+.ribbon__track { display:flex; gap:48px; white-space:nowrap; font-family: var(--font-display); font-style:italic; font-size:1.3rem; animation: ribbon 22s linear infinite; }
+.ribbon__track span { display:inline-flex; align-items:center; gap:48px; }
+.ribbon__track span::after { content:"✦"; color: var(--rose); }
+@keyframes ribbon { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+@media (prefers-reduced-motion: reduce){ .ribbon__track{ animation:none; } }
+
+/* ---- LOOKBOOK masonry: kolom beda tinggi, editorial ---- */
+.lookbook { columns: 3; column-gap: 18px; }
+.lb-item { break-inside: avoid; margin-bottom: 18px; position: relative; overflow: hidden; }
+.lb-item img { width:100%; display:block; transition: transform .6s var(--ease); }
+.lb-item:hover img { transform: scale(1.05); }
+.lb-item .cap { position:absolute; left:0; right:0; bottom:0; padding: 22px 18px 16px; background: linear-gradient(0deg, rgba(40,22,30,.8), transparent); color:#fff; opacity:0; transition: opacity .3s var(--ease); }
+.lb-item:hover .cap { opacity:1; }
+.lb-item .cap .c { font-family: var(--font-body); font-size:.68rem; letter-spacing:.18em; text-transform:uppercase; color: var(--rose); }
+.lb-item .cap .t { font-family: var(--font-display); font-size:1.4rem; font-style:italic; margin-top:2px; }
+.lb-tall img { aspect-ratio: 3/4; object-fit:cover; }
+.lb-short img { aspect-ratio: 1/1; object-fit:cover; }
+
+/* ---- VALUES: garis-garis elegan angka romawi ---- */
+.values { display:grid; grid-template-columns: repeat(2,1fr); gap: 2px; background: var(--line); border: 1px solid var(--line); }
+.value { background: var(--bg); padding: 40px 36px; }
+.value__n { font-family: var(--font-display); font-style:italic; font-size:2rem; color: var(--rose); }
+.value h3 { font-family: var(--font-display); font-weight:600; font-size:1.6rem; margin-top:6px; color: var(--brand); }
+.value p { margin-top:12px; color: var(--ink-soft); }
+
+/* section head fashion: serif gede kiri */
+.hl-head h2 { font-family: var(--font-display); font-weight:500; font-size: clamp(2.4rem,4.5vw,3.6rem); color: var(--brand); text-transform:none; letter-spacing:-0.01em; }
+.hl-head .eyebrow { color: var(--rose); }
+.hl-head .eyebrow::before { background: var(--rose); }
+
+@media (max-width: 860px) {
+  .hero-ed__grid { grid-template-columns: 1fr; gap: 32px; }
+  .hero-ed__media img { width:100%; max-width:100%; margin-left:0; }
+  .hero-ed__tag { left: 16px; }
+  .lookbook { columns: 2; }
+  .values { grid-template-columns: 1fr; }
+}
+@media (max-width: 520px) { .lookbook { columns: 1; } }

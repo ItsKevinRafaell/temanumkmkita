@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portofolio Teman UMKM Kita — Galeri Demo Website UMKM</title>
+  <meta name="description" content="Galeri demo website multi-sektor dari Teman UMKM Kita. Apa pun industri Anda, kami bangun kehadiran digital yang sesuai karakter usaha Anda." />
+
+  <!-- Display: Fraunces (heading serif modern) + Space Grotesk (label/angka) — Body: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,500;1,9..144,600&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="assets/css/global.css" />
+  <link rel="icon" href="assets/img/logo-icon.png" />
+</head>
+<body>
+
+  <!-- ============ HEADER ============ -->
+  <header class="site-header">
+    <div class="container">
+      <a class="brand-logo" href="index.html">
+        <img src="assets/img/logo-icon.png" alt="Teman UMKM Kita" />
+        <span>Teman <b>UMKM</b> Kita</span>
+      </a>
+      <nav>
+        <a href="#galeri">Galeri</a>
+        <a href="#tentang">Tentang</a>
+        <a class="nav-cta" href="https://wa.me/6281234567890" target="_blank" rel="noopener">Hubungi Kami</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ============ HERO (asimetris / editorial) ============ -->
+  <section class="hero" id="tentang">
+    <div class="container hero-grid">
+      <div class="hero-lead">
+        <span class="eyebrow"><i class="dot"></i>Portofolio &mdash; Website UMKM</span>
+        <h1>
+          Bukan sekadar<br />
+          website. Sebuah<br />
+          <em>karakter</em> usaha.
+        </h1>
+        <p>Apa pun industri Anda, kami bangun kehadiran digital yang benar-benar terasa seperti bisnis Anda &mdash; bukan template seragam.</p>
+        <a class="hero-scroll" href="#galeri">
+          Lihat galeri demo
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M6 13l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+
+      <aside class="hero-meta" aria-hidden="true">
+        <div class="meta-block">
+          <span class="meta-num">10</span>
+          <span class="meta-label">Demo sektor</span>
+        </div>
+        <div class="meta-block">
+          <span class="meta-num">04</span>
+          <span class="meta-label">Siap dijelajah</span>
+        </div>
+        <div class="meta-rule"></div>
+        <p class="meta-note">Konstruksi, F&amp;B, fashion, event, kopi, edukasi, dan lainnya &mdash; setiap sektor punya bahasa visualnya sendiri.</p>
+      </aside>
+    </div>
+    <div class="hero-baseline">
+      <span>Est. 2026</span>
+      <span class="marquee-word">Teman&nbsp;UMKM&nbsp;Kita &middot; Studio Web UMKM &middot; Indonesia</span>
+      <span>10 Sektor</span>
+    </div>
+  </section>
+
+  <!-- ============ GALERI ============ -->
+  <section class="gallery-section" id="galeri">
+    <div class="container">
+
+      <div class="section-head">
+        <div>
+          <span class="section-index">[ Galeri ]</span>
+          <h2>Pilih sektor,<br />lihat karyanya.</h2>
+        </div>
+        <div class="filter-bar" role="tablist" aria-label="Filter kategori">
+          <button class="filter-btn active" data-filter="semua">Semua</button>
+          <button class="filter-btn" data-filter="jasa">Jasa</button>
+          <button class="filter-btn" data-filter="fnb">F&amp;B</button>
+          <button class="filter-btn" data-filter="retail">Retail</button>
+          <button class="filter-btn" data-filter="kreatif">Kreatif</button>
+          <button class="filter-btn" data-filter="edukasi">Edukasi</button>
+          <button class="filter-btn" data-filter="kesehatan">Kesehatan</button>
+        </div>
+      </div>
+
+      <div class="gallery-grid">
+
+        <!-- 1. AKTIF — Kontraktor (FEATURE / besar) -->
+        <a class="demo-card is-feature" href="demos/karya-bangun-nusantara/index.html" data-kategori="jasa">
+          <img class="card-img" src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1100&q=75&auto=format&fit=crop" alt="Proyek konstruksi Karya Bangun Nusantara" />
+          <span class="card-index">01</span>
+          <div class="card-content">
+            <span class="card-kategori">Kontraktor &amp; Konstruksi</span>
+            <h3>Karya Bangun Nusantara</h3>
+            <p>Jasa konstruksi terpercaya untuk hunian, ruko, dan proyek komersial &mdash; dari fondasi sampai serah terima kunci.</p>
+            <span class="card-cta">Lihat demo
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </div>
+        </a>
+
+        <!-- 2. AKTIF — Event Organizer -->
+        <a class="demo-card" href="demos/momentum-kreasi/index.html" data-kategori="jasa kreatif">
+          <img class="card-img" src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=800&q=75&auto=format&fit=crop" alt="Acara yang ditata Momentum Kreasi" />
+          <span class="card-index">02</span>
+          <div class="card-content">
+            <span class="card-kategori">Event Organizer</span>
+            <h3>Momentum Kreasi</h3>
+            <p>Rancang acara tak terlupakan &mdash; dari konsep, dekorasi, hingga eksekusi.</p>
+            <span class="card-cta">Lihat demo
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </div>
+        </a>
+
+        <!-- 3. AKTIF — F&B -->
+        <a class="demo-card" href="demos/dapur-rasa-nusantara/index.html" data-kategori="fnb">
+          <img class="card-img" src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800&q=75&auto=format&fit=crop" alt="Sajian Dapur Rasa Nusantara" />
+          <span class="card-index">03</span>
+          <div class="card-content">
+            <span class="card-kategori">Food &amp; Beverage</span>
+            <h3>Dapur Rasa Nusantara</h3>
+            <p>Cita rasa autentik masakan Nusantara, disajikan hangat setiap hari.</p>
+            <span class="card-cta">Lihat demo
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </div>
+        </a>
+
+        <!-- 4. AKTIF — Fashion -->
+        <a class="demo-card" href="demos/helai-studio/index.html" data-kategori="retail kreatif">
+          <img class="card-img" src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=800&q=75&auto=format&fit=crop" alt="Koleksi busana Helai Studio" />
+          <span class="card-index">04</span>
+          <div class="card-content">
+            <span class="card-kategori">Fashion &amp; Apparel</span>
+            <h3>Helai Studio</h3>
+            <p>Busana modern bermaterial premium yang menemani gaya keseharian Anda.</p>
+            <span class="card-cta">Lihat demo
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </div>
+        </a>
+
+        <!-- 5. COMING SOON — Kopi Rehat -->
+        <div class="demo-card is-soon" data-kategori="fnb" role="group" aria-label="Kopi Rehat — segera hadir">
+          <img class="card-img" src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800&q=75&auto=format&fit=crop" alt="Kopi Rehat" />
+          <span class="card-index">05</span>
+          <span class="soon-badge">Segera Hadir</span>
+          <div class="card-content">
+            <span class="card-kategori">Coffee Shop</span>
+            <h3>Kopi Rehat</h3>
+            <p>Ruang santai dengan racikan kopi lokal pilihan untuk melepas penat.</p>
+          </div>
+        </div>
+
+        <!-- 6. COMING SOON — Cerdas Akademi -->
+        <div class="demo-card is-soon" data-kategori="edukasi jasa" role="group" aria-label="Cerdas Akademi — segera hadir">
+          <img class="card-img" src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&q=75&auto=format&fit=crop" alt="Cerdas Akademi" />
+          <span class="card-index">06</span>
+          <span class="soon-badge">Segera Hadir</span>
+          <div class="card-content">
+            <span class="card-kategori">Bimbingan Belajar</span>
+            <h3>Cerdas Akademi</h3>
+            <p>Lembaga kursus modern yang membimbing siswa meraih prestasi terbaik.</p>
+          </div>
+        </div>
+
+        <!-- 7. COMING SOON — Bingkai Cerita -->
+        <div class="demo-card is-soon" data-kategori="kreatif jasa" role="group" aria-label="Bingkai Cerita — segera hadir">
+          <img class="card-img" src="https://images.unsplash.com/photo-1452587925148-ce544e77e70d?w=800&q=75&auto=format&fit=crop" alt="Bingkai Cerita" />
+          <span class="card-index">07</span>
+          <span class="soon-badge">Segera Hadir</span>
+          <div class="card-content">
+            <span class="card-kategori">Fotografi &amp; Videografi</span>
+            <h3>Bingkai Cerita</h3>
+            <p>Abadikan momen berharga Anda dalam bingkai visual yang bercerita.</p>
+          </div>
+        </div>
+
+        <!-- 8. COMING SOON — Laju Kargo -->
+        <div class="demo-card is-soon" data-kategori="jasa" role="group" aria-label="Laju Kargo — segera hadir">
+          <img class="card-img" src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=800&q=75&auto=format&fit=crop" alt="Laju Kargo" />
+          <span class="card-index">08</span>
+          <span class="soon-badge">Segera Hadir</span>
+          <div class="card-content">
+            <span class="card-kategori">Logistik &amp; Pengiriman</span>
+            <h3>Laju Kargo</h3>
+            <p>Solusi pengiriman cepat dan aman untuk kebutuhan bisnis Anda.</p>
+          </div>
+        </div>
+
+        <!-- 9. COMING SOON — Klinik Sehat Ayu -->
+        <div class="demo-card is-soon" data-kategori="kesehatan jasa" role="group" aria-label="Klinik Sehat Ayu — segera hadir">
+          <img class="card-img" src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=800&q=75&auto=format&fit=crop" alt="Klinik Sehat Ayu" />
+          <span class="card-index">09</span>
+          <span class="soon-badge">Segera Hadir</span>
+          <div class="card-content">
+            <span class="card-kategori">Klinik Kecantikan</span>
+            <h3>Klinik Sehat Ayu</h3>
+            <p>Perawatan kulit &amp; kecantikan profesional dengan tenaga ahli tepercaya.</p>
+          </div>
+        </div>
+
+        <!-- 10. COMING SOON — Griya Huni -->
+        <div class="demo-card is-soon" data-kategori="retail jasa" role="group" aria-label="Griya Huni — segera hadir">
+          <img class="card-img" src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800&q=75&auto=format&fit=crop" alt="Griya Huni" />
+          <span class="card-index">10</span>
+          <span class="soon-badge">Segera Hadir</span>
+          <div class="card-content">
+            <span class="card-kategori">Properti &amp; Real Estate</span>
+            <h3>Griya Huni</h3>
+            <p>Temukan hunian impian Anda bersama agen properti yang terpercaya.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <h2 class="footer-headline">Punya usaha?<br /><em>Kami punya waktunya.</em></h2>
+        <a class="footer-cta" href="https://wa.me/6281234567890" target="_blank" rel="noopener">
+          Ngobrol dulu, yuk
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-logo">
+          <img src="assets/img/logo-icon.png" alt="Teman UMKM Kita" />
+          <span>Teman <b>UMKM</b> Kita</span>
+        </div>
+        <p class="footer-copy">Dibuat oleh <b>Teman UMKM Kita</b> &middot; &copy; 2026 &middot; Semua demo hanya untuk keperluan portofolio.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============ JS ============ -->
+  <script src="assets/js/gallery.js"></script>
+</body>
+</html>
