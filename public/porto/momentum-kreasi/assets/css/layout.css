@@ -1,0 +1,90 @@
+/* ============================================================
+   layout.css — SIGNATURE LAYOUT: Dapur Rasa (kuliner)
+   Konsep: HERO CENTERED framed + MENU-BOARD list.
+   Beda total dari Karya Bangun (full-bleed industrial uppercase).
+   Karakter: hangat, elegan, serif Fraunces, warna terracotta.
+   ============================================================ */
+
+/* ---- HERO CENTERED: foto ter-frame, teks di TENGAH, nuansa hangat ---- */
+.hero-fb {
+  position: relative;
+  min-height: 84vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+  background: var(--brand-2);
+}
+.hero-fb__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
+.hero-fb__scrim {
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(0deg, rgba(42,20,12,.78) 0%, rgba(42,20,12,.42) 45%, rgba(42,20,12,.58) 100%);
+}
+.hero-fb__inner { position: relative; z-index: 2; width: 100%; padding-block: clamp(60px, 9vw, 120px); }
+.hero-fb__eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--font-body); font-weight: 600; font-size: 0.78rem;
+  letter-spacing: .24em; text-transform: uppercase; color: #F3D9C8;
+  margin-bottom: 22px;
+}
+.hero-fb__eyebrow::before, .hero-fb__eyebrow::after {
+  content: ""; width: 28px; height: 1px; background: var(--accent); display: inline-block;
+}
+.hero-fb__title {
+  font-family: var(--font-display); font-weight: 600;   /* Fraunces lebih elegan di weight sedang */
+  font-size: clamp(2.6rem, 6vw, 5rem); line-height: 1.04;
+  letter-spacing: -0.02em; color: #fff; max-width: 18ch; margin-inline: auto;
+}
+.hero-fb__title .accent { color: #F0A868; font-style: italic; }  /* italic serif = sentuhan kuliner */
+.hero-fb__lede { margin: 22px auto 0; color: rgba(255,246,240,.9); font-size: 1.12rem; max-width: 52ch; line-height: 1.65; }
+.hero-fb__cta { margin-top: 34px; display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+
+/* ---- MENU-BOARD: daftar menu ala papan menu resto (signature Dapur Rasa) ---- */
+.menu-board { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 56px; }
+.menu-row {
+  display: grid; grid-template-columns: auto 1fr auto; align-items: baseline; gap: 12px;
+  padding: 16px 0; border-bottom: 1px dashed var(--line);
+}
+.menu-row__name { font-family: var(--font-display); font-weight: 600; font-size: 1.15rem; color: var(--ink); white-space: nowrap; }
+.menu-row__dots { border-bottom: 2px dotted var(--line); transform: translateY(-4px); min-width: 20px; }
+.menu-row__price { font-family: var(--font-display); font-weight: 600; font-size: 1.1rem; color: var(--accent); white-space: nowrap; }
+.menu-row__desc { grid-column: 1 / -1; margin-top: -6px; color: var(--ink-soft); font-size: .9rem; line-height: 1.5; }
+
+/* ---- PROOF GALLERY editorial (dipertahankan, tapi border-radius lembut & cap serif) ---- */
+.proof { display: grid; grid-template-columns: repeat(12, 1fr); grid-auto-rows: 220px; gap: 14px; }
+.proof__item { position: relative; overflow: hidden; border-radius: var(--r-lg); background: var(--brand-tint); }
+.proof__item img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .6s var(--ease); }
+.proof__item:hover img { transform: scale(1.06); }
+.proof__item .cap {
+  position: absolute; left: 0; right: 0; bottom: 0; z-index: 2;
+  padding: 22px 22px 18px;
+  background: linear-gradient(0deg, rgba(42,20,12,.9), rgba(42,20,12,0));
+  color: #fff;
+}
+.proof__item .cap .c { font-family: var(--font-body); font-weight: 600; font-size: .72rem; letter-spacing: .16em; text-transform: uppercase; color: #F0A868; }
+.proof__item .cap .t { font-family: var(--font-display); font-weight: 600; font-size: 1.35rem; margin-top: 4px; letter-spacing: -0.01em; }
+.proof__a { grid-column: span 7; grid-row: span 2; }
+.proof__b { grid-column: span 5; grid-row: span 1; }
+.proof__c { grid-column: span 5; grid-row: span 1; }
+.proof__d { grid-column: span 4; grid-row: span 1; }
+.proof__e { grid-column: span 4; grid-row: span 1; }
+.proof__f { grid-column: span 4; grid-row: span 1; }
+
+/* ---- Section head kuliner: TIDAK uppercase, serif elegan, ada garnish ---- */
+.kb-head h2 { letter-spacing: -0.01em; }
+.kb-head .pill {
+  background: var(--brand-tint); color: var(--brand);
+  font-family: var(--font-body); font-weight: 600; letter-spacing: .08em; text-transform: uppercase; font-size: .72rem;
+}
+
+@media (max-width: 860px) {
+  .menu-board { grid-template-columns: 1fr; gap: 0 0; }
+  .proof { grid-auto-rows: 180px; }
+  .proof__a { grid-column: span 12; grid-row: span 2; }
+  .proof__b, .proof__c { grid-column: span 12; }
+  .proof__d, .proof__e, .proof__f { grid-column: span 6; }
+}
+@media (max-width: 520px) {
+  .proof__d, .proof__e, .proof__f { grid-column: span 12; }
+}
