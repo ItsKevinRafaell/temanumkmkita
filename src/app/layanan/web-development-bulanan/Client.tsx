@@ -24,6 +24,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import PortfolioSlider from "@/components/sections/PortfolioSlider";
 import { fetchPortfolios } from "@/lib/api/portfolio";
+import { FALLBACK_PORTFOLIO } from "@/lib/data/portfolio-fallback";
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 
@@ -116,18 +117,20 @@ export default function WebDevelopmentBulananPage() {
   const [tableOpen, setTableOpen] = useState(false);
   const [portfolioItems, setPortfolioItems] = useState<
     Array<{ name: string; category: string; image_url: string; link_url: string | null }>
-  >([]);
+  >(FALLBACK_PORTFOLIO);
   useEffect(() => {
-    fetchPortfolios("web-development-bulanan").then((data) =>
-      setPortfolioItems(
-        data.map((item) => ({
-          name: item.title,
-          category: item.category ?? "",
-          image_url: item.image_url,
-          link_url: item.link_url,
-        }))
-      )
-    );
+    fetchPortfolios("web-development-bulanan").then((data) => {
+      if (data.length > 0) {
+        setPortfolioItems(
+          data.map((item) => ({
+            name: item.title,
+            category: item.category ?? "",
+            image_url: item.image_url,
+            link_url: item.link_url,
+          }))
+        );
+      }
+    });
   }, []);
   const { ref: pricingRef } = useInView({ triggerOnce: true, threshold: 0.1 });
   const { ref: ctaRef, inView: ctaInView } = useInView({ triggerOnce: true, threshold: 0.2 });
