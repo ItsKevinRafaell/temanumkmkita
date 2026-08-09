@@ -6,6 +6,7 @@ class PortfolioBase(BaseModel):
     title: str
     category: str | None = None
     image_url: str
+    link_url: str | None = None
     sort_order: int = 0
 
 
@@ -18,6 +19,7 @@ class PortfolioUpdate(BaseModel):
     title: str | None = None
     category: str | None = None
     image_url: str | None = None
+    link_url: str | None = None
     sort_order: int | None = None
 
 

@@ -6,6 +6,7 @@ export interface PublicPortfolioItem {
   title: string;
   category: string | null;
   image_url: string;
+  link_url: string | null;
   sort_order: number;
   created_at: string;
 }

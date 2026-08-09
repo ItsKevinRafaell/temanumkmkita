@@ -27,6 +27,7 @@ export default function NewPortfolioPage() {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [imageUrl, setImageUrl] = useState("");
+  const [linkUrl, setLinkUrl] = useState("");
   const [sortOrder, setSortOrder] = useState(0);
   const [uploading, setUploading] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -66,6 +67,7 @@ export default function NewPortfolioPage() {
         title: title.trim(),
         category: category.trim() || null,
         image_url: imageUrl,
+        link_url: linkUrl.trim() || null,
         sort_order: sortOrder,
       });
       router.push("/admin/portfolio");
@@ -203,6 +205,22 @@ export default function NewPortfolioPage() {
               onChange={(e) => setCategory(e.target.value)}
               placeholder="Fashion & Retail"
             />
+          </div>
+
+          {/* Link URL */}
+          <div>
+            <label className="mb-1 block text-xs font-semibold text-[#242423]/55">
+              Link Halaman / Website
+            </label>
+            <input
+              className={inputClass}
+              value={linkUrl}
+              onChange={(e) => setLinkUrl(e.target.value)}
+              placeholder="/porto/karya-bangun-nusantara atau https://..."
+            />
+            <p className="mt-1 text-xs text-[#242423]/35">
+              Opsional. Kalau diisi, thumbnail bisa diklik menuju halaman porto/website ini.
+            </p>
           </div>
 
           {/* Sort order */}

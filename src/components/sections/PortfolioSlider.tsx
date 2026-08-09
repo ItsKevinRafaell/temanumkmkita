@@ -4,12 +4,13 @@ import { useRef, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { Globe, ChevronLeft, ChevronRight } from "lucide-react";
+import { Globe, ChevronLeft, ChevronRight, ArrowUpRight } from "lucide-react";
 
 export interface PortfolioItem {
   name: string;
   category: string;
   image_url?: string;
+  link_url?: string | null;
   accent?: string;
   plan?: string;
 }
@@ -65,45 +66,72 @@ export default function PortfolioSlider({ items }: { items: PortfolioItem[] }) {
         className="scrollbar-hide flex flex-1 gap-6 overflow-x-auto pb-2"
         style={{ scrollSnapType: "x mandatory" }}
       >
-        {items.map((item, i) => (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0, y: 24 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: i * 0.08, duration: 0.5 }}
-            className="border-brand-dark/8 card-shadow w-72 flex-shrink-0 overflow-hidden rounded-lg border bg-white"
-            style={{ scrollSnapAlign: "start" }}
-          >
-            <div
-              className={`h-44 ${item.accent ?? "border-orange-100 bg-orange-50"} border-brand-dark/6 relative flex items-center justify-center overflow-hidden border-b`}
-            >
-              {item.image_url ? (
-                <Image
-                  src={item.image_url}
-                  alt={item.name}
-                  fill
-                  className="object-cover"
-                  sizes="288px"
-                />
-              ) : (
-                <Globe size={36} className="text-brand-dark/15" />
-              )}
-              {item.plan && (
-                <div className="absolute right-3 top-3">
-                  <span className="border-brand-dark/8 rounded-md border bg-white/80 px-2.5 py-1 text-xs font-semibold text-brand-dark/50 backdrop-blur-sm">
-                    {item.plan}
-                  </span>
-                </div>
-              )}
-            </div>
-            <div className="p-5">
-              <div className="mb-1 text-xs font-bold uppercase tracking-wider text-accent">
-                {item.category}
+        {items.map((item, i) => {
+          const hasLink = !!item.link_url;
+          const inner = (
+            <>
+              <div
+                className={`h-44 ${item.accent ?? "border-orange-100 bg-orange-50"} border-brand-dark/6 relative flex items-center justify-center overflow-hidden border-b`}
+              >
+                {item.image_url ? (
+                  <Image
+                    src={item.image_url}
+                    alt={item.name}
+                    fill
+                    className="object-cover"
+                    sizes="288px"
+                  />
+                ) : (
+                  <Globe size={36} className="text-brand-dark/15" />
+                )}
+                {item.plan && (
+                  <div className="absolute right-3 top-3">
+                    <span className="border-brand-dark/8 rounded-md border bg-white/80 px-2.5 py-1 text-xs font-semibold text-brand-dark/50 backdrop-blur-sm">
+                      {item.plan}
+                    </span>
+                  </div>
+                )}
               </div>
-              <div className="font-bold text-brand-dark">{item.name}</div>
-            </div>
-          </motion.div>
-        ))}
+              <div className="p-5">
+                <div className="mb-1 text-xs font-bold uppercase tracking-wider text-accent">
+                  {item.category}
+                </div>
+                <div className="flex items-center gap-1.5 font-bold text-brand-dark">
+                  {item.name}
+                  {hasLink && <ArrowUpRight size={15} className="text-accent" />}
+                </div>
+              </div>
+            </>
+          );
+
+          const cardClass =
+            "border-brand-dark/8 card-shadow w-72 flex-shrink-0 overflow-hidden rounded-lg border bg-white" +
+            (hasLink ? " cursor-pointer transition-shadow hover:shadow-lg" : "");
+
+          return (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 24 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: i * 0.08, duration: 0.5 }}
+              className={cardClass}
+              style={{ scrollSnapAlign: "start" }}
+            >
+              {hasLink ? (
+                <a
+                  href={item.link_url as string}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block"
+                >
+                  {inner}
+                </a>
+              ) : (
+                inner
+              )}
+            </motion.div>
+          );
+        })}
       </div>
 
       {/* Next */}

@@ -134,7 +134,7 @@ function CellValue({ val }: { val: boolean | string }) {
 export default function WebDevelopmentPage() {
   const [tableOpen, setTableOpen] = useState(false);
   const [portfolioItems, setPortfolioItems] = useState<
-    Array<{ name: string; category: string; image_url: string }>
+    Array<{ name: string; category: string; image_url: string; link_url: string | null }>
   >([]);
   useEffect(() => {
     fetchPortfolios("web-development").then((data) =>
@@ -143,6 +143,7 @@ export default function WebDevelopmentPage() {
           name: item.title,
           category: item.category ?? "",
           image_url: item.image_url,
+          link_url: item.link_url,
         }))
       )
     );

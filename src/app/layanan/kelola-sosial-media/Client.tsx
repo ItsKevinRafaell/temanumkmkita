@@ -116,7 +116,7 @@ function CellValue({ val }: { val: boolean | string }) {
 export default function SosmedPage() {
   const [tableOpen, setTableOpen] = useState(false);
   const [portfolioItems, setPortfolioItems] = useState<
-    Array<{ name: string; category: string; image_url: string }>
+    Array<{ name: string; category: string; image_url: string; link_url: string | null }>
   >([]);
   useEffect(() => {
     fetchPortfolios("kelola-sosial-media").then((data) =>
@@ -125,6 +125,7 @@ export default function SosmedPage() {
           name: item.title,
           category: item.category ?? "",
           image_url: item.image_url,
+          link_url: item.link_url,
         }))
       )
     );

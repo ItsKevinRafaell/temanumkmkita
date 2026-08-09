@@ -141,7 +141,7 @@ function CellValue({ val }: { val: boolean | string }) {
 export default function SEOPage() {
   const [tableOpen, setTableOpen] = useState(false);
   const [portfolioItems, setPortfolioItems] = useState<
-    Array<{ name: string; category: string; image_url: string }>
+    Array<{ name: string; category: string; image_url: string; link_url: string | null }>
   >([]);
   useEffect(() => {
     fetchPortfolios("seo-google-maps").then((data) =>
@@ -150,6 +150,7 @@ export default function SEOPage() {
           name: item.title,
           category: item.category ?? "",
           image_url: item.image_url,
+          link_url: item.link_url,
         }))
       )
     );
