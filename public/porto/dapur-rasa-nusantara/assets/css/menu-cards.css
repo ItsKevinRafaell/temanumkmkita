@@ -297,3 +297,16 @@ section{ padding-block: clamp(44px, 5.5vw, 76px) !important; }
 }
 .tr-card .who b{ color: var(--dr-ink) !important; }
 .tr-card .who span{ color: var(--dr-muted) !important; }
+
+/* ============================================================
+   LOGO di NAV — chip cream bulat biar logo terracotta kontras di nav gelap
+   ============================================================ */
+.nav-brand img{
+  height: 44px;
+  width: 44px;
+  object-fit: contain;
+  background: var(--dr-cream, #FBF5EC);
+  border-radius: 50%;
+  padding: 5px;
+  display: block;
+}

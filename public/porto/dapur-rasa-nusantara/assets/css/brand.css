@@ -37,6 +37,9 @@ body { background: var(--bg); color: var(--ink); }
 /* Semua tombol = terracotta (konsistensi warna aksi) */
 .btn-primary { background: var(--accent); color: var(--accent-ink); }
 .btn-primary:hover { background: var(--accent-2); }
+/* btn-accent — tombol Reservasi di nav gelap. WAJIB solid + text putih biar keliatan. */
+.btn-accent { background: var(--accent); color: #fff; border-color: var(--accent); }
+.btn-accent:hover { background: var(--accent-2); border-color: var(--accent-2); }
 .btn-ghost { background: transparent; color: var(--brand); border-color: var(--brand); }
 .btn-ghost:hover { background: var(--brand); color: #fff; }
 
