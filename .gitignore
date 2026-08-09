@@ -47,3 +47,7 @@ backend/.env
 # scripts logs (bulk index, indexing API, etc) — generated, jangan di-commit
 /scripts/logs/
 /scripts/**/__pycache__/
+porto_old_bak_*/
+gen_porto_batch.log
+gen_porto_batch.sh
+porto_content_plan.md
