@@ -21,7 +21,7 @@
 
   slots.forEach(function (slot) {
     const name = slot.getAttribute("data-include"); // "nav" / "footer"
-    const url = "partials/" + name + ".html";
+    const url = "/porto/karya-bangun-nusantara/partials/" + name + ".html";
 
     fetch(url)
       .then(function (res) {
