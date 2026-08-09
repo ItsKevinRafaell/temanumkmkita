@@ -1,0 +1,62 @@
+/* brand.css — DAPUR RASA NUSANTARA. Warm terracotta + cream. Font: Fraunces (serif hangat).
+   Layout signature: centered hero + menu-board. Karakter: kuliner, hangat, menggugah selera. */
+:root {
+  --brand:      #7A3B1E;   /* terracotta gelap — dipakai utk teks aksen & judul struktural */
+  --brand-2:    #5A2A15;
+  --brand-tint: #F6EBE2;
+  --brand-ink:  #FFFFFF;
+
+  /* SATU warna aksi: terracotta hangat. Tombol & highlight. Text di atasnya = PUTIH. */
+  --accent:     #C0531F;   /* terracotta terbakar — appetizing */
+  --accent-2:   #A03E13;
+  --accent-ink: #FFFFFF;   /* teks di atas accent WAJIB putih */
+
+  /* aksen kuliner sekunder */
+  --olive:      #6B6A3A;   /* hijau daun redup — dipakai tipis utk badge harga alt */
+
+  /* Font serif hangat */
+  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-body: "Inter", system-ui, sans-serif;
+
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 16px;   /* sudut lebih lembut utk nuansa hangat */
+}
+
+/* base tokens netral hangat (override design-system biar cream, bukan abu dingin) */
+:root {
+  --bg:        #FBF6F0;
+  --surface:   #FFFFFF;
+  --ink:       #2A1E16;   /* coklat gelap, bukan hitam netral */
+  --ink-soft:  #6E5D51;
+  --line:      #EADFD4;
+}
+
+body { background: var(--bg); color: var(--ink); }
+
+/* Semua tombol = terracotta (konsistensi warna aksi) */
+.btn-primary { background: var(--accent); color: var(--accent-ink); }
+.btn-primary:hover { background: var(--accent-2); }
+.btn-ghost { background: transparent; color: var(--brand); border-color: var(--brand); }
+.btn-ghost:hover { background: var(--brand); color: #fff; }
+
+/* judul pakai serif Fraunces */
+h1,h2,h3,h4 { font-family: var(--font-display); }
+
+/* ---- KULINER OVERRIDE: heading besar TIDAK uppercase (elegan, bukan industrial) ---- */
+.cta-fb__in h2,
+.hero-fb__title,
+.section-head h2,
+.kb-head h2,
+.ab-intro__text h2,
+.ab-team__text h2,
+.sv-card__body h3,
+.cs-card__body h3,
+.ab-assure__item h4,
+.info-item h4,
+.bento__cell h4 { text-transform: none; }
+
+/* Fraunces sedikit lebih ringan biar hangat, bukan tegas industrial */
+.hero-fb__title { font-weight: 600; }
+.section-head h2, .kb-head h2 { font-weight: 600; letter-spacing: -0.015em; }
+.cta-fb__in h2 { font-weight: 600; }
