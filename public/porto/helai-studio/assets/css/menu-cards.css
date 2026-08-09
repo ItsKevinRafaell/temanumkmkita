@@ -266,16 +266,6 @@ section{ padding-block: clamp(44px, 5.5vw, 76px) !important; }
   position: relative;
   transition: transform .25s ease, box-shadow .25s ease;
 }
-.tr-card::before{
-  content: "\201C";
-  position: absolute;
-  top: 8px; right: 20px;
-  font-family: "Fraunces", serif;
-  font-size: 4.5rem;
-  line-height: 1;
-  color: var(--dr-terra);
-  opacity: .18;
-}
 .tr-card:hover{
   transform: translateY(-4px);
   box-shadow: 0 16px 40px -20px rgba(43,33,27,.3);

@@ -18,7 +18,7 @@
   --paper-edge: #E8DDD0;
   --ink: #1E1710;
 
-  --ff-display: "Fraunces", Georgia, "Times New Roman", serif;
+  --ff-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
   --ff-body: "Inter", system-ui, -apple-system, sans-serif;
 
   --maxw: 1200px;
@@ -294,7 +294,7 @@ body::before {
   display: block;
   font-family: var(--ff-display);
   font-size: 0.68rem;
-  font-style: italic;
+  font-style: normal;
   color: var(--brown-muted);
   text-align: center;
   margin-top: 6px;
@@ -369,7 +369,7 @@ body::before {
   white-space: nowrap;
   animation: spice-scroll 25s linear infinite;
   font-family: var(--ff-display);
-  font-style: italic;
+  font-style: normal;
   font-size: 0.85rem;
   color: rgba(251, 246, 240, 0.7);
   letter-spacing: 0.02em;
@@ -812,16 +812,6 @@ body::before {
   position: relative;
   padding: clamp(64px, 8vw, 100px) 0;
 }
-.testimonials::before {
-  content: "\201C"; /* opening quote */
-  position: absolute;
-  top: 40px; left: 5%;
-  font-family: var(--ff-display);
-  font-size: 14rem;
-  color: rgba(192,83,31,0.05);
-  line-height: 1;
-  pointer-events: none;
-}
 
 .testi-grid {
   display: grid;
@@ -842,17 +832,6 @@ body::before {
 .testi-card:nth-child(3) { transform: rotate(-0.8deg); }
 .testi-card:hover { transform: rotate(0deg) translateY(-4px) !important; }
 
-/* Handwritten-style quote marks */
-.testi-card::before {
-  content: "\201C";
-  font-family: var(--ff-display);
-  font-size: 4rem;
-  color: rgba(192,83,31,0.12);
-  position: absolute;
-  top: 8px; left: 20px;
-  line-height: 1;
-}
-
 .testi-stars {
   font-size: 1rem;
   color: var(--terracotta);
@@ -862,7 +841,7 @@ body::before {
 .testi-quote {
   font-family: var(--ff-display);
   font-size: 1.1rem;
-  font-style: italic;
+  font-style: normal;
   line-height: 1.65;
   color: var(--brown);
   margin-bottom: 20px;
@@ -1131,3 +1110,5 @@ body::before {
   }
   .gallery-item { min-height: 180px; }
 }
+
+em, i.decor, .em-accent { font-style: normal !important; font-synthesis: none; }

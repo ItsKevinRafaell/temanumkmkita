@@ -15,7 +15,7 @@
   --olive:      #6B6A3A;   /* hijau daun redup — dipakai tipis utk badge harga alt */
 
   /* Font serif hangat */
-  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
   --font-body: "Inter", system-ui, sans-serif;
 
   --r-sm: 6px;

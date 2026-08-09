@@ -17,7 +17,7 @@
   --hs-line:       rgba(74,39,64,.15);
   --hs-white:      #FFFFFF;
 
-  --font-display: "Cormorant Garamond", "Georgia", serif;
+  --font-display: "Syne", "Segoe UI", system-ui, sans-serif;
   --font-body:    "Inter", system-ui, sans-serif;
 
   --ease-out: cubic-bezier(.22, .61, .36, 1);
@@ -222,7 +222,7 @@ a { color: inherit; text-decoration: none; }
   letter-spacing: -.03em;
 }
 .hero-editorial__title em {
-  font-style: italic;
+  font-style: normal;
   font-weight: 400;
   display: block;
   font-size: .6em;
@@ -335,7 +335,7 @@ a { color: inherit; text-decoration: none; }
   max-width: 500px;
 }
 .section-editorial__heading em {
-  font-style: italic;
+  font-style: normal;
   color: var(--hs-plum);
 }
 @media (max-width: 600px) {
@@ -468,7 +468,7 @@ a { color: inherit; text-decoration: none; }
   margin: 0 0 24px 0;
 }
 .editorial-flow__text h2 em {
-  font-style: italic;
+  font-style: normal;
   color: var(--hs-plum);
 }
 .editorial-flow__text p {
@@ -516,7 +516,7 @@ a { color: inherit; text-decoration: none; }
   font-family: var(--font-display);
   font-size: clamp(1.8rem, 3.5vw, 2.8rem);
   font-weight: 300;
-  font-style: italic;
+  font-style: normal;
   line-height: 1.35;
   color: var(--hs-ink);
   margin: 0 0 24px 0;
@@ -587,7 +587,7 @@ a { color: inherit; text-decoration: none; }
 .editorial-testimonials__text {
   font-family: var(--font-display);
   font-size: 1.15rem;
-  font-style: italic;
+  font-style: normal;
   line-height: 1.6;
   color: var(--hs-ink);
   margin: 0 0 20px 0;
@@ -649,7 +649,7 @@ a { color: inherit; text-decoration: none; }
   margin: 0 0 20px 0;
 }
 .editorial-cta__content h2 em {
-  font-style: italic;
+  font-style: normal;
   font-weight: 400;
 }
 .editorial-cta__content p {
@@ -815,3 +815,50 @@ a { color: inherit; text-decoration: none; }
 .hero-editorial__title { animation-delay: .4s; }
 .hero-editorial__tagline { animation-delay: .6s; }
 .hero-editorial__cta { animation-delay: .8s; }
+
+
+/* --- FIX: navbar solid on mobile (no transparency) --- */
+@media (max-width: 768px) {
+  .site-nav {
+    background: var(--hs-cream);
+    box-shadow: 0 1px 0 var(--hs-line);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  .site-nav:not(.scrolled) .nav-toggle span { background: var(--hs-ink); }
+}
+
+
+/* --- Brand statement (replaces AI inspirational quote) --- */
+.brand-statement {
+  padding: clamp(90px, 12vw, 160px) 0;
+  background: var(--hs-ink);
+  color: var(--hs-cream);
+}
+.brand-statement__inner {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 clamp(24px, 5vw, 64px);
+}
+.brand-statement__kicker {
+  display: block;
+  font-family: var(--font-body);
+  font-size: .72rem;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--hs-plum);
+  margin-bottom: 28px;
+}
+.brand-statement__text {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.8rem, 4.5vw, 3.4rem);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  color: var(--hs-cream);
+  max-width: 18ch;
+}
+/* neutralize decorative em in headings — accent color, no italic */
+h1 em, h2 em, h3 em { font-style: normal; color: var(--hs-plum); }
+
+em, i.decor, .em-accent { font-style: normal !important; font-synthesis: none; }

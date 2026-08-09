@@ -36,7 +36,7 @@
   font-size: clamp(2.6rem, 6vw, 5rem); line-height: 1.04;
   letter-spacing: -0.02em; color: #fff; max-width: 18ch; margin-inline: auto;
 }
-.hero-fb__title .accent { color: #F0A868; font-style: italic; }  /* italic serif = sentuhan kuliner */
+.hero-fb__title .accent { color: #F0A868; font-style: normal; }  /* italic serif = sentuhan kuliner */
 .hero-fb__lede { margin: 22px auto 0; color: rgba(255,246,240,.9); font-size: 1.12rem; max-width: 52ch; line-height: 1.65; }
 .hero-fb__cta { margin-top: 34px; display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
 

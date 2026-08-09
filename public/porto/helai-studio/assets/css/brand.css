@@ -15,7 +15,7 @@
   --olive:      #9A8FA0;   /* abu ungu redup — badge alt */
 
   /* Font serif elegan */
-  --font-display: "Cormorant Garamond", "Cormorant", Georgia, serif;
+  --font-display: "Syne", "Segoe UI", system-ui, sans-serif;
   --font-body: "Inter", system-ui, sans-serif;
 
   --r-sm: 4px;
