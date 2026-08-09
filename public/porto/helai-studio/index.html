@@ -3,157 +3,215 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Helai Studio — Fashion Lokal yang Dibuat dengan Rasa</title>
+  <title>Helai Studio — Fashion Lokal dengan Rasa</title>
   <meta name="description" content="Helai Studio: busana lokal modern, dibuat dengan detail dan bahan pilihan. Untuk perempuan yang tahu apa yang ia mau." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/porto/_ds/design-system.css" />
-  <link rel="stylesheet" href="/porto/helai-studio/assets/css/brand.css" />
-  <link rel="stylesheet" href="/porto/helai-studio/assets/css/layout.css" />
-  <link rel="stylesheet" href="/porto/helai-studio/assets/css/bento.css" />
-  <link rel="stylesheet" href="/porto/helai-studio/assets/css/menu-cards.css" />
+  <link rel="stylesheet" href="/porto/helai-studio/assets/css/unique.css" />
 </head>
 <body>
 
+  <!-- ========== NAV ========== -->
   <header class="site-nav" data-include="nav"></header>
 
-  <!-- HERO editorial -->
-  <section class="hero-fb">
-    <img class="hero-fb__img" src="/porto/helai-studio/assets/img/gen/hero-editorial.jpg" alt="Koleksi Helai Studio" fetchpriority="high" onerror="this.src='/porto/helai-studio/assets/img/gen/look-1.jpg'" />
-    <div class="hero-fb__scrim"></div>
-    <div class="hero-fb__inner">
-      <div class="container">
-        <span class="hero-fb__eyebrow reveal">Helai Studio</span>
-        <h1 class="hero-fb__title reveal">Busana yang dibuat <span class="accent">dengan rasa.</span></h1>
-        <p class="hero-fb__lede reveal">Bukan sekadar ikut tren. Setiap helai dijahit dengan detail, untuk perempuan yang tahu apa yang ia mau.</p>
-        <div class="hero-fb__cta reveal">
-          <a class="btn btn-primary" href="/porto/helai-studio/koleksi.html">Lihat Koleksi</a>
-          <a class="btn btn-ghost" style="color:#fff;border-color:rgba(255,255,255,.6)" href="https://wa.me/6281234567890?text=Halo%20Helai%20Studio" target="_blank" rel="noopener">Konsultasi Gaya</a>
+  <!-- ========== HERO: SPLIT EDITORIAL ========== -->
+  <section class="hero-editorial">
+    <div class="hero-editorial__text">
+      <span class="hero-editorial__eyebrow reveal">Helai Studio — Musim Ini</span>
+      <h1 class="hero-editorial__title reveal">
+        HELAI
+        <em>Busana yang bicara dalam diam.</em>
+      </h1>
+      <p class="hero-editorial__tagline reveal">
+        Koleksi yang tidak mengejar tren, tapi menciptakan bahasa sendiri.
+        Dijahit perlahan, dipikirkan matang, untuk perempuan yang tidak perlu berteriak.
+      </p>
+      <div class="hero-editorial__cta reveal">
+        <a class="btn-primary" href="/porto/helai-studio/koleksi.html">Lihat Koleksi</a>
+        <a class="btn-ghost" href="https://wa.me/6281234567890?text=Halo%20Helai%20Studio" target="_blank" rel="noopener">Konsultasi Gaya</a>
+      </div>
+    </div>
+    <div class="hero-editorial__photo">
+      <img src="/porto/helai-studio/assets/img/gen/hero-editorial.jpg" alt="Koleksi Helai Studio" fetchpriority="high" onerror="this.src='/porto/helai-studio/assets/img/gen/look-1.jpg'" />
+    </div>
+  </section>
+
+  <!-- ========== LOOKBOOK MASONRY ========== -->
+  <section class="section-editorial">
+    <div class="section-editorial__header reveal">
+      <span class="section-editorial__number">01</span>
+      <h2 class="section-editorial__heading">Koleksi <em>Musim Ini</em></h2>
+    </div>
+    <div class="lookbook-masonry reveal-stagger">
+      <article class="lookbook-masonry__item lookbook-masonry__item--tall reveal">
+        <span class="lookbook-masonry__serial">01</span>
+        <img src="/porto/helai-studio/assets/img/gen/look-1.jpg" alt="Seri Senja" loading="lazy" onerror="this.src='/porto/helai-studio/assets/img/gen/look-1.jpg'" />
+        <div class="lookbook-masonry__name">
+          <h3>Seri Senja</h3>
+          <p>Tunik flowy warna plum, jatuh anggun untuk senja yang panjang.</p>
         </div>
+      </article>
+      <article class="lookbook-masonry__item lookbook-masonry__item--wide reveal">
+        <span class="lookbook-masonry__serial">02</span>
+        <img src="/porto/helai-studio/assets/img/gen/detail-fabric.jpg" alt="Seri Kabut" loading="lazy" onerror="this.src='/porto/helai-studio/assets/img/gen/look-1.jpg'" />
+        <div class="lookbook-masonry__name">
+          <h3>Seri Kabut</h3>
+          <p>Setelan cream lembut, bahan adem dari pagi ke malam tanpa lelah.</p>
+        </div>
+      </article>
+      <article class="lookbook-masonry__item lookbook-masonry__item--square reveal">
+        <span class="lookbook-masonry__serial">03</span>
+        <img src="/porto/helai-studio/assets/img/gen/look-3.jpg" alt="Seri Tenun" loading="lazy" onerror="this.src='/porto/helai-studio/assets/img/gen/look-1.jpg'" />
+        <div class="lookbook-masonry__name">
+          <h3>Seri Tenun</h3>
+          <p>Tekstur tenun tangan, potongan modern yang tetap membumi.</p>
+        </div>
+      </article>
+      <article class="lookbook-masonry__item lookbook-masonry__item--long reveal">
+        <span class="lookbook-masonry__serial">04</span>
+        <img src="/porto/helai-studio/assets/img/gen/look-4.jpg" alt="Seri Mauve" loading="lazy" onerror="this.src='/porto/helai-studio/assets/img/gen/look-1.jpg'" />
+        <div class="lookbook-masonry__name">
+          <h3>Seri Mauve</h3>
+          <p>Aksen plum lembut pada siluet minimalis, elegan untuk sehari-hari.</p>
+        </div>
+      </article>
+      <article class="lookbook-masonry__item lookbook-masonry__item--tall reveal">
+        <span class="lookbook-masonry__serial">05</span>
+        <img src="/porto/helai-studio/assets/img/gen/look-5.jpg" alt="Seri Awan" loading="lazy" onerror="this.src='/porto/helai-studio/assets/img/gen/look-1.jpg'" />
+        <div class="lookbook-masonry__name">
+          <h3>Seri Awan</h3>
+          <p>Draping lembut warna rose, ringan dan mengalir mengikuti gerak.</p>
+        </div>
+      </article>
+      <article class="lookbook-masonry__item lookbook-masonry__item--wide reveal">
+        <span class="lookbook-masonry__serial">—</span>
+        <img src="/porto/helai-studio/assets/img/gen/atelier.jpg" alt="Atelier" loading="lazy" onerror="this.src='/porto/helai-studio/assets/img/gen/look-1.jpg'" />
+        <div class="lookbook-masonry__name">
+          <h3>Atelier Kami</h3>
+          <p>Setiap helai dijahit dengan tangan, bukan mesin.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ========== EDITORIAL FLOW: FILOSOFI ========== -->
+  <section class="editorial-flow">
+    <div class="editorial-flow__media reveal">
+      <img src="/porto/helai-studio/assets/img/gen/detail-fabric.jpg" alt="Detail bahan" loading="lazy" onerror="this.src='/porto/helai-studio/assets/img/gen/look-1.jpg'" />
+    </div>
+    <div class="editorial-flow__text reveal">
+      <span class="eyebrow">Filosofi</span>
+      <h2>Satu helai, <em>satu cerita.</em></h2>
+      <p>Kami percaya busana yang baik tidak diburu-buru. Setiap potongan dipikirkan, setiap jahitan diperiksa. Bahan dipilih yang nyaman dipakai lama, bukan yang cepat rusak.</p>
+      <p>Dari pemilihan benang hingga sentuhan terakhir — setiap keputusan adalah pilihan yang disengaja. Karena fashion yang sejati bukan tentang terlihat. Tapi tentang terasa.</p>
+      <a class="link-arrow" href="/porto/helai-studio/tentang.html">Kenal lebih dekat →</a>
+    </div>
+  </section>
+
+  <!-- ========== PULL QUOTE ========== -->
+  <section class="editorial-quote reveal">
+    <div class="editorial-quote__line"></div>
+    <blockquote>
+      "Fashion bukan tentang apa yang Anda pakai. Tapi tentang bagaimana Anda hidup di dalamnya."
+    </blockquote>
+    <cite>— Helai Studio, Filosofi</cite>
+  </section>
+
+  <!-- ========== FULL-BLEED EDITORIAL IMAGE ========== -->
+  <div class="editorial-fullbleed reveal">
+    <img src="/porto/helai-studio/assets/img/gen/model-portrait.jpg" alt="Kampanye Helai Studio" loading="lazy" onerror="this.src='/porto/helai-studio/assets/img/gen/look-1.jpg'" />
+    <span class="editorial-fullbleed__caption">Kampanye Musim Ini</span>
+  </div>
+
+  <!-- ========== LOOKBOOK EDITORIAL: DETAIL ========== -->
+  <section class="section-editorial">
+    <div class="section-editorial__header reveal">
+      <span class="section-editorial__number">02</span>
+      <h2 class="section-editorial__heading">Detail yang <em>Berbicara</em></h2>
+    </div>
+    <div class="editorial-flow" style="padding:0; max-width:100%;">
+      <div class="editorial-flow__media reveal">
+        <img src="/porto/helai-studio/assets/img/gen/look-2.jpg" alt="Seri Kabut detail" loading="lazy" onerror="this.src='/porto/helai-studio/assets/img/gen/look-1.jpg'" />
+      </div>
+      <div class="editorial-flow__text reveal">
+        <span class="eyebrow">Material</span>
+        <h2>Bahan yang <em>dipilih, bukan dipaksa.</em></h2>
+        <p>Setiap Seri menggunakan material yang dipilih berdasarkan musim, mood, dan cara hidup pemakainya. Tenun tangan dari pengrajin lokal, katun premium, dan sutra yang lembut di kulit.</p>
+        <a class="link-arrow" href="/porto/helai-studio/koleksi.html">Jelajahi Koleksi →</a>
       </div>
     </div>
   </section>
 
-  <!-- KOLEKSI CAROUSEL -->
-  <section class="mc-section gfx-grid">
-    <div class="container">
-      <div class="section-head kb-head reveal" style="position:relative;">
-        <span class="ghost-num" aria-hidden="true">Look</span>
-        <span class="pill">Koleksi Terbaru</span>
-        <h2>Yang sedang jadi favorit</h2>
-        <p>Geser untuk lihat lookbook musim ini.</p>
+  <!-- ========== PAGE NUM ========== -->
+  <div class="page-num">— 03 —</div>
+
+  <!-- ========== TESTIMONIALS ========== -->
+  <section class="editorial-testimonials">
+    <div class="section-editorial__header reveal" style="margin-bottom:48px;">
+      <span class="section-editorial__number">03</span>
+      <h2 class="section-editorial__heading">Mereka yang <em>Telah Merasakan</em></h2>
+    </div>
+    <div class="editorial-testimonials__grid reveal-stagger">
+      <div class="editorial-testimonials__item reveal">
+        <div class="editorial-testimonials__num">01</div>
+        <p class="editorial-testimonials__text">"Bahannya beneran beda, adem dan jatuhnya bagus. Udah beli 4 seri, ga pernah kecewa."</p>
+        <span class="editorial-testimonials__author">Dinda A. — Pelanggan Setia</span>
       </div>
-      <div class="mc-carousel reveal">
-        <button class="mc-nav mc-nav--prev" aria-label="Sebelumnya" data-mc-prev>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
-        </button>
-        <div class="mc-track" data-mc-track>
-          <article class="mc-card">
-            <div class="mc-card__media"><img src="/porto/helai-studio/assets/img/gen/look-1.jpg" alt="Look 1" loading="lazy" /><span class="mc-tag">Baru</span></div>
-            <div class="mc-card__body"><div class="mc-card__top"><h3>Seri Senja</h3></div><p>Tunik flowy warna plum, jatuh anggun untuk acara semi-formal.</p></div>
-          </article>
-          <article class="mc-card">
-            <div class="mc-card__media"><img src="/porto/helai-studio/assets/img/gen/look-2.jpg" alt="Look 2" loading="lazy" /></div>
-            <div class="mc-card__body"><div class="mc-card__top"><h3>Seri Kabut</h3></div><p>Setelan cream lembut, bahan adem, nyaman dari pagi ke malam.</p></div>
-          </article>
-          <article class="mc-card">
-            <div class="mc-card__media"><img src="/porto/helai-studio/assets/img/gen/look-3.jpg" alt="Look 3" loading="lazy" /></div>
-            <div class="mc-card__body"><div class="mc-card__top"><h3>Seri Tenun</h3></div><p>Detail tekstur tenun, potongan modern yang tetap membumi.</p></div>
-          </article>
-          <article class="mc-card">
-            <div class="mc-card__media"><img src="/porto/helai-studio/assets/img/gen/look-4.jpg" alt="Look 4" loading="lazy" /></div>
-            <div class="mc-card__body"><div class="mc-card__top"><h3>Seri Mauve</h3></div><p>Aksen plum lembut pada siluet minimalis, elegan untuk sehari-hari.</p></div>
-          </article>
-          <article class="mc-card">
-            <div class="mc-card__media"><img src="/porto/helai-studio/assets/img/gen/look-5.jpg" alt="Look 5" loading="lazy" /></div>
-            <div class="mc-card__body"><div class="mc-card__top"><h3>Seri Awan</h3></div><p>Draping lembut warna rose, ringan dan mengalir mengikuti gerak.</p></div>
-          </article>
-        </div>
-        <button class="mc-nav mc-nav--next" aria-label="Berikutnya" data-mc-next>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
-        </button>
+      <div class="editorial-testimonials__item reveal">
+        <div class="editorial-testimonials__num">02</div>
+        <p class="editorial-testimonials__text">"Potongannya modern tapi tetap sopan. Pas banget buat kerja sampai acara keluarga."</p>
+        <span class="editorial-testimonials__author">Maya R. — Profesional</span>
       </div>
-      <div style="text-align:center;margin-top:28px;">
-        <a class="btn btn-primary" href="/porto/helai-studio/koleksi.html">Lihat Semua Koleksi</a>
+      <div class="editorial-testimonials__item reveal">
+        <div class="editorial-testimonials__num">03</div>
+        <p class="editorial-testimonials__text">"Konsultasi gayanya membantu banget. Dibantu pilih warna yang cocok sama kulit."</p>
+        <span class="editorial-testimonials__author">Lestari W. — Pelanggan Baru</span>
       </div>
     </div>
   </section>
 
-  <!-- FILOSOFI (cerita singkat) -->
-  <section class="dr-story gfx-grid">
-    <div class="container">
-      <div class="dr-story__row reveal">
-        <div class="dr-story__media">
-          <img src="/porto/helai-studio/assets/img/gen/detail-fabric.jpg" alt="Detail bahan" loading="lazy" />
-        </div>
-        <div class="dr-story__text">
-          <span class="pill">Filosofi</span>
-          <h2>Satu helai, satu cerita</h2>
-          <p>Kami percaya busana yang baik tidak diburu-buru. Setiap potongan dipikirkan, setiap jahitan diperiksa. Bahan dipilih yang nyaman dipakai lama, bukan yang cepat rusak.</p>
-          <a class="dr-story__link" href="/porto/helai-studio/tentang.html">Kenal lebih dekat →</a>
-        </div>
+  <!-- ========== CTA EDITORIAL ========== -->
+  <section class="editorial-cta">
+    <div class="editorial-cta__inner reveal">
+      <div class="editorial-cta__media">
+        <img src="/porto/helai-studio/assets/img/gen/hero-editorial.jpg" alt="Koleksi Helai" loading="lazy" onerror="this.src='/porto/helai-studio/assets/img/gen/look-2.jpg'" />
+      </div>
+      <div class="editorial-cta__content">
+        <h2>Temukan gaya yang<br /><em>jadi diri Anda.</em></h2>
+        <p>Konsultasi gratis via WhatsApp, atau kunjungi atelier kami di Yogyakarta. Tanpa komitmen, tanpa tekanan — hanya percakapan tentang gaya.</p>
+        <a class="btn-cta" href="https://wa.me/6281234567890?text=Halo%20Helai%20Studio%2C%20saya%20mau%20konsultasi" target="_blank" rel="noopener">Konsultasi via WhatsApp</a>
       </div>
     </div>
   </section>
 
-  <!-- LOOKBOOK GRID -->
-  <section class="gfx-grid">
-    <div class="container">
-      <div class="section-head kb-head reveal">
-        <span class="pill">Lookbook</span>
-        <h2>Detail yang membedakan</h2>
-      </div>
-      <div class="proof">
-        <div class="proof__item proof__a reveal"><img src="/porto/helai-studio/assets/img/gen/look-1.jpg" alt="Look" loading="lazy" /><div class="cap"><div class="c">Seri Senja</div><div class="t">Plum Flowy</div></div></div>
-        <div class="proof__item proof__b reveal"><img src="/porto/helai-studio/assets/img/gen/detail-fabric.jpg" alt="Bahan" loading="lazy" /><div class="cap"><div class="c">Material</div><div class="t">Tenun Premium</div></div></div>
-        <div class="proof__item proof__c reveal"><img src="/porto/helai-studio/assets/img/gen/atelier.jpg" alt="Atelier" loading="lazy" /><div class="cap"><div class="c">Atelier</div><div class="t">Dijahit Tangan</div></div></div>
-        <div class="proof__item proof__d reveal"><img src="/porto/helai-studio/assets/img/gen/look-3.jpg" alt="Look" loading="lazy" /><div class="cap"><div class="c">Seri Tenun</div><div class="t">Tekstur</div></div></div>
-        <div class="proof__item proof__e reveal"><img src="/porto/helai-studio/assets/img/gen/look-5.jpg" alt="Look" loading="lazy" /><div class="cap"><div class="c">Seri Awan</div><div class="t">Rose Draping</div></div></div>
-        <div class="proof__item proof__f reveal"><img src="/porto/helai-studio/assets/img/gen/model-portrait.jpg" alt="Model" loading="lazy" /><div class="cap"><div class="c">Kampanye</div><div class="t">Musim Ini</div></div></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- TESTIMONI -->
-  <section>
-    <div class="container">
-      <div class="section-head kb-head reveal">
-        <span class="pill">Kata Mereka</span>
-        <h2>Yang bikin mereka setia</h2>
-      </div>
-      <div class="testi-rich reveal">
-        <div class="testi-rich__grid">
-          <div class="tr-card"><div class="stars">★★★★★</div><p class="q">"Bahannya beneran beda, adem dan jatuhnya bagus. Udah beli 4 seri, ga pernah kecewa."</p><div class="who"><span class="av">D</span><div><b>Dinda A.</b><span>Pelanggan Setia</span></div></div></div>
-          <div class="tr-card"><div class="stars">★★★★★</div><p class="q">"Potongannya modern tapi tetap sopan. Pas banget buat kerja sampai acara keluarga."</p><div class="who"><span class="av">M</span><div><b>Maya R.</b><span>Profesional</span></div></div></div>
-          <div class="tr-card"><div class="stars">★★★★★</div><p class="q">"Konsultasi gayanya membantu banget. Dibantu pilih warna yang cocok sama kulit."</p><div class="who"><span class="av">L</span><div><b>Lestari W.</b><span>Pelanggan Baru</span></div></div></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA -->
-  <section>
-    <div class="container">
-      <div class="cta-fb reveal">
-        <img src="/porto/helai-studio/assets/img/gen/hero-editorial.jpg" alt="Koleksi" onerror="this.src='/porto/helai-studio/assets/img/gen/look-2.jpg'" />
-        <div class="cta-fb__in">
-          <h2>Temukan gaya yang jadi diri Anda.</h2>
-          <p>Konsultasi gratis via WhatsApp, atau kunjungi atelier kami di Yogyakarta.</p>
-          <a class="btn btn-primary" href="https://wa.me/6281234567890?text=Halo%20Helai%20Studio%2C%20saya%20mau%20konsultasi" target="_blank" rel="noopener">Konsultasi via WhatsApp</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
+  <!-- ========== FOOTER ========== -->
   <footer class="site-footer" data-include="footer"></footer>
 
+  <!-- ========== WA FLOAT ========== -->
   <a class="wa-float" href="https://wa.me/6281234567890?text=Halo%20Helai%20Studio" target="_blank" rel="noopener" aria-label="Chat WhatsApp">
     <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.9-4.45 9.9-9.91C21.95 6.45 17.5 2 12.04 2zm5.8 14.12c-.24.68-1.42 1.31-1.95 1.35-.5.04-.5.4-3.16-.66-2.67-1.05-4.35-3.77-4.48-3.94-.13-.18-1.07-1.42-1.07-2.71 0-1.29.68-1.92.92-2.19.24-.26.53-.33.7-.33.18 0 .35 0 .5.01.16.01.38-.06.59.45.24.58.81 2 .88 2.14.07.13.12.29.02.47-.09.18-.14.29-.27.44-.13.16-.28.35-.4.47-.13.13-.27.28-.12.54.15.26.66 1.09 1.42 1.76.98.87 1.8 1.14 2.06 1.27.26.13.41.11.56-.07.15-.18.65-.76.82-1.02.17-.26.35-.22.59-.13.24.09 1.52.72 1.78.85.26.13.43.19.5.3.06.11.06.66-.18 1.34z"/></svg>
   </a>
 
+  <!-- ========== SCRIPTS ========== -->
   <script src="/porto/helai-studio/assets/js/include.js"></script>
   <script src="/porto/helai-studio/assets/js/main.js"></script>
-  <script src="/porto/helai-studio/assets/js/carousel.js"></script>
+  <script>
+    /* Scroll-based nav solid/transparent */
+    (function() {
+      var nav = document.querySelector('.site-nav');
+      if (!nav) return;
+      function onScroll() {
+        if (window.scrollY > 80) {
+          nav.classList.add('scrolled');
+        } else {
+          nav.classList.remove('scrolled');
+        }
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    })();
+  </script>
 </body>
 </html>

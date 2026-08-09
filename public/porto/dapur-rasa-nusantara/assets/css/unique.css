@@ -1,0 +1,1133 @@
+/* ================================================================
+   unique.css — Dapur Rasa Nusantara
+   Editorial Typographic Hero · Handwritten Menu · Mosaic Gallery
+   Iteration 2: BOLD, distinctive, NOT a restaurant template.
+   ================================================================ */
+
+/* ---------- TOKENS ---------- */
+:root {
+  --terracotta: #C0531F;
+  --terracotta-dark: #A1441A;
+  --terracotta-light: rgba(192, 83, 31, 0.1);
+  --cream: #FBF6F0;
+  --cream-dark: #F0E8DD;
+  --brown: #2A1E16;
+  --brown-soft: #4A3828;
+  --brown-muted: #8B7460;
+  --coffee-stain: rgba(160, 110, 60, 0.06);
+  --paper-edge: #E8DDD0;
+  --ink: #1E1710;
+
+  --ff-display: "Fraunces", Georgia, "Times New Roman", serif;
+  --ff-body: "Inter", system-ui, -apple-system, sans-serif;
+
+  --maxw: 1200px;
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --r-sm: 6px;
+  --r-md: 12px;
+  --r-lg: 20px;
+  --sh-card: 0 8px 30px -10px rgba(42, 30, 22, 0.18);
+  --sh-photo: 4px 6px 20px -4px rgba(42, 30, 22, 0.25);
+  --sh-polaroid: 2px 3px 12px -2px rgba(42, 30, 22, 0.22);
+}
+
+/* ---------- RESET ---------- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--ff-body);
+  color: var(--ink);
+  background: var(--cream);
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+ul { list-style: none; }
+::selection { background: var(--terracotta); color: var(--cream); }
+
+h1,h2,h3,h4 { font-family: var(--ff-display); font-weight: 500; line-height: 1.15; }
+p { margin: 0; }
+
+.container { width: 100%; max-width: var(--maxw); margin-inline: auto; padding-inline: 28px; }
+
+/* ---------- PAPER TEXTURE (subtle noise overlay) ---------- */
+body::before {
+  content: "";
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ================================================================
+   NAVIGATION
+   ================================================================ */
+.site-nav {
+  position: sticky; top: 0; z-index: 1000;
+  background: var(--brown);
+  border-bottom: 3px solid var(--terracotta);
+  padding: 0;
+}
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 68px;
+}
+.nav-brand img {
+  height: 40px;
+  width: auto;
+  border-radius: 4px;
+}
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.nav-links a {
+  font-family: var(--ff-body);
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--cream);
+  padding: 8px 14px;
+  border-radius: var(--r-sm);
+  transition: background 0.2s, color 0.2s;
+}
+.nav-links a:hover { background: rgba(255,255,255,0.1); }
+.nav-links .btn-accent {
+  background: var(--terracotta);
+  color: #fff;
+  font-weight: 600;
+  border-radius: 999px;
+  padding: 9px 22px;
+  margin-left: 8px;
+  transition: background 0.2s, transform 0.2s;
+}
+.nav-links .btn-accent:hover {
+  background: var(--terracotta-dark);
+  transform: translateY(-1px);
+}
+.nav-toggle {
+  display: none;
+  flex-direction: column; gap: 5px;
+  background: none; border: none; cursor: pointer; padding: 8px;
+}
+.nav-toggle span {
+  display: block; width: 24px; height: 2px;
+  background: var(--cream); border-radius: 2px;
+  transition: transform 0.3s, opacity 0.3s;
+}
+
+/* ================================================================
+   HERO EDITORIAL — Typographic Statement
+   Giant "DAPUR RASA" dominates the viewport.
+   Food photo peeks from below/behind the text.
+   Polaroid photos scatter around edges.
+   NOT a split 2-column layout.
+   ================================================================ */
+.hero-editorial {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--cream);
+  padding: 100px 0 0;
+}
+
+/* Warm kertas nasi / rice paper background texture */
+.hero-editorial__paper-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    /* Coffee stain circle top-right */
+    radial-gradient(circle at 82% 15%, rgba(160, 110, 60, 0.08) 0%, transparent 35%),
+    /* Warm glow bottom-left */
+    radial-gradient(circle at 15% 80%, rgba(192, 83, 31, 0.06) 0%, transparent 40%),
+    /* Subtle diagonal lines like kertas nasi */
+    repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 40px,
+      rgba(160, 110, 60, 0.015) 40px,
+      rgba(160, 110, 60, 0.015) 41px
+    );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero-editorial__inner {
+  position: relative;
+  z-index: 5;
+  max-width: var(--maxw);
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 28px;
+}
+
+/* Eyebrow */
+.hero-editorial__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--ff-body);
+  font-weight: 600;
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--terracotta);
+  margin-bottom: 24px;
+}
+.hero-editorial__eyebrow-line {
+  width: 40px;
+  height: 2px;
+  background: var(--terracotta);
+  display: block;
+}
+
+/* Giant title — the hero of the hero */
+.hero-editorial__title {
+  font-family: var(--ff-display);
+  font-weight: 900;
+  line-height: 0.88;
+  color: var(--brown);
+  margin-bottom: 0;
+  letter-spacing: -0.04em;
+  position: relative;
+}
+.hero-editorial__title-line {
+  display: block;
+}
+.hero-editorial__title-line--1 {
+  font-size: clamp(4.5rem, 12vw, 10rem);
+  color: var(--brown);
+  position: relative;
+  z-index: 2;
+}
+.hero-editorial__title-line--2 {
+  font-size: clamp(5rem, 14vw, 12rem);
+  color: var(--terracotta);
+  position: relative;
+  z-index: 2;
+  margin-top: -0.05em;
+  /* Subtle text-shadow for depth */
+  text-shadow: 3px 4px 0 rgba(192, 83, 31, 0.08);
+}
+
+/* Subtitle block — positioned to the left, overlapping the space below title */
+.hero-editorial__subtitle-block {
+  margin-top: 32px;
+  padding-left: 4px;
+  max-width: 480px;
+  position: relative;
+  z-index: 3;
+}
+.hero-editorial__subtitle {
+  font-size: 1.12rem;
+  color: var(--brown-muted);
+  line-height: 1.75;
+}
+
+/* CTA */
+.hero-editorial__cta {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 36px;
+  position: relative;
+  z-index: 3;
+}
+
+/* --- Hero food photo: overlapping bottom-right, NOT a column --- */
+.hero-editorial__photo {
+  position: absolute;
+  bottom: 0;
+  right: 5%;
+  width: clamp(280px, 35vw, 480px);
+  z-index: 4;
+  border-radius: var(--r-lg) var(--r-lg) 0 0;
+  overflow: hidden;
+  box-shadow: -8px -4px 40px rgba(42, 30, 22, 0.2);
+  /* Slight clip to make it peek up from the bottom */
+  clip-path: inset(15% 0 0 0);
+  transition: transform 0.5s var(--ease);
+}
+.hero-editorial__photo:hover {
+  transform: translateY(-8px);
+}
+.hero-editorial__photo img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+/* --- Polaroid scatter: two small tilted photos in the hero area --- */
+.hero-polaroids {
+  position: absolute;
+  z-index: 6;
+  pointer-events: none;
+}
+.hero-polaroid {
+  position: absolute;
+  background: #fff;
+  border-radius: 4px;
+  padding: 8px 8px 28px;
+  box-shadow: var(--sh-polaroid);
+  transition: transform 0.4s var(--ease-spring);
+  pointer-events: auto;
+}
+.hero-polaroid:hover {
+  transform: rotate(0deg) scale(1.08) !important;
+  z-index: 10;
+}
+.hero-polaroid img {
+  width: 100%;
+  height: auto;
+  border-radius: 2px;
+}
+.hero-polaroid__label {
+  display: block;
+  font-family: var(--ff-display);
+  font-size: 0.68rem;
+  font-style: italic;
+  color: var(--brown-muted);
+  text-align: center;
+  margin-top: 6px;
+}
+
+/* Polaroid 1: top-right area */
+.hero-polaroid--1 {
+  top: 12%;
+  right: 3%;
+  width: clamp(100px, 12vw, 150px);
+  transform: rotate(4deg);
+}
+/* Polaroid 2: middle-left area */
+.hero-polaroid--2 {
+  bottom: 25%;
+  right: clamp(220px, 28vw, 400px);
+  width: clamp(90px, 11vw, 130px);
+  transform: rotate(-6deg);
+}
+
+/* --- "Diulek Tiap Pagi" stamp badge --- */
+.hero-stamp {
+  position: absolute;
+  bottom: 22%;
+  left: 50%;
+  transform: translateX(-50%) rotate(-12deg);
+  z-index: 7;
+  pointer-events: none;
+}
+.hero-stamp__ring {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(120px, 14vw, 160px);
+  height: clamp(120px, 14vw, 160px);
+  border: 3px solid var(--terracotta);
+  border-radius: 50%;
+  position: relative;
+}
+.hero-stamp__ring::before {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border: 1.5px solid rgba(192, 83, 31, 0.4);
+  border-radius: 50%;
+}
+.hero-stamp__text {
+  font-family: var(--ff-display);
+  font-weight: 700;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--terracotta);
+  text-align: center;
+  line-height: 1.3;
+  padding: 8px;
+}
+
+/* --- Spice marquee: scrolling strip at the bottom of the hero --- */
+.spice-marquee {
+  position: relative;
+  z-index: 8;
+  width: 100%;
+  overflow: hidden;
+  background: var(--brown);
+  padding: 12px 0;
+  margin-top: 48px;
+}
+.spice-marquee__track {
+  display: flex;
+  gap: 0;
+  white-space: nowrap;
+  animation: spice-scroll 25s linear infinite;
+  font-family: var(--ff-display);
+  font-style: italic;
+  font-size: 0.85rem;
+  color: rgba(251, 246, 240, 0.7);
+  letter-spacing: 0.02em;
+}
+.spice-marquee__track span {
+  padding: 0 16px;
+  flex-shrink: 0;
+}
+.spice-dot {
+  color: var(--terracotta) !important;
+  font-style: normal !important;
+  font-size: 0.5rem !important;
+  opacity: 0.6;
+  vertical-align: middle;
+}
+@keyframes spice-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ================================================================
+   SHARED BUTTONS
+   ================================================================ */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--terracotta);
+  color: #fff;
+  font-family: var(--ff-body);
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 14px 30px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.25s, transform 0.25s, box-shadow 0.25s;
+}
+.btn-primary:hover {
+  background: var(--terracotta-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(192,83,31,0.3);
+}
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  color: var(--brown);
+  font-family: var(--ff-body);
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 13px 28px;
+  border-radius: 999px;
+  border: 2px solid var(--paper-edge);
+  cursor: pointer;
+  transition: border-color 0.25s, color 0.25s;
+}
+.btn-outline:hover {
+  border-color: var(--terracotta);
+  color: var(--terracotta);
+}
+
+/* ================================================================
+   SECTION HEADERS — editorial style
+   ================================================================ */
+.section-header {
+  margin-bottom: clamp(36px, 5vw, 56px);
+  position: relative;
+}
+.section-header .eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--ff-body);
+  font-weight: 600;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--terracotta);
+  margin-bottom: 12px;
+}
+.section-header .eyebrow::before {
+  content: "";
+  width: 24px; height: 2px;
+  background: var(--terracotta);
+}
+.section-header h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  color: var(--brown);
+}
+.section-header p {
+  color: var(--brown-muted);
+  font-size: 1.05rem;
+  margin-top: 12px;
+  max-width: 520px;
+}
+
+/* Ghost number behind section title */
+.section-header .ghost-num {
+  position: absolute;
+  top: -10px; left: -10px;
+  font-family: var(--ff-display);
+  font-size: clamp(6rem, 12vw, 10rem);
+  font-weight: 700;
+  color: rgba(192,83,31,0.04);
+  line-height: 1;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ================================================================
+   MENU LIST — handwritten restaurant menu style
+   ================================================================ */
+.menu-section {
+  background: var(--cream);
+  position: relative;
+  padding: clamp(64px, 8vw, 100px) 0;
+}
+
+/* Coffee stain decorative circle */
+.menu-section::after {
+  content: "";
+  position: absolute;
+  top: 80px; right: 12%;
+  width: 120px; height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(140,100,50,0.04) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.menu-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px 48px;
+  align-items: start;
+}
+
+/* Handwritten menu card */
+.menu-list {
+  background: #fff;
+  border: 1px solid var(--paper-edge);
+  border-radius: var(--r-lg);
+  padding: 40px 36px;
+  box-shadow: var(--sh-card);
+  position: relative;
+  /* Subtle lined-paper look */
+  background-image: repeating-linear-gradient(
+    transparent, transparent 31px, rgba(192,83,31,0.06) 31px, rgba(192,83,31,0.06) 32px
+  );
+  background-position: 0 12px;
+}
+
+/* Tape corner decoration */
+.menu-list::before {
+  content: "";
+  position: absolute;
+  top: -8px; left: 30px;
+  width: 60px; height: 16px;
+  background: rgba(192,83,31,0.12);
+  border-radius: 2px;
+  transform: rotate(-1deg);
+}
+
+.menu-category {
+  margin-bottom: 32px;
+}
+.menu-category:last-child { margin-bottom: 0; }
+
+.menu-category h3 {
+  font-family: var(--ff-display);
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--terracotta);
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--paper-edge);
+}
+
+.menu-item {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 7px 0;
+}
+.menu-item__name {
+  font-family: var(--ff-display);
+  font-size: 1.08rem;
+  font-weight: 500;
+  color: var(--brown);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.menu-item__dots {
+  flex: 1;
+  border-bottom: 2px dotted var(--paper-edge);
+  margin-bottom: 4px;
+  min-width: 20px;
+}
+.menu-item__price {
+  font-family: var(--ff-display);
+  font-size: 1.08rem;
+  font-weight: 600;
+  color: var(--terracotta);
+  white-space: nowrap;
+  /* Stamp-like appearance */
+  position: relative;
+}
+
+/* Scattered dish photos around menu */
+.menu-photos {
+  position: relative;
+  min-height: 500px;
+}
+.menu-photo {
+  position: absolute;
+  border-radius: var(--r-md);
+  overflow: hidden;
+  box-shadow: var(--sh-photo);
+  border: 4px solid #fff;
+  transition: transform 0.4s var(--ease), box-shadow 0.4s;
+  cursor: pointer;
+}
+.menu-photo:hover {
+  transform: rotate(0deg) scale(1.06) !important;
+  box-shadow: 0 10px 35px -8px rgba(42,30,22,0.3);
+  z-index: 10;
+}
+.menu-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Each photo positioned uniquely */
+.menu-photo--1 {
+  top: 0; right: 0;
+  width: 220px; height: 200px;
+  transform: rotate(2deg);
+}
+.menu-photo--2 {
+  top: 140px; left: -20px;
+  width: 200px; height: 180px;
+  transform: rotate(-3deg);
+}
+.menu-photo--3 {
+  top: 280px; right: 30px;
+  width: 180px; height: 220px;
+  transform: rotate(4deg);
+}
+.menu-photo--4 {
+  bottom: 40px; left: 10px;
+  width: 210px; height: 180px;
+  transform: rotate(-2deg);
+}
+
+/* "Best Seller" badge — rotated, playful */
+.badge-best {
+  display: inline-block;
+  background: var(--terracotta);
+  color: #fff;
+  font-family: var(--ff-display);
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 5px 14px;
+  border-radius: 999px;
+  transform: rotate(-6deg);
+  position: absolute;
+  top: 12px; left: 12px;
+  z-index: 2;
+  box-shadow: 0 3px 10px rgba(192,83,31,0.3);
+  animation: badge-wobble 3s ease-in-out infinite;
+}
+
+@keyframes badge-wobble {
+  0%, 100% { transform: rotate(-6deg); }
+  50% { transform: rotate(-3deg); }
+}
+
+/* ================================================================
+   STORY / CERITA — editorial asymmetric
+   ================================================================ */
+.story {
+  background: var(--cream-dark);
+  position: relative;
+  overflow: hidden;
+  padding: clamp(64px, 8vw, 100px) 0;
+}
+.story::before {
+  content: "";
+  position: absolute;
+  top: -100px; left: -100px;
+  width: 300px; height: 300px;
+  background: radial-gradient(circle, rgba(192,83,31,0.06) 0%, transparent 70%);
+  border-radius: 50%;
+}
+
+.story-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+.story__media {
+  position: relative;
+}
+.story__media img {
+  border-radius: var(--r-lg);
+  box-shadow: var(--sh-photo);
+  width: 100%;
+  height: auto;
+}
+/* Offset photo intentionally */
+.story__media::after {
+  content: "";
+  position: absolute;
+  bottom: -16px; right: -16px;
+  width: 60%; height: 60%;
+  border: 3px solid var(--terracotta);
+  border-radius: var(--r-lg);
+  z-index: -1;
+  opacity: 0.2;
+}
+
+.story__text {
+  padding: 20px 0;
+}
+.story__text h2 {
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  color: var(--brown);
+  margin-bottom: 18px;
+}
+.story__text p {
+  color: var(--brown-muted);
+  font-size: 1.05rem;
+  line-height: 1.8;
+  margin-bottom: 24px;
+}
+.story__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  color: var(--terracotta);
+  transition: gap 0.3s;
+}
+.story__link:hover { gap: 14px; }
+
+/* Big decorative number */
+.story__big-num {
+  font-family: var(--ff-display);
+  font-size: clamp(5rem, 10vw, 8rem);
+  font-weight: 700;
+  color: rgba(192,83,31,0.07);
+  line-height: 1;
+  position: absolute;
+  bottom: 20px; right: 40px;
+  pointer-events: none;
+}
+
+/* ================================================================
+   GALLERY MOSAIC — rich, dense, asymmetric
+   Uses CSS grid with named areas for visual density.
+   ================================================================ */
+.gallery {
+  background: var(--cream);
+  padding: clamp(64px, 8vw, 100px) 0;
+}
+.gallery-mosaic {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: minmax(140px, auto);
+  gap: 16px;
+}
+
+.gallery-item {
+  border-radius: var(--r-md);
+  overflow: hidden;
+  position: relative;
+  box-shadow: var(--sh-photo);
+  transition: transform 0.4s var(--ease), box-shadow 0.4s;
+}
+.gallery-item:hover {
+  transform: scale(1.03);
+  z-index: 5;
+  box-shadow: 0 12px 40px -8px rgba(42, 30, 22, 0.3);
+}
+.gallery-item img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+
+/* Size variants for mosaic */
+.gallery-item--tall {
+  grid-row: span 2;
+}
+.gallery-item--wide {
+  grid-column: span 2;
+}
+.gallery-item--medium {
+  grid-row: span 1;
+}
+
+/* Gallery label overlay */
+.gallery-item .cap {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 16px 18px;
+  background: linear-gradient(transparent, rgba(42,30,22,0.75));
+  color: #fff;
+  font-family: var(--ff-body);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.3s, transform 0.3s;
+}
+.gallery-item:hover .cap {
+  opacity: 1;
+  transform: translateY(0);
+}
+.cap-label {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  opacity: 0.7;
+  display: block;
+}
+.cap-title {
+  font-family: var(--ff-display);
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+/* ================================================================
+   TESTIMONIALS — handwritten quote cards scattered
+   ================================================================ */
+.testimonials {
+  background: var(--cream-dark);
+  position: relative;
+  padding: clamp(64px, 8vw, 100px) 0;
+}
+.testimonials::before {
+  content: "\201C"; /* opening quote */
+  position: absolute;
+  top: 40px; left: 5%;
+  font-family: var(--ff-display);
+  font-size: 14rem;
+  color: rgba(192,83,31,0.05);
+  line-height: 1;
+  pointer-events: none;
+}
+
+.testi-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+.testi-card {
+  background: #fff;
+  border: 1px solid var(--paper-edge);
+  border-radius: var(--r-lg);
+  padding: 36px 28px 28px;
+  position: relative;
+  box-shadow: var(--sh-card);
+  transition: transform 0.3s var(--ease);
+}
+.testi-card:nth-child(1) { transform: rotate(-1deg); }
+.testi-card:nth-child(2) { transform: rotate(0.5deg); margin-top: 30px; }
+.testi-card:nth-child(3) { transform: rotate(-0.8deg); }
+.testi-card:hover { transform: rotate(0deg) translateY(-4px) !important; }
+
+/* Handwritten-style quote marks */
+.testi-card::before {
+  content: "\201C";
+  font-family: var(--ff-display);
+  font-size: 4rem;
+  color: rgba(192,83,31,0.12);
+  position: absolute;
+  top: 8px; left: 20px;
+  line-height: 1;
+}
+
+.testi-stars {
+  font-size: 1rem;
+  color: var(--terracotta);
+  margin-bottom: 14px;
+  letter-spacing: 2px;
+}
+.testi-quote {
+  font-family: var(--ff-display);
+  font-size: 1.1rem;
+  font-style: italic;
+  line-height: 1.65;
+  color: var(--brown);
+  margin-bottom: 20px;
+}
+.testi-who {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.testi-avatar {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: var(--cream-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--ff-display);
+  font-weight: 600;
+  color: var(--terracotta);
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+.testi-name {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--brown);
+  display: block;
+}
+.testi-role {
+  font-size: 0.78rem;
+  color: var(--brown-muted);
+}
+
+/* ================================================================
+   CTA SECTION — warm editorial
+   ================================================================ */
+.cta-section {
+  background: var(--brown);
+  position: relative;
+  overflow: hidden;
+  padding: clamp(64px, 8vw, 100px) 0;
+}
+.cta-section::before {
+  content: "";
+  position: absolute;
+  top: -50%; right: -10%;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(192,83,31,0.15) 0%, transparent 70%);
+  border-radius: 50%;
+}
+.cta-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+}
+.cta-text h2 {
+  font-family: var(--ff-display);
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  color: var(--cream);
+  margin-bottom: 16px;
+}
+.cta-text p {
+  color: rgba(251,246,240,0.65);
+  font-size: 1.05rem;
+  margin-bottom: 30px;
+  max-width: 400px;
+}
+.cta-text .btn-primary {
+  background: var(--cream);
+  color: var(--brown);
+}
+.cta-text .btn-primary:hover {
+  background: #fff;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.2);
+}
+.cta-photo {
+  position: relative;
+}
+.cta-photo img {
+  border-radius: var(--r-lg);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+  transform: rotate(-2deg);
+  transition: transform 0.4s var(--ease);
+}
+.cta-photo img:hover { transform: rotate(0deg) scale(1.02); }
+
+/* ================================================================
+   FLOATING WHATSAPP
+   ================================================================ */
+.wa-float {
+  position: fixed;
+  bottom: 24px; right: 24px;
+  width: 56px; height: 56px;
+  background: #25D366;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+  z-index: 900;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.wa-float:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 28px rgba(37,211,102,0.5);
+}
+.wa-float svg { width: 28px; height: 28px; }
+
+/* ================================================================
+   FOOTER
+   ================================================================ */
+.site-footer {
+  background: var(--brown);
+  color: var(--cream);
+  padding: 60px 0 30px;
+  border-top: 3px solid var(--terracotta);
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 40px;
+  padding-bottom: 36px;
+  border-bottom: 1px solid rgba(251,246,240,0.1);
+}
+.footer-brand {
+  font-family: var(--ff-display);
+  font-size: 1.2rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.footer-brand img { height: 32px; border-radius: 4px; }
+.footer-grid p {
+  color: rgba(251,246,240,0.55);
+  font-size: 0.9rem;
+  line-height: 1.7;
+  max-width: 320px;
+}
+.footer-grid h4 {
+  font-family: var(--ff-body);
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--cream);
+  margin-bottom: 16px;
+}
+.footer-grid ul { display: flex; flex-direction: column; gap: 10px; }
+.footer-grid a {
+  font-size: 0.9rem;
+  color: rgba(251,246,240,0.55);
+  transition: color 0.2s;
+}
+.footer-grid a:hover { color: var(--terracotta); }
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 24px;
+  font-size: 0.8rem;
+  color: rgba(251,246,240,0.35);
+}
+
+/* ================================================================
+   REVEAL ANIMATION (JS-driven via .revealed class)
+   ================================================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+}
+.reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ================================================================
+   RESPONSIVE — Mobile adjustments
+   ================================================================ */
+@media (max-width: 900px) {
+  /* Hero → stack vertically, photo centered below */
+  .hero-editorial {
+    min-height: auto;
+    padding-top: 80px;
+    padding-bottom: 0;
+  }
+  .hero-editorial__title-line--1 { font-size: clamp(3.5rem, 14vw, 5rem); }
+  .hero-editorial__title-line--2 { font-size: clamp(4rem, 16vw, 6rem); }
+  .hero-editorial__subtitle-block { max-width: 100%; }
+  .hero-editorial__cta { justify-content: center; }
+  .hero-editorial__photo {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    width: 85%;
+    max-width: 400px;
+    margin: 32px auto 0;
+    clip-path: none;
+    border-radius: var(--r-lg);
+  }
+  /* Hide polaroids + stamp on mobile to prevent overflow */
+  .hero-polaroids { display: none; }
+  .hero-stamp { display: none; }
+
+  /* Menu → single column */
+  .menu-layout { grid-template-columns: 1fr; }
+  .menu-photos { min-height: 320px; }
+  .menu-photo--1 { width: 160px; height: 150px; top: 0; right: 0; }
+  .menu-photo--2 { width: 150px; height: 130px; top: 100px; left: 0; }
+  .menu-photo--3 { width: 140px; height: 160px; top: 200px; right: 20px; }
+  .menu-photo--4 { width: 150px; height: 130px; bottom: 0; left: 0; }
+
+  .story-layout { grid-template-columns: 1fr; gap: 32px; }
+
+  /* Gallery → 2-column grid */
+  .gallery-mosaic {
+    grid-template-columns: 1fr 1fr;
+  }
+  .gallery-item--tall { grid-row: span 2; }
+  .gallery-item--wide { grid-column: span 2; }
+
+  .testi-grid { grid-template-columns: 1fr; }
+  .testi-card:nth-child(2) { margin-top: 0; }
+
+  .cta-inner { grid-template-columns: 1fr; text-align: center; }
+  .cta-text p { margin-inline: auto; }
+
+  .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+
+  .spice-marquee { margin-top: 32px; }
+}
+
+@media (max-width: 600px) {
+  .nav-toggle { display: flex; }
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 100%; left: 0; right: 0;
+    background: var(--brown);
+    flex-direction: column;
+    padding: 16px 28px 24px;
+    gap: 4px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+  .nav-links.open { display: flex; }
+  .nav-links a { width: 100%; padding: 12px 16px; }
+  .nav-links .btn-accent { margin-left: 0; text-align: center; }
+
+  .menu-list { padding: 28px 20px; }
+  .hero-editorial__title-line--1 { font-size: 3.2rem; }
+  .hero-editorial__title-line--2 { font-size: 3.8rem; }
+
+  /* Gallery → single column on very small screens */
+  .gallery-mosaic {
+    grid-template-columns: 1fr;
+  }
+  .gallery-item--tall,
+  .gallery-item--wide {
+    grid-row: span 1;
+    grid-column: span 1;
+  }
+  .gallery-item { min-height: 180px; }
+}

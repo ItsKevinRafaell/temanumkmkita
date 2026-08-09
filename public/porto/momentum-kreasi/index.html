@@ -7,100 +7,305 @@
   <meta name="description" content="Momentum Kreasi: wedding organizer Yogyakarta. Dari konsep sampai hari-H, kami yang urus supaya Anda tinggal menikmati." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/porto/_ds/design-system.css" />
-  <link rel="stylesheet" href="/porto/momentum-kreasi/assets/css/brand.css" />
-  <link rel="stylesheet" href="/porto/momentum-kreasi/assets/css/layout.css" />
-  <link rel="stylesheet" href="/porto/momentum-kreasi/assets/css/bento.css" />
-  <link rel="stylesheet" href="/porto/momentum-kreasi/assets/css/menu-cards.css" />
+  <link rel="stylesheet" href="/porto/momentum-kreasi/assets/css/unique.css" />
 </head>
 <body>
+
+  <!-- ========== NAV ========== -->
   <header class="site-nav" data-include="nav"></header>
 
-  <section class="hero-fb">
-    <img class="hero-fb__img" src="/porto/momentum-kreasi/assets/img/gen/hero-wedding.jpg" alt="Momen pernikahan" fetchpriority="high" onerror="this.src='/porto/momentum-kreasi/assets/img/gen/moment-1.jpg'" />
-    <div class="hero-fb__scrim"></div>
-    <div class="hero-fb__inner"><div class="container">
-      <span class="hero-fb__eyebrow reveal">Momentum Kreasi</span>
-      <h1 class="hero-fb__title reveal">Hari besar Anda, <span class="accent">kami yang urus.</span></h1>
-      <p class="hero-fb__lede reveal">Dari konsep sampai hari-H berjalan tenang. Anda tinggal hadir, tersenyum, dan menikmati momennya.</p>
-      <div class="hero-fb__cta reveal">
-        <a class="btn btn-primary" href="/porto/momentum-kreasi/layanan.html">Lihat Paket</a>
-        <a class="btn btn-ghost" style="color:#fff;border-color:rgba(255,255,255,.6)" href="https://wa.me/6281234567890?text=Halo%20Momentum%20Kreasi" target="_blank" rel="noopener">Konsultasi Gratis</a>
+  <!-- ========== HERO — Cinematic full-bleed ========== -->
+  <section class="hero-cinema">
+    <img
+      class="hero-cinema__img"
+      src="/porto/momentum-kreasi/assets/img/gen/hero-wedding.jpg"
+      alt="Momen pernikahan yang indah"
+      fetchpriority="high"
+      onerror="this.src='/porto/momentum-kreasi/assets/img/gen/moment-1.jpg'"
+    />
+    <div class="hero-cinema__overlay"></div>
+    <div class="hero-cinema__content">
+      <span class="hero-cinema__eyebrow">Wedding Organizer Yogyakarta</span>
+      <h1 class="hero-cinema__title">Hari besar Anda,<br>kami yang urus.</h1>
+      <div class="hero-cinema__line"></div>
+      <p class="hero-cinema__subtitle">
+        Dari konsep sampai hari-H berjalan tenang.<br>
+        Anda tinggal hadir, tersenyum, dan menikmati momennya.
+      </p>
+      <div class="hero-cinema__cta">
+        <a class="btn-film btn-film--primary" href="https://wa.me/6281234567890?text=Halo%20Momentum%2C%20mau%20konsultasi%20wedding" target="_blank" rel="noopener">Konsultasi Gratis</a>
+        <a class="btn-film btn-film--outline" href="#timeline">Lihat Perjalanan</a>
       </div>
-    </div></div>
+    </div>
+    <div class="hero-cinema__scroll">
+      <span>Gulir</span>
+      <div class="hero-cinema__scroll-line"></div>
+    </div>
   </section>
 
-  <section class="mc-section gfx-grid">
+  <!-- ========== TIMELINE — Perjalanan bersama kami ========== -->
+  <section class="timeline" id="timeline">
     <div class="container">
-      <div class="section-head kb-head reveal" style="position:relative;">
-        <span class="ghost-num" aria-hidden="true">Paket</span>
-        <span class="pill">Paket Pilihan</span>
-        <h2>Sesuaikan dengan hari Anda</h2>
-        <p>Geser untuk lihat paket yang paling pas.</p>
+      <div class="sec-header reveal">
+        <span class="sec-header__eyebrow">Perjalanan Bersama Kami</span>
+        <h2 class="sec-header__title">Dari mimpi menjadi <em>kenyataan</em></h2>
+        <div class="sec-header__line"></div>
       </div>
-      <div class="mc-carousel reveal">
-        <button class="mc-nav mc-nav--prev" aria-label="Sebelumnya" data-mc-prev><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
-        <div class="mc-track" data-mc-track>
-          <article class="mc-card"><div class="mc-card__media"><img src="/porto/momentum-kreasi/assets/img/gen/moment-1.jpg" alt="Paket Intimate" loading="lazy" /><span class="mc-tag">Favorit</span></div><div class="mc-card__body"><div class="mc-card__top"><h3>Intimate</h3><span class="mc-price">Mulai 15jt</span></div><p>Untuk 50–100 tamu. Hangat, personal, tetap berkesan.</p></div></article>
-          <article class="mc-card"><div class="mc-card__media"><img src="/porto/momentum-kreasi/assets/img/gen/moment-2.jpg" alt="Paket Klasik" loading="lazy" /></div><div class="mc-card__body"><div class="mc-card__top"><h3>Klasik</h3><span class="mc-price">Mulai 30jt</span></div><p>Untuk 200–300 tamu. Dekor elegan, koordinasi penuh hari-H.</p></div></article>
-          <article class="mc-card"><div class="mc-card__media"><img src="/porto/momentum-kreasi/assets/img/gen/moment-3.jpg" alt="Paket Grand" loading="lazy" /></div><div class="mc-card__body"><div class="mc-card__top"><h3>Grand</h3><span class="mc-price">Mulai 60jt</span></div><p>Untuk 500+ tamu. Full service, dekorasi mewah, tim lengkap.</p></div></article>
-          <article class="mc-card"><div class="mc-card__media"><img src="/porto/momentum-kreasi/assets/img/gen/decor-1.jpg" alt="Custom" loading="lazy" /></div><div class="mc-card__body"><div class="mc-card__top"><h3>Custom</h3><span class="mc-price">By Quote</span></div><p>Konsep sesuai impian Anda. Kami rancang dari nol.</p></div></article>
+
+      <!-- Step 1: Konsultasi -->
+      <div class="timeline-step">
+        <div class="tl-media">
+          <img src="/porto/momentum-kreasi/assets/img/gen/team.jpg" alt="Konsultasi awal" loading="lazy" onerror="this.src='/porto/momentum-kreasi/assets/img/gen/moment-1.jpg'" />
         </div>
-        <button class="mc-nav mc-nav--next" aria-label="Berikutnya" data-mc-next><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+        <div class="tl-text">
+          <span class="tl-text__label">Langkah Pertama</span>
+          <h3 class="tl-text__heading">Konsultasi &amp; <em>Berbicara dari Hati</em></h3>
+          <p class="tl-text__desc">Kami dengar cerita Anda — bagaimana Anda berdua bertemu, apa yang Anda impikan, apa yang membuat Anda berdua istimewa. Semua ini jadi fondasi desain hari besar Anda.</p>
+        </div>
+        <div class="tl-num">I</div>
       </div>
-      <div style="text-align:center;margin-top:28px;"><a class="btn btn-primary" href="/porto/momentum-kreasi/layanan.html">Lihat Detail Paket</a></div>
+
+      <!-- Step 2: Konsep & Dekor -->
+      <div class="timeline-step">
+        <div class="tl-media">
+          <img src="/porto/momentum-kreasi/assets/img/gen/decor-1.jpg" alt="Konsep dan dekorasi" loading="lazy" onerror="this.src='/porto/momentum-kreasi/assets/img/gen/moment-1.jpg'" />
+        </div>
+        <div class="tl-text">
+          <span class="tl-text__label">Langkah Kedua</span>
+          <h3 class="tl-text__heading"><em>Konsep &amp; Dekor</em> yang Berbicara</h3>
+          <p class="tl-text__desc">Tim kreatif kami merancang konsep visual yang personal — dari palet warna hingga detail dekorasi terkecil. Setiap elemen punya cerita, bukan sekadar indah.</p>
+        </div>
+        <div class="tl-num">II</div>
+      </div>
+
+      <!-- Step 3: Vendor -->
+      <div class="timeline-step">
+        <div class="tl-media">
+          <img src="/porto/momentum-kreasi/assets/img/gen/moment-2.jpg" alt="Koordinasi vendor" loading="lazy" onerror="this.src='/porto/momentum-kreasi/assets/img/gen/moment-1.jpg'" />
+        </div>
+        <div class="tl-text">
+          <span class="tl-text__label">Langkah Ketiga</span>
+          <h3 class="tl-text__heading">Koordinasi <em>Vendor Pilihan</em></h3>
+          <p class="tl-text__desc">Kami jembatani semua vendor — katering, foto, musik, MUA, dan lainnya. Anda tidak perlu koordinasi dengan sepuluh orang. Cukup satu pintu, kami yang urus.</p>
+        </div>
+        <div class="tl-num">III</div>
+      </div>
+
+      <!-- Step 4: Hari-H -->
+      <div class="timeline-step">
+        <div class="tl-media">
+          <img src="/porto/momentum-kreasi/assets/img/gen/moment-3.jpg" alt="Hari-H pernikahan" loading="lazy" onerror="this.src='/porto/momentum-kreasi/assets/img/gen/moment-1.jpg'" />
+        </div>
+        <div class="tl-text">
+          <span class="tl-text__label">Langkah Keempat</span>
+          <h3 class="tl-text__heading">Hari-H — <em>Anda Tinggal Hadir</em></h3>
+          <p class="tl-text__desc">Tim kami di lapangan sejak subuh. Rundown on time, vendor koordinasi, tamu terlayani. Anda dan keluarga cukup menikmati setiap momen tanpa gangguan.</p>
+        </div>
+        <div class="tl-num">IV</div>
+      </div>
+
+      <!-- Step 5: Kenangan -->
+      <div class="timeline-step">
+        <div class="tl-media">
+          <img src="/porto/momentum-kreasi/assets/img/gen/moment-4.jpg" alt="Kenangan abadi" loading="lazy" onerror="this.src='/porto/momentum-kreasi/assets/img/gen/moment-1.jpg'" />
+        </div>
+        <div class="tl-text">
+          <span class="tl-text__label">Langkah Kelima</span>
+          <h3 class="tl-text__heading">Kenangan yang <em>Tak Lupa</em></h3>
+          <p class="tl-text__desc">Yang tersisa bukan stres — tapi tawa, air mata kebahagiaan, dan foto-foto yang akan Anda pandang bertahun-tahun kemudian. Itulah kenapa kami ada.</p>
+        </div>
+        <div class="tl-num">V</div>
+      </div>
     </div>
   </section>
 
-  <section class="dr-story gfx-grid">
-    <div class="container"><div class="dr-story__row reveal">
-      <div class="dr-story__media"><img src="/porto/momentum-kreasi/assets/img/gen/team.jpg" alt="Tim Momentum" loading="lazy" /></div>
-      <div class="dr-story__text">
-        <span class="pill">Kenapa Kami</span>
-        <h2>Supaya Anda tenang, bukan sibuk</h2>
-        <p>Banyak pasangan stres di hari yang harusnya bahagia. Tugas kami menghapus itu — vendor, rundown, koordinasi, semua kami yang pegang.</p>
-        <a class="dr-story__link" href="/porto/momentum-kreasi/tentang.html">Kenal tim kami →</a>
-      </div>
-    </div></div>
-  </section>
+  <!-- ========== DIAMOND SEPARATOR ========== -->
+  <div class="diamond-sep">
+    <div class="diamond-sep__line"></div>
+    <div class="diamond-sep__dot"></div>
+    <div class="diamond-sep__line"></div>
+  </div>
 
-  <section class="gfx-grid">
+  <!-- ========== PAKET — Elegant horizontal list ========== -->
+  <section class="paket" id="paket">
     <div class="container">
-      <div class="section-head kb-head reveal"><span class="pill">Momen</span><h2>Cerita yang pernah kami rangkai</h2></div>
-      <div class="proof">
-        <div class="proof__item proof__a reveal"><img src="/porto/momentum-kreasi/assets/img/gen/moment-1.jpg" alt="Momen" loading="lazy" /><div class="cap"><div class="c">Intimate</div><div class="t">Kebun, 80 tamu</div></div></div>
-        <div class="proof__item proof__b reveal"><img src="/porto/momentum-kreasi/assets/img/gen/decor-1.jpg" alt="Dekor" loading="lazy" /><div class="cap"><div class="c">Dekorasi</div><div class="t">Gold &amp; Putih</div></div></div>
-        <div class="proof__item proof__c reveal"><img src="/porto/momentum-kreasi/assets/img/gen/moment-2.jpg" alt="Momen" loading="lazy" /><div class="cap"><div class="c">Klasik</div><div class="t">Ballroom, 250 tamu</div></div></div>
-        <div class="proof__item proof__d reveal"><img src="/porto/momentum-kreasi/assets/img/gen/decor-2.jpg" alt="Dekor" loading="lazy" /><div class="cap"><div class="c">Pelaminan</div><div class="t">Elegan</div></div></div>
-        <div class="proof__item proof__e reveal"><img src="/porto/momentum-kreasi/assets/img/gen/moment-3.jpg" alt="Momen" loading="lazy" /><div class="cap"><div class="c">Grand</div><div class="t">Outdoor, 500 tamu</div></div></div>
-        <div class="proof__item proof__f reveal"><img src="/porto/momentum-kreasi/assets/img/gen/moment-4.jpg" alt="Momen" loading="lazy" /><div class="cap"><div class="c">Prosesi</div><div class="t">Adat &amp; Modern</div></div></div>
+      <div class="sec-header reveal">
+        <span class="sec-header__eyebrow">Pilihan Paket</span>
+        <h2 class="sec-header__title">Sesuaikan dengan <em>cita rasa</em> Anda</h2>
+        <div class="sec-header__line"></div>
+      </div>
+      <div class="paket-list reveal">
+        <div class="paket-item">
+          <div>
+            <div class="paket-item__name">Intimate</div>
+            <div class="paket-item__details">50–100 tamu · Hangat, personal, tetap berkesan · Koordinasi vendor dasar + dekor minimalis</div>
+          </div>
+          <div class="paket-item__price">Rp 15 Juta <span>Mulai dari</span></div>
+        </div>
+        <div class="paket-item">
+          <div>
+            <div class="paket-item__name">Klasik</div>
+            <div class="paket-item__details">200–300 tamu · Dekor elegan, koordinasi penuh hari-H · Termasuk MUA, foto, katering koordinasi</div>
+          </div>
+          <div class="paket-item__price">Rp 30 Juta <span>Mulai dari</span></div>
+        </div>
+        <div class="paket-item">
+          <div>
+            <div class="paket-item__name">Grand</div>
+            <div class="paket-item__details">500+ tamu · Full service, dekorasi mewah · Tim lengkap, koordinasi vendor premium</div>
+          </div>
+          <div class="paket-item__price">Rp 60 Juta <span>Mulai dari</span></div>
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:48px;" class="reveal">
+        <a class="btn-film btn-film--outline" style="color:#fff;border-color:rgba(255,255,255,0.3);" href="https://wa.me/6281234567890?text=Halo%20Momentum%2C%20mau%20tanya%20paket%20wedding" target="_blank" rel="noopener">Diskusi Paket via WhatsApp</a>
       </div>
     </div>
   </section>
 
-  <section>
+  <!-- ========== GALERI — Cinematic mosaic ========== -->
+  <section class="galeri" id="galeri">
     <div class="container">
-      <div class="section-head kb-head reveal"><span class="pill">Kata Mereka</span><h2>Yang mereka rasakan di hari-H</h2></div>
-      <div class="testi-rich reveal"><div class="testi-rich__grid">
-        <div class="tr-card"><div class="stars">★★★★★</div><p class="q">"Kami bener-bener cuma dateng dan nikmatin. Semua diurus, ga ada drama. Terima kasih Momentum!"</p><div class="who"><span class="av">A</span><div><b>Adi &amp; Rani</b><span>Intimate Wedding</span></div></div></div>
-        <div class="tr-card"><div class="stars">★★★★★</div><p class="q">"Dekornya persis kayak yang kami bayangin. Tim koordinasinya sigap banget di hari-H."</p><div class="who"><span class="av">F</span><div><b>Fajar &amp; Nisa</b><span>Klasik Wedding</span></div></div></div>
-        <div class="tr-card"><div class="stars">★★★★★</div><p class="q">"Tamu 500 orang tapi semua rapi. Rundown on time. Worth setiap rupiahnya."</p><div class="who"><span class="av">G</span><div><b>Gilang &amp; Tari</b><span>Grand Wedding</span></div></div></div>
-      </div></div>
+      <div class="sec-header reveal">
+        <span class="sec-header__eyebrow">Momen yang Kami Rangkai</span>
+        <h2 class="sec-header__title">Cerita <em>cinta</em> dalam setiap frame</h2>
+        <div class="sec-header__line"></div>
+      </div>
+      <div class="galeri-grid reveal">
+        <div class="galeri-item">
+          <img src="/porto/momentum-kreasi/assets/img/gen/moment-1.jpg" alt="Intimate wedding" loading="lazy" onerror="this.src='/porto/momentum-kreasi/assets/img/gen/moment-1.jpg'" />
+          <div class="galeri-item__cap"><span class="galeri-item__cap-text">Kebun, 80 tamu</span></div>
+        </div>
+        <div class="galeri-item">
+          <img src="/porto/momentum-kreasi/assets/img/gen/decor-1.jpg" alt="Dekorasi elegan" loading="lazy" onerror="this.src='/porto/momentum-kreasi/assets/img/gen/moment-1.jpg'" />
+          <div class="galeri-item__cap"><span class="galeri-item__cap-text">Gold &amp; Putih</span></div>
+        </div>
+        <div class="galeri-item">
+          <img src="/porto/momentum-kreasi/assets/img/gen/moment-2.jpg" alt="Klasik wedding" loading="lazy" onerror="this.src='/porto/momentum-kreasi/assets/img/gen/moment-1.jpg'" />
+          <div class="galeri-item__cap"><span class="galeri-item__cap-text">Ballroom, 250 tamu</span></div>
+        </div>
+        <div class="galeri-item">
+          <img src="/porto/momentum-kreasi/assets/img/gen/decor-2.jpg" alt="Pelaminan" loading="lazy" onerror="this.src='/porto/momentum-kreasi/assets/img/gen/moment-1.jpg'" />
+          <div class="galeri-item__cap"><span class="galeri-item__cap-text">Pelaminan Elegan</span></div>
+        </div>
+        <div class="galeri-item">
+          <img src="/porto/momentum-kreasi/assets/img/gen/moment-3.jpg" alt="Grand wedding" loading="lazy" onerror="this.src='/porto/momentum-kreasi/assets/img/gen/moment-1.jpg'" />
+          <div class="galeri-item__cap"><span class="galeri-item__cap-text">Outdoor, 500 tamu</span></div>
+        </div>
+        <div class="galeri-item">
+          <img src="/porto/momentum-kreasi/assets/img/gen/moment-4.jpg" alt="Prosesi pernikahan" loading="lazy" onerror="this.src='/porto/momentum-kreasi/assets/img/gen/moment-1.jpg'" />
+          <div class="galeri-item__cap"><span class="galeri-item__cap-text">Adat &amp; Modern</span></div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section>
-    <div class="container"><div class="cta-fb reveal">
-      <img src="/porto/momentum-kreasi/assets/img/gen/hero-wedding.jpg" alt="Momen" onerror="this.src='/porto/momentum-kreasi/assets/img/gen/moment-2.jpg'" />
-      <div class="cta-fb__in"><h2>Mulai rencanakan hari besar Anda.</h2><p>Konsultasi gratis, tanpa komitmen. Ceritakan impian Anda, kami bantu wujudkan.</p><a class="btn btn-primary" href="https://wa.me/6281234567890?text=Halo%20Momentum%2C%20mau%20konsultasi%20wedding" target="_blank" rel="noopener">Konsultasi via WhatsApp</a></div>
-    </div></div>
+  <!-- ========== KENAPA KAMI — Cinematic split ========== -->
+  <section class="kenapa" id="tentang">
+    <div class="container">
+      <div class="kenapa__row reveal">
+        <div class="kenapa__media">
+          <img src="/porto/momentum-kreasi/assets/img/gen/team.jpg" alt="Tim Momentum Kreasi" loading="lazy" onerror="this.src='/porto/momentum-kreasi/assets/img/gen/moment-1.jpg'" />
+        </div>
+        <div class="kenapa__text">
+          <span class="sec-header__eyebrow">Kenapa Momentum</span>
+          <h2 class="sec-header__title">Supaya Anda <em>tenang</em>, bukan sibuk</h2>
+          <p class="kenapa__desc">Banyak pasangan stres di hari yang harusnya bahagia. Tugas kami menghapus itu — vendor, rundown, koordinasi, semua kami yang pegang. Anda cukup hadir dan bahagia.</p>
+          <ul class="kenapa__features">
+            <li>Koordinasi vendor lengkap dalam satu pintu</li>
+            <li>Tim di lapangan sejak subuh hari-H</li>
+            <li>Dekorasi personal sesuai cerita Anda</li>
+            <li>Transparent pricing — biaya yang Anda lihat, biaya yang Anda bayar</li>
+          </ul>
+          <div style="margin-top:32px;">
+            <a class="btn-film btn-film--primary" href="https://wa.me/6281234567890?text=Halo%20Momentum%2C%20mau%20kenal%20lebih%20dekat" target="_blank" rel="noopener">Kenali Tim Kami</a>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 
+  <!-- ========== TESTIMONI — Cinematic quotes ========== -->
+  <section class="testi" id="testimoni">
+    <div class="container">
+      <div class="sec-header reveal">
+        <span class="sec-header__eyebrow">Kata Mereka</span>
+        <h2 class="sec-header__title">Yang mereka rasakan di <em>hari-H</em></h2>
+        <div class="sec-header__line"></div>
+      </div>
+      <div class="testi-grid reveal">
+        <div class="testi-card">
+          <p class="testi-card__quote">"Kami bener-bener cuma dateng dan nikmatin. Semua diurus, ga ada drama. Terima kasih Momentum!"</p>
+          <div class="testi-card__divider"></div>
+          <div class="testi-card__name">Adi &amp; Rani</div>
+          <div class="testi-card__type">Intimate Wedding</div>
+        </div>
+        <div class="testi-card">
+          <p class="testi-card__quote">"Dekornya persis kayak yang kami bayangin. Tim koordinasinya sigap banget di hari-H."</p>
+          <div class="testi-card__divider"></div>
+          <div class="testi-card__name">Fajar &amp; Nisa</div>
+          <div class="testi-card__type">Klasik Wedding</div>
+        </div>
+        <div class="testi-card">
+          <p class="testi-card__quote">"Tamu 500 orang tapi semua rapi. Rundown on time. Worth setiap rupiahnya."</p>
+          <div class="testi-card__divider"></div>
+          <div class="testi-card__name">Gilang &amp; Tari</div>
+          <div class="testi-card__type">Grand Wedding</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CTA — Cinematic band ========== -->
+  <section class="cta-film">
+    <img class="cta-film__bg" src="/porto/momentum-kreasi/assets/img/gen/hero-wedding.jpg" alt="Momen pernikahan" loading="lazy" onerror="this.src='/porto/momentum-kreasi/assets/img/gen/moment-2.jpg'" />
+    <div class="cta-film__overlay"></div>
+    <div class="container">
+      <div class="cta-film__content reveal">
+        <h2 class="cta-film__title">Mulai rencanakan hari besar Anda.</h2>
+        <p class="cta-film__desc">Konsultasi gratis, tanpa komitmen. Ceritakan impian Anda, kami bantu wujudkan.</p>
+        <a class="btn-film btn-film--primary" href="https://wa.me/6281234567890?text=Halo%20Momentum%2C%20mau%20konsultasi%20wedding" target="_blank" rel="noopener">Konsultasi via WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
   <footer class="site-footer" data-include="footer"></footer>
-  <a class="wa-float" href="https://wa.me/6281234567890?text=Halo%20Momentum%20Kreasi" target="_blank" rel="noopener" aria-label="Chat WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.9-4.45 9.9-9.91C21.95 6.45 17.5 2 12.04 2zm5.8 14.12c-.24.68-1.42 1.31-1.95 1.35-.5.04-.5.4-3.16-.66-2.67-1.05-4.35-3.77-4.48-3.94-.13-.18-1.07-1.42-1.07-2.71 0-1.29.68-1.92.92-2.19.24-.26.53-.33.7-.33.18 0 .35 0 .5.01.16.01.38-.06.59.45.24.58.81 2 .88 2.14.07.13.12.29.02.47-.09.18-.14.29-.27.44-.13.16-.28.35-.4.47-.13.13-.27.28-.12.54.15.26.66 1.09 1.42 1.76.98.87 1.8 1.14 2.06 1.27.26.13.41.11.56-.07.15-.18.65-.76.82-1.02.17-.26.35-.22.59-.13.24.09 1.52.72 1.78.85.26.13.43.19.5.3.06.11.06.66-.18 1.34z"/></svg></a>
+
+  <!-- ========== WHATSAPP FLOAT ========== -->
+  <a class="wa-float" href="https://wa.me/6281234567890?text=Halo%20Momentum%20Kreasi" target="_blank" rel="noopener" aria-label="Chat WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.9-4.45 9.9-9.91C21.95 6.45 17.5 2 12.04 2zm5.8 14.12c-.24.68-1.42 1.31-1.95 1.35-.5.04-.5.4-3.16-.66-2.67-1.05-4.35-3.77-4.48-3.94-.13-.18-1.07-1.42-1.07-2.71 0-1.29.68-1.92.92-2.19.24-.26.53-.33.7-.33.18 0 .35 0 .5.01.16.01.38-.06.59.45.24.58.81 2 .88 2.14.07.13.12.29.02.47-.09.18-.14.29-.27.44-.13.16-.28.35-.4.47-.13.13-.27.28-.12.54.15.26.66 1.09 1.42 1.76.98.87 1.8 1.14 2.06 1.27.26.13.41.11.56-.07.15-.18.65-.76.82-1.02.17-.26.35-.22.59-.13.24.09 1.52.72 1.78.85.26.13.43.19.5.3.06.11.06.66-.18 1.34z"/></svg>
+  </a>
+
+  <!-- ========== SCRIPTS ========== -->
   <script src="/porto/momentum-kreasi/assets/js/include.js"></script>
   <script src="/porto/momentum-kreasi/assets/js/main.js"></script>
-  <script src="/porto/momentum-kreasi/assets/js/carousel.js"></script>
+
+  <!-- Scroll reveal + timeline animation (self-contained) -->
+  <script>
+    (function() {
+      // Scroll reveal
+      const reveals = document.querySelectorAll('.reveal, .timeline-step');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+      reveals.forEach(el => observer.observe(el));
+
+      // Nav scroll effect
+      const nav = document.querySelector('.site-nav');
+      if (nav) {
+        window.addEventListener('scroll', () => {
+          nav.classList.toggle('scrolled', window.scrollY > 80);
+        }, { passive: true });
+      }
+    })();
+  </script>
+
 </body>
 </html>
