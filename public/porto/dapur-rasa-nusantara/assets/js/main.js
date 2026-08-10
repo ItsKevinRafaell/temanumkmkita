@@ -99,11 +99,38 @@
     });
   }
 
+  /* ---------- 4. MENU TABS (kategori) ---------- */
+  function initMenuTabs() {
+    var tabs = document.querySelectorAll(".menu-tab");
+    var panels = document.querySelectorAll(".menu-panel");
+    if (!tabs.length || !panels.length) return;
+
+    tabs.forEach(function (tab) {
+      if (tab.dataset.bound) return;
+      tab.dataset.bound = "1";
+      tab.addEventListener("click", function () {
+        var cat = tab.getAttribute("data-cat");
+        tabs.forEach(function (t) {
+          var on = t === tab;
+          t.classList.toggle("is-active", on);
+          t.setAttribute("aria-selected", on ? "true" : "false");
+        });
+        panels.forEach(function (p) {
+          var on = p.getAttribute("data-panel") === cat;
+          p.classList.toggle("is-active", on);
+          if (on) { p.removeAttribute("hidden"); }
+          else { p.setAttribute("hidden", ""); }
+        });
+      });
+    });
+  }
+
   /* ---------- INIT ---------- */
   function boot() {
     initReveal();
     initContactForm();
     initNavToggle();
+    initMenuTabs();
     scheduleSafetyReveal();
   }
 

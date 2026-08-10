@@ -107,18 +107,24 @@ p { margin: 0; }
 .nav-brand {
   display: inline-flex;
   align-items: center;
-  gap: 11px;
+  gap: 12px;
 }
-.nav-brand img {
-  height: 42px;
-  width: auto;
+.nav-brand__mark {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 42px; height: 42px;
+  background: var(--warm-accent);
+  color: #fff;
+  font-family: var(--ff-display); font-weight: 800;
+  font-size: 1.15rem; letter-spacing: -0.02em;
+  border-radius: 12px;
+  flex-shrink: 0;
 }
 .nav-brand__name {
   display: flex;
   flex-direction: column;
   font-family: var(--ff-display);
   font-weight: 800;
-  font-size: 1.18rem;
+  font-size: 1.16rem;
   line-height: 1;
   color: #fff;
   letter-spacing: -0.01em;
@@ -126,39 +132,38 @@ p { margin: 0; }
 .nav-brand__sub {
   font-family: var(--ff-body);
   font-weight: 700;
-  font-size: 0.66rem;
+  font-size: 0.64rem;
   letter-spacing: 0.24em;
   text-transform: uppercase;
-  color: #86C98F;
+  color: #9BD4A3;
   margin-top: 4px;
 }
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 10px;
 }
 .nav-links a {
   font-family: var(--ff-body);
-  font-size: 0.94rem;
+  font-size: 0.95rem;
   font-weight: 600;
-  color: rgba(255,255,255,0.92);
-  padding: 10px 16px;
-  border-radius: var(--r-sm);
+  color: rgba(255,255,255,0.9);
+  padding: 10px 6px;
   position: relative;
-  transition: background 0.2s, color 0.2s;
+  transition: color 0.2s;
 }
 /* Animated underline grow on hover */
 .nav-links a:not(.btn-accent)::after {
   content: "";
   position: absolute;
-  bottom: 4px;
-  left: 16px;
-  right: 16px;
+  bottom: 2px;
+  left: 6px;
+  right: 6px;
   height: 2px;
   background: var(--warm-accent);
   border-radius: 1px;
   transform: scaleX(0);
-  transform-origin: center;
+  transform-origin: left center;
   transition: transform 0.3s var(--ease);
 }
 .nav-links a:not(.btn-accent):hover::after,
@@ -166,24 +171,24 @@ p { margin: 0; }
   transform: scaleX(1);
 }
 .nav-links a:hover,
-.nav-links a.active { background: rgba(255,255,255,0.1); color: #fff; }
+.nav-links a.active { color: #fff; }
 .nav-links .btn-accent {
-  background: var(--green-accent);
+  background: var(--warm-accent);
   color: #fff;
   font-weight: 700;
   border-radius: 999px;
-  padding: 10px 24px;
-  margin-left: 12px;
+  padding: 11px 26px;
+  margin-left: 8px;
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  box-shadow: 0 4px 14px -4px rgba(63,163,77,0.45);
+  box-shadow: 0 4px 14px -4px rgba(196,133,58,0.6);
   transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
 }
 .nav-links .btn-accent:hover {
-  background: var(--green-accent-hover);
+  background: #b0742f;
   transform: translateY(-1px);
-  box-shadow: 0 6px 20px -4px rgba(63,163,77,0.5);
+  box-shadow: 0 6px 20px -4px rgba(196,133,58,0.65);
 }
 .nav-links .btn-accent:active {
   transform: translateY(0);
@@ -823,7 +828,39 @@ p { margin: 0; }
 .order-info__item svg { color: #86C98F; flex-shrink: 0; }
 
 /* ================================================================
-   DELIVERY PLATFORM CHIPS — brand-colored wordmarks (no external assets)
+   MENU TABS — kategori switcher (Katalog Menu page)
+   ================================================================ */
+.menu-tabs {
+  display: flex; flex-wrap: wrap; gap: 10px;
+  justify-content: center;
+  margin: 0 auto clamp(32px, 5vw, 48px);
+  padding-bottom: 6px;
+}
+.menu-tab {
+  font-family: var(--ff-body); font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--green-deep);
+  background: #fff;
+  padding: 12px 24px;
+  border-radius: 999px;
+  cursor: pointer;
+  box-shadow: var(--sh-card);
+  transition: background 0.2s, color 0.2s, transform 0.15s;
+}
+.menu-tab:hover { transform: translateY(-2px); }
+.menu-tab.is-active {
+  background: var(--green-deep);
+  color: #fff;
+}
+.menu-panel { display: none; animation: menuFade 0.35s var(--ease); }
+.menu-panel.is-active { display: block; }
+@keyframes menuFade {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ================================================================
+   MENU TABS — kategori switcher END
    ================================================================ */
 .delivery-chip {
   display: inline-flex; align-items: center;
@@ -956,7 +993,14 @@ a.delivery-chip:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba
   margin-bottom: 14px;
   color: #fff;
 }
-.footer-brand img { height: 34px; width: auto; }
+.footer-brand__mark {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 34px; height: 34px;
+  background: var(--warm-accent); color: #fff;
+  font-family: var(--ff-display); font-weight: 800;
+  font-size: 0.95rem; border-radius: 10px;
+  flex-shrink: 0;
+}
 .footer-desc {
   color: rgba(255,255,255,0.6);
   font-size: 0.9rem; line-height: 1.7;
@@ -1385,9 +1429,11 @@ a.contact-item__value:hover { color: var(--green-accent); }
   }
   .hero__cta {
     flex-direction: column;
-    align-items: center;
+    align-items: stretch;
     gap: 12px;
   }
+  .hero__cta .btn-hero-accent,
+  .hero__cta .btn-hero-ghost { justify-content: center; }
   .hero__delivery-bar {
     flex-direction: column;
     gap: 8px;

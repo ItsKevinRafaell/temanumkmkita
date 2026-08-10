@@ -26,13 +26,15 @@
 
   <section class="menu-full">
     <div class="container">
+      <div class="menu-tabs" role="tablist" aria-label="Kategori menu">
+        <button class="menu-tab is-active" role="tab" aria-selected="true" data-cat="utama">Hidangan Utama</button>
+        <button class="menu-tab" role="tab" aria-selected="false" data-cat="kuah">Kuah &amp; Sayur</button>
+        <button class="menu-tab" role="tab" aria-selected="false" data-cat="minuman">Minuman</button>
+        <button class="menu-tab" role="tab" aria-selected="false" data-cat="dessert">Dessert</button>
+      </div>
+
       <!-- HIDANGAN UTAMA -->
-      <div class="menu-full__group reveal">
-        <div class="menu-full__head">
-          <span class="ghost-num" aria-hidden="true">01</span>
-          <span class="eyebrow">Hidangan Utama</span>
-          <h2>Yang paling sering dipesan</h2>
-        </div>
+      <div class="menu-panel is-active" data-panel="utama">
         <div class="dish-grid">
           <article class="dish-full-card">
             <div class="dish-full-card__img"><span class="badge-best">Best Seller</span><img src="/porto/dapur-rasa-nusantara/assets/img/gen/dish-1.jpg" alt="Rendang Daging" onerror="this.src='/porto/dapur-rasa-nusantara/assets/img/gen/dish-rendang.jpg'" /></div>
@@ -54,12 +56,7 @@
       </div>
 
       <!-- KUAH & SAYUR -->
-      <div class="menu-full__group reveal">
-        <div class="menu-full__head">
-          <span class="ghost-num" aria-hidden="true">02</span>
-          <span class="eyebrow">Kuah &amp; Sayur</span>
-          <h2>Hangat, cocok buat siang</h2>
-        </div>
+      <div class="menu-panel" data-panel="kuah" hidden>
         <div class="dish-grid">
           <article class="dish-full-card">
             <div class="dish-full-card__img"><img src="/porto/dapur-rasa-nusantara/assets/img/gen/dish-soto.jpg" alt="Soto Betawi" onerror="this.src='/porto/dapur-rasa-nusantara/assets/img/gen/dish-rendang.jpg'" /></div>
@@ -73,12 +70,7 @@
       </div>
 
       <!-- MINUMAN -->
-      <div class="menu-full__group reveal">
-        <div class="menu-full__head">
-          <span class="ghost-num" aria-hidden="true">03</span>
-          <span class="eyebrow">Minuman Segar</span>
-          <h2>Penutup yang menyegarkan</h2>
-        </div>
+      <div class="menu-panel" data-panel="minuman" hidden>
         <div class="dish-grid">
           <article class="dish-full-card">
             <div class="dish-full-card__img"><img src="/porto/dapur-rasa-nusantara/assets/img/gen/dish-esteler.jpg" alt="Es Teler" onerror="this.src='/porto/dapur-rasa-nusantara/assets/img/gen/dish-rendang.jpg'" /></div>
@@ -87,6 +79,28 @@
           <article class="dish-full-card">
             <div class="dish-full-card__img"><img src="/porto/dapur-rasa-nusantara/assets/img/gen/dish-esteh.jpg" alt="Es Teh Manis" onerror="this.src='/porto/dapur-rasa-nusantara/assets/img/gen/dish-rendang.jpg'" /></div>
             <div class="dish-full-card__body"><div class="dish-full-card__top"><h3>Es Teh Manis</h3><span class="dish-full-card__price">8K</span></div><p>Teh tubruk diseduh sendiri, manisnya pas. Teman makan yang nggak pernah salah.</p></div>
+          </article>
+          <article class="dish-full-card">
+            <div class="dish-full-card__img"><img src="/porto/dapur-rasa-nusantara/assets/img/gen/dish-esjeruk.jpg" alt="Es Jeruk Peras" onerror="this.src='/porto/dapur-rasa-nusantara/assets/img/gen/dish-esteh.jpg'" /></div>
+            <div class="dish-full-card__body"><div class="dish-full-card__top"><h3>Es Jeruk Peras</h3><span class="dish-full-card__price">10K</span></div><p>Jeruk peras asli, tanpa sirup buatan. Asam segarnya bikin melek.</p></div>
+          </article>
+          <article class="dish-full-card">
+            <div class="dish-full-card__img"><img src="/porto/dapur-rasa-nusantara/assets/img/gen/dish-jusalpukat.jpg" alt="Jus Alpukat" onerror="this.src='/porto/dapur-rasa-nusantara/assets/img/gen/dish-esteler.jpg'" /></div>
+            <div class="dish-full-card__body"><div class="dish-full-card__top"><h3>Jus Alpukat</h3><span class="dish-full-card__price">14K</span></div><p>Alpukat mentega diblender kental, disiram cokelat. Manis dan mengenyangkan.</p></div>
+          </article>
+        </div>
+      </div>
+
+      <!-- DESSERT -->
+      <div class="menu-panel" data-panel="dessert" hidden>
+        <div class="dish-grid">
+          <article class="dish-full-card">
+            <div class="dish-full-card__img"><img src="/porto/dapur-rasa-nusantara/assets/img/gen/dish-klepon.jpg" alt="Klepon" onerror="this.src='/porto/dapur-rasa-nusantara/assets/img/gen/dish-esteler.jpg'" /></div>
+            <div class="dish-full-card__body"><div class="dish-full-card__top"><h3>Klepon</h3><span class="dish-full-card__price">12K</span></div><p>Bola ketan isi gula merah cair, dibalur kelapa parut. Meletus manis di mulut.</p></div>
+          </article>
+          <article class="dish-full-card">
+            <div class="dish-full-card__img"><img src="/porto/dapur-rasa-nusantara/assets/img/gen/dish-pisgor.jpg" alt="Pisang Goreng" onerror="this.src='/porto/dapur-rasa-nusantara/assets/img/gen/dish-klepon.jpg'" /></div>
+            <div class="dish-full-card__body"><div class="dish-full-card__top"><h3>Pisang Goreng Crispy</h3><span class="dish-full-card__price">13K</span></div><p>Pisang kepok digoreng tepung renyah, taburan gula halus. Hangat paling enak.</p></div>
           </article>
         </div>
       </div>
