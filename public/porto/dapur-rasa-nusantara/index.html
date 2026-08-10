@@ -9,7 +9,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/porto/_ds/design-system.css" />
   <link rel="stylesheet" href="/porto/dapur-rasa-nusantara/assets/css/unique.css" />
 </head>
@@ -19,363 +19,212 @@
   <header class="site-nav" data-include="nav"></header>
 
   <!-- ============================================================
-       HERO — Editorial Typographic Statement
-       Giant "DAPUR RASA" text dominates, food photo peeks behind/beside,
-       polaroid scatter + spice marquee + paper texture = NOT a template.
+       HERO — Full-bleed food photo, warm overlay
        ============================================================ -->
-  <section class="hero-cine">
-    <!-- Full-bleed cinematic food photo -->
-    <div class="hero-cine__media" aria-hidden="true">
+  <section class="hero">
+    <div class="hero__media" aria-hidden="true">
       <img
-        class="hero-cine__img"
+        class="hero__img"
         src="/porto/dapur-rasa-nusantara/assets/img/gen/hero.jpg"
         alt=""
         fetchpriority="high"
       />
-      <div class="hero-cine__scrim"></div>
-      <div class="hero-cine__grain"></div>
+      <div class="hero__scrim"></div>
     </div>
 
-    <div class="hero-cine__inner">
-      <div class="hero-cine__eyebrow reveal">
-        <span class="hero-cine__eyebrow-dot"></span>
+    <div class="hero__inner">
+      <div class="hero__eyebrow reveal">
+        <span class="hero__eyebrow-dot"></span>
         Masakan Rumahan · Yogyakarta
       </div>
 
-      <h1 class="hero-cine__title reveal">
-        <span class="hero-cine__title-line">DAPUR</span>
-        <span class="hero-cine__title-line hero-cine__title-line--accent">RASA</span>
+      <h1 class="hero__title reveal">
+        Masakan Rumahan yang Bikin Kangen
       </h1>
 
-      <p class="hero-cine__subtitle reveal">
+      <p class="hero__subtitle reveal">
         Bumbu diulek sendiri, resep turun-temurun, tanpa jalan pintas.
         Dimasak segar tiap hari — dari dapur ibu untuk meja Anda.
       </p>
 
-      <div class="hero-cine__cta reveal">
+      <div class="hero__cta reveal">
         <a class="btn-primary" href="#menu-andalan">Lihat Menu Hari Ini</a>
         <a class="btn-hero-ghost" href="https://wa.me/6281234567890?text=Halo%20Dapur%20Rasa%2C%20saya%20mau%20reservasi" target="_blank" rel="noopener">
-          <span>Reservasi via WhatsApp</span>
+          Reservasi via WhatsApp
         </a>
       </div>
     </div>
 
-    <div class="hero-cine__scroll reveal" aria-hidden="true">
-      <span class="hero-cine__scroll-line"></span>
-      <span class="hero-cine__scroll-label">Scroll</span>
-    </div>
-  </section>
-
-    <!-- Spice marquee strip -->
-    <div class="spice-marquee" aria-hidden="true">
-      <div class="spice-marquee__track">
-        <span>merica</span><span class="spice-dot">●</span>
-        <span>kunyit</span><span class="spice-dot">●</span>
-        <span>lengkuas</span><span class="spice-dot">●</span>
-        <span>serai</span><span class="spice-dot">●</span>
-        <span>jahe</span><span class="spice-dot">●</span>
-        <span>bawang merah</span><span class="spice-dot">●</span>
-        <span>kemiri</span><span class="spice-dot">●</span>
-        <span>cabai keriting</span><span class="spice-dot">●</span>
-        <span>kencur</span><span class="spice-dot">●</span>
-        <span>daun jeruk</span><span class="spice-dot">●</span>
-        <span>merica</span><span class="spice-dot">●</span>
-        <span>kunyit</span><span class="spice-dot">●</span>
-        <span>lengkuas</span><span class="spice-dot">●</span>
-        <span>serai</span><span class="spice-dot">●</span>
-        <span>jahe</span><span class="spice-dot">●</span>
-        <span>bawang merah</span><span class="spice-dot">●</span>
-        <span>kemiri</span><span class="spice-dot">●</span>
-        <span>cabai keriting</span><span class="spice-dot">●</span>
-        <span>kencur</span><span class="spice-dot">●</span>
-        <span>daun jeruk</span><span class="spice-dot">●</span>
-      </div>
+    <div class="hero__scroll reveal" aria-hidden="true">
+      <span class="hero__scroll-line"></span>
+      <span class="hero__scroll-label">Scroll</span>
     </div>
   </section>
 
   <!-- ============================================================
-       MENU ANDALAN — Daftar tulis tangan + foto scatter asimetris
+       MENU UNGGULAN — Image-forward grid, BIG photos
        ============================================================ -->
   <section class="menu-section" id="menu-andalan">
     <div class="container">
       <div class="section-header reveal">
-        <span class="ghost-num" aria-hidden="true">01</span>
-        <span class="eyebrow">Menu Andalan</span>
-        <h2>Daftar menu hari ini</h2>
-        <p>Disusun spesial untuk Anda. Semua dimasak dadakan, bumbu diulek fresh.</p>
+        <span class="eyebrow">Menu Unggulan</span>
+        <h2>Yang paling sering dipesan</h2>
+        <p>Dimasak dadakan setelah pesanan masuk. Bumbu diulek fresh, porsi jujur.</p>
       </div>
 
-      <div class="order-reasons reveal">
-        <div class="order-reason">
-          <h3 class="order-reason__title">Dimasak pas dipesan</h3>
-          <p>Nggak ada makanan yang nunggu di panci seharian. Piring kamu baru dimasak begitu pesanan masuk.</p>
-        </div>
-        <div class="order-reason">
-          <h3 class="order-reason__title">Bumbu diulek pagi itu</h3>
-          <p>Rempahnya diulek di cobek tiap pagi. Itu bedanya rasa yang nendang sama yang datar.</p>
-        </div>
-        <div class="order-reason">
-          <h3 class="order-reason__title">Porsinya jujur</h3>
-          <p>Porsi rumahan yang bikin kenyang beneran. Bukan yang cuma cantik di foto tapi nanggung di perut.</p>
-        </div>
-      </div>
-
-      <div class="menu-layout">
-        <!-- Handwritten-style menu list -->
-        <div class="menu-list reveal">
-          <div class="menu-category">
-            <h3>Hidangan Utama</h3>
-            <div class="menu-item">
-              <span class="menu-item__name">Rendang Daging</span>
-              <span class="menu-item__dots"></span>
-              <span class="menu-item__price">35K</span>
-            </div>
-            <div class="menu-item">
-              <span class="menu-item__name">Sate Ayam</span>
-              <span class="menu-item__dots"></span>
-              <span class="menu-item__price">28K</span>
-            </div>
-            <div class="menu-item">
-              <span class="menu-item__name">Ayam Bakar Kecap</span>
-              <span class="menu-item__dots"></span>
-              <span class="menu-item__price">30K</span>
-            </div>
-            <div class="menu-item">
-              <span class="menu-item__name">Nasi Goreng Kampung</span>
-              <span class="menu-item__dots"></span>
-              <span class="menu-item__price">22K</span>
-            </div>
-          </div>
-
-          <div class="menu-category">
-            <h3>Kuah &amp; Sayur</h3>
-            <div class="menu-item">
-              <span class="menu-item__name">Soto Betawi</span>
-              <span class="menu-item__dots"></span>
-              <span class="menu-item__price">25K</span>
-            </div>
-            <div class="menu-item">
-              <span class="menu-item__name">Gado-Gado</span>
-              <span class="menu-item__dots"></span>
-              <span class="menu-item__price">20K</span>
-            </div>
-          </div>
-
-          <div class="menu-category">
-            <h3>Minuman Segar</h3>
-            <div class="menu-item">
-              <span class="menu-item__name">Es Teler</span>
-              <span class="menu-item__dots"></span>
-              <span class="menu-item__price">15K</span>
-            </div>
-            <div class="menu-item">
-              <span class="menu-item__name">Es Teh Manis</span>
-              <span class="menu-item__dots"></span>
-              <span class="menu-item__price">8K</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Scattered dish photos (asymmetric, rotated) -->
-        <div class="menu-photos">
-          <div class="menu-photo menu-photo--1">
+      <div class="dish-showcase">
+        <article class="dish-card reveal">
+          <div class="dish-card__img">
             <span class="badge-best">Best Seller</span>
             <img
-              src="/porto/dapur-rasa-nusantara/assets/img/gen/dish-rendang.jpg"
+              src="/porto/dapur-rasa-nusantara/assets/img/gen/dish-1.jpg"
               alt="Rendang Daging"
-             
               onerror="this.src='/porto/dapur-rasa-nusantara/assets/img/gen/dish-rendang.jpg'"
             />
           </div>
-          <div class="menu-photo menu-photo--2">
+          <div class="dish-card__body">
+            <div class="dish-card__name">Rendang Daging</div>
+            <div class="dish-card__desc">Dimasak berjam-jam sampai bumbu meresap. Empuk, pedas, kaya rempah.</div>
+            <div class="dish-card__price">35K</div>
+          </div>
+        </article>
+
+        <article class="dish-card reveal">
+          <div class="dish-card__img">
             <img
-              src="/porto/dapur-rasa-nusantara/assets/img/gen/dish-sate.jpg"
+              src="/porto/dapur-rasa-nusantara/assets/img/gen/dish-2.jpg"
               alt="Sate Ayam"
-             
-              onerror="this.src='/porto/dapur-rasa-nusantara/assets/img/gen/dish-rendang.jpg'"
+              onerror="this.src='/porto/dapur-rasa-nusantara/assets/img/gen/dish-sate.jpg'"
             />
           </div>
-          <div class="menu-photo menu-photo--3">
+          <div class="dish-card__body">
+            <div class="dish-card__name">Sate Ayam</div>
+            <div class="dish-card__desc">Dibakar di atas arang, bumbu kacang diulek sendiri. 10 tusuk plus lontong.</div>
+            <div class="dish-card__price">28K</div>
+          </div>
+        </article>
+
+        <article class="dish-card reveal">
+          <div class="dish-card__img">
             <img
-              src="/porto/dapur-rasa-nusantara/assets/img/gen/dish-ayambakar.jpg"
-              alt="Ayam Bakar"
-             
-              onerror="this.src='/porto/dapur-rasa-nusantara/assets/img/gen/dish-rendang.jpg'"
+              src="/porto/dapur-rasa-nusantara/assets/img/gen/dish-3.jpg"
+              alt="Ayam Bakar Kecap"
+              onerror="this.src='/porto/dapur-rasa-nusantara/assets/img/gen/dish-ayambakar.jpg'"
             />
           </div>
-          <div class="menu-photo menu-photo--4">
+          <div class="dish-card__body">
+            <div class="dish-card__name">Ayam Bakar Kecap</div>
+            <div class="dish-card__desc">Ayam kampung dibakar sampai kecapnya karamel. Wangi bakaran bikin lapar.</div>
+            <div class="dish-card__price">30K</div>
+          </div>
+        </article>
+
+        <article class="dish-card reveal">
+          <div class="dish-card__img">
             <img
-              src="/porto/dapur-rasa-nusantara/assets/img/gen/dish-esteler.jpg"
-              alt="Es Teler"
-             
-              onerror="this.src='/porto/dapur-rasa-nusantara/assets/img/gen/dish-rendang.jpg'"
+              src="/porto/dapur-rasa-nusantara/assets/img/gen/dish-4.jpg"
+              alt="Nasi Goreng Kampung"
+              onerror="this.src='/porto/dapur-rasa-nusantara/assets/img/gen/dish-nasgor.jpg'"
             />
           </div>
-        </div>
+          <div class="dish-card__body">
+            <div class="dish-card__name">Nasi Goreng Kampung</div>
+            <div class="dish-card__desc">Nasi goreng terasi dan cabai rawit. Sederhana tapi bikin nambah.</div>
+            <div class="dish-card__price">22K</div>
+          </div>
+        </article>
       </div>
 
-      <div style="text-align:center; margin-top:48px;" class="reveal">
+      <div class="menu-cta reveal">
         <a class="btn-primary" href="/porto/dapur-rasa-nusantara/menu.html">Lihat Menu Lengkap →</a>
       </div>
     </div>
   </section>
 
   <!-- ============================================================
-       CERITA KAMI — Editorial asymmetric layout
+       SUASANA — Interior + diners, warm & inviting
+       ============================================================ -->
+  <section class="suasana-section">
+    <div class="container">
+      <div class="suasana-grid reveal">
+        <div class="suasana-photos">
+          <div class="suasana-photo">
+            <img
+              src="/porto/dapur-rasa-nusantara/assets/img/gen/interior.jpg"
+              alt="Interior hangat Dapur Rasa"
+              onerror="this.src='/porto/dapur-rasa-nusantara/assets/img/gen/dr-interior.jpg'"
+            />
+          </div>
+          <div class="suasana-photo">
+            <img
+              src="/porto/dapur-rasa-nusantara/assets/img/gen/diners.jpg"
+              alt="Pengunjung menikmati makanan"
+              onerror="this.src='/porto/dapur-rasa-nusantara/assets/img/gen/dr-hero-table.jpg'"
+            />
+          </div>
+          <div class="suasana-photo">
+            <img
+              src="/porto/dapur-rasa-nusantara/assets/img/gen/detail-food.jpg"
+              alt="Detail hidangan lezat"
+              onerror="this.src='/porto/dapur-rasa-nusantara/assets/img/gen/dr-rendang.jpg'"
+            />
+          </div>
+        </div>
+        <div class="suasana-text">
+          <span class="highlight-tag">Datang, Rasakan</span>
+          <h2>Tempat yang Bikin Betah Lama</h2>
+          <p>
+            Meja kayu, lampu hangat, dan aroma masakan yang langsung bikin perut keroncongan.
+            Cocok buat kumpul keluarga, makan bareng teman, atau sekadar menikmati waktu sendiri.
+          </p>
+          <p>
+            Parkir luas, area keluarga tersedia, dan pelayanan yang bikin kerasan.
+            Datang lapar, pulang senang — itu janji kami.
+          </p>
+          <a class="story__link" href="/porto/dapur-rasa-nusantara/kontak.html">Lihat Lokasi & Jam Buka →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CERITA CHEF — Resep turun-temurun, kualitas bahan
        ============================================================ -->
   <section class="story">
     <div class="container">
       <div class="story-layout reveal">
         <div class="story__media">
           <img
-            src="/porto/dapur-rasa-nusantara/assets/img/gen/dr-cook.jpg"
-            alt="Chef memasak dadakan di dapur"
-           
-            onerror="this.src='/porto/dapur-rasa-nusantara/assets/img/gen/dish-rendang.jpg'"
+            src="/porto/dapur-rasa-nusantara/assets/img/gen/chef.jpg"
+            alt="Chef Dapur Rasa Nusantara"
+            onerror="this.src='/porto/dapur-rasa-nusantara/assets/img/gen/dr-cook.jpg'"
           />
         </div>
-        <div class="story__text" style="position:relative;">
-          <span class="eyebrow" style="display:inline-flex;font-family:var(--ff-body);font-weight:600;font-size:0.72rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--terracotta);margin-bottom:12px;padding:5px 14px;background:var(--terracotta-light);border-radius:999px;">Cerita Kami</span>
-          <h2>Bermula dari dapur ibu</h2>
-          <p>Masakan rumahan yang jujur selalu punya tempat di hati. Tidak ada bumbu instan, tidak ada jalan pintas — semua diulek dan dimasak segar setiap hari. Dari dapur kecil di rumah, kini kami hadir untuk Anda.</p>
-          <a class="story__link" href="/porto/dapur-rasa-nusantara/tentang.html">Kenal lebih dekat →</a>
-          <span class="story__big-num" aria-hidden="true">2019</span>
+        <div class="story__text">
+          <span class="eyebrow">Cerita Kami</span>
+          <h2>Resep Turun-temurun, Rasa yang Jujur</h2>
+          <p>
+            Bermula dari dapur ibu di rumah kecil, kini kami hadir untuk Anda.
+            Tidak ada bumbu instan, tidak ada jalan pintas — semua diulek dan dimasak segar setiap hari.
+            Karena masakan yang jujur selalu punya tempat di hati.
+          </p>
+          <p>
+            Bahan pilihan dari pasar pagi, rempah utuh diulek di cobek,
+            kaldu direbus dari awal. Itu bedanya rasa yang nendang sama yang datar.
+          </p>
+          <a class="story__link" href="/porto/dapur-rasa-nusantara/tentang.html">Kenal Lebih Dekat →</a>
         </div>
       </div>
     </div>
   </section>
 
   <!-- ============================================================
-       GALERI RASA — Full masonry mosaic, ALL photos
-       ============================================================ -->
-  <section class="gallery">
-    <div class="container">
-      <div class="section-header reveal">
-        <span class="ghost-num" aria-hidden="true">02</span>
-        <span class="eyebrow">Galeri Rasa</span>
-        <h2>Setiap hidangan punya cerita</h2>
-      </div>
-      <div class="gallery-mosaic">
-        <div class="gallery-item gallery-item--tall">
-          <img
-            src="/porto/dapur-rasa-nusantara/assets/img/gen/dr-rendang.jpg"
-            alt="Rendang spesial"
-           
-            onerror="this.src='/porto/dapur-rasa-nusantara/assets/img/gen/dish-rendang.jpg'"
-          />
-          <div class="cap"><span class="cap-label">Signature</span><span class="cap-title">Rendang Spesial</span></div>
-        </div>
-        <div class="gallery-item gallery-item--short">
-          <img
-            src="/porto/dapur-rasa-nusantara/assets/img/gen/dr-interior.jpg"
-            alt="Interior hangat"
-           
-            onerror="this.src='/porto/dapur-rasa-nusantara/assets/img/gen/dish-rendang.jpg'"
-          />
-          <div class="cap"><span class="cap-label">Suasana</span><span class="cap-title">Hangat &amp; Nyaman</span></div>
-        </div>
-        <div class="gallery-item gallery-item--medium">
-          <img
-            src="/porto/dapur-rasa-nusantara/assets/img/gen/dish-sate.jpg"
-            alt="Sate ayam"
-           
-            onerror="this.src='/porto/dapur-rasa-nusantara/assets/img/gen/dish-rendang.jpg'"
-          />
-          <div class="cap"><span class="cap-label">Favorit</span><span class="cap-title">Sate Ayam Bakar</span></div>
-        </div>
-        <div class="gallery-item gallery-item--wide">
-          <img
-            src="/porto/dapur-rasa-nusantara/assets/img/gen/dr-hero-table.jpg"
-            alt="Meja keluarga"
-           
-            onerror="this.src='/porto/dapur-rasa-nusantara/assets/img/gen/dish-rendang.jpg'"
-          />
-          <div class="cap"><span class="cap-label">Untuk Rame-rame</span><span class="cap-title">Menu Keluarga</span></div>
-        </div>
-        <div class="gallery-item gallery-item--medium">
-          <img
-            src="/porto/dapur-rasa-nusantara/assets/img/gen/dish-nasgor.jpg"
-            alt="Nasi goreng kampung"
-           
-            onerror="this.src='/porto/dapur-rasa-nusantara/assets/img/gen/dish-rendang.jpg'"
-          />
-          <div class="cap"><span class="cap-label">Kampung</span><span class="cap-title">Nasi Goreng</span></div>
-        </div>
-        <div class="gallery-item gallery-item--short">
-          <img
-            src="/porto/dapur-rasa-nusantara/assets/img/gen/dr-cook.jpg"
-            alt="Chef memasak"
-           
-            onerror="this.src='/porto/dapur-rasa-nusantara/assets/img/gen/dish-rendang.jpg'"
-          />
-          <div class="cap"><span class="cap-label">Dapur</span><span class="cap-title">Masak Dadakan</span></div>
-        </div>
-        <div class="gallery-item gallery-item--tall">
-          <img
-            src="/porto/dapur-rasa-nusantara/assets/img/gen/dish-gadogado.jpg"
-            alt="Gado-gado segar"
-           
-            onerror="this.src='/porto/dapur-rasa-nusantara/assets/img/gen/dish-rendang.jpg'"
-          />
-          <div class="cap"><span class="cap-label">Segar</span><span class="cap-title">Gado-Gado</span></div>
-        </div>
-        <div class="gallery-item gallery-item--medium">
-          <img
-            src="/porto/dapur-rasa-nusantara/assets/img/gen/dish-soto.jpg"
-            alt="Soto Betawi"
-           
-            onerror="this.src='/porto/dapur-rasa-nusantara/assets/img/gen/dish-rendang.jpg'"
-          />
-          <div class="cap"><span class="cap-label">Kuah Hangat</span><span class="cap-title">Soto Betawi</span></div>
-        </div>
-        <div class="gallery-item gallery-item--short">
-          <img
-            src="/porto/dapur-rasa-nusantara/assets/img/gen/dish-klepon.jpg"
-            alt="Klepon manis"
-           
-            onerror="this.src='/porto/dapur-rasa-nusantara/assets/img/gen/dish-rendang.jpg'"
-          />
-          <div class="cap"><span class="cap-label">Jajanan</span><span class="cap-title">Klepon Manis</span></div>
-        </div>
-        <div class="gallery-item gallery-item--medium">
-          <img
-            src="/porto/dapur-rasa-nusantara/assets/img/gen/dish-ayambakar.jpg"
-            alt="Ayam bakar kecap"
-           
-            onerror="this.src='/porto/dapur-rasa-nusantara/assets/img/gen/dish-rendang.jpg'"
-          />
-          <div class="cap"><span class="cap-label">Bakar</span><span class="cap-title">Ayam Bakar Kecap</span></div>
-        </div>
-        <div class="gallery-item gallery-item--short">
-          <img
-            src="/porto/dapur-rasa-nusantara/assets/img/gen/dish-esteler.jpg"
-            alt="Es Teler"
-           
-            onerror="this.src='/porto/dapur-rasa-nusantara/assets/img/gen/dish-rendang.jpg'"
-          />
-          <div class="cap"><span class="cap-label">Minuman</span><span class="cap-title">Es Teler Segar</span></div>
-        </div>
-        <div class="gallery-item gallery-item--medium">
-          <img
-            src="/porto/dapur-rasa-nusantara/assets/img/gen/dish-pisgor.jpg"
-            alt="Pisang goreng"
-           
-            onerror="this.src='/porto/dapur-rasa-nusantara/assets/img/gen/dish-rendang.jpg'"
-          />
-          <div class="cap"><span class="cap-label">Camilan</span><span class="cap-title">Pisang Goreng</span></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================================================
-       TESTIMONIAL — Scattered handwritten quote cards
+       TESTIMONI — Kata pelanggan
        ============================================================ -->
   <section class="testimonials">
     <div class="container">
       <div class="section-header reveal">
-        <span class="ghost-num" aria-hidden="true">03</span>
-        <span class="eyebrow">Kata Pelanggan</span>
+        <span class="eyebrow">Testimoni</span>
         <h2>Yang bikin mereka balik lagi</h2>
       </div>
       <div class="testi-grid">
@@ -408,24 +257,48 @@
   </section>
 
   <!-- ============================================================
-       CTA — Warm dark brown section
+       LOKASI + CTA — Reservasi & Delivery
        ============================================================ -->
   <section class="cta-section">
     <div class="container">
       <div class="cta-inner reveal">
         <div class="cta-text">
-          <h2>Lapar? Meja Anda sudah menunggu.</h2>
-          <p>Reservasi meja atau langsung datang. Kami buka tiap hari dari jam 10 pagi sampai 10 malam.</p>
+          <h2>Lapar? Meja Anda Sudah Menunggu.</h2>
+
+          <div class="lokasi-info">
+            <div class="lokasi-item">
+              <div class="lokasi-icon">📍</div>
+              <div class="lokasi-item__text">
+                <strong>Lokasi</strong>
+                <span>Jl. Rempah Raya No. 12, Yogyakarta</span>
+              </div>
+            </div>
+            <div class="lokasi-item">
+              <div class="lokasi-icon">🕐</div>
+              <div class="lokasi-item__text">
+                <strong>Jam Buka</strong>
+                <span>Setiap hari, 10.00 — 21.00</span>
+              </div>
+            </div>
+          </div>
+
           <a class="btn-primary" href="https://wa.me/6281234567890?text=Halo%20Dapur%20Rasa%2C%20saya%20mau%20reservasi" target="_blank" rel="noopener">
             Reservasi via WhatsApp
           </a>
+
+          <div class="cta-delivery">
+            <p>Atau pesan antar lewat:</p>
+            <div class="cta-delivery-links">
+              <a href="https://gofood.co.id" target="_blank" rel="noopener">🛵 GoFood</a>
+              <a href="https://grabfood.co.id" target="_blank" rel="noopener">🛵 GrabFood</a>
+            </div>
+          </div>
         </div>
         <div class="cta-photo">
           <img
-            src="/porto/dapur-rasa-nusantara/assets/img/gen/dr-hero-table.jpg"
+            src="/porto/dapur-rasa-nusantara/assets/img/gen/hero.jpg"
             alt="Meja makan menunggu Anda"
-           
-            onerror="this.src='/porto/dapur-rasa-nusantara/assets/img/gen/dish-rendang.jpg'"
+            onerror="this.src='/porto/dapur-rasa-nusantara/assets/img/gen/dr-hero-table.jpg'"
           />
         </div>
       </div>
@@ -443,7 +316,7 @@
   <script src="/porto/dapur-rasa-nusantara/assets/js/include.js"></script>
   <script src="/porto/dapur-rasa-nusantara/assets/js/main.js"></script>
 
-  <!-- Reveal-on-scroll for .reveal elements -->
+  <!-- Reveal-on-scroll -->
   <script>
   (function(){
     const els = document.querySelectorAll('.reveal');
