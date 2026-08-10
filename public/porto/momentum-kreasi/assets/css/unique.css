@@ -750,7 +750,7 @@ em { font-style: normal; }
 }
 
 /* ============================================================
-   KENAPA KAMI — Split layout with photo
+   KENAPA — Split layout with photo
    ============================================================ */
 .kenapa {
   padding: var(--section-py) 0;
@@ -763,6 +763,12 @@ em { font-style: normal; }
   grid-template-columns: 1fr 1fr;
   gap: 64px;
   align-items: center;
+}
+
+.kenapa__media-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 .kenapa__media {
@@ -1559,6 +1565,167 @@ a.contact__value:hover { color: var(--sage); }
 }
 
 /* ============================================================
+   HERO — Price teaser strip
+   ============================================================ */
+.hero-romantic__price {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 28px;
+  padding: 10px 24px;
+  background: var(--gold, #C9A961);
+  border: 1px solid var(--gold, #C9A961);
+  border-radius: 999px;
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #2A2A28;
+  letter-spacing: 0.02em;
+  opacity: 0;
+  animation: fadeUp 1s 1.3s forwards;
+}
+
+.hero-romantic__price span {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--gold);
+}
+
+/* ============================================================
+   PORTFOLIO — Price badge on gallery items
+   ============================================================ */
+.portfolio-item__price {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 3;
+  background: rgba(42,42,40,0.9);
+  padding: 6px 14px;
+  border-radius: 999px;
+  pointer-events: none;
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.4s, transform 0.4s;
+}
+
+.portfolio-item:hover .portfolio-item__price {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.portfolio-item__price span {
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #fff;
+  white-space: nowrap;
+}
+
+/* Mosaic layout for 9 items */
+.portfolio-item:nth-child(7)  { grid-column: span 6; aspect-ratio: 4/3; }
+.portfolio-item:nth-child(8)  { grid-column: span 6; aspect-ratio: 4/3; }
+.portfolio-item:nth-child(9)  { grid-column: span 12; aspect-ratio: 21/9; }
+
+/* ============================================================
+   PROSES — Editorial photo strip between header and steps
+   ============================================================ */
+.proses-photos {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 48px;
+  max-height: 220px;
+  overflow: hidden;
+}
+
+.proses-photos__item {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.proses-photos__item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s;
+}
+
+.proses-photos__item:hover img {
+  transform: scale(1.04);
+}
+
+/* ============================================================
+   TESTIMONI — Photo header on each card
+   ============================================================ */
+.testi-card__photo {
+  position: relative;
+  margin: -40px -28px 24px;
+  height: 160px;
+  overflow: hidden;
+  border-radius: 14px 14px 0 0;
+}
+
+.testi-card__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s;
+}
+
+.testi-card:hover .testi-card__photo img {
+  transform: scale(1.04);
+}
+
+/* ============================================================
+   KENAPA — Secondary photo with price badge
+   ============================================================ */
+.kenapa__media-secondary {
+  position: relative;
+  overflow: hidden;
+  border-radius: 14px;
+  margin-top: 16px;
+}
+
+.kenapa__media-secondary img {
+  width: 100%;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+}
+
+.kenapa__media-secondary__badge {
+  position: absolute;
+  bottom: 14px;
+  left: 14px;
+  background: rgba(42,42,40,0.7);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  padding: 8px 18px;
+  border-radius: 999px;
+}
+
+.kenapa__media-secondary__badge span {
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #fff;
+}
+
+/* ============================================================
+   CTA — Price element
+   ============================================================ */
+.cta-romantic__price {
+  font-family: var(--serif);
+  font-size: clamp(1.2rem, 2.2vw, 1.6rem);
+  color: var(--gold);
+  margin-bottom: 28px;
+  letter-spacing: 0.02em;
+}
+
+/* ============================================================
    RESPONSIVE — Mobile-first
    ============================================================ */
 @media (max-width: 768px) {
@@ -1612,6 +1779,18 @@ a.contact__value:hover { color: var(--sage); }
 
   .portfolio-item:nth-child(1) { grid-column: span 2; aspect-ratio: 16/9; }
   .portfolio-item:nth-child(6) { grid-column: span 2; aspect-ratio: 16/9; }
+  .portfolio-item:nth-child(7),
+  .portfolio-item:nth-child(8) { grid-column: span 1; aspect-ratio: 1; }
+  .portfolio-item:nth-child(9) { grid-column: span 2; aspect-ratio: 16/9; }
+
+  /* Kenapa secondary */
+  .kenapa__media-secondary { margin-top: 24px; }
+
+  /* Testimoni photo */
+  .testi-card__photo { height: 130px; margin-top: -40px; }
+
+  /* Portfolio price badge — always visible on mobile */
+  .portfolio-item__price { opacity: 1; transform: translateY(0); }
 
   /* Paket stacks */
   .paket-grid,
@@ -1634,6 +1813,15 @@ a.contact__value:hover { color: var(--sage); }
   .proses-grid {
     grid-template-columns: 1fr 1fr;
     gap: 16px;
+  }
+
+  .proses-photos {
+    grid-template-columns: 1fr 1fr;
+    max-height: 160px;
+  }
+
+  .proses-photos__item--wide {
+    grid-column: span 2;
   }
 
   .proses-step::after {
@@ -1725,6 +1913,19 @@ a.contact__value:hover { color: var(--sage); }
     grid-column: span 1;
     aspect-ratio: 4/3;
   }
+
+  .portfolio-item:nth-child(9) { aspect-ratio: 4/3; }
+
+  .proses-photos {
+    grid-template-columns: 1fr;
+    max-height: none;
+  }
+
+  .proses-photos__item--wide { grid-column: span 1; }
+
+  .testi-card__photo { height: 110px; }
+
+  .hero-romantic__price { margin-top: 20px; font-size: 0.75rem; }
 
   .paket-card, .pkg-card {
     padding: 32px 24px 28px;

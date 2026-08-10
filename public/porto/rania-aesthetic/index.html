@@ -44,6 +44,31 @@
   </section>
 
   <!-- ═══════════════════════════════════════════════════════
+       1b. PHOTO MARQUEE — full-bleed scrolling visual proof
+       ═══════════════════════════════════════════════════════ -->
+  <section class="photo-marquee" aria-label="Suasana & perawatan Rania">
+    <div class="photo-marquee__track">
+      <img src="/porto/rania-aesthetic/assets/img/gen/interior.jpg" alt="Interior klinik Rania" loading="lazy" />
+      <img src="/porto/rania-aesthetic/assets/img/gen/trt-facial.jpg" alt="Perawatan facial" loading="lazy" />
+      <img src="/porto/rania-aesthetic/assets/img/gen/reception.jpg" alt="Resepsionis klinik" loading="lazy" />
+      <img src="/porto/rania-aesthetic/assets/img/gen/massage.jpg" alt="Perawatan relaksasi" loading="lazy" />
+      <img src="/porto/rania-aesthetic/assets/img/gen/skincare-detail.jpg" alt="Detail produk skincare" loading="lazy" />
+      <img src="/porto/rania-aesthetic/assets/img/gen/trt-laser.jpg" alt="Treatment laser" loading="lazy" />
+      <img src="/porto/rania-aesthetic/assets/img/gen/doctor.jpg" alt="Dokter estetika" loading="lazy" />
+      <img src="/porto/rania-aesthetic/assets/img/gen/products.jpg" alt="Produk perawatan BPOM" loading="lazy" />
+      <!-- duplicate set for seamless loop -->
+      <img src="/porto/rania-aesthetic/assets/img/gen/interior.jpg" alt="" loading="lazy" aria-hidden="true" />
+      <img src="/porto/rania-aesthetic/assets/img/gen/trt-facial.jpg" alt="" loading="lazy" aria-hidden="true" />
+      <img src="/porto/rania-aesthetic/assets/img/gen/reception.jpg" alt="" loading="lazy" aria-hidden="true" />
+      <img src="/porto/rania-aesthetic/assets/img/gen/massage.jpg" alt="" loading="lazy" aria-hidden="true" />
+      <img src="/porto/rania-aesthetic/assets/img/gen/skincare-detail.jpg" alt="" loading="lazy" aria-hidden="true" />
+      <img src="/porto/rania-aesthetic/assets/img/gen/trt-laser.jpg" alt="" loading="lazy" aria-hidden="true" />
+      <img src="/porto/rania-aesthetic/assets/img/gen/doctor.jpg" alt="" loading="lazy" aria-hidden="true" />
+      <img src="/porto/rania-aesthetic/assets/img/gen/products.jpg" alt="" loading="lazy" aria-hidden="true" />
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
        2. PHILOSOPHY BAND — deep rose
        ═══════════════════════════════════════════════════════ -->
   <section class="quote-band">
@@ -180,44 +205,56 @@
   </section>
 
   <!-- ═══════════════════════════════════════════════════════
-       5. TRUST SECTION — Kenapa Pilih Rania
+       5. TRUST SECTION — Kenapa Pilih Rania (PHOTO-PROOF cards)
        ═══════════════════════════════════════════════════════ -->
   <section class="sec-blush trust-section">
     <div class="container">
       <h2 class="headline-section reveal">Kenapa Memilih Rania?</h2>
-      <p class="sub-text reveal">Kami percaya, perawatan kulit yang tepat dimulai dari kepercayaan. Ini yang kami jaga.</p>
-      <div class="trust-grid reveal-stagger">
-        <!-- Dokter Berpengalaman -->
-        <div class="trust-card reveal">
-          <div class="trust-card__icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+      <p class="sub-text reveal">Bukan janji — ini yang Anda lihat sendiri saat datang.</p>
+      <div class="proof-grid reveal-stagger">
+        <!-- Dokter -->
+        <div class="proof-card proof-card--tall reveal">
+          <img src="/porto/rania-aesthetic/assets/img/gen/doctor.jpg" alt="Dokter estetika bersertifikat Rania" loading="lazy" />
+          <div class="proof-card__body">
+            <div class="proof-card__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+            </div>
+            <h3>Dirawat Dokter, Bukan Sekadar Terapis</h3>
+            <p>Setiap treatment diawasi dokter estetika bersertifikat.</p>
           </div>
-          <h3>Dokter Berpengalaman</h3>
-          <p>Dirawat langsung oleh dokter estetika bersertifikat, bukan sekadar terapis tanpa kompetensi medis.</p>
         </div>
         <!-- Produk BPOM -->
-        <div class="trust-card reveal">
-          <div class="trust-card__icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <div class="proof-card proof-card--tall reveal">
+          <img src="/porto/rania-aesthetic/assets/img/gen/products.jpg" alt="Produk perawatan terdaftar BPOM" loading="lazy" />
+          <div class="proof-card__body">
+            <div class="proof-card__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <h3>Produk Terdaftar BPOM</h3>
+            <p>Transparan soal ingredient — tanyakan kapan saja.</p>
           </div>
-          <h3>Produk BPOM &amp; Aman</h3>
-          <p>Semua produk yang kami gunakan terdaftar BPOM. Kami transparan soal ingredient — tanyakan kapan saja.</p>
         </div>
-        <!-- Konsultasi Gratis -->
-        <div class="trust-card reveal">
-          <div class="trust-card__icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        <!-- Konsultasi -->
+        <div class="proof-card proof-card--tall reveal">
+          <img src="/porto/rania-aesthetic/assets/img/gen/consult.jpg" alt="Sesi konsultasi kulit gratis" loading="lazy" />
+          <div class="proof-card__body">
+            <div class="proof-card__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            </div>
+            <h3>Konsultasi Dulu, Gratis</h3>
+            <p>Kami dengarkan kondisi kulit Anda sebelum menyarankan.</p>
           </div>
-          <h3>Konsultasi Gratis</h3>
-          <p>Tidak perlu ragu — datang dulu, konsultasi tanpa biaya. Kami dengarkan dulu sebelum menyarankan treatment.</p>
         </div>
         <!-- Alat Modern -->
-        <div class="trust-card reveal">
-          <div class="trust-card__icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+        <div class="proof-card proof-card--tall reveal">
+          <img src="/porto/rania-aesthetic/assets/img/gen/trt-laser.jpg" alt="Peralatan medis modern & higienis" loading="lazy" />
+          <div class="proof-card__body">
+            <div class="proof-card__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+            </div>
+            <h3>Alat Modern &amp; Higienis</h3>
+            <p>Steril standar klinik di setiap sesi treatment.</p>
           </div>
-          <h3>Alat Modern &amp; Higienis</h3>
-          <p>Peralatan medis terkini yang di sterilisasi standar klinik — menjaga keamanan di setiap sesi treatment.</p>
         </div>
       </div>
     </div>
@@ -294,9 +331,41 @@
   </section>
 
   <!-- ═══════════════════════════════════════════════════════
-       7. FAQ
+       6b. SUASANA KLINIK — mosaic gallery (image-dominant)
        ═══════════════════════════════════════════════════════ -->
   <section class="sec-light">
+    <div class="container">
+      <h2 class="headline-section reveal">Suasana yang Bikin Nyaman</h2>
+      <p class="sub-text reveal" style="margin-bottom:8px">Ruang yang tenang, bersih, dan tanpa kesan menakutkan. Rasakan sebelum Anda datang.</p>
+      <div class="gallery-mosaic reveal-stagger" style="margin-top:44px">
+        <div class="atmos-cell g-large">
+          <img src="/porto/rania-aesthetic/assets/img/gen/interior.jpg" alt="Interior klinik Rania yang tenang" loading="lazy" />
+          <span class="atmos-cap">Ruang perawatan</span>
+        </div>
+        <div class="atmos-cell g-tall">
+          <img src="/porto/rania-aesthetic/assets/img/gen/reception.jpg" alt="Area resepsionis" loading="lazy" />
+          <span class="atmos-cap">Resepsionis</span>
+        </div>
+        <div class="atmos-cell">
+          <img src="/porto/rania-aesthetic/assets/img/gen/massage.jpg" alt="Perawatan relaksasi" loading="lazy" />
+          <span class="atmos-cap">Relaksasi</span>
+        </div>
+        <div class="atmos-cell">
+          <img src="/porto/rania-aesthetic/assets/img/gen/consult.jpg" alt="Ruang konsultasi" loading="lazy" />
+          <span class="atmos-cap">Konsultasi</span>
+        </div>
+        <div class="atmos-cell g-wide">
+          <img src="/porto/rania-aesthetic/assets/img/gen/skincare-detail.jpg" alt="Detail produk skincare" loading="lazy" />
+          <span class="atmos-cap">Produk pilihan</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       7. FAQ
+       ═══════════════════════════════════════════════════════ -->
+  <section class="sec-blush">
     <div class="container">
       <h2 class="headline-section reveal">Sering Ditanya</h2>
       <p class="sub-text reveal">Yang perlu Anda ketahui sebelum datang.</p>
@@ -322,9 +391,12 @@
   </section>
 
   <!-- ═══════════════════════════════════════════════════════
-       8. CTA DAFTAR — deep rose, final conversion
+       8. CTA DAFTAR — photo background, final conversion
        ═══════════════════════════════════════════════════════ -->
-  <section class="cta-section">
+  <section class="cta-section sec-photobg">
+    <div class="sec-photobg__bg">
+      <img src="/porto/rania-aesthetic/assets/img/gen/happy-client.jpg" alt="" loading="lazy" />
+    </div>
     <div class="container">
       <div class="cta-inner reveal">
         <h2>Siap merawat kulit Anda dengan tepat?</h2>

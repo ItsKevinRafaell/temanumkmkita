@@ -366,8 +366,16 @@ section { padding-block: clamp(80px, 10vw, 140px); }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0.18;
-  filter: saturate(0.6);
+  opacity: 0.32;
+  filter: saturate(0.8);
+}
+.hero-cinema::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: radial-gradient(ellipse at center, rgba(250,247,245,0.55) 0%, rgba(250,247,245,0.82) 70%);
+  pointer-events: none;
 }
 .hero-cinema__content {
   position: relative;
@@ -1547,3 +1555,132 @@ section { padding-block: clamp(80px, 10vw, 140px); }
 /* mobile anti horizontal-scroll guard */
 html,body{overflow-x:clip;max-width:100%;}
 img{max-width:100%;height:auto;}
+
+/* ============================================================
+   VISUAL OVERHAUL — image-dominant components (2026-08-10)
+   ============================================================ */
+
+/* --- PHOTO MARQUEE BAND — full-bleed scrolling proof strip --- */
+.photo-marquee {
+  padding: 0;
+  background: var(--bg);
+  overflow: hidden;
+}
+.photo-marquee__track {
+  display: flex;
+  gap: 16px;
+  width: max-content;
+  animation: rania-marquee 42s linear infinite;
+  padding: 20px 0;
+}
+.photo-marquee:hover .photo-marquee__track { animation-play-state: paused; }
+.photo-marquee__track img {
+  height: clamp(220px, 26vw, 340px);
+  width: auto;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  border-radius: 20px;
+  display: block;
+  box-shadow: var(--shadow-soft);
+}
+@keyframes rania-marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .photo-marquee__track { animation: none; flex-wrap: nowrap; overflow-x: auto; }
+}
+
+/* --- PHOTO-PROOF CARDS — image + short overlay text (image sembari menjelaskan) --- */
+.proof-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-top: 48px;
+}
+.proof-card {
+  position: relative;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  min-height: 320px;
+  display: flex;
+  align-items: flex-end;
+  box-shadow: var(--shadow-card);
+}
+.proof-card img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  transition: transform 0.6s var(--ease);
+}
+.proof-card:hover img { transform: scale(1.05); }
+.proof-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(to top, rgba(42,34,36,0.86) 0%, rgba(42,34,36,0.35) 45%, rgba(42,34,36,0) 75%);
+}
+.proof-card__body {
+  position: relative;
+  z-index: 2;
+  padding: 28px;
+  color: #fff;
+}
+.proof-card__icon {
+  width: 40px; height: 40px;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(255,255,255,0.18);
+  backdrop-filter: blur(4px);
+  border-radius: 12px;
+  margin-bottom: 14px;
+}
+.proof-card__icon svg { width: 22px; height: 22px; color: #fff; }
+.proof-card__body h3 { color: #fff; font-size: 22px; margin-bottom: 8px; letter-spacing: -0.3px; }
+.proof-card__body p { color: rgba(255,255,255,0.88) !important; font-size: 15px; line-height: 1.55; margin: 0; }
+.proof-card--tall { grid-row: span 1; min-height: 320px; }
+@media (max-width: 760px) {
+  .proof-grid { grid-template-columns: 1fr; }
+  .proof-card { min-height: 260px; }
+}
+
+/* --- SECTION with photo background + overlay (kill polos putih) --- */
+.sec-photobg {
+  position: relative;
+  color: #fff;
+  overflow: hidden;
+}
+.sec-photobg > .container { position: relative; z-index: 2; }
+.sec-photobg__bg {
+  position: absolute; inset: 0; z-index: 0;
+}
+.sec-photobg__bg img { width: 100%; height: 100%; object-fit: cover; }
+.sec-photobg::after {
+  content: ""; position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(135deg, rgba(142,74,90,0.92), rgba(42,34,36,0.82));
+}
+.sec-photobg h2, .sec-photobg h3 { color: #fff; }
+.sec-photobg p { color: rgba(255,255,255,0.85); }
+.sec-photobg .eyebrow { color: var(--accent-soft); }
+
+/* --- ATMOSPHERE / clinic gallery caption chips --- */
+.atmos-cap {
+  position: absolute;
+  left: 14px; bottom: 14px;
+  z-index: 3;
+  background: rgba(255,255,255,0.92);
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: var(--pill);
+  letter-spacing: 0.02em;
+}
+.atmos-cell { position: relative; overflow: hidden; border-radius: 24px; }
+.atmos-cell img { border-radius: 24px; }
+
+/* testimonial photo bump */
+.testi-top__photo img { border-radius: var(--radius-card); box-shadow: var(--shadow-card); }
