@@ -302,12 +302,6 @@ export default function WebDevelopmentPage() {
                     ))}
                   </ul>
 
-                  {plan.name === "Web Starter" && (
-                    <div className="border-brand-dark/6 border-t pt-3 text-xs font-medium text-brand-dark/40">
-                      ⚡ Garansi revisi 2× — belum puas? diskusikan sampai cocok.
-                    </div>
-                  )}
-
                   {/* CTA */}
                   <a
                     href={plan.wa}
@@ -324,6 +318,12 @@ export default function WebDevelopmentPage() {
                 </motion.div>
               ))}
             </div>
+
+            {/* Catatan umum di luar paket */}
+            <p className="mx-auto mt-8 max-w-2xl text-center text-sm text-brand-dark/50">
+              Setiap paket sudah termasuk garansi revisi. Belum puas dengan
+              hasilnya? Kami diskusikan bareng sampai benar-benar cocok.
+            </p>
           </div>
         </section>
 
