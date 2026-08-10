@@ -7,85 +7,196 @@
   <meta name="description" content="Rupa Lokal: produk fashion & kriya buatan pengrajin lokal Indonesia. Kualitas premium, desain modern, cerita di tiap produk." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/porto/_ds/design-system.css" />
   <link rel="stylesheet" href="/porto/rupa-lokal/assets/css/unique.css" />
 </head>
 <body>
   <header class="site-nav" data-include="nav"></header>
-  <section class="hero-rupa">
+
+  <!-- HERO — EDITORIAL -->
+  <section class="hero-editorial">
     <div class="container">
-      <div class="hero-rupa__text">
-        <span class="eyebrow reveal">Brand Lifestyle Lokal</span>
-        <h1 class="reveal">Karya lokal, rasa <span>dunia.</span></h1>
-        <p class="hero-rupa__tag reveal">Setiap produk Rupa Lokal dibuat tangan oleh pengrajin Indonesia. Bukan sekadar barang — tapi cerita, budaya, dan kualitas yang kamu bawa setiap hari.</p>
-        <div class="hero-rupa__cta reveal">
+      <div>
+        <div class="hero-editorial__meta reveal">
+          <span class="est">Est. 2020</span>
+          <span class="dot"></span>
+          <span class="est">Kriya Lokal</span>
+        </div>
+        <h1 class="reveal">Karya Lokal,<br/>Rasa <span class="accent">Dunia.</span></h1>
+        <p class="hero-editorial__copy reveal">Setiap produk Rupa Lokal dibuat tangan oleh pengrajin Indonesia. Bukan sekadar barang — tapi cerita, budaya, dan kualitas yang kamu bawa setiap hari.</p>
+        <div class="hero-editorial__actions reveal">
           <a class="btn-primary" href="/porto/rupa-lokal/koleksi.html">Lihat Koleksi</a>
           <a class="btn-outline" href="https://wa.me/6281234567890?text=Halo%20Rupa%20Lokal%2C%20mau%20order" target="_blank" rel="noopener">Order via WhatsApp</a>
         </div>
       </div>
+      <div class="hero-editorial__frame reveal">
+        <img src="/porto/rupa-lokal/assets/img/gen/hero.jpg" alt="Suasana toko Rupa Lokal" fetchpriority="high" onerror="this.src='/porto/rupa-lokal/assets/img/gen/hero.jpg'" />
+      </div>
     </div>
-    <div class="hero-rupa__photo reveal"><img src="/porto/rupa-lokal/assets/img/gen/hero.jpg" alt="Suasana toko Rupa Lokal" fetchpriority="high" /></div>
   </section>
 
+  <!-- EDITORIAL PRODUCT GRID -->
   <section>
     <div class="container">
-      <div class="section-header center reveal"><span class="eyebrow">Kategori</span><h2>Jelajahi koleksi kami.</h2></div>
-      <div class="cat-strip reveal-stagger">
-        <a class="cat-pill reveal" href="/porto/rupa-lokal/koleksi.html"><div class="ic">👜</div><h4>Tas &amp; Aksesori</h4></a>
-        <a class="cat-pill reveal" href="/porto/rupa-lokal/koleksi.html"><div class="ic">🧣</div><h4>Fashion &amp; Kain</h4></a>
-        <a class="cat-pill reveal" href="/porto/rupa-lokal/koleksi.html"><div class="ic">🏺</div><h4>Dekorasi Rumah</h4></a>
-        <a class="cat-pill reveal" href="/porto/rupa-lokal/koleksi.html"><div class="ic">🎁</div><h4>Hampers &amp; Gift</h4></a>
+      <div class="section-header reveal">
+        <span class="eyebrow">Pilihan Terbaik</span>
+        <h2>Karya yang paling dicintai pelanggan.</h2>
+        <p>Setiap produk dibuat terbatas oleh pengrajin pilihan — tidak ada produksi massal.</p>
+      </div>
+      <div class="editorial-grid reveal-stagger">
+        <article class="prod-card reveal">
+          <div class="prod-card__img">
+            <span class="prod-badge">Best Seller</span>
+            <img src="/porto/rupa-lokal/assets/img/gen/prod-1.jpg" alt="Tote Batik Modern" loading="lazy" onerror="this.src='/porto/rupa-lokal/assets/img/gen/hero.jpg'" />
+          </div>
+          <div class="prod-card__body">
+            <h3>Tote Batik Modern</h3>
+            <span class="cat">Tas &amp; Aksesori</span>
+            <span class="prod-price">Rp 185.000</span>
+          </div>
+        </article>
+        <article class="prod-card reveal">
+          <div class="prod-card__img">
+            <img src="/porto/rupa-lokal/assets/img/gen/prod-3.jpg" alt="Tas Rotan Anyam" loading="lazy" onerror="this.src='/porto/rupa-lokal/assets/img/gen/hero.jpg'" />
+          </div>
+          <div class="prod-card__body">
+            <h3>Tas Rotan Anyam</h3>
+            <span class="cat">Tas &amp; Aksesori</span>
+            <span class="prod-price">Rp 245.000</span>
+          </div>
+        </article>
+        <article class="prod-card reveal">
+          <div class="prod-card__img">
+            <span class="prod-badge">Baru</span>
+            <img src="/porto/rupa-lokal/assets/img/gen/prod-4.jpg" alt="Scarf Pewarna Alam" loading="lazy" onerror="this.src='/porto/rupa-lokal/assets/img/gen/hero.jpg'" />
+          </div>
+          <div class="prod-card__body">
+            <h3>Scarf Pewarna Alam</h3>
+            <span class="cat">Fashion &amp; Kain</span>
+            <span class="prod-price">Rp 165.000</span>
+          </div>
+        </article>
+        <article class="prod-card reveal">
+          <div class="prod-card__img">
+            <img src="/porto/rupa-lokal/assets/img/gen/prod-2.jpg" alt="Set Mug Keramik" loading="lazy" onerror="this.src='/porto/rupa-lokal/assets/img/gen/hero.jpg'" />
+          </div>
+          <div class="prod-card__body">
+            <h3>Set Mug Keramik</h3>
+            <span class="cat">Dekorasi Rumah</span>
+            <span class="prod-price">Rp 220.000</span>
+          </div>
+        </article>
+        <article class="prod-card reveal">
+          <div class="prod-card__img">
+            <img src="/porto/rupa-lokal/assets/img/gen/prod-1.jpg" alt="Pouch Tenun Etnik" loading="lazy" onerror="this.src='/porto/rupa-lokal/assets/img/gen/hero.jpg'" />
+          </div>
+          <div class="prod-card__body">
+            <h3>Pouch Tenun Etnik</h3>
+            <span class="cat">Tas &amp; Aksesori</span>
+            <span class="prod-price">Rp 95.000</span>
+          </div>
+        </article>
+        <article class="prod-card reveal">
+          <div class="prod-card__img">
+            <span class="prod-badge">Best Seller</span>
+            <img src="/porto/rupa-lokal/assets/img/gen/prod-3.jpg" alt="Keranjang Rotan" loading="lazy" onerror="this.src='/porto/rupa-lokal/assets/img/gen/hero.jpg'" />
+          </div>
+          <div class="prod-card__body">
+            <h3>Keranjang Rotan</h3>
+            <span class="cat">Dekorasi Rumah</span>
+            <span class="prod-price">Rp 175.000</span>
+          </div>
+        </article>
       </div>
     </div>
   </section>
 
-  <section style="background:var(--surface-2)">
+  <!-- CATEGORY TILES -->
+  <section class="cat-band">
     <div class="container">
-      <div class="section-header reveal"><span class="eyebrow">Best Seller</span><h2>Yang paling dicintai pelanggan.</h2><p>Geser untuk lihat produk andalan kami — stok terbatas karena dibuat tangan.</p></div>
-      <div class="carousel-wrap">
-        <div class="carousel reveal">
-          <article class="prod-card reveal"><div class="prod-card__img"><span class="prod-badge">Best Seller</span><img src="/porto/rupa-lokal/assets/img/gen/prod-1.jpg" alt="Tote Batik Modern" loading="lazy" /></div><div class="prod-card__body"><h3>Tote Batik Modern</h3><span class="cat">Tas & Aksesori</span><span class="prod-price">Rp 185.000</span></div></article>
-          <article class="prod-card reveal"><div class="prod-card__img"><img src="/porto/rupa-lokal/assets/img/gen/prod-3.jpg" alt="Tas Rotan Anyam" loading="lazy" /></div><div class="prod-card__body"><h3>Tas Rotan Anyam</h3><span class="cat">Tas & Aksesori</span><span class="prod-price">Rp 245.000</span></div></article>
-          <article class="prod-card reveal"><div class="prod-card__img"><span class="prod-badge">Baru</span><img src="/porto/rupa-lokal/assets/img/gen/prod-4.jpg" alt="Scarf Pewarna Alam" loading="lazy" /></div><div class="prod-card__body"><h3>Scarf Pewarna Alam</h3><span class="cat">Fashion & Kain</span><span class="prod-price">Rp 165.000</span></div></article>
-          <article class="prod-card reveal"><div class="prod-card__img"><img src="/porto/rupa-lokal/assets/img/gen/prod-2.jpg" alt="Set Mug Keramik" loading="lazy" /></div><div class="prod-card__body"><h3>Set Mug Keramik</h3><span class="cat">Dekorasi Rumah</span><span class="prod-price">Rp 220.000</span></div></article>
-          <article class="prod-card reveal"><div class="prod-card__img"><img src="/porto/rupa-lokal/assets/img/gen/prod-1.jpg" alt="Pouch Tenun" loading="lazy" /></div><div class="prod-card__body"><h3>Pouch Tenun</h3><span class="cat">Tas & Aksesori</span><span class="prod-price">Rp 95.000</span></div></article>
-          <article class="prod-card reveal"><div class="prod-card__img"><span class="prod-badge">Best Seller</span><img src="/porto/rupa-lokal/assets/img/gen/prod-3.jpg" alt="Keranjang Rotan" loading="lazy" /></div><div class="prod-card__body"><h3>Keranjang Rotan</h3><span class="cat">Dekorasi Rumah</span><span class="prod-price">Rp 175.000</span></div></article>
-        </div>
-        <div class="carousel-btns"><button class="carousel-prev" aria-label="Sebelumnya">‹</button><button class="carousel-next" aria-label="Berikutnya">›</button></div>
+      <div class="section-header center reveal">
+        <span class="eyebrow" style="color:#E9B39C;">Jelajahi</span>
+        <h2 style="color:#fff;">Kategori Koleksi.</h2>
+      </div>
+      <div class="cat-tiles reveal-stagger">
+        <a class="cat-tile reveal" href="/porto/rupa-lokal/koleksi.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+          <h4>Tas &amp; Aksesori</h4>
+          <span>12 produk</span>
+        </a>
+        <a class="cat-tile reveal" href="/porto/rupa-lokal/koleksi.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+          <h4>Fashion &amp; Kain</h4>
+          <span>9 produk</span>
+        </a>
+        <a class="cat-tile reveal" href="/porto/rupa-lokal/koleksi.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <h4>Dekorasi Rumah</h4>
+          <span>8 produk</span>
+        </a>
+        <a class="cat-tile reveal" href="/porto/rupa-lokal/koleksi.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 010-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 000-5C13 2 12 7 12 7z"/></svg>
+          <h4>Hampers &amp; Gift</h4>
+          <span>6 produk</span>
+        </a>
       </div>
     </div>
   </section>
 
-  <section>
+  <!-- BRAND STORY -->
+  <section class="brand-story">
     <div class="container">
-      <div class="split reveal">
-        <div class="split__media"><img src="/porto/rupa-lokal/assets/img/gen/lifestyle.jpg" alt="Produk Rupa Lokal dalam keseharian" loading="lazy" /></div>
-        <div>
-          <span class="eyebrow">Kenapa Rupa Lokal</span>
-          <h2>Lebih dari produk — sebuah dukungan.</h2>
-          <p>Setiap pembelian langsung menghidupi pengrajin lokal. Kamu dapat produk berkualitas, mereka dapat penghidupan yang layak. Menang bersama.</p>
-          <ul class="checklist"><li>Dibuat tangan oleh pengrajin Indonesia</li><li>Bahan berkualitas & ramah lingkungan</li><li>Desain modern, tetap punya akar budaya</li><li>Order mudah via WhatsApp & marketplace</li></ul>
-        </div>
+      <div class="brand-story__images reveal">
+        <img src="/porto/rupa-lokal/assets/img/gen/lifestyle.jpg" alt="Produk Rupa Lokal dalam keseharian" loading="lazy" onerror="this.src='/porto/rupa-lokal/assets/img/gen/hero.jpg'" />
+        <img src="/porto/rupa-lokal/assets/img/gen/store.jpg" alt="Suasana toko Rupa Lokal" loading="lazy" onerror="this.src='/porto/rupa-lokal/assets/img/gen/hero.jpg'" />
+      </div>
+      <div class="brand-story__copy reveal">
+        <span class="eyebrow">Cerita Kami</span>
+        <p class="brand-statement">Setiap pembelian langsung menghidupi tangan-tangan terampil <span class="accent">pengrajin lokal.</span></p>
+        <p>Kami percaya produk lokal bisa bersaing di level mana pun. Rupa Lokal hadir untuk mewujudkan itu — menghubungkan pengrajin berbakat dengan orang-orang yang menghargai karya tangan.</p>
+        <ul class="checklist">
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Dibuat tangan oleh pengrajin Indonesia
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Bahan berkualitas &amp; ramah lingkungan
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Desain modern, tetap punya akar budaya
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Order mudah via WhatsApp &amp; marketplace
+          </li>
+        </ul>
       </div>
     </div>
   </section>
-  <section class="cta-section"><div class="container"><div class="cta-inner reveal"><h2>Bawa pulang karya lokal terbaik.</h2><p>Order sekarang via WhatsApp — tim kami bantu pilihkan yang pas buatmu.</p><a class="btn-ghost" href="https://wa.me/6281234567890?text=Halo%20Rupa%20Lokal" target="_blank" rel="noopener">Order via WhatsApp</a></div></div></section>  <footer class="site-footer" data-include="footer"></footer>
-  <a class="wa-float" href="https://wa.me/6281234567890" target="_blank" rel="noopener" aria-label="Chat WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.9-4.45 9.9-9.91C21.95 6.45 17.5 2 12.04 2zm5.8 14.12c-.24.68-1.42 1.31-1.95 1.35-.5.04-.5.4-3.16-.66-2.67-1.05-4.35-3.77-4.48-3.94-.13-.18-1.07-1.42-1.07-2.71 0-1.29.68-1.92.92-2.19.24-.26.53-.33.7-.33.18 0 .35 0 .5.01.16.01.38-.06.59.45.24.58.81 2 .88 2.14.07.13.12.29.02.47-.09.18-.14.29-.27.44-.13.16-.28.35-.4.47-.13.13-.27.28-.12.54.15.26.66 1.09 1.42 1.76.98.87 1.8 1.14 2.06 1.27.26.13.41.11.56-.07.15-.18.65-.76.82-1.02.17-.26.35-.22.59-.13.24.09 1.52.72 1.78.85.26.13.43.19.5.3.06.11.06.66-.18 1.34z"/></svg></a>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-inner reveal">
+        <h2>Bawa pulang karya lokal terbaik.</h2>
+        <p>Order sekarang via WhatsApp — tim kami bantu pilihkan yang pas buatmu.</p>
+        <a class="btn-ghost" href="https://wa.me/6281234567890?text=Halo%20Rupa%20Lokal" target="_blank" rel="noopener">Order via WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer" data-include="footer"></footer>
+
+  <a class="wa-float" href="https://wa.me/6281234567890" target="_blank" rel="noopener" aria-label="Chat WhatsApp">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/>
+    </svg>
+  </a>
+
   <script src="/porto/rupa-lokal/assets/js/include.js"></script>
   <script src="/porto/rupa-lokal/assets/js/main.js"></script>
-
-  <script>
-  (function(){
-    var track=document.querySelector('.carousel');
-    if(!track)return;
-    var prev=document.querySelector('.carousel-prev'),next=document.querySelector('.carousel-next');
-    function step(){var c=track.querySelector('.prod-card');return c?c.offsetWidth+20:280;}
-    function upd(){if(prev)prev.disabled=track.scrollLeft<=4;if(next)next.disabled=track.scrollLeft+track.clientWidth>=track.scrollWidth-4;}
-    next&&next.addEventListener('click',function(){track.scrollBy({left:step(),behavior:'smooth'});});
-    prev&&prev.addEventListener('click',function(){track.scrollBy({left:-step(),behavior:'smooth'});});
-    track.addEventListener('scroll',upd,{passive:true});upd();
-  })();
-  </script>
 </body>
 </html>

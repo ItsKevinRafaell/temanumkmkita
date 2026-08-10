@@ -7,32 +7,81 @@
   <meta name="description" content="Hubungi Rupa Lokal untuk order, custom, & kerja sama. Lokasi, jam buka, dan form kontak." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/porto/_ds/design-system.css" />
   <link rel="stylesheet" href="/porto/rupa-lokal/assets/css/unique.css" />
 </head>
 <body>
   <header class="site-nav" data-include="nav"></header>
-  <section class="page-hero"><div class="container"><span class="eyebrow">Kontak</span><h1>Mau order atau kerja sama? Sapa kami.</h1><p>Tim kami responsif via WhatsApp. Untuk custom & reseller, jangan ragu tanya.</p></div></section>
-  <section><div class="container"><div class="contact-grid">
-    <div class="contact-info reveal">
-      <div class="row"><div class="ic">📍</div><div><h4>Alamat</h4><p>Jl. Kriya Lokal No. 5, Bandung</p></div></div>
-      <div class="row"><div class="ic">💬</div><div><h4>WhatsApp</h4><p><a href="https://wa.me/6281234567890" target="_blank" rel="noopener" style="color:var(--accent-2);font-weight:600">0812-3456-7890</a></p></div></div>
-      <div class="row"><div class="ic">🕐</div><div><h4>Jam Buka</h4><p>Setiap hari: 09.00–20.00</p></div></div>
-      <div class="row"><div class="ic">📧</div><div><h4>Email</h4><p>halo@rupalokal.id</p></div></div>
-      <div class="map-embed"><iframe title="Lokasi Rupa Lokal" src="https://www.openstreetmap.org/export/embed.html?bbox=107.58%2C-6.94%2C107.64%2C-6.89&amp;layer=mapnik" loading="lazy"></iframe></div>
+
+  <section class="page-hero">
+    <div class="container">
+      <span class="eyebrow reveal">Kontak</span>
+      <h1 class="reveal">Mau order atau kerja sama? Sapa kami.</h1>
+      <p class="reveal">Tim kami responsif via WhatsApp. Untuk custom &amp; reseller, jangan ragu tanya.</p>
     </div>
-    <form class="contact-form reveal" id="contact-form">
-      <h3 style="font-family:var(--font-display)">Order / Pertanyaan</h3>
-      <label for="nama">Nama</label><input id="nama" name="nama" type="text" placeholder="Nama Anda" required />
-      <label for="hp">No. WhatsApp</label><input id="hp" name="hp" type="tel" placeholder="08xx-xxxx-xxxx" required />
-      <label for="pesan">Produk yang diminati</label><textarea id="pesan" name="pesan" placeholder="Contoh: mau order 2 Tote Batik + tanya hampers korporat" required></textarea>
-      <button class="btn-primary" type="submit">Kirim Pesan</button>
-      <p class="form-status" aria-live="polite"></p>
-    </form>
-  </div></div></section>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="contact-grid">
+        <div class="contact-info reveal">
+          <div class="row">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <div>
+              <h4>Alamat</h4>
+              <p>Jl. Kriya Lokal No. 5, Bandung</p>
+            </div>
+          </div>
+          <div class="row">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
+            <div>
+              <h4>WhatsApp</h4>
+              <p><a href="https://wa.me/6281234567890" target="_blank" rel="noopener">0812-3456-7890</a></p>
+            </div>
+          </div>
+          <div class="row">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <div>
+              <h4>Jam Buka</h4>
+              <p>Setiap hari: 09.00–20.00</p>
+            </div>
+          </div>
+          <div class="row">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <div>
+              <h4>Email</h4>
+              <p>halo@rupalokal.id</p>
+            </div>
+          </div>
+          <div class="map-embed">
+            <iframe title="Lokasi Rupa Lokal" src="https://www.openstreetmap.org/export/embed.html?bbox=107.58%2C-6.94%2C107.64%2C-6.89&amp;layer=mapnik" loading="lazy"></iframe>
+          </div>
+        </div>
+
+        <form class="contact-form reveal" id="contact-form">
+          <h3>Order / Pertanyaan</h3>
+          <label for="nama">Nama</label>
+          <input id="nama" name="nama" type="text" placeholder="Nama Anda" required />
+          <label for="hp">No. WhatsApp</label>
+          <input id="hp" name="hp" type="tel" placeholder="08xx-xxxx-xxxx" required />
+          <label for="pesan">Produk yang diminati</label>
+          <textarea id="pesan" name="pesan" placeholder="Contoh: mau order 2 Tote Batik + tanya hampers korporat" required></textarea>
+          <button class="btn-primary" type="submit">Kirim Pesan</button>
+          <p class="form-status" aria-live="polite"></p>
+        </form>
+      </div>
+    </div>
+  </section>
+
   <footer class="site-footer" data-include="footer"></footer>
-  <a class="wa-float" href="https://wa.me/6281234567890" target="_blank" rel="noopener" aria-label="Chat WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.9-4.45 9.9-9.91C21.95 6.45 17.5 2 12.04 2zm5.8 14.12c-.24.68-1.42 1.31-1.95 1.35-.5.04-.5.4-3.16-.66-2.67-1.05-4.35-3.77-4.48-3.94-.13-.18-1.07-1.42-1.07-2.71 0-1.29.68-1.92.92-2.19.24-.26.53-.33.7-.33.18 0 .35 0 .5.01.16.01.38-.06.59.45.24.58.81 2 .88 2.14.07.13.12.29.02.47-.09.18-.14.29-.27.44-.13.16-.28.35-.4.47-.13.13-.27.28-.12.54.15.26.66 1.09 1.42 1.76.98.87 1.8 1.14 2.06 1.27.26.13.41.11.56-.07.15-.18.65-.76.82-1.02.17-.26.35-.22.59-.13.24.09 1.52.72 1.78.85.26.13.43.19.5.3.06.11.06.66-.18 1.34z"/></svg></a>
+
+  <a class="wa-float" href="https://wa.me/6281234567890" target="_blank" rel="noopener" aria-label="Chat WhatsApp">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/>
+    </svg>
+  </a>
+
   <script src="/porto/rupa-lokal/assets/js/include.js"></script>
   <script src="/porto/rupa-lokal/assets/js/main.js"></script>
 </body>

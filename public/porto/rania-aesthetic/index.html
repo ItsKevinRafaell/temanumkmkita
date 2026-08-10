@@ -7,60 +7,161 @@
   <meta name="description" content="Rania Aesthetic: klinik kecantikan modern dengan perawatan aman oleh dokter berpengalaman. Facial, laser, dan treatment kulit untuk glowing alami." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/porto/_ds/design-system.css" />
   <link rel="stylesheet" href="/porto/rania-aesthetic/assets/css/unique.css" />
 </head>
 <body>
   <header class="site-nav" data-include="nav"></header>
-  <section class="hero-rania container">
-    <div class="hero-rania__text">
+
+  <!-- HERO: Asymmetric editorial -->
+  <section class="hero-editorial container">
+    <div class="hero-editorial__text">
+      <span class="hero-editorial__number">No. 001</span>
       <span class="eyebrow reveal">Klinik Kecantikan &amp; Estetika</span>
-      <h1 class="reveal">Kulit sehat yang <span>glowing</span>, dirawat dengan aman.</h1>
-      <p class="hero-rania__tag reveal">Di Rania, kami tidak menjanjikan keajaiban instan. Kami rawat kulit Anda dengan pendekatan medis, produk teruji, dan dokter yang benar-benar mendengarkan.</p>
-      <div class="hero-rania__cta reveal">
+      <h1 class="reveal">Kulit sehat yang <em>glowing</em>, dirawat dengan aman.</h1>
+      <p class="hero-editorial__body reveal">Di Rania, kami tidak menjanjikan keajaiban instan. Kami rawat kulit Anda dengan pendekatan medis, produk teruji, dan dokter yang benar-benar mendengarkan.</p>
+      <div class="hero-editorial__cta reveal">
         <a class="btn-primary" href="https://wa.me/6281234567890?text=Halo%20Rania%2C%20mau%20booking%20konsultasi" target="_blank" rel="noopener">Booking Konsultasi</a>
         <a class="btn-outline" href="/porto/rania-aesthetic/layanan.html">Lihat Treatment</a>
       </div>
+      <span class="hero-editorial__label">Rania / Aesthetic</span>
     </div>
-    <div class="hero-rania__photo reveal"><img src="/porto/rania-aesthetic/assets/img/gen/hero.jpg" alt="Suasana klinik Rania Aesthetic" fetchpriority="high" /></div>
+    <div class="hero-editorial__photo reveal">
+      <img src="/porto/rania-aesthetic/assets/img/gen/hero.jpg" alt="Suasana klinik Rania Aesthetic" fetchpriority="high" onerror="this.src='/porto/rania-aesthetic/assets/img/gen/hero.jpg'" />
+    </div>
   </section>
 
-  <section class="soft-band">
+  <!-- TRUST STRIP: icon-based features -->
+  <section class="trust-strip">
     <div class="container">
-      <div class="soft-item reveal"><div class="ic">👩‍⚕️</div><h4>Dokter Berpengalaman</h4><p>Setiap treatment diawasi dokter estetika bersertifikat.</p></div>
-      <div class="soft-item reveal"><div class="ic">🧴</div><h4>Produk &amp; Alat Teruji</h4><p>Bahan aman, alat modern, standar higienis klinik.</p></div>
-      <div class="soft-item reveal"><div class="ic">💬</div><h4>Konsultasi Jujur</h4><p>Kami sarankan yang kulit Anda butuh, bukan yang mahal.</p></div>
+      <div class="trust-item reveal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+        <h4>Dokter Berpengalaman</h4>
+        <p>Setiap treatment diawasi dokter estetika bersertifikat.</p>
+      </div>
+      <div class="trust-item reveal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M12 6v6l4 2"/></svg>
+        <h4>Produk &amp; Alat Teruji</h4>
+        <p>Bahan aman, alat modern, standar higienis klinik.</p>
+      </div>
+      <div class="trust-item reveal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        <h4>Konsultasi Jujur</h4>
+        <p>Kami sarankan yang kulit Anda butuh, bukan yang mahal.</p>
+      </div>
     </div>
   </section>
 
+  <!-- TREATMENTS: Editorial alternating rows -->
   <section>
     <div class="container">
-      <div class="section-header center reveal"><span class="eyebrow">Treatment Favorit</span><h2>Perawatan yang paling dicari pelanggan kami.</h2><p>Setiap treatment diawali konsultasi kulit gratis, biar kami tahu persis apa yang kulit Anda butuhkan.</p></div>
-      <div class="trt-grid reveal-stagger">
-        <article class="trt-card reveal"><img src="/porto/rania-aesthetic/assets/img/gen/trt-facial.jpg" alt="Facial treatment" loading="lazy" /><div class="trt-card__body"><h3>Facial Rejuvenasi</h3><p>Bersihkan, hidrasi, dan cerahkan kulit. Wajah terasa segar & lembap.</p><div class="trt-meta"><span class="trt-dur">⏱ 60 menit</span><span class="trt-price">mulai Rp 250rb</span></div></div></article>
-        <article class="trt-card reveal"><img src="/porto/rania-aesthetic/assets/img/gen/trt-laser.jpg" alt="Laser treatment" loading="lazy" /><div class="trt-card__body"><h3>Laser Brightening</h3><p>Samarkan flek & bekas jerawat, ratakan warna kulit secara bertahap.</p><div class="trt-meta"><span class="trt-dur">⏱ 45 menit</span><span class="trt-price">mulai Rp 450rb</span></div></div></article>
-        <article class="trt-card reveal"><img src="/porto/rania-aesthetic/assets/img/gen/trt-glow.jpg" alt="Glow treatment" loading="lazy" /><div class="trt-card__body"><h3>Glow Infusion</h3><p>Booster nutrisi & antioksidan untuk kulit dewy dan sehat dari dalam.</p><div class="trt-meta"><span class="trt-dur">⏱ 50 menit</span><span class="trt-price">mulai Rp 380rb</span></div></div></article>
+      <div class="section-header reveal">
+        <span class="eyebrow">Treatment Favorit</span>
+        <h2>Perawatan yang paling dicari pelanggan kami.</h2>
+        <p>Setiap treatment diawali konsultasi kulit gratis, biar kami tahu persis apa yang kulit Anda butuhkan.</p>
       </div>
-      <div style="text-align:center;margin-top:34px" class="reveal"><a class="btn-outline" href="/porto/rania-aesthetic/layanan.html">Lihat Semua Treatment &amp; Harga</a></div>
+      <div class="trt-editorial__item reveal">
+        <div class="trt-editorial__media">
+          <img src="/porto/rania-aesthetic/assets/img/gen/trt-facial.jpg" alt="Facial treatment" loading="lazy" onerror="this.src='/porto/rania-aesthetic/assets/img/gen/hero.jpg'" />
+        </div>
+        <div>
+          <div class="trt-editorial__num">01</div>
+          <h3 class="trt-editorial__name">Facial Rejuvenasi</h3>
+          <p class="trt-editorial__desc">Bersihkan, hidrasi, dan cerahkan kulit. Deep cleansing, ekstraksi lembut, dan pencerahan untuk wajah terasa segar dan lembap.</p>
+          <div class="trt-editorial__meta">
+            <span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              60 menit
+            </span>
+            <span class="trt-editorial__price">mulai Rp 250rb</span>
+          </div>
+        </div>
+      </div>
+      <div class="trt-editorial__item reveal">
+        <div class="trt-editorial__media">
+          <img src="/porto/rania-aesthetic/assets/img/gen/trt-laser.jpg" alt="Laser treatment" loading="lazy" onerror="this.src='/porto/rania-aesthetic/assets/img/gen/hero.jpg'" />
+        </div>
+        <div>
+          <div class="trt-editorial__num">02</div>
+          <h3 class="trt-editorial__name">Laser Brightening</h3>
+          <p class="trt-editorial__desc">Samarkan flek dan bekas jerawat, ratakan warna kulit secara bertahap dengan teknologi laser modern.</p>
+          <div class="trt-editorial__meta">
+            <span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              45 menit
+            </span>
+            <span class="trt-editorial__price">mulai Rp 450rb</span>
+          </div>
+        </div>
+      </div>
+      <div class="trt-editorial__item reveal">
+        <div class="trt-editorial__media">
+          <img src="/porto/rania-aesthetic/assets/img/gen/trt-glow.jpg" alt="Glow treatment" loading="lazy" onerror="this.src='/porto/rania-aesthetic/assets/img/gen/hero.jpg'" />
+        </div>
+        <div>
+          <div class="trt-editorial__num">03</div>
+          <h3 class="trt-editorial__name">Glow Infusion</h3>
+          <p class="trt-editorial__desc">Booster nutrisi dan antioksidan untuk kulit dewy dan sehat dari dalam. Perawatan yang bikin kulit bersinar alami.</p>
+          <div class="trt-editorial__meta">
+            <span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              50 menit
+            </span>
+            <span class="trt-editorial__price">mulai Rp 380rb</span>
+          </div>
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:40px" class="reveal">
+        <a class="btn-outline" href="/porto/rania-aesthetic/layanan.html">Lihat Semua Treatment &amp; Harga</a>
+      </div>
     </div>
   </section>
 
-  <section style="background:var(--surface-2)">
+  <!-- PHILOSOPHY BAND -->
+  <section class="philosophy-band">
+    <div class="container reveal">
+      <p>Cantik itu proses, bukan janji instan. Kami percaya perawatan terbaik adalah yang aman dan berkelanjutan.</p>
+    </div>
+  </section>
+
+  <!-- WHY RANIA: split layout -->
+  <section>
     <div class="container">
       <div class="split reveal">
-        <div class="split__media"><img src="/porto/rania-aesthetic/assets/img/gen/before-after.jpg" alt="Hasil perawatan Rania" loading="lazy" /></div>
+        <div class="split__media">
+          <img src="/porto/rania-aesthetic/assets/img/gen/before-after.jpg" alt="Hasil perawatan Rania" loading="lazy" onerror="this.src='/porto/rania-aesthetic/assets/img/gen/hero.jpg'" />
+        </div>
         <div>
           <span class="eyebrow">Kenapa Rania</span>
-          <h2>Cantik itu proses, bukan janji instan.</h2>
-          <p>Kami percaya perawatan terbaik adalah yang aman dan berkelanjutan. Tidak ada janji berlebihan — hanya hasil nyata yang dibangun bertahap, sesuai kondisi kulit Anda.</p>
-          <ul class="checklist"><li>Konsultasi kulit gratis sebelum treatment</li><li>Rencana perawatan disesuaikan kondisi kulit</li><li>Produk & tindakan aman, diawasi dokter</li><li>Follow-up untuk pantau perkembangan</li></ul>
+          <h2>Tidak ada janji berlebihan — hanya hasil nyata yang dibangun bertahap.</h2>
+          <p>Kami percaya perawatan terbaik adalah yang aman dan berkelanjutan. Tidak ada janji berlebihan — hanya hasil nyata yang disesuaikan kondisi kulit Anda.</p>
+          <ul class="checklist">
+            <li>Konsultasi kulit gratis sebelum treatment</li>
+            <li>Rencana perawatan disesuaikan kondisi kulit</li>
+            <li>Produk &amp; tindakan aman, diawasi dokter</li>
+            <li>Follow-up untuk pantau perkembangan</li>
+          </ul>
         </div>
       </div>
     </div>
   </section>
-  <section class="cta-section"><div class="container"><div class="cta-inner reveal"><h2>Siap rawat kulit Anda dengan tepat?</h2><p>Booking konsultasi gratis sekarang. Kami bantu temukan perawatan yang paling pas.</p><a class="btn-ghost" href="https://wa.me/6281234567890?text=Halo%20Rania%20Aesthetic" target="_blank" rel="noopener">Booking via WhatsApp</a></div></div></section>  <footer class="site-footer" data-include="footer"></footer>
-  <a class="wa-float" href="https://wa.me/6281234567890" target="_blank" rel="noopener" aria-label="Chat WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.9-4.45 9.9-9.91C21.95 6.45 17.5 2 12.04 2zm5.8 14.12c-.24.68-1.42 1.31-1.95 1.35-.5.04-.5.4-3.16-.66-2.67-1.05-4.35-3.77-4.48-3.94-.13-.18-1.07-1.42-1.07-2.71 0-1.29.68-1.92.92-2.19.24-.26.53-.33.7-.33.18 0 .35 0 .5.01.16.01.38-.06.59.45.24.58.81 2 .88 2.14.07.13.12.29.02.47-.09.18-.14.29-.27.44-.13.16-.28.35-.4.47-.13.13-.27.28-.12.54.15.26.66 1.09 1.42 1.76.98.87 1.8 1.14 2.06 1.27.26.13.41.11.56-.07.15-.18.65-.76.82-1.02.17-.26.35-.22.59-.13.24.09 1.52.72 1.78.85.26.13.43.19.5.3.06.11.06.66-.18 1.34z"/></svg></a>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-inner reveal">
+        <h2>Siap rawat kulit Anda dengan tepat?</h2>
+        <p>Booking konsultasi gratis sekarang. Kami bantu temukan perawatan yang paling pas.</p>
+        <a class="btn-ghost" href="https://wa.me/6281234567890?text=Halo%20Rania%20Aesthetic" target="_blank" rel="noopener">Booking via WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer" data-include="footer"></footer>
+  <a class="wa-float" href="https://wa.me/6281234567890" target="_blank" rel="noopener" aria-label="Chat WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.9-4.45 9.9-9.91C21.95 6.45 17.5 2 12.04 2zm5.8 14.12c-.24.68-1.42 1.31-1.95 1.35-.5.04-.5.4-3.16-.66-2.67-1.05-4.35-3.77-4.48-3.94-.13-.18-1.07-1.42-1.07-2.71 0-1.29.68-1.92.92-2.19.24-.26.53-.33.7-.33.18 0 .35 0 .5.01.16.01.38-.06.59.45.24.58.81 2 .88 2.14.07.13.12.29.02.47-.09.18-.14.29-.27.44-.13.16-.28.35-.4.47-.13.13-.27.28-.12.54.15.26.66 1.09 1.42 1.76.98.87 1.8 1.14 2.06 1.27.26.13.41.11.56-.07.15-.18.65-.76.82-1.02.17-.26.35-.22.59-.13.24.09 1.52.72 1.78.85.26.13.43.19.5.3.06.11.06.66-.18 1.34z"/></svg>
+  </a>
   <script src="/porto/rania-aesthetic/assets/js/include.js"></script>
   <script src="/porto/rania-aesthetic/assets/js/main.js"></script>
 </body>
