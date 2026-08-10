@@ -1264,6 +1264,23 @@ body::before {
    RESPONSIVE — Mobile adjustments
    ================================================================ */
 @media (max-width: 900px) {
+  /* Hero cinematic → mobile tuning */
+  .hero-cine { min-height: 88vh; }
+  .hero-cine__inner { padding-bottom: clamp(44px, 7vh, 72px); }
+  .hero-cine__title-line { font-size: clamp(3.6rem, 20vw, 6rem); }
+  .hero-cine__subtitle { font-size: 1rem; max-width: 100%; }
+  .hero-cine__scrim {
+    background:
+      linear-gradient(to top,
+        rgba(20,12,8,0.94) 0%,
+        rgba(20,12,8,0.72) 34%,
+        rgba(20,12,8,0.30) 70%,
+        rgba(20,12,8,0.12) 100%);
+  }
+  /* Hide stamp on mobile (collides with headline on small screens) */
+  .hero-cine__stamp { display: none; }
+  .hero-cine__scroll { display: none; }
+
   /* Hero → stack vertically, photo centered below */
   .hero-editorial {
     min-height: auto;
