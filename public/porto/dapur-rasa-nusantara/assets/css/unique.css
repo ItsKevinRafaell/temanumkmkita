@@ -137,7 +137,9 @@ body::before {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
   overflow: hidden;
   background: var(--brown);
   isolation: isolate;
@@ -164,23 +166,23 @@ body::before {
   to   { transform: scale(1.14) translate(-1.5%, -1%); }
 }
 
-/* Directional scrim: dark bottom-left where text sits, clear top-right */
+/* Vignette scrim: darker center+edges so centered text stays legible */
 .hero-cine__scrim {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(
-      to top,
-      rgba(20, 12, 8, 0.92) 0%,
-      rgba(20, 12, 8, 0.70) 26%,
-      rgba(20, 12, 8, 0.30) 55%,
-      rgba(20, 12, 8, 0.10) 100%
+    radial-gradient(
+      ellipse 90% 70% at 50% 50%,
+      rgba(20, 12, 8, 0.72) 0%,
+      rgba(20, 12, 8, 0.55) 45%,
+      rgba(20, 12, 8, 0.35) 75%,
+      rgba(20, 12, 8, 0.25) 100%
     ),
     linear-gradient(
-      to right,
-      rgba(20, 12, 8, 0.72) 0%,
-      rgba(20, 12, 8, 0.30) 42%,
-      rgba(20, 12, 8, 0) 75%
+      to top,
+      rgba(20, 12, 8, 0.55) 0%,
+      rgba(20, 12, 8, 0.10) 45%,
+      rgba(20, 12, 8, 0.35) 100%
     );
 }
 /* Subtle film grain for depth (no AI-slop gradient) */
@@ -199,7 +201,10 @@ body::before {
   max-width: var(--maxw);
   width: 100%;
   margin: 0 auto;
-  padding: 0 28px clamp(56px, 9vh, 104px);
+  padding: 0 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .hero-cine__eyebrow {
@@ -242,18 +247,19 @@ body::before {
 }
 
 .hero-cine__subtitle {
-  max-width: 42ch;
-  margin: 26px 0 0;
+  max-width: 46ch;
+  margin: 26px auto 0;
   font-family: var(--ff-body);
   font-size: clamp(1rem, 1.4vw, 1.18rem);
   line-height: 1.65;
-  color: rgba(253, 246, 238, 0.88);
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+  color: rgba(253, 246, 238, 0.9);
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
 }
 
 .hero-cine__cta {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 16px;
   margin-top: 36px;
 }
