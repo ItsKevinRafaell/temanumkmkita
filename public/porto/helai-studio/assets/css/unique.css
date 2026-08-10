@@ -879,9 +879,9 @@ em, i.decor, .em-accent { font-style: normal !important; font-synthesis: none; }
 }
 /* text nav selalu gelap & kebaca (buang mode putih transparan) */
 .site-nav:not(.scrolled) .nav-brand img { filter: none !important; }
-.site-nav:not(.scrolled) .nav-links a { color: var(--hs-ink-soft) !important; }
-.site-nav:not(.scrolled) .nav-links a:hover,
-.site-nav:not(.scrolled) .nav-links a.active { color: var(--hs-ink) !important; }
+.site-nav:not(.scrolled) .nav-links a:not(.btn-accent) { color: var(--hs-ink-soft) !important; }
+.site-nav:not(.scrolled) .nav-links a:not(.btn-accent):hover,
+.site-nav:not(.scrolled) .nav-links a:not(.btn-accent).active { color: var(--hs-ink) !important; }
 .site-nav:not(.scrolled) .nav-toggle span { background: var(--hs-ink) !important; }
 .site-nav .nav-brand img { height: 40px !important; }
 
