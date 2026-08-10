@@ -908,3 +908,103 @@ em, i.decor, .em-accent { font-style: normal !important; font-synthesis: none; }
   margin-top: 24px;
   max-width: 20ch;
 }
+
+
+/* ============================================================
+   INNER PAGE COMPONENTS — Helai editorial (satu jiwa dgn home)
+   ============================================================ */
+.page-hero-ed {
+  padding: clamp(150px, 18vw, 220px) clamp(24px,6vw,90px) clamp(60px,8vw,100px);
+  background: var(--hs-cream);
+  max-width: 1400px; margin: 0 auto;
+}
+.page-hero-ed__inner { max-width: 780px; }
+.page-hero-ed__eyebrow {
+  display: inline-block; font-family: var(--font-body);
+  font-size: .72rem; letter-spacing: .28em; text-transform: uppercase;
+  color: var(--hs-plum); margin-bottom: 26px;
+}
+.page-hero-ed__title {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: clamp(2.6rem, 7vw, 5rem); line-height: 1.02;
+  letter-spacing: -.02em; color: var(--hs-ink); margin-bottom: 26px;
+}
+.page-hero-ed__lede { font-size: 1.15rem; line-height: 1.7; color: var(--hs-ink-soft); max-width: 560px; }
+
+/* Values (editorial, angka besar, no thin border) */
+.values-ed { max-width: 1400px; margin: 0 auto; padding: clamp(40px,6vw,80px) clamp(24px,6vw,90px); }
+.values-ed__grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 48px; margin-top: 40px; }
+.values-ed__num { font-family: var(--font-display); font-weight: 700; font-size: 2rem; color: var(--hs-plum); display:block; margin-bottom: 14px; }
+.values-ed__item h3 { font-family: var(--font-display); font-weight: 600; font-size: 1.4rem; color: var(--hs-ink); margin-bottom: 10px; }
+.values-ed__item p { color: var(--hs-ink-soft); font-size: .98rem; line-height: 1.65; }
+.values-ed__item { border-top: 1px solid var(--hs-line); padding-top: 22px; }
+
+/* Journey editorial timeline */
+.journey-ed { max-width: 1400px; margin: 0 auto; padding: clamp(40px,6vw,80px) clamp(24px,6vw,90px); }
+.journey-ed__list { position: relative; max-width: 720px; margin-top: 40px; padding-left: 40px; }
+.journey-ed__list::before { content:""; position:absolute; left:7px; top:10px; bottom:10px; width:2px; background: var(--hs-plum); opacity:.5; }
+.journey-ed__item { position: relative; display: grid; grid-template-columns: 90px 1fr; gap: 24px; padding: 18px 0; }
+.journey-ed__item::before { content:""; position:absolute; left:-40px; top:22px; width:16px; height:16px; border-radius:50%; background: var(--hs-plum); border:3px solid var(--hs-cream); box-shadow:0 0 0 2px var(--hs-plum); }
+.journey-ed__year { font-family: var(--font-display); font-weight: 700; font-size: 1.4rem; color: var(--hs-plum); }
+.journey-ed__item p { color: var(--hs-ink-soft); line-height: 1.65; font-size: .98rem; }
+
+/* Collection grid (koleksi page) */
+.collection-section { max-width: 1400px; margin: 0 auto; padding: clamp(30px,5vw,60px) clamp(24px,6vw,90px) clamp(60px,8vw,100px); }
+.collection-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 32px; }
+.collection-card { background: var(--hs-white); overflow: hidden; transition: transform .4s var(--ease-out); }
+.collection-card:hover { transform: translateY(-6px); }
+.collection-card__img { position: relative; aspect-ratio: 3/4; overflow: hidden; }
+.collection-card__img img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s var(--ease-out); }
+.collection-card:hover .collection-card__img img { transform: scale(1.04); }
+.collection-card__serial { position: absolute; top: 16px; left: 16px; z-index: 2; font-family: var(--font-display); font-weight: 700; font-size: .85rem; color: var(--hs-white); mix-blend-mode: difference; }
+.collection-card__body { padding: 20px 4px 0; }
+.collection-card__top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 6px; }
+.collection-card__top h3 { font-family: var(--font-display); font-weight: 600; font-size: 1.3rem; color: var(--hs-ink); }
+.collection-card__price { font-family: var(--font-body); font-weight: 600; font-size: .92rem; color: var(--hs-plum); flex-shrink: 0; }
+.collection-card__body p { color: var(--hs-muted); font-size: .92rem; line-height: 1.55; }
+.collection-note { text-align: center; margin-top: 56px; }
+.collection-note p { color: var(--hs-ink-soft); margin-bottom: 20px; }
+
+/* Gallery editorial */
+.gallery-ed-section { max-width: 1400px; margin: 0 auto; padding: clamp(20px,4vw,50px) clamp(24px,6vw,90px) clamp(60px,8vw,100px); }
+.gallery-ed { display: grid; grid-template-columns: repeat(4,1fr); grid-auto-rows: 220px; gap: 16px; }
+.gallery-ed__item { position: relative; overflow: hidden; }
+.gallery-ed__item img { width:100%; height:100%; object-fit: cover; transition: transform .6s var(--ease-out); }
+.gallery-ed__item:hover img { transform: scale(1.05); }
+.gallery-ed__item--wide { grid-column: span 2; }
+.gallery-ed__item--tall { grid-row: span 2; }
+.gallery-ed__item--square { grid-column: span 1; }
+.gallery-ed__cap { position: absolute; bottom: 12px; left: 14px; color: var(--hs-white); font-family: var(--font-body); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; text-shadow: 0 1px 8px rgba(0,0,0,.5); }
+
+/* Contact editorial */
+.contact-ed { max-width: 1400px; margin: 0 auto; padding: clamp(30px,5vw,60px) clamp(24px,6vw,90px); }
+.contact-ed__grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: 56px; align-items: start; }
+.contact-ed__info { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+.contact-ed__label { display: block; font-family: var(--font-body); font-size: .68rem; letter-spacing: .18em; text-transform: uppercase; color: var(--hs-plum); margin-bottom: 8px; }
+.contact-ed__value { display: block; font-family: var(--font-display); font-weight: 600; font-size: 1.15rem; color: var(--hs-ink); margin-bottom: 6px; }
+a.contact-ed__value:hover { color: var(--hs-plum); }
+.contact-ed__item p { color: var(--hs-muted); font-size: .88rem; line-height: 1.5; }
+.contact-ed__form-wrap { background: var(--hs-white); padding: clamp(28px,4vw,44px); }
+.contact-ed__form-wrap h2 { font-family: var(--font-display); font-weight: 600; font-size: 1.6rem; color: var(--hs-ink); margin-bottom: 6px; }
+.contact-ed__sub { color: var(--hs-muted); font-size: .95rem; margin-bottom: 24px; }
+.contact-ed__form { display: flex; flex-direction: column; gap: 16px; }
+.contact-ed__form label { display: flex; flex-direction: column; gap: 7px; font-family: var(--font-body); font-weight: 600; font-size: .8rem; color: var(--hs-ink-soft); }
+.contact-ed__form input, .contact-ed__form textarea { font-family: var(--font-body); font-size: .95rem; color: var(--hs-ink); padding: 12px 14px; border: 1.5px solid var(--hs-line); background: var(--hs-cream); transition: border-color .2s; }
+.contact-ed__form input:focus, .contact-ed__form textarea:focus { outline: none; border-color: var(--hs-plum); background: var(--hs-white); }
+.contact-ed__form .btn-cta { margin-top: 8px; text-align: center; }
+
+.map-ed-section { max-width: 1400px; margin: 0 auto; padding: clamp(30px,5vw,60px) clamp(24px,6vw,90px) clamp(60px,8vw,100px); }
+.map-ed { height: 380px; overflow: hidden; }
+.map-ed iframe { width: 100%; height: 100%; border: 0; display: block; }
+
+@media (max-width: 960px) {
+  .values-ed__grid { grid-template-columns: 1fr; gap: 28px; }
+  .collection-grid { grid-template-columns: repeat(2,1fr); }
+  .gallery-ed { grid-template-columns: repeat(2,1fr); }
+  .contact-ed__grid { grid-template-columns: 1fr; gap: 36px; }
+}
+@media (max-width: 560px) {
+  .collection-grid { grid-template-columns: 1fr; }
+  .contact-ed__info { grid-template-columns: 1fr; }
+  .journey-ed__item { grid-template-columns: 70px 1fr; gap: 14px; }
+}
