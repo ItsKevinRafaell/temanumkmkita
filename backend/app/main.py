@@ -4,6 +4,7 @@ from fastapi.staticfiles import StaticFiles
 import os
 
 from app.core.database import engine, Base
+from app.core.auto_migrate import run_auto_migrations
 from app.routers import (
     articles,
     categories,
@@ -22,6 +23,11 @@ from app.routers import (
 )
 
 Base.metadata.create_all(bind=engine)
+run_auto_migrations(engine)
+
+# Idempotent column migrations (create_all tidak menambah kolom ke tabel lama)
+from app.core.migrate import run_migrations
+run_migrations()
 
 app = FastAPI(
     title="Teman UMKM Kita API",
