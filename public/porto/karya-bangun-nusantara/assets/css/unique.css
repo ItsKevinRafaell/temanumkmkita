@@ -1700,3 +1700,7 @@ section {
   * { animation-duration: .01ms !important; transition-duration: .01ms !important; }
   .js-reveal .reveal { opacity: 1 !important; transform: none !important; }
 }
+
+/* mobile anti horizontal-scroll guard */
+html,body{overflow-x:clip;max-width:100%;}
+img{max-width:100%;height:auto;}

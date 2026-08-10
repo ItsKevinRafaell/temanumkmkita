@@ -1543,3 +1543,7 @@ section { padding-block: clamp(80px, 10vw, 140px); }
    ============================================================ */
 .text-center { text-align: center; }
 .mb-0 { margin-bottom: 0; }
+
+/* mobile anti horizontal-scroll guard */
+html,body{overflow-x:clip;max-width:100%;}
+img{max-width:100%;height:auto;}

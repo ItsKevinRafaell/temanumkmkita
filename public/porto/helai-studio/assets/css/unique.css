@@ -1178,3 +1178,7 @@ a.contact-ed__value:hover { color: var(--hs-plum); }
   .collection-card__body { padding: 14px 2px 0; }
   .collection-card__top h3 { font-size: 1.15rem; }
 }
+
+/* mobile anti horizontal-scroll guard */
+html,body{overflow-x:clip;max-width:100%;}
+img{max-width:100%;height:auto;}

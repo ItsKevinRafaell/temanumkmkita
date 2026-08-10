@@ -1750,3 +1750,7 @@ h1 em, h2 em, h3 em, p em { font-style: normal; }
     background: rgba(247,242,236,0.98);
   }
 }
+
+/* mobile anti horizontal-scroll guard */
+html,body{overflow-x:clip;max-width:100%;}
+img{max-width:100%;height:auto;}
