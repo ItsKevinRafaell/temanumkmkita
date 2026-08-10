@@ -24,7 +24,7 @@
   display: inline-flex; align-items: center; gap: 10px;
   font-family: var(--font-display); font-weight: 700; font-size: 0.8rem;
   letter-spacing: .18em; text-transform: uppercase; color: var(--accent);
-  border-left: 3px solid var(--accent); padding-left: 12px; margin-bottom: 22px;
+  margin-bottom: 22px;
 }
 .hero-fb__title {
   font-family: var(--font-display); font-weight: 800;
@@ -68,7 +68,7 @@
 .proof__f { grid-column: span 4; grid-row: span 1; }
 
 /* ---- LAYANAN: baris tegas dgn nomor gede kiri (bukan kartu 2-col) ---- */
-.svc-rows { border-top: 2px solid var(--brand); }
+.svc-rows { }
 .svc-row {
   display: grid; grid-template-columns: 90px 1fr auto; gap: 28px; align-items: center;
   padding: 30px 8px; border-bottom: 1px solid var(--line);

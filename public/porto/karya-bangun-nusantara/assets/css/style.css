@@ -1,7 +1,7 @@
-/* Hallmark · macrostructure: Photographic · tone: industrial-premium editorial · anchor hue: steel-navy (cool)
- * Hallmark · pre-emit critique: P5 H5 E5 S5 R4 V5
- * theme: custom (vibe: "kokoh presisi premium industrial" · paper #F5F4F0 · charcoal #1A1A1A · accent steel-navy #1E3A5F · Archivo + Inter)
- * nav: N6 masthead · footer: Ft5 statement · contrast: pass (40-41) · slop: pass (42-45) · mobile: pass (34,49,50-57)
+/* Hallmark — macrostructure: Photographic — tone: industrial-premium editorial — anchor hue: steel-navy (cool)
+ * Hallmark — pre-emit critique: P5 H5 E5 S5 R4 V5
+ * theme: custom (vibe: "kokoh presisi premium industrial" — paper #F5F4F0 — charcoal #1A1A1A — accent steel-navy #1E3A5F — Archivo + Inter)
+ * nav: N6 masthead — footer: Ft5 statement — contrast: pass (40-41) — slop: pass (42-45) — mobile: pass (34,49,50-57)
  * ============================================================
  *  KARYA BANGUN NUSANTARA — style.css (rombak total, no framework)
  *  Foto proyek DOMINAN. Archivo Black uppercase. Whitespace editorial.
@@ -234,7 +234,6 @@ section { padding-block: clamp(64px, 9vw, 128px); }
 /* Blok teks pada panel plat baja solid, garis aksen kiri */
 .hero__inner .hero__panel {
   background: var(--paper);
-  border-left: 6px solid var(--safety);
   padding: 40px 44px 44px;
   max-width: 720px;
   box-shadow: 0 20px 60px -24px rgba(26,26,26,.55);
@@ -431,7 +430,7 @@ section { padding-block: clamp(64px, 9vw, 128px); }
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 28px;
 }
-.tl-step { position: relative; padding-top: 30px; border-top: 4px solid var(--safety); }
+.tl-step { position: relative; padding-top: 30px; }
 .bg-alt .tl-step { border-top-color: var(--safety); }
 .tl-step__num {
   font-family: var(--font-display);
@@ -462,7 +461,6 @@ section { padding-block: clamp(64px, 9vw, 128px); }
   background: #FFFFFF;
   color: var(--ink);
   padding: 40px 34px;
-  border-top: 5px solid var(--safety);
   box-shadow: 0 14px 40px -22px rgba(26,26,26,.28);
   display: flex;
   flex-direction: column;
@@ -647,7 +645,7 @@ section { padding-block: clamp(64px, 9vw, 128px); }
   justify-content: space-between;
   gap: 40px;
   flex-wrap: wrap;
-  border-left: 8px solid var(--accent);
+
 }
 .cta h2 { font-weight: 800; font-size: clamp(1.6rem, 3.6vw, 2.6rem); text-transform: uppercase; color: var(--safety-ink); max-width: 20ch; }
 .cta p { margin-top: 14px; color: rgba(26,26,26,.82); max-width: 46ch; }

@@ -109,15 +109,12 @@ p { margin: 0; }
   align-items: center;
   gap: 12px;
 }
-.nav-brand__mark {
-  display: inline-flex; align-items: center; justify-content: center;
-  width: 42px; height: 42px;
-  background: var(--warm-accent);
-  color: #fff;
-  font-family: var(--ff-display); font-weight: 800;
-  font-size: 1.15rem; letter-spacing: -0.02em;
-  border-radius: 12px;
+.nav-brand__logo {
+  width: 44px; height: 44px;
+  object-fit: contain;
   flex-shrink: 0;
+  display: block;
+  image-rendering: -webkit-optimize-contrast;
 }
 .nav-brand__name {
   display: flex;
@@ -993,13 +990,11 @@ a.delivery-chip:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba
   margin-bottom: 14px;
   color: #fff;
 }
-.footer-brand__mark {
-  display: inline-flex; align-items: center; justify-content: center;
-  width: 34px; height: 34px;
-  background: var(--warm-accent); color: #fff;
-  font-family: var(--ff-display); font-weight: 800;
-  font-size: 0.95rem; border-radius: 10px;
+.footer-brand__logo {
+  width: 38px; height: 38px;
+  object-fit: contain;
   flex-shrink: 0;
+  display: block;
 }
 .footer-desc {
   color: rgba(255,255,255,0.6);

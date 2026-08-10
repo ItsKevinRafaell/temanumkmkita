@@ -34,51 +34,72 @@
         <h2 class="sec-header__title">Tiga cara kami menemani hari Anda</h2>
         <div class="sec-header__line"></div>
       </div>
-      <div class="pkg-grid reveal">
 
-        <div class="pkg-card">
-          <h3 class="pkg-card__name">Intimate</h3>
-          <div class="pkg-card__price">Mulai Rp 15 Juta</div>
-          <ul class="pkg-card__feats">
-            <li>Akad &amp; resepsi hingga 100 tamu</li>
-            <li>Konsep &amp; moodboard dekorasi</li>
-            <li>Koordinasi 4 vendor utama</li>
-            <li>Tim lapangan hari-H</li>
-            <li>Rundown &amp; gladi bersih</li>
-          </ul>
-          <a class="btn-romantic btn-romantic--outline" style="color:var(--sage);border-color:rgba(58,74,63,0.25);" href="https://wa.me/6281234567890?text=Halo%20Momentum%2C%20tanya%20paket%20Intimate" target="_blank" rel="noopener">Tanya Paket Ini</a>
-        </div>
-
-        <div class="pkg-card pkg-card--featured">
-          <span class="pkg-card__tag">Paling Dipilih</span>
-          <h3 class="pkg-card__name">Classic</h3>
-          <div class="pkg-card__price">Mulai Rp 30 Juta</div>
-          <ul class="pkg-card__feats">
-            <li>Resepsi hingga 300 tamu</li>
-            <li>Konsep visual penuh + dekorasi</li>
-            <li>Koordinasi seluruh vendor</li>
-            <li>Tim lapangan lengkap sejak subuh</li>
-            <li>MC &amp; entertainment koordinasi</li>
-            <li>Dokumentasi vendor terkurasi</li>
-          </ul>
-          <a class="btn-romantic btn-romantic--primary" href="https://wa.me/6281234567890?text=Halo%20Momentum%2C%20tanya%20paket%20Classic" target="_blank" rel="noopener">Tanya Paket Ini</a>
-        </div>
-
-        <div class="pkg-card">
-          <h3 class="pkg-card__name">Grand</h3>
-          <div class="pkg-card__price">Mulai Rp 60 Juta</div>
-          <ul class="pkg-card__feats">
-            <li>Resepsi 300+ tamu / multi-hari</li>
-            <li>Desain dekorasi eksklusif</li>
-            <li>Full vendor management</li>
-            <li>Tim besar + koordinator per area</li>
-            <li>Konsep hiburan &amp; tata panggung</li>
-            <li>Konsultasi tanpa batas</li>
-          </ul>
-          <a class="btn-romantic btn-romantic--outline" style="color:var(--sage);border-color:rgba(58,74,63,0.25);" href="https://wa.me/6281234567890?text=Halo%20Momentum%2C%20tanya%20paket%20Grand" target="_blank" rel="noopener">Tanya Paket Ini</a>
-        </div>
-
+      <div class="menu-tabs" role="tablist" aria-label="Kategori paket">
+        <button class="menu-tab is-active" role="tab" aria-selected="true" data-cat="intimate">Paket Intimate</button>
+        <button class="menu-tab" role="tab" aria-selected="false" data-cat="classic">Paket Classic</button>
+        <button class="menu-tab" role="tab" aria-selected="false" data-cat="grand">Paket Grand</button>
       </div>
+
+      <!-- PAKET INTIMATE -->
+      <div class="menu-panel is-active" data-panel="intimate">
+        <div class="pkg-grid reveal">
+          <div class="pkg-card pkg-card--featured" style="grid-column: 1 / -1; max-width: 560px; margin: 0 auto;">
+            <span class="pkg-card__tag">Intimate</span>
+            <h3 class="pkg-card__name">Paket Intimate</h3>
+            <div class="pkg-card__price">Mulai Rp 15 Juta</div>
+            <ul class="pkg-card__feats">
+              <li>Akad &amp; resepsi hingga 100 tamu</li>
+              <li>Konsep &amp; moodboard dekorasi</li>
+              <li>Koordinasi 4 vendor utama</li>
+              <li>Tim lapangan hari-H</li>
+              <li>Rundown &amp; gladi bersih</li>
+            </ul>
+            <a class="btn-romantic btn-romantic--primary" href="https://wa.me/6281234567890?text=Halo%20Momentum%2C%20tanya%20paket%20Intimate" target="_blank" rel="noopener">Tanya Paket Ini</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAKET CLASSIC -->
+      <div class="menu-panel" data-panel="classic" hidden>
+        <div class="pkg-grid reveal">
+          <div class="pkg-card pkg-card--featured" style="grid-column: 1 / -1; max-width: 560px; margin: 0 auto;">
+            <span class="pkg-card__tag">Paling Dipilih</span>
+            <h3 class="pkg-card__name">Paket Classic</h3>
+            <div class="pkg-card__price">Mulai Rp 30 Juta</div>
+            <ul class="pkg-card__feats">
+              <li>Resepsi hingga 300 tamu</li>
+              <li>Konsep visual penuh + dekorasi</li>
+              <li>Koordinasi seluruh vendor</li>
+              <li>Tim lapangan lengkap sejak subuh</li>
+              <li>MC &amp; entertainment koordinasi</li>
+              <li>Dokumentasi vendor terkurasi</li>
+            </ul>
+            <a class="btn-romantic btn-romantic--primary" href="https://wa.me/6281234567890?text=Halo%20Momentum%2C%20tanya%20paket%20Classic" target="_blank" rel="noopener">Tanya Paket Ini</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAKET GRAND -->
+      <div class="menu-panel" data-panel="grand" hidden>
+        <div class="pkg-grid reveal">
+          <div class="pkg-card pkg-card--featured" style="grid-column: 1 / -1; max-width: 560px; margin: 0 auto;">
+            <span class="pkg-card__tag">Grand</span>
+            <h3 class="pkg-card__name">Paket Grand</h3>
+            <div class="pkg-card__price">Mulai Rp 60 Juta</div>
+            <ul class="pkg-card__feats">
+              <li>Resepsi 300+ tamu / multi-hari</li>
+              <li>Desain dekorasi eksklusif</li>
+              <li>Full vendor management</li>
+              <li>Tim besar + koordinator per area</li>
+              <li>Konsep hiburan &amp; tata panggung</li>
+              <li>Konsultasi tanpa batas</li>
+            </ul>
+            <a class="btn-romantic btn-romantic--primary" href="https://wa.me/6281234567890?text=Halo%20Momentum%2C%20tanya%20paket%20Grand" target="_blank" rel="noopener">Tanya Paket Ini</a>
+          </div>
+        </div>
+      </div>
+
       <p class="pkg-note reveal">Semua paket bisa disesuaikan. Punya budget atau kebutuhan khusus? Ceritakan, kami buatkan penawaran yang pas.</p>
     </div>
   </section>

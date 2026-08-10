@@ -30,116 +30,163 @@
     <cite class="reveal">Rania Aesthetic</cite>
   </section>
 
-  <!-- TREATMENT LIST: Editorial alternating, deep rose bg -->
+  <!-- TREATMENT TABS -->
   <section class="sec-deep">
     <div class="container">
       <h2 class="headline-section reveal">Daftar Treatment</h2>
       <p class="sub-text reveal" style="color:rgba(255,255,255,0.7)">Perawatan yang kami sediakan dengan hati-hati.</p>
 
-      <div class="trt-editorial__item reveal">
-        <div class="trt-editorial__media">
-          <img src="/porto/rania-aesthetic/assets/img/gen/trt-facial.jpg" alt="Facial" loading="lazy" onerror="this.src='/porto/rania-aesthetic/assets/img/gen/hero.jpg'" />
+      <!-- Tab Bar -->
+      <div class="menu-tabs" role="tablist">
+        <button class="menu-tab is-active" data-cat="t1" aria-selected="true" role="tab">Facial</button>
+        <button class="menu-tab" data-cat="t2" aria-selected="false" role="tab">Laser &amp; Glow</button>
+        <button class="menu-tab" data-cat="t3" aria-selected="false" role="tab">Body &amp; Massage</button>
+      </div>
+
+      <!-- Panel: Facial -->
+      <div class="menu-panel is-active" data-panel="t1">
+        <div class="trt-editorial__item reveal">
+          <div class="trt-editorial__media">
+            <img src="/porto/rania-aesthetic/assets/img/gen/trt-facial.jpg" alt="Facial" loading="lazy" onerror="this.src='/porto/rania-aesthetic/assets/img/gen/hero.jpg'" />
+          </div>
+          <div>
+            <div class="trt-editorial__num">01</div>
+            <h3 class="trt-editorial__name">Facial Rejuvenasi</h3>
+            <p class="trt-editorial__desc">Deep cleansing, ekstraksi lembut, hidrasi &amp; pencerahan. Wajah terasa segar dan lembap setelah treatment. Cocok untuk kulit kusam dan pori tersumbat.</p>
+            <div class="trt-editorial__meta">
+              <span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                60 mnt
+              </span>
+              <span class="trt-editorial__price">Rp 250rb</span>
+            </div>
+          </div>
         </div>
-        <div>
-          <div class="trt-editorial__num">01</div>
-          <h3 class="trt-editorial__name">Facial Rejuvenasi</h3>
-          <p class="trt-editorial__desc">Deep cleansing, ekstraksi lembut, hidrasi &amp; pencerahan. Wajah terasa segar dan lembap setelah treatment. Cocok untuk kulit kusam dan pori tersumbat.</p>
-          <div class="trt-editorial__meta">
-            <span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-              60 mnt
-            </span>
-            <span class="trt-editorial__price">Rp 250rb</span>
+        <div class="trt-editorial__item reveal">
+          <div class="trt-editorial__media">
+            <img src="/porto/rania-aesthetic/assets/img/gen/trt-facial.jpg" alt="Chemical peeling" loading="lazy" onerror="this.src='/porto/rania-aesthetic/assets/img/gen/hero.jpg'" />
+          </div>
+          <div>
+            <div class="trt-editorial__num">02</div>
+            <h3 class="trt-editorial__name">Chemical Peeling</h3>
+            <p class="trt-editorial__desc">Angkat sel kulit mati, tekstur lebih halus &amp; cerah. Formula disesuaikan jenis kulit Anda untuk hasil optimal tanpa iritasi.</p>
+            <div class="trt-editorial__meta">
+              <span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                40 mnt
+              </span>
+              <span class="trt-editorial__price">Rp 350rb</span>
+            </div>
+          </div>
+        </div>
+        <div class="trt-editorial__item reveal">
+          <div class="trt-editorial__media">
+            <img src="/porto/rania-aesthetic/assets/img/gen/trt-glow.jpg" alt="Acne treatment" loading="lazy" onerror="this.src='/porto/rania-aesthetic/assets/img/gen/hero.jpg'" />
+          </div>
+          <div>
+            <div class="trt-editorial__num">03</div>
+            <h3 class="trt-editorial__name">Acne Treatment</h3>
+            <p class="trt-editorial__desc">Penanganan jerawat aktif, kontrol minyak, cegah bekas. Rencana perawatan berkelanjutan untuk kulit bersih dan sehat.</p>
+            <div class="trt-editorial__meta">
+              <span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                55 mnt
+              </span>
+              <span class="trt-editorial__price">Rp 320rb</span>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="trt-editorial__item reveal">
-        <div class="trt-editorial__media">
-          <img src="/porto/rania-aesthetic/assets/img/gen/trt-laser.jpg" alt="Laser" loading="lazy" onerror="this.src='/porto/rania-aesthetic/assets/img/gen/hero.jpg'" />
+      <!-- Panel: Laser & Glow -->
+      <div class="menu-panel" data-panel="t2" hidden>
+        <div class="trt-editorial__item reveal">
+          <div class="trt-editorial__media">
+            <img src="/porto/rania-aesthetic/assets/img/gen/trt-laser.jpg" alt="Laser" loading="lazy" onerror="this.src='/porto/rania-aesthetic/assets/img/gen/hero.jpg'" />
+          </div>
+          <div>
+            <div class="trt-editorial__num">01</div>
+            <h3 class="trt-editorial__name">Laser Brightening</h3>
+            <p class="trt-editorial__desc">Samarkan flek, bekas jerawat, ratakan warna kulit dengan teknologi laser modern dan aman. Diawasi langsung oleh dokter estetika.</p>
+            <div class="trt-editorial__meta">
+              <span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                45 mnt
+              </span>
+              <span class="trt-editorial__price">Rp 450rb</span>
+            </div>
+          </div>
         </div>
-        <div>
-          <div class="trt-editorial__num">02</div>
-          <h3 class="trt-editorial__name">Laser Brightening</h3>
-          <p class="trt-editorial__desc">Samarkan flek, bekas jerawat, ratakan warna kulit dengan teknologi laser modern dan aman. Diawasi langsung oleh dokter estetika.</p>
-          <div class="trt-editorial__meta">
-            <span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-              45 mnt
-            </span>
-            <span class="trt-editorial__price">Rp 450rb</span>
+        <div class="trt-editorial__item reveal">
+          <div class="trt-editorial__media">
+            <img src="/porto/rania-aesthetic/assets/img/gen/trt-glow.jpg" alt="Glow" loading="lazy" onerror="this.src='/porto/rania-aesthetic/assets/img/gen/hero.jpg'" />
+          </div>
+          <div>
+            <div class="trt-editorial__num">02</div>
+            <h3 class="trt-editorial__name">Glow Infusion</h3>
+            <p class="trt-editorial__desc">Booster nutrisi &amp; antioksidan untuk kulit dewy sehat. Perawatan yang bikin kulit bersinar dari dalam tanpa efek berlebihan.</p>
+            <div class="trt-editorial__meta">
+              <span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                50 mnt
+              </span>
+              <span class="trt-editorial__price">Rp 380rb</span>
+            </div>
+          </div>
+        </div>
+        <div class="trt-editorial__item reveal">
+          <div class="trt-editorial__media">
+            <img src="/porto/rania-aesthetic/assets/img/gen/trt-laser.jpg" alt="Microneedling" loading="lazy" onerror="this.src='/porto/rania-aesthetic/assets/img/gen/hero.jpg'" />
+          </div>
+          <div>
+            <div class="trt-editorial__num">03</div>
+            <h3 class="trt-editorial__name">Microneedling</h3>
+            <p class="trt-editorial__desc">Stimulasi kolagen, samarkan pori &amp; garis halus. Teknik modern untuk regenerasi kulit optimal dengan downtime minimal.</p>
+            <div class="trt-editorial__meta">
+              <span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                60 mnt
+              </span>
+              <span class="trt-editorial__price">Rp 550rb</span>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="trt-editorial__item reveal">
-        <div class="trt-editorial__media">
-          <img src="/porto/rania-aesthetic/assets/img/gen/trt-glow.jpg" alt="Glow" loading="lazy" onerror="this.src='/porto/rania-aesthetic/assets/img/gen/hero.jpg'" />
-        </div>
-        <div>
-          <div class="trt-editorial__num">03</div>
-          <h3 class="trt-editorial__name">Glow Infusion</h3>
-          <p class="trt-editorial__desc">Booster nutrisi &amp; antioksidan untuk kulit dewy sehat. Perawatan yang bikin kulit bersinar dari dalam tanpa efek berlebihan.</p>
-          <div class="trt-editorial__meta">
-            <span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-              50 mnt
-            </span>
-            <span class="trt-editorial__price">Rp 380rb</span>
+      <!-- Panel: Body & Massage -->
+      <div class="menu-panel" data-panel="t3" hidden>
+        <div class="trt-editorial__item reveal">
+          <div class="trt-editorial__media">
+            <img src="/porto/rania-aesthetic/assets/img/gen/massage.jpg" alt="Body Massage" loading="lazy" onerror="this.src='/porto/rania-aesthetic/assets/img/gen/hero.jpg'" />
+          </div>
+          <div>
+            <div class="trt-editorial__num">01</div>
+            <h3 class="trt-editorial__name">Body Massage &amp; Relaxation</h3>
+            <p class="trt-editorial__desc">Relaksasi otot dan kulit tubuh dengan teknik pijat profesional. Cocok setelah treatment wajah untuk pengalaman perawatan menyeluruh.</p>
+            <div class="trt-editorial__meta">
+              <span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                60 mnt
+              </span>
+              <span class="trt-editorial__price">Rp 300rb</span>
+            </div>
           </div>
         </div>
-      </div>
-
-      <div class="trt-editorial__item reveal">
-        <div class="trt-editorial__media">
-          <img src="/porto/rania-aesthetic/assets/img/gen/trt-facial.jpg" alt="Chemical peeling" loading="lazy" onerror="this.src='/porto/rania-aesthetic/assets/img/gen/hero.jpg'" />
-        </div>
-        <div>
-          <div class="trt-editorial__num">04</div>
-          <h3 class="trt-editorial__name">Chemical Peeling</h3>
-          <p class="trt-editorial__desc">Angkat sel kulit mati, tekstur lebih halus &amp; cerah. Formula disesuaikan jenis kulit Anda untuk hasil optimal tanpa iritasi.</p>
-          <div class="trt-editorial__meta">
-            <span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-              40 mnt
-            </span>
-            <span class="trt-editorial__price">Rp 350rb</span>
+        <div class="trt-editorial__item reveal">
+          <div class="trt-editorial__media">
+            <img src="/porto/rania-aesthetic/assets/img/gen/skincare-detail.jpg" alt="Body Whitening" loading="lazy" onerror="this.src='/porto/rania-aesthetic/assets/img/gen/hero.jpg'" />
           </div>
-        </div>
-      </div>
-
-      <div class="trt-editorial__item reveal">
-        <div class="trt-editorial__media">
-          <img src="/porto/rania-aesthetic/assets/img/gen/trt-glow.jpg" alt="Acne treatment" loading="lazy" onerror="this.src='/porto/rania-aesthetic/assets/img/gen/hero.jpg'" />
-        </div>
-        <div>
-          <div class="trt-editorial__num">05</div>
-          <h3 class="trt-editorial__name">Acne Treatment</h3>
-          <p class="trt-editorial__desc">Penanganan jerawat aktif, kontrol minyak, cegah bekas. Rencana perawatan berkelanjutan untuk kulit bersih dan sehat.</p>
-          <div class="trt-editorial__meta">
-            <span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-              55 mnt
-            </span>
-            <span class="trt-editorial__price">Rp 320rb</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="trt-editorial__item reveal">
-        <div class="trt-editorial__media">
-          <img src="/porto/rania-aesthetic/assets/img/gen/trt-laser.jpg" alt="Microneedling" loading="lazy" onerror="this.src='/porto/rania-aesthetic/assets/img/gen/hero.jpg'" />
-        </div>
-        <div>
-          <div class="trt-editorial__num">06</div>
-          <h3 class="trt-editorial__name">Microneedling</h3>
-          <p class="trt-editorial__desc">Stimulasi kolagen, samarkan pori &amp; garis halus. Teknik modern untuk regenerasi kulit optimal dengan downtime minimal.</p>
-          <div class="trt-editorial__meta">
-            <span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-              60 mnt
-            </span>
-            <span class="trt-editorial__price">Rp 550rb</span>
+          <div>
+            <div class="trt-editorial__num">02</div>
+            <h3 class="trt-editorial__name">Body Whitening Treatment</h3>
+            <p class="trt-editorial__desc">Pencerahan kulit tubuh yang merata dan aman. Formula khusus untuk mengurangi hiperpigmentasi di area ketiak, siku, dan selangkangan.</p>
+            <div class="trt-editorial__meta">
+              <span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                45 mnt
+              </span>
+              <span class="trt-editorial__price">Rp 350rb</span>
+            </div>
           </div>
         </div>
       </div>

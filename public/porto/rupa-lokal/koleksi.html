@@ -23,154 +23,280 @@
     </div>
   </section>
 
-  <!-- CATEGORY PILL BAR -->
-  <section class="cat-pills">
+  <!-- MENU TABS — kategori produk -->
+  <section class="menu-full">
     <div class="container">
-      <div class="cat-pills__inner">
-        <button class="cat-pill__arrow" aria-label="Geser kiri" onclick="document.querySelector('.cat-pills__scroll').scrollBy({left:-200,behavior:'smooth'})">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-        </button>
-        <div class="cat-pills__scroll">
-          <button class="cat-pill active" data-cat="all">Semua</button>
-          <button class="cat-pill" data-cat="tas">Tas &amp; Aksesori</button>
-          <button class="cat-pill" data-cat="fashion">Fashion &amp; Kain</button>
-          <button class="cat-pill" data-cat="dekorasi">Dekorasi Rumah</button>
-          <button class="cat-pill" data-cat="hampers">Hampers &amp; Gift</button>
-          <button class="cat-pill" data-cat="keramik">Keramik</button>
-          <button class="cat-pill" data-cat="rotan">Rotan &amp; Anyam</button>
-        </div>
-        <button class="cat-pill__arrow" aria-label="Geser kanan" onclick="document.querySelector('.cat-pills__scroll').scrollBy({left:200,behavior:'smooth'})">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-        </button>
+      <div class="menu-tabs" role="tablist" aria-label="Kategori produk">
+        <button class="menu-tab is-active" role="tab" aria-selected="true" data-cat="semua">Semua</button>
+        <button class="menu-tab" role="tab" aria-selected="false" data-cat="tas">Tas &amp; Aksesori</button>
+        <button class="menu-tab" role="tab" aria-selected="false" data-cat="fashion">Fashion &amp; Kain</button>
+        <button class="menu-tab" role="tab" aria-selected="false" data-cat="dekorasi">Dekorasi &amp; Keramik</button>
       </div>
-    </div>
-  </section>
 
-  <!-- FULL PRODUCT GRID — 8 products -->
-  <section style="padding-top:0;">
-    <div class="container">
-      <div class="prod-grid reveal-stagger">
-        <article class="prod-card reveal" data-cat="tas">
-          <div class="prod-card__img">
-            <button class="prod-card__wishlist" aria-label="Simpan favorit">
-              <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
-            </button>
-            <img src="/porto/rupa-lokal/assets/img/gen/prod-1.jpg" alt="Tote Batik Modern" loading="lazy" onerror="this.src='/porto/rupa-lokal/assets/img/gen/hero.jpg'" />
-          </div>
-          <div class="prod-card__body">
-            <div class="prod-card__name">Tote Batik Modern</div>
-            <div class="prod-card__meta">
-              <span class="prod-card__cat">Tas &amp; Aksesori</span>
-              <span class="prod-card__price">Rp 185.000</span>
+      <!-- SEMUA PRODUK -->
+      <div class="menu-panel is-active" data-panel="semua">
+        <div class="prod-grid reveal-stagger">
+          <article class="prod-card reveal">
+            <div class="prod-card__img">
+              <button class="prod-card__wishlist" aria-label="Simpan favorit">
+                <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+              </button>
+              <img src="/porto/rupa-lokal/assets/img/gen/prod-1.jpg" alt="Tote Batik Modern" loading="lazy" onerror="this.src='/porto/rupa-lokal/assets/img/gen/hero.jpg'" />
             </div>
-          </div>
-        </article>
-        <article class="prod-card reveal" data-cat="rotan">
-          <div class="prod-card__img">
-            <button class="prod-card__wishlist" aria-label="Simpan favorit">
-              <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
-            </button>
-            <img src="/porto/rupa-lokal/assets/img/gen/prod-3.jpg" alt="Tas Rotan Anyam" loading="lazy" onerror="this.src='/porto/rupa-lokal/assets/img/gen/hero.jpg'" />
-          </div>
-          <div class="prod-card__body">
-            <div class="prod-card__name">Tas Rotan Anyam</div>
-            <div class="prod-card__meta">
-              <span class="prod-card__cat">Tas &amp; Aksesori</span>
-              <span class="prod-card__price">Rp 245.000</span>
+            <div class="prod-card__body">
+              <div class="prod-card__name">Tote Batik Modern</div>
+              <div class="prod-card__meta">
+                <span class="prod-card__cat">Tas &amp; Aksesori</span>
+                <span class="prod-card__price">Rp 185.000</span>
+              </div>
             </div>
-          </div>
-        </article>
-        <article class="prod-card reveal" data-cat="fashion">
-          <div class="prod-card__img">
-            <button class="prod-card__wishlist" aria-label="Simpan favorit">
-              <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
-            </button>
-            <img src="/porto/rupa-lokal/assets/img/gen/prod-4.jpg" alt="Scarf Pewarna Alam" loading="lazy" onerror="this.src='/porto/rupa-lokal/assets/img/gen/hero.jpg'" />
-          </div>
-          <div class="prod-card__body">
-            <div class="prod-card__name">Scarf Pewarna Alam</div>
-            <div class="prod-card__meta">
-              <span class="prod-card__cat">Fashion &amp; Kain</span>
-              <span class="prod-card__price">Rp 165.000</span>
+          </article>
+          <article class="prod-card reveal">
+            <div class="prod-card__img">
+              <button class="prod-card__wishlist" aria-label="Simpan favorit">
+                <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+              </button>
+              <img src="/porto/rupa-lokal/assets/img/gen/prod-3.jpg" alt="Tas Rotan Anyam" loading="lazy" onerror="this.src='/porto/rupa-lokal/assets/img/gen/hero.jpg'" />
             </div>
-          </div>
-        </article>
-        <article class="prod-card reveal" data-cat="keramik">
-          <div class="prod-card__img">
-            <button class="prod-card__wishlist" aria-label="Simpan favorit">
-              <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
-            </button>
-            <img src="/porto/rupa-lokal/assets/img/gen/prod-2.jpg" alt="Set Mug Keramik" loading="lazy" onerror="this.src='/porto/rupa-lokal/assets/img/gen/hero.jpg'" />
-          </div>
-          <div class="prod-card__body">
-            <div class="prod-card__name">Set Mug Keramik</div>
-            <div class="prod-card__meta">
-              <span class="prod-card__cat">Dekorasi Rumah</span>
-              <span class="prod-card__price">Rp 220.000</span>
+            <div class="prod-card__body">
+              <div class="prod-card__name">Tas Rotan Anyam</div>
+              <div class="prod-card__meta">
+                <span class="prod-card__cat">Tas &amp; Aksesori</span>
+                <span class="prod-card__price">Rp 245.000</span>
+              </div>
             </div>
-          </div>
-        </article>
-        <article class="prod-card reveal" data-cat="tas">
-          <div class="prod-card__img">
-            <button class="prod-card__wishlist" aria-label="Simpan favorit">
-              <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
-            </button>
-            <img src="/porto/rupa-lokal/assets/img/gen/prod-1.jpg" alt="Pouch Tenun Etnik" loading="lazy" onerror="this.src='/porto/rupa-lokal/assets/img/gen/hero.jpg'" />
-          </div>
-          <div class="prod-card__body">
-            <div class="prod-card__name">Pouch Tenun Etnik</div>
-            <div class="prod-card__meta">
-              <span class="prod-card__cat">Tas &amp; Aksesori</span>
-              <span class="prod-card__price">Rp 95.000</span>
+          </article>
+          <article class="prod-card reveal">
+            <div class="prod-card__img">
+              <button class="prod-card__wishlist" aria-label="Simpan favorit">
+                <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+              </button>
+              <img src="/porto/rupa-lokal/assets/img/gen/prod-4.jpg" alt="Scarf Pewarna Alam" loading="lazy" onerror="this.src='/porto/rupa-lokal/assets/img/gen/hero.jpg'" />
             </div>
-          </div>
-        </article>
-        <article class="prod-card reveal" data-cat="dekorasi">
-          <div class="prod-card__img">
-            <button class="prod-card__wishlist" aria-label="Simpan favorit">
-              <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
-            </button>
-            <img src="/porto/rupa-lokal/assets/img/gen/prod-3.jpg" alt="Keranjang Rotan" loading="lazy" onerror="this.src='/porto/rupa-lokal/assets/img/gen/hero.jpg'" />
-          </div>
-          <div class="prod-card__body">
-            <div class="prod-card__name">Keranjang Rotan</div>
-            <div class="prod-card__meta">
-              <span class="prod-card__cat">Dekorasi Rumah</span>
-              <span class="prod-card__price">Rp 175.000</span>
+            <div class="prod-card__body">
+              <div class="prod-card__name">Scarf Pewarna Alam</div>
+              <div class="prod-card__meta">
+                <span class="prod-card__cat">Fashion &amp; Kain</span>
+                <span class="prod-card__price">Rp 165.000</span>
+              </div>
             </div>
-          </div>
-        </article>
-        <article class="prod-card reveal" data-cat="fashion">
-          <div class="prod-card__img">
-            <button class="prod-card__wishlist" aria-label="Simpan favorit">
-              <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
-            </button>
-            <img src="/porto/rupa-lokal/assets/img/gen/prod-4.jpg" alt="Selendang Batik Tulis" loading="lazy" onerror="this.src='/porto/rupa-lokal/assets/img/gen/hero.jpg'" />
-          </div>
-          <div class="prod-card__body">
-            <div class="prod-card__name">Selendang Batik Tulis</div>
-            <div class="prod-card__meta">
-              <span class="prod-card__cat">Fashion &amp; Kain</span>
-              <span class="prod-card__price">Rp 285.000</span>
+          </article>
+          <article class="prod-card reveal">
+            <div class="prod-card__img">
+              <button class="prod-card__wishlist" aria-label="Simpan favorit">
+                <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+              </button>
+              <img src="/porto/rupa-lokal/assets/img/gen/prod-2.jpg" alt="Set Mug Keramik" loading="lazy" onerror="this.src='/porto/rupa-lokal/assets/img/gen/hero.jpg'" />
             </div>
-          </div>
-        </article>
-        <article class="prod-card reveal" data-cat="keramik">
-          <div class="prod-card__img">
-            <button class="prod-card__wishlist" aria-label="Simpan favorit">
-              <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
-            </button>
-            <img src="/porto/rupa-lokal/assets/img/gen/prod-2.jpg" alt="Vas Keramik Lokal" loading="lazy" onerror="this.src='/porto/rupa-lokal/assets/img/gen/hero.jpg'" />
-          </div>
-          <div class="prod-card__body">
-            <div class="prod-card__name">Vas Keramik Lokal</div>
-            <div class="prod-card__meta">
-              <span class="prod-card__cat">Dekorasi Rumah</span>
-              <span class="prod-card__price">Rp 195.000</span>
+            <div class="prod-card__body">
+              <div class="prod-card__name">Set Mug Keramik</div>
+              <div class="prod-card__meta">
+                <span class="prod-card__cat">Dekorasi &amp; Keramik</span>
+                <span class="prod-card__price">Rp 220.000</span>
+              </div>
             </div>
-          </div>
-        </article>
+          </article>
+          <article class="prod-card reveal">
+            <div class="prod-card__img">
+              <button class="prod-card__wishlist" aria-label="Simpan favorit">
+                <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+              </button>
+              <img src="/porto/rupa-lokal/assets/img/gen/prod-1.jpg" alt="Pouch Tenun Etnik" loading="lazy" onerror="this.src='/porto/rupa-lokal/assets/img/gen/hero.jpg'" />
+            </div>
+            <div class="prod-card__body">
+              <div class="prod-card__name">Pouch Tenun Etnik</div>
+              <div class="prod-card__meta">
+                <span class="prod-card__cat">Tas &amp; Aksesori</span>
+                <span class="prod-card__price">Rp 95.000</span>
+              </div>
+            </div>
+          </article>
+          <article class="prod-card reveal">
+            <div class="prod-card__img">
+              <button class="prod-card__wishlist" aria-label="Simpan favorit">
+                <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+              </button>
+              <img src="/porto/rupa-lokal/assets/img/gen/prod-3.jpg" alt="Keranjang Rotan" loading="lazy" onerror="this.src='/porto/rupa-lokal/assets/img/gen/hero.jpg'" />
+            </div>
+            <div class="prod-card__body">
+              <div class="prod-card__name">Keranjang Rotan</div>
+              <div class="prod-card__meta">
+                <span class="prod-card__cat">Dekorasi &amp; Keramik</span>
+                <span class="prod-card__price">Rp 175.000</span>
+              </div>
+            </div>
+          </article>
+          <article class="prod-card reveal">
+            <div class="prod-card__img">
+              <button class="prod-card__wishlist" aria-label="Simpan favorit">
+                <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+              </button>
+              <img src="/porto/rupa-lokal/assets/img/gen/prod-4.jpg" alt="Selendang Batik Tulis" loading="lazy" onerror="this.src='/porto/rupa-lokal/assets/img/gen/hero.jpg'" />
+            </div>
+            <div class="prod-card__body">
+              <div class="prod-card__name">Selendang Batik Tulis</div>
+              <div class="prod-card__meta">
+                <span class="prod-card__cat">Fashion &amp; Kain</span>
+                <span class="prod-card__price">Rp 285.000</span>
+              </div>
+            </div>
+          </article>
+          <article class="prod-card reveal">
+            <div class="prod-card__img">
+              <button class="prod-card__wishlist" aria-label="Simpan favorit">
+                <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+              </button>
+              <img src="/porto/rupa-lokal/assets/img/gen/prod-2.jpg" alt="Vas Keramik Lokal" loading="lazy" onerror="this.src='/porto/rupa-lokal/assets/img/gen/hero.jpg'" />
+            </div>
+            <div class="prod-card__body">
+              <div class="prod-card__name">Vas Keramik Lokal</div>
+              <div class="prod-card__meta">
+                <span class="prod-card__cat">Dekorasi &amp; Keramik</span>
+                <span class="prod-card__price">Rp 195.000</span>
+              </div>
+            </div>
+          </article>
+        </div>
       </div>
+
+      <!-- TAS & AKSESORI -->
+      <div class="menu-panel" data-panel="tas" hidden>
+        <div class="prod-grid reveal-stagger">
+          <article class="prod-card reveal">
+            <div class="prod-card__img">
+              <button class="prod-card__wishlist" aria-label="Simpan favorit">
+                <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+              </button>
+              <img src="/porto/rupa-lokal/assets/img/gen/prod-1.jpg" alt="Tote Batik Modern" loading="lazy" onerror="this.src='/porto/rupa-lokal/assets/img/gen/hero.jpg'" />
+            </div>
+            <div class="prod-card__body">
+              <div class="prod-card__name">Tote Batik Modern</div>
+              <div class="prod-card__meta">
+                <span class="prod-card__cat">Tas &amp; Aksesori</span>
+                <span class="prod-card__price">Rp 185.000</span>
+              </div>
+            </div>
+          </article>
+          <article class="prod-card reveal">
+            <div class="prod-card__img">
+              <button class="prod-card__wishlist" aria-label="Simpan favorit">
+                <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+              </button>
+              <img src="/porto/rupa-lokal/assets/img/gen/prod-3.jpg" alt="Tas Rotan Anyam" loading="lazy" onerror="this.src='/porto/rupa-lokal/assets/img/gen/hero.jpg'" />
+            </div>
+            <div class="prod-card__body">
+              <div class="prod-card__name">Tas Rotan Anyam</div>
+              <div class="prod-card__meta">
+                <span class="prod-card__cat">Tas &amp; Aksesori</span>
+                <span class="prod-card__price">Rp 245.000</span>
+              </div>
+            </div>
+          </article>
+          <article class="prod-card reveal">
+            <div class="prod-card__img">
+              <button class="prod-card__wishlist" aria-label="Simpan favorit">
+                <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+              </button>
+              <img src="/porto/rupa-lokal/assets/img/gen/prod-1.jpg" alt="Pouch Tenun Etnik" loading="lazy" onerror="this.src='/porto/rupa-lokal/assets/img/gen/hero.jpg'" />
+            </div>
+            <div class="prod-card__body">
+              <div class="prod-card__name">Pouch Tenun Etnik</div>
+              <div class="prod-card__meta">
+                <span class="prod-card__cat">Tas &amp; Aksesori</span>
+                <span class="prod-card__price">Rp 95.000</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <!-- FASHION & KAIN -->
+      <div class="menu-panel" data-panel="fashion" hidden>
+        <div class="prod-grid reveal-stagger">
+          <article class="prod-card reveal">
+            <div class="prod-card__img">
+              <button class="prod-card__wishlist" aria-label="Simpan favorit">
+                <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+              </button>
+              <img src="/porto/rupa-lokal/assets/img/gen/prod-4.jpg" alt="Scarf Pewarna Alam" loading="lazy" onerror="this.src='/porto/rupa-lokal/assets/img/gen/hero.jpg'" />
+            </div>
+            <div class="prod-card__body">
+              <div class="prod-card__name">Scarf Pewarna Alam</div>
+              <div class="prod-card__meta">
+                <span class="prod-card__cat">Fashion &amp; Kain</span>
+                <span class="prod-card__price">Rp 165.000</span>
+              </div>
+            </div>
+          </article>
+          <article class="prod-card reveal">
+            <div class="prod-card__img">
+              <button class="prod-card__wishlist" aria-label="Simpan favorit">
+                <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+              </button>
+              <img src="/porto/rupa-lokal/assets/img/gen/prod-4.jpg" alt="Selendang Batik Tulis" loading="lazy" onerror="this.src='/porto/rupa-lokal/assets/img/gen/hero.jpg'" />
+            </div>
+            <div class="prod-card__body">
+              <div class="prod-card__name">Selendang Batik Tulis</div>
+              <div class="prod-card__meta">
+                <span class="prod-card__cat">Fashion &amp; Kain</span>
+                <span class="prod-card__price">Rp 285.000</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <!-- DEKORASI & KERAMIK -->
+      <div class="menu-panel" data-panel="dekorasi" hidden>
+        <div class="prod-grid reveal-stagger">
+          <article class="prod-card reveal">
+            <div class="prod-card__img">
+              <button class="prod-card__wishlist" aria-label="Simpan favorit">
+                <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+              </button>
+              <img src="/porto/rupa-lokal/assets/img/gen/prod-2.jpg" alt="Set Mug Keramik" loading="lazy" onerror="this.src='/porto/rupa-lokal/assets/img/gen/hero.jpg'" />
+            </div>
+            <div class="prod-card__body">
+              <div class="prod-card__name">Set Mug Keramik</div>
+              <div class="prod-card__meta">
+                <span class="prod-card__cat">Dekorasi &amp; Keramik</span>
+                <span class="prod-card__price">Rp 220.000</span>
+              </div>
+            </div>
+          </article>
+          <article class="prod-card reveal">
+            <div class="prod-card__img">
+              <button class="prod-card__wishlist" aria-label="Simpan favorit">
+                <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+              </button>
+              <img src="/porto/rupa-lokal/assets/img/gen/prod-3.jpg" alt="Keranjang Rotan" loading="lazy" onerror="this.src='/porto/rupa-lokal/assets/img/gen/hero.jpg'" />
+            </div>
+            <div class="prod-card__body">
+              <div class="prod-card__name">Keranjang Rotan</div>
+              <div class="prod-card__meta">
+                <span class="prod-card__cat">Dekorasi &amp; Keramik</span>
+                <span class="prod-card__price">Rp 175.000</span>
+              </div>
+            </div>
+          </article>
+          <article class="prod-card reveal">
+            <div class="prod-card__img">
+              <button class="prod-card__wishlist" aria-label="Simpan favorit">
+                <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+              </button>
+              <img src="/porto/rupa-lokal/assets/img/gen/prod-2.jpg" alt="Vas Keramik Lokal" loading="lazy" onerror="this.src='/porto/rupa-lokal/assets/img/gen/hero.jpg'" />
+            </div>
+            <div class="prod-card__body">
+              <div class="prod-card__name">Vas Keramik Lokal</div>
+              <div class="prod-card__meta">
+                <span class="prod-card__cat">Dekorasi &amp; Keramik</span>
+                <span class="prod-card__price">Rp 195.000</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -213,11 +339,11 @@
       <div class="testimonials-grid reveal-stagger">
         <div class="testi-card reveal">
           <div class="testi-card__stars">
-            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 14.14 2 9.27 8.91 8.26 12 2"/></svg>
           </div>
           <p class="testi-card__text">Tote Batik-nya beneran premium. Jahitan rapi, kainnya tebal tapi tetap elegan. Banyak yang nanya beli dimana. Respon WA-nya juga cepat.</p>
           <div class="testi-card__author">
@@ -230,11 +356,11 @@
         </div>
         <div class="testi-card reveal">
           <div class="testi-card__stars">
-            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 14.14 2 9.27 8.91 8.26 12 2"/></svg>
           </div>
           <p class="testi-card__text">Pesan hampers buat klien korporat, hasilnya luar biasa. Semua kolega pada nanya. Packaging-nya juga rapi dan berkesan. Pasti repeat order.</p>
           <div class="testi-card__author">
@@ -247,11 +373,11 @@
         </div>
         <div class="testi-card reveal">
           <div class="testi-card__stars">
-            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 14.14 2 9.27 8.91 8.26 12 2"/></svg>
           </div>
           <p class="testi-card__text">Vas keramiknya jadi centerpiece di ruang tamu. Kualitasnya beda banget sama yang di marketplace biasa. Worth every rupiah.</p>
           <div class="testi-card__author">

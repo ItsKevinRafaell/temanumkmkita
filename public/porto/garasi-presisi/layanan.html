@@ -23,7 +23,7 @@
     </div>
   </section>
 
-  <!-- SERVICE TILES — SPEC-SHEET GRID -->
+  <!-- SERVICE TILES — TAB KATEGORI -->
   <section>
     <div class="container">
       <div class="section-header center reveal">
@@ -31,90 +31,144 @@
         <h2>Layanan utama yang paling sering diminta.</h2>
         <p>Setiap layanan dikerjakan dengan standar yang sama: presisi, transparan, bergaransi.</p>
       </div>
-      <div class="svc-grid reveal-stagger">
-        <article class="svc-card reveal">
-          <div class="svc-card__img">
-            <span class="svc-card__serial">01</span>
-            <img src="/porto/garasi-presisi/assets/img/gen/svc-servis.jpg" alt="Servis rutin" loading="lazy" onerror="this.src='/porto/garasi-presisi/assets/img/gen/hero.jpg'" />
-          </div>
-          <div class="svc-card__body">
-            <div class="svc-card__top">
-              <h3>Servis Rutin Berkala</h3>
-              <span class="svc-card__price">Rp 350rb - 600rb</span>
+      <div class="menu-tabs" role="tablist" aria-label="Kategori layanan">
+        <button class="menu-tab is-active" role="tab" aria-selected="true" data-cat="servis-rutin">Servis Rutin</button>
+        <button class="menu-tab" role="tab" aria-selected="false" data-cat="kaki-kaki">Kaki-Kaki &amp; Spooring</button>
+        <button class="menu-tab" role="tab" aria-selected="false" data-cat="mesin">Mesin</button>
+        <button class="menu-tab" role="tab" aria-selected="false" data-cat="body-cat">Body &amp; Cat</button>
+      </div>
+
+      <!-- SERVIS RUTIN -->
+      <div class="menu-panel is-active" data-panel="servis-rutin">
+        <div class="svc-grid reveal-stagger">
+          <article class="svc-card reveal">
+            <div class="svc-card__img">
+              <span class="svc-card__serial">01</span>
+              <img src="/porto/garasi-presisi/assets/img/gen/svc-servis.jpg" alt="Servis rutin" loading="lazy" onerror="this.src='/porto/garasi-presisi/assets/img/gen/hero.jpg'" />
             </div>
-            <p>Cek mesin, rem, filter, cairan, dan sistem penting lainnya.</p>
-          </div>
-        </article>
-        <article class="svc-card reveal">
-          <div class="svc-card__img">
-            <span class="svc-card__serial">02</span>
-            <img src="/porto/garasi-presisi/assets/img/gen/svc-spooring.jpg" alt="Spooring balancing" loading="lazy" onerror="this.src='/porto/garasi-presisi/assets/img/gen/hero.jpg'" />
-          </div>
-          <div class="svc-card__body">
-            <div class="svc-card__top">
-              <h3>Spooring &amp; Balancing</h3>
-              <span class="svc-card__price">Rp 180rb - 300rb</span>
+            <div class="svc-card__body">
+              <div class="svc-card__top">
+                <h3>Servis Rutin Berkala</h3>
+                <span class="svc-card__price">Rp 350rb - 600rb</span>
+              </div>
+              <p>Cek mesin, rem, filter, cairan, dan sistem penting lainnya.</p>
             </div>
-            <p>Setir lurus, ban awet, kemudi stabil di kecepatan tinggi.</p>
-          </div>
-        </article>
-        <article class="svc-card reveal">
-          <div class="svc-card__img">
-            <span class="svc-card__serial">03</span>
-            <img src="/porto/garasi-presisi/assets/img/gen/svc-oli.jpg" alt="Ganti oli" loading="lazy" onerror="this.src='/porto/garasi-presisi/assets/img/gen/hero.jpg'" />
-          </div>
-          <div class="svc-card__body">
-            <div class="svc-card__top">
-              <h3>Ganti Oli &amp; Filter</h3>
-              <span class="svc-card__price">Rp 220rb - 500rb</span>
+          </article>
+          <article class="svc-card reveal">
+            <div class="svc-card__img">
+              <span class="svc-card__serial">02</span>
+              <img src="/porto/garasi-presisi/assets/img/gen/svc-oli.jpg" alt="Ganti oli" loading="lazy" onerror="this.src='/porto/garasi-presisi/assets/img/gen/hero.jpg'" />
             </div>
-            <p>Oli original + filter baru, dicatat jadwal berikutnya.</p>
-          </div>
-        </article>
-        <article class="svc-card reveal">
-          <div class="svc-card__img">
-            <span class="svc-card__serial">04</span>
-            <img src="/porto/garasi-presisi/assets/img/gen/before-after.jpg" alt="Tune up mesin" loading="lazy" onerror="this.src='/porto/garasi-presisi/assets/img/gen/hero.jpg'" />
-          </div>
-          <div class="svc-card__body">
-            <div class="svc-card__top">
-              <h3>Tune Up Mesin</h3>
-              <span class="svc-card__price">Rp 400rb - 850rb</span>
+            <div class="svc-card__body">
+              <div class="svc-card__top">
+                <h3>Ganti Oli &amp; Filter</h3>
+                <span class="svc-card__price">Rp 220rb - 500rb</span>
+              </div>
+              <p>Oli original + filter baru, dicatat jadwal berikutnya.</p>
             </div>
-            <p>Optimalkan performa: busi, throttle, sensor, pembersihan.</p>
-          </div>
-        </article>
-        <article class="svc-card reveal">
-          <div class="svc-card__img">
-            <span class="svc-card__serial">05</span>
-            <img src="/porto/garasi-presisi/assets/img/gen/svc-servis.jpg" alt="Servis rem" loading="lazy" onerror="this.src='/porto/garasi-presisi/assets/img/gen/hero.jpg'" />
-          </div>
-          <div class="svc-card__body">
-            <div class="svc-card__top">
-              <h3>Servis Rem</h3>
-              <span class="svc-card__price">Rp 250rb - 700rb</span>
+          </article>
+          <article class="svc-card reveal">
+            <div class="svc-card__img">
+              <span class="svc-card__serial">03</span>
+              <img src="/porto/garasi-presisi/assets/img/gen/svc-oli.jpg" alt="Servis AC" loading="lazy" onerror="this.src='/porto/garasi-presisi/assets/img/gen/hero.jpg'" />
             </div>
-            <p>Ganti kampas, cek cakram, kuras minyak rem. Keamanan nomor satu.</p>
-          </div>
-        </article>
-        <article class="svc-card reveal">
-          <div class="svc-card__img">
-            <span class="svc-card__serial">06</span>
-            <img src="/porto/garasi-presisi/assets/img/gen/svc-oli.jpg" alt="Servis AC" loading="lazy" onerror="this.src='/porto/garasi-presisi/assets/img/gen/hero.jpg'" />
-          </div>
-          <div class="svc-card__body">
-            <div class="svc-card__top">
-              <h3>Servis AC Mobil</h3>
-              <span class="svc-card__price">Rp 300rb - 750rb</span>
+            <div class="svc-card__body">
+              <div class="svc-card__top">
+                <h3>Servis AC Mobil</h3>
+                <span class="svc-card__price">Rp 300rb - 750rb</span>
+              </div>
+              <p>Bersihkan evaporator, isi freon, cek kompresor. Kabin adem lagi.</p>
             </div>
-            <p>Bersihkan evaporator, isi freon, cek kompresor. Kabin adem lagi.</p>
-          </div>
-        </article>
+          </article>
+        </div>
+      </div>
+
+      <!-- KAKI-KAKI & SPOORING -->
+      <div class="menu-panel" data-panel="kaki-kaki" hidden>
+        <div class="svc-grid reveal-stagger">
+          <article class="svc-card reveal">
+            <div class="svc-card__img">
+              <span class="svc-card__serial">04</span>
+              <img src="/porto/garasi-presisi/assets/img/gen/svc-spooring.jpg" alt="Spooring balancing" loading="lazy" onerror="this.src='/porto/garasi-presisi/assets/img/gen/hero.jpg'" />
+            </div>
+            <div class="svc-card__body">
+              <div class="svc-card__top">
+                <h3>Spooring &amp; Balancing</h3>
+                <span class="svc-card__price">Rp 180rb - 300rb</span>
+              </div>
+              <p>Setir lurus, ban awet, kemudi stabil di kecepatan tinggi.</p>
+            </div>
+          </article>
+          <article class="svc-card reveal">
+            <div class="svc-card__img">
+              <span class="svc-card__serial">05</span>
+              <img src="/porto/garasi-presisi/assets/img/gen/svc-servis.jpg" alt="Servis rem" loading="lazy" onerror="this.src='/porto/garasi-presisi/assets/img/gen/hero.jpg'" />
+            </div>
+            <div class="svc-card__body">
+              <div class="svc-card__top">
+                <h3>Servis Rem</h3>
+                <span class="svc-card__price">Rp 250rb - 700rb</span>
+              </div>
+              <p>Ganti kampas, cek cakram, kuras minyak rem. Keamanan nomor satu.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <!-- MESIN -->
+      <div class="menu-panel" data-panel="mesin" hidden>
+        <div class="svc-grid reveal-stagger">
+          <article class="svc-card reveal">
+            <div class="svc-card__img">
+              <span class="svc-card__serial">06</span>
+              <img src="/porto/garasi-presisi/assets/img/gen/before-after.jpg" alt="Tune up mesin" loading="lazy" onerror="this.src='/porto/garasi-presisi/assets/img/gen/hero.jpg'" />
+            </div>
+            <div class="svc-card__body">
+              <div class="svc-card__top">
+                <h3>Tune Up Mesin</h3>
+                <span class="svc-card__price">Rp 400rb - 850rb</span>
+              </div>
+              <p>Optimalkan performa: busi, throttle, sensor, pembersihan.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <!-- BODY & CAT -->
+      <div class="menu-panel" data-panel="body-cat" hidden>
+        <div class="svc-grid reveal-stagger">
+          <article class="svc-card reveal">
+            <div class="svc-card__img">
+              <span class="svc-card__serial">07</span>
+              <img src="/porto/garasi-presisi/assets/img/gen/svc-servis.jpg" alt="Body repair" loading="lazy" onerror="this.src='/porto/garasi-presisi/assets/img/gen/hero.jpg'" />
+            </div>
+            <div class="svc-card__body">
+              <div class="svc-card__top">
+                <h3>Body Repair</h3>
+                <span class="svc-card__price">Rp 500rb - 3jt</span>
+              </div>
+              <p>Baret ringan sampai penyok berat. Body kerangka diperbaiki presisi.</p>
+            </div>
+          </article>
+          <article class="svc-card reveal">
+            <div class="svc-card__img">
+              <span class="svc-card__serial">08</span>
+              <img src="/porto/garasi-presisi/assets/img/gen/svc-spooring.jpg" alt="Cat ulang" loading="lazy" onerror="this.src='/porto/garasi-presisi/assets/img/gen/hero.jpg'" />
+            </div>
+            <div class="svc-card__body">
+              <div class="svc-card__top">
+                <h3>Cat Ulang &amp; Detailing</h3>
+                <span class="svc-card__price">Rp 800rb - 5jt</span>
+              </div>
+              <p>Cat oven, poles full body, coating. Mobil kembali kinclong.</p>
+            </div>
+          </article>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- PACKAGE TIERS — SPEC-SHEET PANELS -->
+  <!-- PACKAGE TIERS -->
   <section style="background:var(--surface-2)">
     <div class="container">
       <div class="section-header center reveal">

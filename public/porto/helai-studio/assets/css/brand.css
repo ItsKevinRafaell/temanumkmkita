@@ -1,5 +1,5 @@
 /* brand.css — HELAI STUDIO. Fashion lokal modern. Plum + cream dingin.
-   Font: Cormorant (serif elegan tinggi). Karakter: editorial, aspiratif, tenang. */
+   Font: Syne (display) + Inter (body). Karakter: editorial, aspiratif, tenang. */
 :root {
   --brand:      #4A2740;   /* plum gelap — teks aksen & judul struktural */
   --brand-2:    #331A2C;
@@ -51,10 +51,10 @@ body { background: var(--bg); color: var(--ink); }
 .btn-ghost { background: transparent; color: var(--brand); border-color: var(--brand); }
 .btn-ghost:hover { background: var(--brand); color: #fff; }
 
-/* judul serif Cormorant — elegan tinggi */
+/* judul display — elegan */
 h1,h2,h3,h4 { font-family: var(--font-display); }
 
-/* FASHION: heading TIDAK uppercase, weight lebih tinggi (Cormorant butuh berat lebih) */
+/* FASHION: heading TIDAK uppercase, weight lebih tinggi */
 .cta-fb__in h2,
 .hero-fb__title,
 .section-head h2,
@@ -67,7 +67,7 @@ h1,h2,h3,h4 { font-family: var(--font-display); }
 .info-item h4,
 .bento__cell h4 { text-transform: none; }
 
-/* Cormorant perlu weight & size lebih besar biar elegan, bukan tipis lemah */
+/* Syne perlu weight lebih besar biar elegan, bukan tipis lemah */
 .hero-fb__title { font-weight: 600; letter-spacing: -0.01em; }
 .section-head h2, .kb-head h2 { font-weight: 600; letter-spacing: -0.005em; }
 .cta-fb__in h2 { font-weight: 600; }
