@@ -7,50 +7,28 @@
   <meta name="description" content="Daftar treatment Rania Aesthetic dengan harga transparan: facial, laser, glow infusion, chemical peeling, dan paket perawatan." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/porto/_ds/design-system.css" />
   <link rel="stylesheet" href="/porto/rania-aesthetic/assets/css/unique.css" />
 </head>
 <body>
   <header class="site-nav" data-include="nav"></header>
 
+  <!-- PAGE HERO -->
   <section class="page-hero">
-    <div class="container">
-      <span class="eyebrow">Treatment &amp; Harga</span>
-      <h1>Semua treatment, harga jelas &amp; jujur.</h1>
-      <p>Harga di bawah adalah kisaran mulai. Rencana pasti selalu dibahas saat konsultasi kulit gratis, disesuaikan kondisi Anda.</p>
+    <div>
+      <span class="eyebrow reveal">Treatment &amp; Harga</span>
+      <h1 class="reveal">Semua treatment, harga jelas &amp; jujur.</h1>
+      <p class="reveal">Harga di bawah adalah kisaran mulai. Rencana pasti selalu dibahas saat konsultasi kulit gratis.</p>
     </div>
   </section>
 
-  <!-- STATS BAND -->
-  <section class="stats-band">
-    <div class="container reveal-stagger">
-      <div class="stat-item reveal">
-        <div class="stat-num">8.000+</div>
-        <div class="stat-label">Klien Terlayani</div>
-      </div>
-      <div class="stat-item reveal">
-        <div class="stat-num">4.9</div>
-        <div class="stat-label">Rating Google</div>
-      </div>
-      <div class="stat-item reveal">
-        <div class="stat-num">12</div>
-        <div class="stat-label">Dokter &amp; Terapis</div>
-      </div>
-      <div class="stat-item reveal">
-        <div class="stat-num">6</div>
-        <div class="stat-label">Tahun Pengalaman</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- TREATMENT LIST: Editorial alternating -->
-  <section>
+  <!-- TREATMENT LIST: Editorial alternating, dark bg -->
+  <section class="sec-dark">
     <div class="container">
-      <div class="section-header reveal">
-        <span class="eyebrow">Daftar Treatment</span>
-        <h2>Perawatan yang kami sediakan.</h2>
-      </div>
+      <h2 class="headline-section reveal">Daftar Treatment</h2>
+      <p class="sub-text reveal" style="color:var(--dark-text-soft)">Perawatan yang kami sediakan.</p>
+
       <div class="trt-editorial__item reveal">
         <div class="trt-editorial__media">
           <img src="/porto/rania-aesthetic/assets/img/gen/trt-facial.jpg" alt="Facial" loading="lazy" onerror="this.src='/porto/rania-aesthetic/assets/img/gen/hero.jpg'" />
@@ -161,15 +139,12 @@
     </div>
   </section>
 
-  <!-- PACKAGES: clean typographic price panels, NO box -->
-  <section style="background:var(--brand-tint)">
+  <!-- PACKAGES -->
+  <section class="sec-light">
     <div class="container">
-      <div class="section-header center reveal">
-        <span class="eyebrow">Paket Perawatan</span>
-        <h2>Lebih hemat dengan paket berkala.</h2>
-        <p>Perawatan kulit paling optimal saat rutin. Paket dibuat agar hasil lebih maksimal &amp; terjangkau.</p>
-      </div>
-      <div class="pkg-grid">
+      <h2 class="headline-section reveal">Paket Perawatan</h2>
+      <p class="sub-text reveal">Lebih hemat dengan paket berkala. Perawatan kulit paling optimal saat rutin.</p>
+      <div class="pkg-grid" style="margin-top:clamp(36px,4vw,56px)">
         <div class="pkg reveal">
           <span class="tag">Starter</span>
           <div class="price">Rp 900rb<small> /3x</small></div>
@@ -210,13 +185,11 @@
   </section>
 
   <!-- PROCESS -->
-  <section>
+  <section class="sec-dark">
     <div class="container">
-      <div class="section-header center reveal">
-        <span class="eyebrow">Proses Perawatan</span>
-        <h2>Empat langkah menuju kulit yang lebih sehat.</h2>
-      </div>
-      <div class="process-steps reveal-stagger">
+      <h2 class="headline-section reveal">Proses Perawatan</h2>
+      <p class="sub-text reveal" style="color:var(--dark-text-soft)">Empat langkah menuju kulit yang lebih sehat.</p>
+      <div class="process-steps" style="margin-top:clamp(36px,4vw,56px)">
         <div class="process-step reveal">
           <div class="process-step__num">01</div>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
@@ -246,30 +219,28 @@
   </section>
 
   <!-- FAQ -->
-  <section style="background:var(--surface-2)">
+  <section class="sec-light">
     <div class="container">
-      <div class="section-header center reveal">
-        <span class="eyebrow">Sering Ditanya</span>
-        <h2>Sebelum treatment pertama Anda.</h2>
-      </div>
-      <div class="editorial-list">
-        <div class="editorial-list__item reveal">
+      <h2 class="headline-section reveal">Sering Ditanya</h2>
+      <p class="sub-text reveal">Sebelum treatment pertama Anda.</p>
+      <div class="faq-list">
+        <div class="faq-item reveal">
           <h3>Apakah harus konsultasi dulu?</h3>
           <p>Ya, dan itu gratis. Kami perlu tahu kondisi kulit Anda agar treatment aman &amp; tepat sasaran. Tidak ada treatment yang langsung tanpa asesmen dokter.</p>
         </div>
-        <div class="editorial-list__item reveal">
+        <div class="faq-item reveal">
           <h3>Aman untuk kulit sensitif?</h3>
           <p>Kami sesuaikan intensitas &amp; produk dengan kondisi kulit Anda. Dokter akan menilai dulu sebelum tindakan. Banyak klien sensitif yang hasilnya justru bagus karena treatment-nya yang tepat.</p>
         </div>
-        <div class="editorial-list__item reveal">
+        <div class="faq-item reveal">
           <h3>Berapa kali agar terlihat hasil?</h3>
           <p>Tergantung kondisi &amp; jenis treatment. Umumnya hasil mulai terasa setelah beberapa sesi rutin — kami pantau bersama dan sesuaikan jika perlu.</p>
         </div>
-        <div class="editorial-list__item reveal">
+        <div class="faq-item reveal">
           <h3>Bisa bayar pakai apa?</h3>
           <p>Kami menerima tunai dan transfer. Pembayaran paket bisa dicicil untuk nominal tertentu. Tanyakan detailnya saat konsultasi.</p>
         </div>
-        <div class="editorial-list__item reveal">
+        <div class="faq-item reveal">
           <h3>Ada jaminan hasil?</h3>
           <p>Kami tidak memberikan jaminan berlebihan karena setiap kulit unik. Yang kami jamin adalah: treatment dilakukan dengan aman, diawasi dokter, dan kami akan pantau hasilnya bersama Anda.</p>
         </div>
@@ -283,7 +254,9 @@
       <div class="cta-inner reveal">
         <h2>Kulit sehat dimulai dari langkah pertama.</h2>
         <p>Booking konsultasi gratis &amp; temukan treatment yang pas untuk Anda.</p>
-        <a class="btn-ghost" href="https://wa.me/6281234567890?text=Halo%20Rania%20Aesthetic" target="_blank" rel="noopener">Booking Sekarang</a>
+        <div class="cta-row">
+          <a class="btn-pill btn-pill--fill" href="https://wa.me/6281234567890?text=Halo%20Rania%20Aesthetic" target="_blank" rel="noopener">Booking Sekarang</a>
+        </div>
       </div>
     </div>
   </section>

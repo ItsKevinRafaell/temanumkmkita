@@ -7,7 +7,7 @@
   <meta name="description" content="Katalog lengkap produk Rupa Lokal: tas, fashion, kain, dekorasi rumah, dan hampers buatan pengrajin lokal." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/porto/_ds/design-system.css" />
   <link rel="stylesheet" href="/porto/rupa-lokal/assets/css/unique.css" />
 </head>
@@ -22,112 +22,151 @@
     </div>
   </section>
 
-  <!-- PRODUK GRID -->
-  <section>
+  <!-- CATEGORY PILL BAR -->
+  <section class="cat-pills">
     <div class="container">
-      <div class="catalog-grid reveal-stagger">
-        <article class="prod-card reveal">
+      <div class="cat-pills__inner">
+        <button class="cat-pill__arrow" aria-label="Geser kiri" onclick="document.querySelector('.cat-pills__scroll').scrollBy({left:-200,behavior:'smooth'})">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <div class="cat-pills__scroll">
+          <button class="cat-pill active" data-cat="all">Semua</button>
+          <button class="cat-pill" data-cat="tas">Tas &amp; Aksesori</button>
+          <button class="cat-pill" data-cat="fashion">Fashion &amp; Kain</button>
+          <button class="cat-pill" data-cat="dekorasi">Dekorasi Rumah</button>
+          <button class="cat-pill" data-cat="hampers">Hampers &amp; Gift</button>
+          <button class="cat-pill" data-cat="keramik">Keramik</button>
+          <button class="cat-pill" data-cat="rotan">Rotan &amp; Anyam</button>
+        </div>
+        <button class="cat-pill__arrow" aria-label="Geser kanan" onclick="document.querySelector('.cat-pills__scroll').scrollBy({left:200,behavior:'smooth'})">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- FULL PRODUCT GRID — 8 products -->
+  <section style="padding-top:0;">
+    <div class="container">
+      <div class="prod-grid reveal-stagger">
+        <article class="prod-card reveal" data-cat="tas">
           <div class="prod-card__img">
-            <span class="prod-card__serial">01</span>
+            <button class="prod-card__wishlist" aria-label="Simpan favorit">
+              <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+            </button>
             <img src="/porto/rupa-lokal/assets/img/gen/prod-1.jpg" alt="Tote Batik Modern" loading="lazy" onerror="this.src='/porto/rupa-lokal/assets/img/gen/hero.jpg'" />
           </div>
           <div class="prod-card__body">
-            <div class="prod-card__top">
-              <h3>Tote Batik Modern</h3>
+            <div class="prod-card__name">Tote Batik Modern</div>
+            <div class="prod-card__meta">
+              <span class="prod-card__cat">Tas &amp; Aksesori</span>
               <span class="prod-card__price">Rp 185.000</span>
             </div>
-            <span class="prod-card__cat">Tas & Aksesori</span>
           </div>
         </article>
-        <article class="prod-card reveal">
+        <article class="prod-card reveal" data-cat="rotan">
           <div class="prod-card__img">
-            <span class="prod-card__serial">02</span>
+            <button class="prod-card__wishlist" aria-label="Simpan favorit">
+              <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+            </button>
             <img src="/porto/rupa-lokal/assets/img/gen/prod-3.jpg" alt="Tas Rotan Anyam" loading="lazy" onerror="this.src='/porto/rupa-lokal/assets/img/gen/hero.jpg'" />
           </div>
           <div class="prod-card__body">
-            <div class="prod-card__top">
-              <h3>Tas Rotan Anyam</h3>
+            <div class="prod-card__name">Tas Rotan Anyam</div>
+            <div class="prod-card__meta">
+              <span class="prod-card__cat">Tas &amp; Aksesori</span>
               <span class="prod-card__price">Rp 245.000</span>
             </div>
-            <span class="prod-card__cat">Tas & Aksesori</span>
           </div>
         </article>
-        <article class="prod-card reveal">
+        <article class="prod-card reveal" data-cat="fashion">
           <div class="prod-card__img">
-            <span class="prod-card__serial">03</span>
+            <button class="prod-card__wishlist" aria-label="Simpan favorit">
+              <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+            </button>
             <img src="/porto/rupa-lokal/assets/img/gen/prod-4.jpg" alt="Scarf Pewarna Alam" loading="lazy" onerror="this.src='/porto/rupa-lokal/assets/img/gen/hero.jpg'" />
           </div>
           <div class="prod-card__body">
-            <div class="prod-card__top">
-              <h3>Scarf Pewarna Alam</h3>
+            <div class="prod-card__name">Scarf Pewarna Alam</div>
+            <div class="prod-card__meta">
+              <span class="prod-card__cat">Fashion &amp; Kain</span>
               <span class="prod-card__price">Rp 165.000</span>
             </div>
-            <span class="prod-card__cat">Fashion & Kain</span>
           </div>
         </article>
-        <article class="prod-card reveal">
+        <article class="prod-card reveal" data-cat="keramik">
           <div class="prod-card__img">
-            <span class="prod-card__serial">04</span>
+            <button class="prod-card__wishlist" aria-label="Simpan favorit">
+              <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+            </button>
             <img src="/porto/rupa-lokal/assets/img/gen/prod-2.jpg" alt="Set Mug Keramik" loading="lazy" onerror="this.src='/porto/rupa-lokal/assets/img/gen/hero.jpg'" />
           </div>
           <div class="prod-card__body">
-            <div class="prod-card__top">
-              <h3>Set Mug Keramik</h3>
+            <div class="prod-card__name">Set Mug Keramik</div>
+            <div class="prod-card__meta">
+              <span class="prod-card__cat">Dekorasi Rumah</span>
               <span class="prod-card__price">Rp 220.000</span>
             </div>
-            <span class="prod-card__cat">Dekorasi Rumah</span>
           </div>
         </article>
-        <article class="prod-card reveal">
+        <article class="prod-card reveal" data-cat="tas">
           <div class="prod-card__img">
-            <span class="prod-card__serial">05</span>
+            <button class="prod-card__wishlist" aria-label="Simpan favorit">
+              <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+            </button>
             <img src="/porto/rupa-lokal/assets/img/gen/prod-1.jpg" alt="Pouch Tenun Etnik" loading="lazy" onerror="this.src='/porto/rupa-lokal/assets/img/gen/hero.jpg'" />
           </div>
           <div class="prod-card__body">
-            <div class="prod-card__top">
-              <h3>Pouch Tenun Etnik</h3>
+            <div class="prod-card__name">Pouch Tenun Etnik</div>
+            <div class="prod-card__meta">
+              <span class="prod-card__cat">Tas &amp; Aksesori</span>
               <span class="prod-card__price">Rp 95.000</span>
             </div>
-            <span class="prod-card__cat">Tas & Aksesori</span>
           </div>
         </article>
-        <article class="prod-card reveal">
+        <article class="prod-card reveal" data-cat="dekorasi">
           <div class="prod-card__img">
-            <span class="prod-card__serial">06</span>
+            <button class="prod-card__wishlist" aria-label="Simpan favorit">
+              <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+            </button>
             <img src="/porto/rupa-lokal/assets/img/gen/prod-3.jpg" alt="Keranjang Rotan" loading="lazy" onerror="this.src='/porto/rupa-lokal/assets/img/gen/hero.jpg'" />
           </div>
           <div class="prod-card__body">
-            <div class="prod-card__top">
-              <h3>Keranjang Rotan</h3>
+            <div class="prod-card__name">Keranjang Rotan</div>
+            <div class="prod-card__meta">
+              <span class="prod-card__cat">Dekorasi Rumah</span>
               <span class="prod-card__price">Rp 175.000</span>
             </div>
-            <span class="prod-card__cat">Dekorasi Rumah</span>
           </div>
         </article>
-        <article class="prod-card reveal">
+        <article class="prod-card reveal" data-cat="fashion">
           <div class="prod-card__img">
-            <span class="prod-card__serial">07</span>
+            <button class="prod-card__wishlist" aria-label="Simpan favorit">
+              <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+            </button>
             <img src="/porto/rupa-lokal/assets/img/gen/prod-4.jpg" alt="Selendang Batik Tulis" loading="lazy" onerror="this.src='/porto/rupa-lokal/assets/img/gen/hero.jpg'" />
           </div>
           <div class="prod-card__body">
-            <div class="prod-card__top">
-              <h3>Selendang Batik Tulis</h3>
+            <div class="prod-card__name">Selendang Batik Tulis</div>
+            <div class="prod-card__meta">
+              <span class="prod-card__cat">Fashion &amp; Kain</span>
               <span class="prod-card__price">Rp 285.000</span>
             </div>
-            <span class="prod-card__cat">Fashion & Kain</span>
           </div>
         </article>
-        <article class="prod-card reveal">
+        <article class="prod-card reveal" data-cat="keramik">
           <div class="prod-card__img">
-            <span class="prod-card__serial">08</span>
+            <button class="prod-card__wishlist" aria-label="Simpan favorit">
+              <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+            </button>
             <img src="/porto/rupa-lokal/assets/img/gen/prod-2.jpg" alt="Vas Keramik Lokal" loading="lazy" onerror="this.src='/porto/rupa-lokal/assets/img/gen/hero.jpg'" />
           </div>
           <div class="prod-card__body">
-            <div class="prod-card__top">
-              <h3>Vas Keramik Lokal</h3>
+            <div class="prod-card__name">Vas Keramik Lokal</div>
+            <div class="prod-card__meta">
+              <span class="prod-card__cat">Dekorasi Rumah</span>
               <span class="prod-card__price">Rp 195.000</span>
             </div>
-            <span class="prod-card__cat">Dekorasi Rumah</span>
           </div>
         </article>
       </div>
@@ -143,7 +182,7 @@
       <div class="reveal">
         <span class="eyebrow">Custom Order</span>
         <h2>Mau produk custom atau hampers spesial?</h2>
-        <p style="color:var(--ink-soft);margin-top:16px;line-height:1.75;">Kami terima pesanan custom untuk hadiah, hampers korporat, atau event. Sebutkan kebutuhanmu, kami wujudkan bareng pengrajin.</p>
+        <p style="color:var(--muted);margin-top:16px;line-height:1.75;">Kami terima pesanan custom untuk hadiah, hampers korporat, atau event. Sebutkan kebutuhanmu, kami wujudkan bareng pengrajin.</p>
         <ul class="checklist" style="margin-top:24px;">
           <li>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>

@@ -7,31 +7,26 @@
   <meta name="description" content="Garasi Presisi: bengkel mobil modern dengan servis presisi, harga transparan, dan garansi jelas. Booking servis online, ditangani mekanik bersertifikat." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/porto/_ds/design-system.css" />
   <link rel="stylesheet" href="/porto/garasi-presisi/assets/css/unique.css" />
 </head>
 <body>
   <header class="site-nav" data-include="nav"></header>
 
-  <!-- HERO -->
+  <!-- HERO — FULL-BLEED DARK SHOWROOM -->
   <section class="hero-garasi">
-    <div class="hero-garasi__text">
+    <div class="hero-garasi__bg">
+      <img src="/porto/garasi-presisi/assets/img/gen/hero.jpg" alt="" fetchpriority="high" onerror="this.src='/porto/garasi-presisi/assets/img/gen/hero.jpg'" />
+    </div>
+    <div class="hero-garasi__content container">
       <span class="eyebrow hero-garasi__eyebrow reveal">Bengkel Mobil Terpercaya</span>
       <h1 class="reveal">Servis Mobil <span>Presisi</span>, Tanpa Tebak-Tebakan.</h1>
       <p class="hero-garasi__tag reveal">Kami periksa detail, kasih estimasi jujur di depan, dan garansi tiap pengerjaan. Mobil Anda kembali sehat — dompet Anda tetap tenang.</p>
       <div class="hero-garasi__cta reveal">
         <a class="btn-primary" href="https://wa.me/6281234567890?text=Halo%20Garasi%20Presisi%2C%20saya%20mau%20booking%20servis" target="_blank" rel="noopener">Booking Servis</a>
-        <a class="btn-outline" href="/porto/garasi-presisi/layanan.html" style="color:#fff;border-color:#fff">Lihat Layanan</a>
+        <a class="btn-outline" href="/porto/garasi-presisi/layanan.html">Lihat Layanan</a>
       </div>
-      <div class="hero-garasi__trust reveal">
-        <div><b>12rb+</b><small>Mobil ditangani</small></div>
-        <div><b>4.9/5</b><small>Rating pelanggan</small></div>
-        <div><b>1 Thn</b><small>Garansi servis</small></div>
-      </div>
-    </div>
-    <div class="hero-garasi__photo reveal">
-      <img src="/porto/garasi-presisi/assets/img/gen/hero.jpg" alt="Mekanik Garasi Presisi menangani mobil" fetchpriority="high" onerror="this.src='/porto/garasi-presisi/assets/img/gen/hero.jpg'" />
     </div>
   </section>
 
@@ -39,25 +34,25 @@
   <section class="stats-band">
     <div class="container">
       <div class="stat-item reveal">
-        <div class="stat-item__num">12.000+</div>
-        <div class="stat-item__label">Mobil sudah ditangani</div>
+        <div class="stat-item__num">12rb+</div>
+        <div class="stat-item__label">Mobil Ditangani</div>
       </div>
       <div class="stat-item reveal">
         <div class="stat-item__num">4.9</div>
-        <div class="stat-item__label">Rating dari pelanggan</div>
+        <div class="stat-item__label">Rating Pelanggan</div>
       </div>
       <div class="stat-item reveal">
         <div class="stat-item__num">15</div>
-        <div class="stat-item__label">Mekanik bersertifikat</div>
+        <div class="stat-item__label">Mekanik Bersertifikat</div>
       </div>
       <div class="stat-item reveal">
         <div class="stat-item__num">8</div>
-        <div class="stat-item__label">Tahun melayani</div>
+        <div class="stat-item__label">Tahun Melayani</div>
       </div>
     </div>
   </section>
 
-  <!-- SERVICE SHOWCASE (editorial image-forward cards) -->
+  <!-- SERVICES — SPEC-SHEET IMAGE TILES -->
   <section>
     <div class="container">
       <div class="section-header center reveal">
@@ -74,7 +69,7 @@
           <div class="svc-card__body">
             <div class="svc-card__top">
               <h3>Servis Rutin Berkala</h3>
-              <span class="svc-card__price">mulai Rp 350rb</span>
+              <span class="svc-card__price">Mulai Rp 350rb</span>
             </div>
             <p>Cek menyeluruh mesin, rem, filter, dan cairan. Biar mobil selalu prima.</p>
           </div>
@@ -87,7 +82,7 @@
           <div class="svc-card__body">
             <div class="svc-card__top">
               <h3>Spooring &amp; Balancing</h3>
-              <span class="svc-card__price">mulai Rp 180rb</span>
+              <span class="svc-card__price">Mulai Rp 180rb</span>
             </div>
             <p>Setir kembali lurus, ban awet, kemudi stabil di kecepatan tinggi.</p>
           </div>
@@ -100,7 +95,7 @@
           <div class="svc-card__body">
             <div class="svc-card__top">
               <h3>Ganti Oli &amp; Filter</h3>
-              <span class="svc-card__price">mulai Rp 220rb</span>
+              <span class="svc-card__price">Mulai Rp 220rb</span>
             </div>
             <p>Oli original, filter baru, dicatat rapi jadwal servis berikutnya.</p>
           </div>
@@ -112,122 +107,92 @@
     </div>
   </section>
 
-  <!-- PROCESS STEPS 1-2-3-4 -->
-  <section style="background:var(--surface-2)">
-    <div class="container">
-      <div class="section-header center reveal">
-        <span class="eyebrow">Cara Kerja Kami</span>
-        <h2>Empat langkah menuju mobil sehat.</h2>
-        <p>Setiap servis mengikuti alur yang rapi — supaya hasilnya bisa dipertanggungjawabkan.</p>
-      </div>
-      <div class="process-grid reveal-stagger">
-        <div class="process-step reveal">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
-          <h3>Diagnosa</h3>
-          <p>Kami cek kondisi mobil Anda secara menyeluruh. Pakai alat diagnosa, bukan tebakan.</p>
-        </div>
-        <div class="process-step reveal">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="4" width="12" height="17" rx="2"/><path d="M9 4V3h6v1"/><path d="M9 10h6M9 14h4"/></svg>
-          <h3>Estimasi Jujur</h3>
-          <p>Rincian biaya & waktu pengerjaan diberikan di depan. Tidak ada biaya tersembunyi.</p>
-        </div>
-        <div class="process-step reveal">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.2-2.2 2.4-2.6z"/></svg>
-          <h3>Kerjakan</h3>
-          <p>Mekanik bersertifikat eksekusi dengan presisi. Sparepart original, kerja rapi.</p>
-        </div>
-        <div class="process-step reveal">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9.5 12l2 2 3.5-4"/></svg>
-          <h3>Garansi</h3>
-          <p>Servis bergaransi hingga 1 tahun. Kalau ada masalah, kami perbaiki tanpa biaya tambahan.</p>
-        </div>
-      </div>
+  <!-- PROCESS 01-02-03-04 — HORIZONTAL NUMBERED STRIP -->
+  <section class="process-strip">
+    <div class="process-step reveal">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
+      <div class="process-step__num">01</div>
+      <h3>Diagnosa</h3>
+      <p>Kami cek kondisi mobil Anda secara menyeluruh. Pakai alat diagnosa, bukan tebakan.</p>
+    </div>
+    <div class="process-step reveal">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="4" width="12" height="17" rx="0"/><path d="M9 4V3h6v1"/><path d="M9 10h6M9 14h4"/></svg>
+      <div class="process-step__num">02</div>
+      <h3>Estimasi Jujur</h3>
+      <p>Rincian biaya &amp; waktu pengerjaan diberikan di depan. Tidak ada biaya tersembunyi.</p>
+    </div>
+    <div class="process-step reveal">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.2-2.2 2.4-2.6z"/></svg>
+      <div class="process-step__num">03</div>
+      <h3>Kerjakan</h3>
+      <p>Mekanik bersertifikat eksekusi dengan presisi. Sparepart original, kerja rapi.</p>
+    </div>
+    <div class="process-step reveal">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9.5 12l2 2 3.5-4"/></svg>
+      <div class="process-step__num">04</div>
+      <h3>Garansi</h3>
+      <p>Servis bergaransi hingga 1 tahun. Kalau ada masalah, kami perbaiki tanpa biaya tambahan.</p>
     </div>
   </section>
 
-  <!-- TRUST BAND -->
-  <section class="trust-band">
-    <div class="container">
-      <div class="trust-item reveal">
-        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.2-2.2 2.4-2.6z"/></svg></div>
-        <h4>Mekanik Bersertifikat</h4>
-        <p>Ditangani teknisi terlatih & berpengalaman.</p>
-      </div>
-      <div class="trust-item reveal">
-        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="4" width="12" height="17" rx="2"/><path d="M9 4V3h6v1"/><path d="M9 10h6M9 14h4"/></svg></div>
-        <h4>Estimasi Transparan</h4>
-        <p>Biaya dikonfirmasi dulu, tanpa biaya siluman.</p>
-      </div>
-      <div class="trust-item reveal">
-        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9.5 12l2 2 3.5-4"/></svg></div>
-        <h4>Garansi Pengerjaan</h4>
-        <p>Setiap servis bergaransi hingga 1 tahun.</p>
-      </div>
-      <div class="trust-item reveal">
-        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9 3h6"/></svg></div>
-        <h4>Booking Online</h4>
-        <p>Atur jadwal via WhatsApp, tanpa antre lama.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- BEFORE/AFTER SPLIT -->
-  <section>
+  <!-- DARK FULL-BLEED — KENAPA KAMI -->
+  <section class="dark-band">
     <div class="container">
       <div class="split reveal">
-        <div class="split__media"><img src="/porto/garasi-presisi/assets/img/gen/before-after.jpg" alt="Hasil servis Garasi Presisi" loading="lazy" onerror="this.src='/porto/garasi-presisi/assets/img/gen/hero.jpg'" /></div>
         <div>
           <span class="eyebrow">Kenapa Garasi Presisi</span>
           <h2>Kami perlakukan mobil Anda seperti milik kami sendiri.</h2>
           <p>Trust dibangun dari kejujuran, bukan janji manis. Kami tunjukkan kondisi asli kendaraan Anda sebelum &amp; sesudah dikerjakan.</p>
-          <ul class="checklist">
-            <li>Foto kondisi sebelum &amp; sesudah tiap servis besar</li>
-            <li>Sparepart original, ada nota resmi</li>
-            <li>Riwayat servis dicatat digital, gampang dicek</li>
-            <li>Konsultasi jujur — kalau belum perlu ganti, kami bilang</li>
+          <ul class="checklist" style="color:#D6DEE9;">
+            <li style="color:#D6DEE9">Foto kondisi sebelum &amp; sesudah tiap servis besar</li>
+            <li style="color:#D6DEE9">Sparepart original, ada nota resmi</li>
+            <li style="color:#D6DEE9">Riwayat servis dicatat digital, gampang dicek</li>
+            <li style="color:#D6DEE9">Konsultasi jujur — kalau belum perlu ganti, kami bilang</li>
           </ul>
+        </div>
+        <div class="split__media">
+          <img src="/porto/garasi-presisi/assets/img/gen/before-after.jpg" alt="Hasil servis Garasi Presisi" loading="lazy" onerror="this.src='/porto/garasi-presisi/assets/img/gen/hero.jpg'" />
         </div>
       </div>
     </div>
   </section>
 
   <!-- TESTIMONIALS -->
-  <section style="background:var(--surface-2)">
+  <section>
     <div class="container">
       <div class="section-header center reveal">
         <span class="eyebrow">Kata Pelanggan</span>
         <h2>Mereka bilang apa soal servis kami.</h2>
-        <p>Kami tidak suruh mereka bilang apa-apa. Ini kata mereka sendiri, setelah mobilnya selesai ditangani.</p>
       </div>
       <div class="testi-grid reveal-stagger">
         <div class="testi-item reveal">
           <p class="testi-item__quote">"Pertama kali ke sini bawa Avanza 2019. Yang saya suka: mekaniknya jujur, bilang kampas rem masih aman. Di tempat lain pasti sudah disuruh ganti. Harga juga persis seperti yang diestimasikan."</p>
           <div class="testi-item__author">
-            <div class="testi-item__avatar">R</div>
             <div>
               <div class="testi-item__name">Rudi Hartono</div>
               <div class="testi-item__car">Toyota Avanza 2019</div>
             </div>
+            <div class="testi-item__avatar">R</div>
           </div>
         </div>
         <div class="testi-item reveal">
           <p class="testi-item__quote">"Mobil saya Innova Reborn. Servis di sini rasanya beda — mereka pakai alat diagnosa, bukan cuma lihat-lihat. AC yang tadinya nggak dingin jadi sehat lagi. Pengerjaan juga rapi, ada catatan digitalnya."</p>
           <div class="testi-item__author">
-            <div class="testi-item__avatar">S</div>
             <div>
               <div class="testi-item__name">Sari Dewi</div>
               <div class="testi-item__car">Toyota Innova Reborn 2021</div>
             </div>
+            <div class="testi-item__avatar">S</div>
           </div>
         </div>
         <div class="testi-item reveal">
           <p class="testi-item__quote">"Sudah tiga tahun langganan. Yang bikin setia: mereka nggak pernah paksa ganti komponen yang masih bagus. Estimasi waktunya juga akurat, kalau bilang 2 jam ya selesai 2 jam."</p>
           <div class="testi-item__author">
-            <div class="testi-item__avatar">A</div>
             <div>
               <div class="testi-item__name">Ahmad Fauzi</div>
               <div class="testi-item__car">Honda Civic 2018</div>
             </div>
+            <div class="testi-item__avatar">A</div>
           </div>
         </div>
       </div>
@@ -235,7 +200,7 @@
   </section>
 
   <!-- FAQ -->
-  <section>
+  <section style="background:var(--surface-2)">
     <div class="container">
       <div class="section-header center reveal">
         <span class="eyebrow">Pertanyaan Umum</span>
