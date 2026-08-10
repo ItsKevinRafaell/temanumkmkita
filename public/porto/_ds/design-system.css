@@ -71,7 +71,7 @@ section { padding-block: clamp(64px, 9vw, 120px); }
   font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase;
   color: var(--brand);
 }
-.eyebrow::before { content: ""; width: 26px; height: 2px; background: var(--accent); display: inline-block; }
+/* eyebrow line removed — AI-slop tell */
 .section-head { max-width: 640px; margin-bottom: clamp(36px, 5vw, 56px); }
 .section-head h2 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); margin-top: 14px; }
 .section-head p { color: var(--ink-soft); margin-top: 14px; font-size: 1.05rem; }
@@ -221,3 +221,8 @@ section { padding-block: clamp(64px, 9vw, 120px); }
   .footer-grid { grid-template-columns: 1fr; }
   .cta { flex-direction: column; align-items: flex-start; }
 }
+
+/* --- GLOBAL FIX: WA icon putih + nav CTA text putih (semua inner page) --- */
+.wa-float { color: #fff !important; }
+.wa-float svg { fill: #fff !important; color: #fff !important; }
+.nav-links .btn-accent, .nav-links .btn.btn-accent { color: #fff !important; }

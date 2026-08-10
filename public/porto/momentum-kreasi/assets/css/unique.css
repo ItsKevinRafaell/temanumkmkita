@@ -1000,3 +1000,53 @@ a { color: inherit; text-decoration: none; }
 h1 em, h2 em, h3 em, p em { font-style: normal; }
 
 em, i.decor, .em-accent { font-style: normal !important; font-synthesis: none; }
+
+
+/* ============================================================
+   KEVIN FIX PASS 2 — Momentum
+   "Wedding Organizer Yogyakarta" WAJIB keliatan di hero,
+   buang garis gold AI-slop, hero lebih hidup, WA + nav CTA putih
+   ============================================================ */
+
+/* Eyebrow WAJIB keliatan: badge gold tegas, jangan andalkan animasi opacity */
+.hero-cinema__eyebrow {
+  opacity: 1 !important;
+  animation: none !important;
+  display: inline-block;
+  background: var(--gold);
+  color: #241F12 !important;
+  padding: 8px 18px;
+  border-radius: 999px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  font-size: 0.72rem;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+}
+
+/* Overlay lebih kuat di atas biar teks & badge kontras */
+.hero-cinema__overlay {
+  background: linear-gradient(180deg,
+    rgba(36,31,18,0.55) 0%,
+    rgba(36,31,18,0.30) 30%,
+    rgba(36,31,18,0.35) 55%,
+    rgba(36,31,18,0.75) 80%,
+    rgba(36,31,18,0.92) 100%) !important;
+}
+
+/* Buang garis gold AI-slop di hero */
+.hero-cinema__line { display: none !important; }
+
+/* Judul & subtitle kasih shadow biar tegas */
+.hero-cinema__title { text-shadow: 0 2px 24px rgba(0,0,0,0.5); }
+.hero-cinema__subtitle { text-shadow: 0 1px 12px rgba(0,0,0,0.55); }
+
+/* Konten hero naik dikit biar ga terlalu mepet bawah + lebih hidup */
+.hero-cinema__content { padding-bottom: 84px; }
+
+/* Nav CTA putih + WA putih */
+.nav-links .btn-accent, .nav-links .btn.btn-accent { color: #fff !important; }
+.wa-float { color: #fff !important; }
+.wa-float svg { fill: #fff !important; color: #fff !important; }
+
+/* section eyebrow: buang garis (kalau ada) */
+.sec-header__eyebrow::before, .sec-header .eyebrow::before { display: none !important; }

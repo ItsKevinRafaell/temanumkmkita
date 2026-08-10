@@ -1112,3 +1112,88 @@ body::before {
 }
 
 em, i.decor, .em-accent { font-style: normal !important; font-synthesis: none; }
+
+
+/* ============================================================
+   KEVIN FIX PASS 2 — Dapur Rasa
+   logo besar (nav tetap), buang garis eyebrow AI-slop,
+   hero photo overflow fix, menu photo diperbesar,
+   WA icon putih, nav CTA putih
+   ============================================================ */
+
+/* Logo lebih besar tapi nav TIDAK ikut membesar */
+.site-nav .nav-inner { height: 68px; }
+.nav-brand img { height: 54px !important; width: auto; }
+
+/* Buang garis horizontal di eyebrow (AI-slop tell) */
+.hero-editorial__eyebrow-line { display: none !important; }
+.hero-editorial__eyebrow { gap: 0; letter-spacing: 0.18em; }
+.section-header .eyebrow::before { display: none !important; }
+.section-header .eyebrow {
+  gap: 0;
+  padding: 5px 14px;
+  background: var(--terracotta-light);
+  border-radius: 999px;
+  letter-spacing: 0.14em;
+}
+
+/* Hero: cegah foto overflow ke bawah + rapikan komposisi */
+.hero-editorial { min-height: auto; padding: 96px 0 0; }
+.hero-editorial__photo {
+  bottom: auto; top: 120px; right: 4%;
+  width: clamp(260px, 30vw, 420px);
+  clip-path: none;
+  border-radius: var(--r-lg);
+  max-height: 66vh;
+}
+.hero-editorial__photo img { max-height: 66vh; object-fit: cover; }
+.hero-stamp { bottom: auto; top: 58%; }
+
+/* Nav CTA "Reservasi" — text WAJIB putih */
+.nav-links .btn-accent,
+.nav-links .btn.btn-accent { color: #fff !important; }
+
+/* WhatsApp float — icon putih tegas */
+.wa-float { color: #fff !important; }
+.wa-float svg { fill: #fff !important; color: #fff !important; }
+
+/* Menu foto diperbesar + lebih hidup */
+.menu-photos { min-height: 560px; }
+.menu-photo--1 { width: 280px; height: 250px; }
+.menu-photo--2 { width: 250px; height: 220px; top: 180px; left: -30px; }
+.menu-photo--3 { width: 230px; height: 280px; top: 340px; right: 10px; }
+.menu-photo--4 { width: 260px; height: 220px; bottom: 10px; left: 0; }
+
+/* Sell-copy highlight band (alasan pesan) */
+.order-reasons {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 56px;
+}
+.order-reason {
+  background: #fff;
+  border: 1px solid var(--paper-edge);
+  border-radius: var(--r-md);
+  padding: 24px 22px;
+  position: relative;
+  box-shadow: var(--sh-card);
+  border-top: 4px solid var(--terracotta);
+}
+.order-reason__tag {
+  display: inline-block;
+  font-family: var(--ff-display);
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--terracotta);
+  margin-bottom: 8px;
+}
+.order-reason p {
+  color: var(--brown-soft);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+.order-reason strong { color: var(--brown); font-weight: 700; }
+@media (max-width: 900px) {
+  .order-reasons { grid-template-columns: 1fr; gap: 14px; }
+}

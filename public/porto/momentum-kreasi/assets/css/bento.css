@@ -478,3 +478,45 @@ body::before{
   .mn-split{ grid-template-columns:1fr; gap:28px; }
   .mn-split--rev .mn-poster{ order:0; }
 }
+
+/* --- FIX: timeline garis penghubung + support <b> tahun --- */
+.ab-tl { position: relative; padding-left: 30px; }
+.ab-tl::before {
+  content: "";
+  position: absolute;
+  left: 6px; top: 8px; bottom: 8px;
+  width: 2px;
+  background: var(--line, #E6E2DB);
+}
+.ab-tl__item { position: relative; padding: 14px 0 14px 4px; grid-template-columns: 80px 1fr; }
+.ab-tl__item::before {
+  content: "";
+  position: absolute;
+  left: -30px; top: 22px;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--accent, #E59500);
+  border: 3px solid #fff;
+  box-shadow: 0 0 0 2px var(--accent, #E59500);
+}
+.ab-tl__item b {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 1.35rem;
+  color: var(--accent, #E59500);
+  letter-spacing: -.02em;
+  align-self: start;
+}
+.ab-tl__item p { color: var(--ink-soft, #6B655C); line-height: 1.6; font-size: .95rem; }
+
+/* --- FIX: nilai 3-kolom biar center (bukan 4 kolom sisa kosong) --- */
+.ab-assure { grid-template-columns: repeat(3, 1fr) !important; max-width: 980px; margin: 0 auto; }
+@media (max-width: 900px) { .ab-assure { grid-template-columns: 1fr !important; } }
+
+/* FIX2: garis timeline lebih jelas (bukan cream samar) */
+.ab-tl::before { background: rgba(184,149,46,0.35) !important; }
+
+/* FIX3: garis timeline tebal + dot align tepat di garis */
+.ab-tl { padding-left: 34px !important; }
+.ab-tl::before { left: 7px !important; width: 3px !important; background: rgba(184,149,46,0.6) !important; border-radius: 2px; }
+.ab-tl__item::before { left: -34px !important; width: 16px !important; height: 16px !important; }

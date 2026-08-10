@@ -862,3 +862,49 @@ a { color: inherit; text-decoration: none; }
 h1 em, h2 em, h3 em { font-style: normal; color: var(--hs-plum); }
 
 em, i.decor, .em-accent { font-style: normal !important; font-synthesis: none; }
+
+
+/* ============================================================
+   KEVIN FIX PASS 2 — Helai
+   navbar solid dari awal (buang transparan-over-hero yg bikin
+   text invisible tapi underline+CTA muncul), hero image
+   jangan kegedean, logo sedikit lebih besar
+   ============================================================ */
+.site-nav {
+  background: var(--hs-cream) !important;
+  box-shadow: 0 1px 0 var(--hs-line);
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+/* text nav selalu gelap & kebaca (buang mode putih transparan) */
+.site-nav:not(.scrolled) .nav-brand img { filter: none !important; }
+.site-nav:not(.scrolled) .nav-links a { color: var(--hs-ink-soft) !important; }
+.site-nav:not(.scrolled) .nav-links a:hover,
+.site-nav:not(.scrolled) .nav-links a.active { color: var(--hs-ink) !important; }
+.site-nav:not(.scrolled) .nav-toggle span { background: var(--hs-ink) !important; }
+.site-nav .nav-brand img { height: 40px !important; }
+
+/* nav CTA text putih */
+.nav-links .btn-accent, .nav-links .btn.btn-accent { color: #fff !important; }
+
+/* WhatsApp float putih */
+.wa-float { color: #fff !important; }
+.wa-float svg { fill: #fff !important; color: #fff !important; }
+
+/* Hero image jangan kegedean — batasi tinggi */
+.hero-editorial { min-height: auto; }
+.hero-editorial__photo { max-height: 74vh; }
+.hero-editorial__photo img { max-height: 74vh; object-position: center 25%; }
+
+/* Hero subline (ganti tagline em AI-slop) */
+.hero-editorial__sub-line {
+  display: block;
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: clamp(1rem, 1.6vw, 1.35rem);
+  line-height: 1.5;
+  letter-spacing: 0;
+  color: var(--hs-ink-soft);
+  margin-top: 24px;
+  max-width: 20ch;
+}
