@@ -83,7 +83,7 @@ chore: maintenance, deps, config
 ### Auto-deploy
 
 - **Push ke `main` → Vercel otomatis deploy frontend**
-- Backend di shared hosting di-deploy manual via rsync/SFTP
+- Backend di shared hosting di-deploy manual via scp (rsync TIDAK ada di hosting)
 
 ### Larangan keras
 
@@ -190,16 +190,34 @@ CRM_API_KEY=your-crm-key
 
 ## Backend Deployment (Shared Hosting)
 
+> PENTING (terverifikasi 10 Ags 2026): `rsync` TIDAK terinstall di shared hosting ini
+> (`rsync: command not found`, exit 12). PAKAI `scp`, BUKAN rsync. SSH key deploy
+> di-lock forced-command (restart|status|health|logs) via ~/hermes_deploy.sh —
+> LOGIN PAKAI PASSWORD cPanel dapat shell penuh (bypass lock). Tidak perlu buka lock
+> / tidak perlu cPanel API token untuk deploy.
+
 ```bash
-# 1. Upload file baru
-rsync -avz -e "ssh -p PORT" backend/ user@host:~/backend/
+# Host: 163.223.227.44  Port: 6401  User: pfjqehkj  (password = password cPanel)
+SSHOPT="-P 6401 -o PreferredAuthentications=password -o PubkeyAuthentication=no -o StrictHostKeyChecking=no"
 
-# 2. Install dependencies
-pip install -r requirements.txt
+# 1. Upload file (scp per-file atau -r per-folder). CONTOH file backend:
+sshpass -e scp $SSHOPT backend/app/core/migrate.py      pfjqehkj@163.223.227.44:~/backend/app/core/migrate.py
+sshpass -e scp $SSHOPT backend/app/main.py              pfjqehkj@163.223.227.44:~/backend/app/main.py
+sshpass -e scp $SSHOPT backend/app/models/portfolio.py  pfjqehkj@163.223.227.44:~/backend/app/models/portfolio.py
+# (export SSHPASS='<password cPanel>' dulu, atau sshpass -p '<pw>')
 
-# 3. Restart Passenger
-touch tmp/restart.txt
+# 2. Restart Passenger (reload backend + jalanin run_migrations otomatis)
+sshpass -e ssh -p 6401 -o PreferredAuthentications=password -o PubkeyAuthentication=no pfjqehkj@163.223.227.44 'touch ~/backend/tmp/restart.txt'
+
+# 3. Verifikasi DB (pakai venv python hosting + SQLAlchemy inspect, JANGAN parse DATABASE_URL manual):
+#    ~/virtualenv/backend/3.13/bin/python -> inspect(engine).get_columns("portfolios")
+# 4. Verifikasi API live: https://api.temanumkmkita.com/api/portfolios  (route /api/..., BUKAN /portfolio)
 ```
+
+Skema migrasi: taruh perubahan idempotent di app/core/migrate.py (pakai inspect(engine)
+cek kolom → ALTER TABLE ... ADD COLUMN IF NOT EXISTS). main.py sudah memanggil
+run_migrations() setelah Base.metadata.create_all — kolom baru terbentuk OTOMATIS saat
+reload. TIDAK perlu SQL manual / akses phpMyAdmin.
 
 ---
 
