@@ -129,7 +129,7 @@ p { margin: 0; }
   font-size: 0.66rem;
   letter-spacing: 0.24em;
   text-transform: uppercase;
-  color: var(--green-accent);
+  color: #86C98F;
   margin-top: 4px;
 }
 .nav-links {
@@ -270,10 +270,9 @@ p { margin: 0; }
 .hero__media::before {
   content: "";
   position: absolute;
-  inset: -2px;
-  border: 2px solid var(--warm-accent);
+  inset: 14px 14px -14px -14px;
+  background: var(--green-tint);
   border-radius: var(--r-xl);
-  transform: translate(16px, 16px);
   z-index: -1;
 }
 .hero__img {
@@ -295,29 +294,12 @@ p { margin: 0; }
   box-shadow: var(--sh-photo);
   font-family: var(--ff-body);
   font-size: 0.92rem;
-  border-left: 4px solid var(--warm-accent);
 }
 .hero__badge-star { color: var(--warm-accent); display: inline-flex; }
 .hero__badge-text strong { font-weight: 800; }
 .hero__cta {
   display: flex; flex-wrap: wrap; justify-content: flex-start;
   gap: 14px; margin-top: 34px;
-}
-.hero__delivery-bar {
-  display: flex; align-items: center; flex-wrap: wrap; gap: 10px;
-  margin-top: 26px;
-  font-size: 0.82rem; color: var(--ink);
-  font-family: var(--ff-body);
-}
-.hero__delivery-label { font-weight: 600; }
-.hero__delivery-pill {
-  padding: 5px 14px;
-  border-radius: 999px;
-  background: var(--green-light);
-  color: var(--green-deep);
-  font-weight: 700;
-  font-size: 0.74rem;
-  letter-spacing: 0.03em;
 }
 .hero__scroll {
   position: absolute; left: 50%; bottom: 28px;
@@ -670,11 +652,10 @@ p { margin: 0; }
   content: "";
   position: absolute;
   bottom: -14px; right: -14px;
-  width: 50%; height: 50%;
-  border: 3px solid var(--green-accent);
+  width: 45%; height: 45%;
+  background: rgba(63,163,77,0.18);
   border-radius: var(--r-xl);
   z-index: -1;
-  opacity: 0.2;
 }
 .story__text {
   padding: 20px 0;
@@ -684,7 +665,7 @@ p { margin: 0; }
   font-family: var(--ff-body); font-weight: 700;
   font-size: 0.72rem; letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--green-accent);
+  color: #E8D8B8;
   margin-bottom: 10px;
 }
 .story__text .eyebrow::after {
@@ -710,8 +691,9 @@ p { margin: 0; }
   margin-bottom: 20px;
 }
 .story .link-accent {
-  color: var(--green-accent);
+  color: #F2E4C8;
 }
+.story .link-accent:hover { color: #fff; }
 
 /* ================================================================
    MORE DISHES — Mosaic grid
@@ -829,24 +811,6 @@ p { margin: 0; }
 .order-btn--wa:hover {
   box-shadow: 0 8px 28px rgba(37,211,102,0.45);
 }
-.order-btn--gofood {
-  background: var(--green-accent);
-  color: #fff;
-  box-shadow: 0 4px 16px rgba(63,163,77,0.3);
-}
-.order-btn--gofood:hover {
-  background: var(--green-accent-hover);
-  box-shadow: 0 8px 28px rgba(63,163,77,0.4);
-}
-.order-btn--grab {
-  background: var(--green-accent);
-  color: #fff;
-  box-shadow: 0 4px 16px rgba(63,163,77,0.3);
-}
-.order-btn--grab:hover {
-  background: var(--green-accent-hover);
-  box-shadow: 0 8px 28px rgba(63,163,77,0.4);
-}
 
 .order-info {
   display: flex; flex-wrap: wrap; justify-content: center; gap: 28px;
@@ -856,7 +820,58 @@ p { margin: 0; }
   color: rgba(255,255,255,0.75);
   font-size: 0.9rem;
 }
-.order-info__item svg { color: var(--green-accent); flex-shrink: 0; }
+.order-info__item svg { color: #86C98F; flex-shrink: 0; }
+
+/* ================================================================
+   DELIVERY PLATFORM CHIPS — brand-colored wordmarks (no external assets)
+   ================================================================ */
+.delivery-chip {
+  display: inline-flex; align-items: center;
+  background: #fff;
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-family: var(--ff-display);
+  font-weight: 700; font-size: 0.92rem;
+  line-height: 1;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.10);
+  transition: transform 0.2s var(--ease-spring), box-shadow 0.2s;
+  letter-spacing: -0.01em;
+}
+a.delivery-chip:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.16); }
+.delivery-chip b { font-weight: 800; }
+/* GoFood: "go" red + "food" green */
+.delivery-chip--gofood { color: #00AA13; }
+.delivery-chip--gofood b { color: #E8112D; }
+/* GrabFood: green */
+.delivery-chip--grab { color: #1A1A17; }
+.delivery-chip--grab b { color: #00B14F; }
+/* ShopeeFood: orange */
+.delivery-chip--shopee { color: #EE4D2D; }
+.delivery-chip--shopee b { color: #EE4D2D; }
+
+/* Hero delivery bar layout */
+.hero__delivery-bar {
+  display: flex; align-items: center; flex-wrap: wrap; gap: 10px;
+  margin-top: 26px;
+}
+.hero__delivery-label {
+  font-family: var(--ff-body); font-weight: 600;
+  font-size: 0.85rem; color: var(--ink-soft);
+  margin-right: 2px;
+}
+
+/* Order section delivery row */
+.order-delivery {
+  margin-top: 22px;
+  display: flex; flex-direction: column; align-items: center; gap: 12px;
+}
+.order-delivery__label {
+  font-family: var(--ff-body); font-size: 0.88rem;
+  color: rgba(255,255,255,0.75);
+}
+.order-delivery__chips {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;
+}
 
 /* ================================================================
    FLOATING WHATSAPP
@@ -1197,9 +1212,8 @@ p { margin: 0; }
 .value-card {
   background: var(--cream-card);
   border-radius: var(--r-lg);
-  padding: 40px 30px 34px;
+  padding: 36px 30px 34px;
   box-shadow: var(--sh-card);
-  border-top: 5px solid var(--green-accent);
   transition: transform 0.3s var(--ease), box-shadow 0.3s;
 }
 .value-card:hover { transform: translateY(-6px); box-shadow: var(--sh-heavy); }
@@ -1321,18 +1335,34 @@ a.contact-item__value:hover { color: var(--green-accent); }
   .footer-main > .footer-about {
     grid-column: span 2;
   }
-  /* Nav responsive */
+  /* Nav responsive — clean full-width mobile menu */
   .nav-links {
     display: none;
-    position: absolute; top: 64px; left: 0; right: 0;
-    background: var(--green-deep);
+    position: absolute; top: 74px; left: 0; right: 0;
+    background: var(--green-primary);
     flex-direction: column;
-    padding: 16px 24px 24px;
-    gap: 4px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    padding: 12px 16px 20px;
+    gap: 2px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.35);
   }
   .nav-links.open { display: flex; }
-  .nav-links .btn-accent { margin-left: 0; margin-top: 8px; width: 100%; justify-content: center; }
+  .nav-links a {
+    display: flex; align-items: center;
+    width: 100%;
+    padding: 15px 16px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    border-radius: var(--r-md);
+  }
+  .nav-links a:not(.btn-accent)::after { display: none; }
+  .nav-links a:not(.btn-accent):active,
+  .nav-links a:not(.btn-accent).active { background: rgba(255,255,255,0.12); }
+  .nav-links .btn-accent {
+    margin-left: 0; margin-top: 10px;
+    width: 100%; justify-content: center;
+    padding: 15px 16px; font-size: 1rem;
+  }
   .nav-toggle { display: flex; }
   /* Hide info strip on tablet */
   .nav-info-strip { display: none; }
