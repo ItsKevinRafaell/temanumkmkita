@@ -22,73 +22,55 @@
        Giant "DAPUR RASA" text dominates, food photo peeks behind/beside,
        polaroid scatter + spice marquee + paper texture = NOT a template.
        ============================================================ -->
-  <section class="hero-editorial">
-    <!-- Warm paper texture bg -->
-    <div class="hero-editorial__paper-bg" aria-hidden="true"></div>
+  <section class="hero-cine">
+    <!-- Full-bleed cinematic food photo -->
+    <div class="hero-cine__media" aria-hidden="true">
+      <img
+        class="hero-cine__img"
+        src="/porto/dapur-rasa-nusantara/assets/img/gen/hero.jpg"
+        alt=""
+        fetchpriority="high"
+      />
+      <div class="hero-cine__scrim"></div>
+      <div class="hero-cine__grain"></div>
+    </div>
 
-    <!-- Giant typographic statement -->
-    <div class="hero-editorial__inner">
-      <div class="hero-editorial__eyebrow reveal">
-        <span class="hero-editorial__eyebrow-line"></span>
+    <div class="hero-cine__inner">
+      <div class="hero-cine__eyebrow reveal">
+        <span class="hero-cine__eyebrow-dot"></span>
         Masakan Rumahan · Yogyakarta
       </div>
 
-      <h1 class="hero-editorial__title reveal">
-        <span class="hero-editorial__title-line hero-editorial__title-line--1">DAPUR</span>
-        <span class="hero-editorial__title-line hero-editorial__title-line--2">RASA</span>
+      <h1 class="hero-cine__title reveal">
+        <span class="hero-cine__title-line">DAPUR</span>
+        <span class="hero-cine__title-line hero-cine__title-line--accent">RASA</span>
       </h1>
 
-      <div class="hero-editorial__subtitle-block reveal">
-        <p class="hero-editorial__subtitle">
-          Masakan rumahan yang jujur — bumbu diulek sendiri, resep turun-temurun, tanpa jalan pintas.
-          Dimasak segar tiap hari, dari dapur ibu untuk meja Anda.
-        </p>
-      </div>
+      <p class="hero-cine__subtitle reveal">
+        Bumbu diulek sendiri, resep turun-temurun, tanpa jalan pintas.
+        Dimasak segar tiap hari — dari dapur ibu untuk meja Anda.
+      </p>
 
-      <div class="hero-editorial__cta reveal">
+      <div class="hero-cine__cta reveal">
         <a class="btn-primary" href="#menu-andalan">Lihat Menu Hari Ini</a>
-        <a class="btn-outline" href="https://wa.me/6281234567890?text=Halo%20Dapur%20Rasa%2C%20saya%20mau%20reservasi" target="_blank" rel="noopener">Reservasi via WhatsApp</a>
+        <a class="btn-hero-ghost" href="https://wa.me/6281234567890?text=Halo%20Dapur%20Rasa%2C%20saya%20mau%20reservasi" target="_blank" rel="noopener">
+          <span>Reservasi via WhatsApp</span>
+        </a>
       </div>
 
-      <!-- "Diulek Tiap Pagi" stamp badge -->
-      <div class="hero-stamp reveal" aria-hidden="true">
-        <span class="hero-stamp__ring">
-          <span class="hero-stamp__text">Diulek Tiap Pagi</span>
+      <!-- "Diulek Tiap Pagi" filled stamp -->
+      <div class="hero-cine__stamp reveal" aria-hidden="true">
+        <span class="hero-cine__stamp-ring">
+          <span class="hero-cine__stamp-text">Diulek Tiap Pagi</span>
         </span>
       </div>
     </div>
 
-    <!-- Hero food photo — dramatic, overlapping, not a boring right column -->
-    <div class="hero-editorial__photo reveal">
-      <img
-        src="/porto/dapur-rasa-nusantara/assets/img/gen/dr-rendang.jpg"
-        alt="Rendang spesial Dapur Rasa"
-        fetchpriority="high"
-        onerror="this.src='/porto/dapur-rasa-nusantara/assets/img/gen/dish-rendang.jpg'"
-      />
+    <div class="hero-cine__scroll reveal" aria-hidden="true">
+      <span class="hero-cine__scroll-line"></span>
+      <span class="hero-cine__scroll-label">Scroll</span>
     </div>
-
-    <!-- Polaroid scatter photos -->
-    <div class="hero-polaroids" aria-hidden="true">
-      <div class="hero-polaroid hero-polaroid--1">
-        <img
-          src="/porto/dapur-rasa-nusantara/assets/img/gen/dish-sate.jpg"
-          alt="Sate ayam"
-         
-          onerror="this.src='/porto/dapur-rasa-nusantara/assets/img/gen/dish-rendang.jpg'"
-        />
-        <span class="hero-polaroid__label">Sate Ayam 28K</span>
-      </div>
-      <div class="hero-polaroid hero-polaroid--2">
-        <img
-          src="/porto/dapur-rasa-nusantara/assets/img/gen/dish-ayambakar.jpg"
-          alt="Ayam bakar"
-         
-          onerror="this.src='/porto/dapur-rasa-nusantara/assets/img/gen/dish-rendang.jpg'"
-        />
-        <span class="hero-polaroid__label">Ayam Bakar 30K</span>
-      </div>
-    </div>
+  </section>
 
     <!-- Spice marquee strip -->
     <div class="spice-marquee" aria-hidden="true">
