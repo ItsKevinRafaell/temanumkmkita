@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta name="robots" content="noindex, nofollow, noarchive" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Proyek — Baja Perkasa</title>
+  <meta name="description" content="Track record proyek Baja Perkasa: infrastruktur, tambang, kawasan industri. Dipercaya proyek skala besar." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/porto/_ds/design-system.css" />
+  <link rel="stylesheet" href="/porto/baja-perkasa/assets/css/unique.css?v=1" />
+</head>
+<body>
+  <header class="site-nav" data-include="nav"></header>
+
+  <section class="page-hero">
+    <img class="page-hero__bg" src="/porto/baja-perkasa/assets/img/gen/project.jpg" alt="" />
+    <div class="page-hero__overlay"></div>
+    <div class="container page-hero__inner">
+      <div class="eyebrow">Track Record</div>
+      <h1 class="page-hero__title">Proyek yang kami dukung.</h1>
+      <p class="page-hero__sub">Dari infrastruktur nasional sampai site tambang. Ini bukti, bukan janji.</p>
+    </div>
+  </section>
+
+  <section class="record" style="background:var(--bg);">
+    <div class="container">
+      <div class="record-grid reveal">
+        <div class="record-card"><img src="/porto/baja-perkasa/assets/img/gen/project.jpg" alt="Proyek jalan tol" loading="lazy" /><div class="record-card__cap"><b>Proyek Jalan Tol</b><span>8 unit excavator, 6 bulan</span></div></div>
+        <div class="record-card"><img src="/porto/baja-perkasa/assets/img/gen/yard.jpg" alt="Kawasan industri" loading="lazy" /><div class="record-card__cap"><b>Kawasan Industri</b><span>Sewa crane &amp; loader</span></div></div>
+        <div class="record-card"><img src="/porto/baja-perkasa/assets/img/gen/loader.jpg" alt="Site tambang" loading="lazy" /><div class="record-card__cap"><b>Site Tambang</b><span>Suplai unit &amp; sparepart</span></div></div>
+        <div class="record-card"><img src="/porto/baja-perkasa/assets/img/gen/excavator.jpg" alt="Pembangunan gudang" loading="lazy" /><div class="record-card__cap"><b>Pembangunan Gudang</b><span>Sewa excavator 3 bulan</span></div></div>
+        <div class="record-card"><img src="/porto/baja-perkasa/assets/img/gen/crane.jpg" alt="Erection struktur baja" loading="lazy" /><div class="record-card__cap"><b>Erection Struktur Baja</b><span>Mobile crane 25 ton</span></div></div>
+        <div class="record-card"><img src="/porto/baja-perkasa/assets/img/gen/bulldozer.jpg" alt="Land clearing" loading="lazy" /><div class="record-card__cap"><b>Land Clearing</b><span>Bulldozer &amp; loader</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <img class="cta-band__bg" src="/porto/baja-perkasa/assets/img/gen/hero.jpg" alt="" loading="lazy" />
+    <div class="cta-band__overlay"></div>
+    <div class="container"><div class="cta-band__content reveal">
+      <h2 class="cta-band__title">Proyek Anda berikutnya?</h2>
+      <p class="cta-band__desc">Mari jadi bagian dari track record kami. Konsultasikan kebutuhan alat berat proyek Anda.</p>
+      <div class="cta-band__cta"><a class="btn btn-amber" href="https://wa.me/6281234567890?text=Konsultasi%20proyek" target="_blank" rel="noopener">Konsultasi Sekarang</a></div>
+    </div></div>
+  </section>
+
+  <footer class="site-footer" data-include="footer"></footer>
+  <a class="wa-float" href="https://wa.me/6281234567890?text=Halo%20Baja%20Perkasa" target="_blank" rel="noopener" aria-label="Chat WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.9-4.45 9.9-9.91C21.95 6.45 17.5 2 12.04 2z"/></svg></a>
+  <script src="/porto/baja-perkasa/assets/js/include.js"></script>
+  <script>
+    document.documentElement.classList.add('js-reveal');
+    (function(){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}});},{threshold:0.08});document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});setTimeout(function(){document.querySelectorAll('.reveal:not(.visible)').forEach(function(el){el.classList.add('visible');});},1400);document.addEventListener('include:loaded',function(ev){if(ev.detail&&ev.detail.name==='nav'){var nav=document.querySelector('.site-nav');window.addEventListener('scroll',function(){nav.classList.toggle('scrolled',window.scrollY>60);},{passive:true});var t=document.querySelector('.nav-toggle'),l=document.querySelector('.nav-links');if(t&&l){t.addEventListener('click',function(){var o=l.classList.toggle('open');t.classList.toggle('active',o);t.setAttribute('aria-expanded',o);});}}});})();
+  </script>
+</body>
+</html>
