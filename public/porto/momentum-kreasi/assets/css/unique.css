@@ -155,9 +155,9 @@ em { font-style: normal; }
 .nav-links a:hover,
 .nav-links a.active { color: #fff; }
 
-.nav-links .btn-accent {
+.nav-links .btn.btn-accent {
   background: var(--gold);
-  color: #fff;
+  color: #2A2A28;
   font-weight: 700;
   border-radius: 999px;
   padding: 11px 26px;
@@ -264,7 +264,8 @@ em { font-style: normal; }
   font-weight: 500;
   letter-spacing: 0.35em;
   text-transform: uppercase;
-  color: var(--gold);
+  color: #FFFFFF;
+  text-shadow: 0 1px 14px rgba(0,0,0,0.55);
   margin-bottom: 28px;
   opacity: 0;
   animation: fadeUp 1s 0.3s forwards;
@@ -368,11 +369,12 @@ em { font-style: normal; }
 
 .btn-romantic--primary {
   background: var(--gold);
-  color: #fff;
+  color: #2A2A28;
 }
 
 .btn-romantic--primary:hover {
   background: #b8923d;
+  color: #fff;
   transform: translateY(-2px);
   box-shadow: 0 8px 28px rgba(201,162,75,0.35);
 }
@@ -578,10 +580,10 @@ em { font-style: normal; }
   left: 50%;
   transform: translateX(-50%);
   background: var(--gold);
-  color: #fff;
+  color: #2A2A28;
   font-family: var(--sans);
   font-size: 0.68rem;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   padding: 6px 18px;
@@ -1833,7 +1835,8 @@ a.contact__value:hover { color: var(--sage); }
   font-size: 0.68rem;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  color: var(--gold);
+  color: #2A2A28;
+  opacity: 0.72;
 }
 
 /* ============================================================
