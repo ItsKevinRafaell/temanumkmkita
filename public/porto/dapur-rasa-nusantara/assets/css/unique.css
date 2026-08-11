@@ -1059,7 +1059,7 @@ a.delivery-chip:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba
 /* ================================================================
    REVEAL ANIMATION + STAGGER
    ================================================================ */
-.reveal {
+.js-reveal .reveal {
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.65s var(--ease), transform 0.65s var(--ease);

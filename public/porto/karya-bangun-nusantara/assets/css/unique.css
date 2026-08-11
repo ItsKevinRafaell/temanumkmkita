@@ -1819,7 +1819,7 @@ section {
 .wa-float svg { width: 28px; height: 28px; }
 
 /* ---------- REVEAL ---------- */
-.reveal { opacity: 1; }
+.js-reveal .reveal { opacity: 1; }
 .js-reveal .reveal {
   opacity: 0;
   transform: translateY(18px);

@@ -875,7 +875,7 @@ button{cursor:pointer;font-family:inherit;}
 /* ================================================================
    REVEAL ANIMATION
    ================================================================ */
-.reveal{opacity:1;}
+.js-reveal .reveal {opacity:1;}
 .js-reveal .reveal{
   opacity:0;transform:translateY(22px);
   transition:opacity .6s var(--ease),transform .6s var(--ease);

@@ -530,13 +530,29 @@ em { font-style: normal; }
 
 .paket-card {
   background: var(--ivory);
-  padding: 44px 32px 36px;
+  padding: 0 32px 36px;
   text-align: center;
   position: relative;
   border: 1px solid rgba(58,74,63,0.08);
   border-radius: 16px;
   box-shadow: 0 8px 32px -12px rgba(42,42,40,0.1);
   transition: transform 0.4s, box-shadow 0.4s;
+}
+.paket-card__photo {
+  margin: 0 -32px 28px;
+  height: 190px;
+  overflow: hidden;
+  border-radius: 16px 16px 0 0;
+}
+.paket-card__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s var(--ease);
+}
+.paket-card:hover .paket-card__photo img {
+  transform: scale(1.05);
 }
 
 .paket-card:hover {
@@ -1251,6 +1267,34 @@ em { font-style: normal; }
   border-radius: 50%;
 }
 
+.pkg-card__img {
+  margin: -40px -32px 24px;
+  overflow: hidden;
+  border-radius: 14px 14px 0 0;
+  max-height: 220px;
+}
+
+.pkg-card__img img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s;
+}
+
+.pkg-card:hover .pkg-card__img img {
+  transform: scale(1.05);
+}
+
+.pkg-card--featured .pkg-card__img {
+  margin-top: 0;
+  max-height: 240px;
+}
+
+.pkg-card--featured .pkg-card__img img {
+  height: 240px;
+}
+
 .pkg-note {
   text-align: center;
   max-width: 640px;
@@ -1728,7 +1772,7 @@ a.contact__value:hover { color: var(--sage); }
 /* ============================================================
    SCROLL REVEAL
    ============================================================ */
-.reveal {
+.js-reveal .reveal {
   opacity: 0;
   transform: translateY(30px);
   transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1),
@@ -1940,10 +1984,10 @@ a.contact__value:hover { color: var(--sage); }
     flex-direction: column;
     align-items: stretch;
     gap: 0;
-    background: rgba(247,242,236,1);
-    padding: 12px var(--container-px) 20px;
+    background: var(--sage);
+    padding: 8px 0 14px;
     display: none;
-    border-top: 1px solid rgba(58,74,63,0.08);
+    box-shadow: 0 12px 24px -8px rgba(0,0,0,0.35);
   }
 
   .site-nav .nav-links.open {
@@ -1951,16 +1995,22 @@ a.contact__value:hover { color: var(--sage); }
   }
 
   .site-nav .nav-links a {
-    padding: 14px 0;
-    border-bottom: 1px solid rgba(58,74,63,0.06);
-    color: var(--dark);
+    padding: 15px var(--container-px);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+  .site-nav .nav-links a:last-of-type {
+    border-bottom: none;
   }
 
   .site-nav .nav-links .btn-cta {
-    margin-top: 14px;
+    margin: 14px var(--container-px) 0;
     text-align: center;
     justify-content: center;
     color: #fff !important;
+    border-radius: 8px;
   }
 
   /* Portfolio simplified */
@@ -2173,4 +2223,105 @@ img{max-width:100%;height:auto;}
   .pkg-card:hover,
   .pkg-card--featured:hover,
   .menu-tab:hover { transform: none; }
+
+  .pkg-card__img img { transition: none; }
+}
+
+/* ============================================================
+   ABOUT GALLERY — Photo mosaic on Tentang Kami page
+   ============================================================ */
+.about-gallery {
+  padding: var(--section-py) 0;
+  background: #f9f7f3;
+}
+
+.about-gallery .sec-header {
+  margin-bottom: 40px;
+}
+
+.about-gallery__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto auto;
+  gap: 20px;
+}
+
+.about-gallery__item {
+  overflow: hidden;
+  border-radius: 14px;
+  box-shadow: 0 12px 40px -12px rgba(42,42,40,0.15);
+}
+
+.about-gallery__item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s;
+}
+
+.about-gallery__item:hover img {
+  transform: scale(1.05);
+}
+
+.about-gallery__item--wide {
+  grid-column: span 2;
+}
+
+.about-gallery__item--tall {
+  grid-row: span 2;
+}
+
+.about-gallery__item--wide img {
+  min-height: 280px;
+}
+
+.about-gallery__item:not(.about-gallery__item--wide):not(.about-gallery__item--tall) img {
+  min-height: 240px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .pkg-card__img img { height: 180px; }
+  .pkg-card__img { max-height: 180px; }
+  .pkg-card--featured .pkg-card__img img { height: 200px; }
+  .pkg-card--featured .pkg-card__img { max-height: 200px; }
+}
+
+@media (max-width: 768px) {
+  .pkg-card__img { margin: -40px -20px 20px; }
+  .pkg-card__img img { height: 160px; }
+  .pkg-card__img { max-height: 160px; }
+
+  .about-gallery__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .about-gallery__item--wide {
+    grid-column: span 2;
+  }
+
+  .about-gallery__item--tall {
+    grid-row: span 1;
+  }
+
+  .about-gallery__item--wide img { min-height: 200px; }
+  .about-gallery__item img { min-height: 180px; }
+}
+
+@media (max-width: 480px) {
+  .pkg-card__img img { height: 140px; }
+  .pkg-card__img { max-height: 140px; }
+
+  .about-gallery__grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .about-gallery__item--wide {
+    grid-column: span 1;
+  }
+
+  .about-gallery__item--wide img,
+  .about-gallery__item img { min-height: 200px; }
 }
