@@ -228,6 +228,13 @@ html.js-reveal .reveal.visible { opacity: 1; transform: none; }
 .paket-card__feats li:last-child { border-bottom: none; }
 .paket-card__feats li svg { position: absolute; left: 0; top: 12px; width: 15px; height: 15px; color: var(--accent-2); }
 .paket-card .btn { width: 100%; justify-content: center; }
+.paket-card__for { font-size: 0.86rem; color: var(--ink-soft); margin: 0 0 18px; padding-bottom: 16px; border-bottom: 1px dashed var(--line); }
+.paket-card--featured .paket-card__for { color: rgba(255,255,255,.72); border-color: rgba(255,255,255,.16); }
+.paket-card__excl { margin: 0 0 24px; padding: 13px 15px; background: var(--paper); border-radius: 8px; }
+.paket-card--featured .paket-card__excl { background: rgba(255,255,255,.07); }
+.paket-card__excl b { display: block; font-size: 0.7rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--accent-2); margin-bottom: 5px; }
+.paket-card__excl span { font-size: 0.84rem; color: var(--ink-soft); line-height: 1.55; }
+.paket-card--featured .paket-card__excl span { color: rgba(255,255,255,.72); }
 .paket-note { text-align: center; max-width: 640px; margin: 40px auto 0; color: var(--muted); font-size: 0.92rem; }
 
 /* ============================================================
