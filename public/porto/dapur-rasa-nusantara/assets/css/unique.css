@@ -1251,23 +1251,30 @@ a.delivery-chip:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba
 .value-card {
   background: var(--cream-card);
   border-radius: var(--r-lg);
-  padding: 36px 30px 34px;
+  padding: 0 0 30px;
+  overflow: hidden;
   box-shadow: var(--sh-card);
   transition: transform 0.3s var(--ease), box-shadow 0.3s;
 }
 .value-card:hover { transform: translateY(-6px); box-shadow: var(--sh-heavy); }
+.value-card__photo { height: 180px; overflow: hidden; }
+.value-card__photo img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  transition: transform 0.6s var(--ease);
+}
+.value-card:hover .value-card__photo img { transform: scale(1.06); }
 .value-card__num {
   font-family: var(--ff-display);
   font-weight: 800; font-size: 2.4rem;
-  color: rgba(63,163,77,0.2);
-  line-height: 1; display: block; margin-bottom: 14px;
+  color: rgba(63,163,77,0.28);
+  line-height: 1; display: block; margin: 18px 0 6px; padding: 0 30px;
 }
 .value-card h3 {
   font-family: var(--ff-display);
   font-weight: 700; font-size: 1.25rem;
-  color: var(--ink); margin-bottom: 10px;
+  color: var(--ink); margin-bottom: 10px; padding: 0 30px;
 }
-.value-card p { color: var(--ink-soft); font-size: 0.98rem; line-height: 1.65; }
+.value-card p { color: var(--ink-soft); font-size: 0.98rem; line-height: 1.65; padding: 0 30px; }
 
 /* ================================================================
    JOURNEY / TIMELINE (for tentang.html)
