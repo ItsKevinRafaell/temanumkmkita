@@ -2,7 +2,7 @@
    gallery.js — Filter kategori + fade-in on scroll (vanilla)
    ------------------------------------------------------------
    PROGRESSIVE ENHANCEMENT:
-   - CSS default: .demo-card VISIBLE (opacity:1).
+   - CSS default: .card VISIBLE (opacity:1).
    - JS menandai <html class="js-reveal"> -> baru elemen disembunyikan
      lalu di-fade-in. Jadi kalau JS mati konten tetap keliatan.
    - Fallback: kalau IntersectionObserver tak ada / gagal -> semua card
@@ -21,7 +21,7 @@
   }
 
   function initReveal() {
-    var cards = document.querySelectorAll(".demo-card");
+    var cards = document.querySelectorAll(".card");
     if (!cards.length) return;
 
     // Fallback total: browser tanpa IntersectionObserver -> tampil semua.
@@ -61,7 +61,7 @@
     // SAFETY NET: kalau setelah 1500ms masih ada card belum visible
     // (observer gagal fire), paksa reveal semua sisanya.
     setTimeout(function () {
-      document.querySelectorAll(".demo-card:not(.visible)").forEach(function (c) {
+      document.querySelectorAll(".card:not(.visible)").forEach(function (c) {
         c.classList.add("visible");
       });
     }, 1500);
@@ -70,7 +70,7 @@
   /* ---------- FILTER KATEGORI ---------- */
   function initFilter() {
     var filterBtns = document.querySelectorAll(".filter-btn");
-    var gridCards = document.querySelectorAll(".demo-card");
+    var gridCards = document.querySelectorAll(".card");
     if (!filterBtns.length) return;
 
     filterBtns.forEach(function (btn) {
