@@ -23,3 +23,15 @@ export async function fetchPortfolios(service_slug: string): Promise<PublicPortf
     return [];
   }
 }
+
+/** Ambil SEMUA porto (lintas layanan) untuk galeri /portofolio. */
+export async function fetchAllPortfolios(): Promise<PublicPortfolioItem[]> {
+  try {
+    const url = buildPublicApiUrl("portfolios");
+    const res = await fetch(url.toString(), { cache: "no-store" });
+    if (!res.ok) return [];
+    return res.json();
+  } catch {
+    return [];
+  }
+}
