@@ -3,7 +3,7 @@
   "framework": "nextjs",
   "headers": [
     {
-      "source": "/porto/(.*)",
+      "source": "/portofolio/(.*)",
       "headers": [
         {
           "key": "X-Robots-Tag",

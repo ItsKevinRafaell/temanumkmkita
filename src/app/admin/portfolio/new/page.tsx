@@ -216,7 +216,7 @@ export default function NewPortfolioPage() {
               className={inputClass}
               value={linkUrl}
               onChange={(e) => setLinkUrl(e.target.value)}
-              placeholder="/porto/karya-bangun-nusantara atau https://..."
+              placeholder="/portofolio/karya-bangun-nusantara atau https://..."
             />
             <p className="mt-1 text-xs text-[#242423]/35">
               Opsional. Kalau diisi, thumbnail bisa diklik menuju halaman porto/website ini.

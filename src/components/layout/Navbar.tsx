@@ -12,6 +12,7 @@ const navLinks = [
   { label: "Beranda", href: "/" },
   { label: "Tools", href: "/tools/profil-google", badge: "Gratis" },
   { label: "Tentang Kami", href: "/tentang-kami" },
+  { label: "Portofolio", href: "/portofolio/", external: true },
   { label: "Artikel", href: "/blog" },
   { label: "Kontak", href: "/kontak" },
 ];
@@ -173,6 +174,7 @@ export default function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
+                  {...(link.external ? { prefetch: false } : {})}
                   className={cn(
                     "nav-link-hover relative flex items-center gap-1.5 whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium transition-colors",
                     active ? activeLinkColor : linkColor

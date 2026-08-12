@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta name="robots" content="noindex, nofollow, noarchive" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cerita Kami - Kopi Rehat</title>
+  <meta name="description" content="Cerita di balik Kopi Rehat, coffee shop yang lahir dari kecintaan pada kopi & tempat berkumpul." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/portofolio/_ds/design-system.css" />
+  <link rel="stylesheet" href="/portofolio/kopi-rehat/assets/css/unique.css?v=1" />
+</head>
+<body>
+  <header class="site-nav" data-include="nav"></header>
+
+  <section class="page-hero">
+    <img class="page-hero__bg" src="/portofolio/kopi-rehat/assets/img/gen/barista.jpg" alt="" />
+    <div class="page-hero__overlay"></div>
+    <div class="container page-hero__inner">
+      <div class="eyebrow">Cerita Kami</div>
+      <h1 class="page-hero__title">Berawal dari satu cangkir.</h1>
+      <p class="page-hero__sub">Dan keinginan sederhana punya tempat buat rehat bareng.</p>
+    </div>
+  </section>
+
+  <section class="ambience" style="background:var(--bg);">
+    <div class="container ambience__row">
+      <div class="ambience__media reveal">
+        <img src="/portofolio/kopi-rehat/assets/img/gen/barista.jpg" alt="Barista" loading="lazy" />
+        <img src="/portofolio/kopi-rehat/assets/img/gen/beans.jpg" alt="Biji kopi" loading="lazy" />
+        <img src="/portofolio/kopi-rehat/assets/img/gen/counter.jpg" alt="Counter" loading="lazy" />
+      </div>
+      <div class="ambience__text reveal">
+        <div class="eyebrow">Kenapa Kopi Rehat</div>
+        <h2 class="ambience__title">Kopi yang diseduh dengan <em>sabar</em></h2>
+        <p class="ambience__desc">Kopi Rehat lahir 2021 dari obrolan sederhana: kenapa tempat ngopi enak harus mahal dan jauh? Kami mau bikin tempat yang kopinya serius, tapi harganya bersahabat dan suasananya senyaman rumah.</p>
+        <p class="ambience__desc">Kami pilih biji lokal terbaik, seduh dengan telaten, dan racik menu yang bikin kamu balik lagi. Bukan cuma jual kopi, kami jual momen rehat.</p>
+        <ul class="ambience__list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Biji kopi single origin lokal pilihan</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Barista terlatih, konsisten tiap gelas</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Camilan homemade, dibuat segar tiap hari</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <img class="cta-band__bg" src="/portofolio/kopi-rehat/assets/img/gen/hero.jpg" alt="" loading="lazy" />
+    <div class="cta-band__overlay"></div>
+    <div class="container">
+      <div class="cta-band__content reveal">
+        <h2 class="cta-band__title">Jadi bagian ceritanya.</h2>
+        <p class="cta-band__desc">Mampir kapan aja. Kopi hangat &amp; kursi nyaman selalu siap buat kamu.</p>
+        <div class="cta-band__cta">
+          <a class="btn btn-accent" href="/portofolio/kopi-rehat/kontak.html">Cari Lokasi Kami</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer" data-include="footer"></footer>
+  <a class="wa-float" href="https://wa.me/6281234567890?text=Halo%20Kopi%20Rehat" target="_blank" rel="noopener" aria-label="Chat WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.9-4.45 9.9-9.91C21.95 6.45 17.5 2 12.04 2z"/></svg></a>
+  <script src="/portofolio/kopi-rehat/assets/js/include.js"></script>
+  <script>
+    document.documentElement.classList.add('js-reveal');
+    (function(){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}});},{threshold:0.1});document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});setTimeout(function(){document.querySelectorAll('.reveal:not(.visible)').forEach(function(el){el.classList.add('visible');});},1400);document.addEventListener('include:loaded',function(ev){if(ev.detail&&ev.detail.name==='nav'){var nav=document.querySelector('.site-nav');window.addEventListener('scroll',function(){nav.classList.toggle('scrolled',window.scrollY>60);},{passive:true});var t=document.querySelector('.nav-toggle'),l=document.querySelector('.nav-links');if(t&&l){t.addEventListener('click',function(){var o=l.classList.toggle('open');t.classList.toggle('active',o);t.setAttribute('aria-expanded',o);});}}});})();
+  </script>
+</body>
+</html>

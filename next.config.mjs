@@ -47,7 +47,7 @@ const nextConfig = {
         ],
       },
       {
-        source: "/porto/:path*",
+        source: "/portofolio/:path*",
         headers: [
           { key: "Cache-Control", value: "public, max-age=0, stale-while-revalidate=60" },
         ],

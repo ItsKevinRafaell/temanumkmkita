@@ -13,19 +13,19 @@ export const FALLBACK_PORTFOLIO: RealPortfolio[] = [
   {
     name: "Karya Bangun Nusantara",
     category: "Kontraktor & Konstruksi",
-    image_url: "/porto/karya-bangun-nusantara/assets/img/gen/hero.jpg",
-    link_url: "/porto/karya-bangun-nusantara",
+    image_url: "/portofolio/karya-bangun-nusantara/assets/img/gen/hero.jpg",
+    link_url: "/portofolio/karya-bangun-nusantara",
   },
   {
     name: "Dapur Rasa Nusantara",
     category: "Restoran & Kuliner",
-    image_url: "/porto/dapur-rasa-nusantara/assets/img/gen/dr-hero-table.jpg",
-    link_url: "/porto/dapur-rasa-nusantara",
+    image_url: "/portofolio/dapur-rasa-nusantara/assets/img/gen/dr-hero-table.jpg",
+    link_url: "/portofolio/dapur-rasa-nusantara",
   },
   {
     name: "Helai Studio",
     category: "Fashion & Studio",
-    image_url: "/porto/helai-studio/assets/img/gen/hero-editorial.jpg",
-    link_url: "/porto/helai-studio",
+    image_url: "/portofolio/helai-studio/assets/img/gen/hero-editorial.jpg",
+    link_url: "/portofolio/helai-studio",
   },
 ];
