@@ -131,7 +131,7 @@ html.js-reveal .reveal.visible { opacity: 1; transform: none; }
    ============================================================ */
 .hero { position: relative; padding: clamp(48px,7vw,90px) 0 clamp(60px,8vw,110px); }
 .hero__grid { display: grid; grid-template-columns: 1.05fr 1fr; gap: 56px; align-items: center; }
-.hero__eyebrow { margin-bottom: 22px; }
+.hero__eyebrow { margin-bottom: 22px; background: none; box-shadow: none; padding: 0; border-radius: 0; }
 .hero__title { font-size: clamp(2.6rem, 6vw, 4.6rem); color: var(--ink); }
 .hero__title span { color: var(--accent-2); font-style: italic; }
 .hero__desc { margin: 26px 0 34px; font-size: 1.1rem; color: var(--ink-soft); max-width: 480px; }
