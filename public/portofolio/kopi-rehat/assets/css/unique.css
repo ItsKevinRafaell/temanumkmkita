@@ -92,7 +92,7 @@ html.js-reveal .reveal.visible { opacity: 1; transform: none; }
 .hero__grid { display: grid; grid-template-columns: 1.15fr 0.85fr; align-items: stretch; min-height: 90vh; }
 .hero__text { display: flex; flex-direction: column; justify-content: center; padding: clamp(48px,7vw,96px) 0 clamp(48px,7vw,96px) clamp(24px,5vw,84px); position: relative; z-index: 3; }
 .hero__eyebrow { margin-bottom: 24px; background: none; box-shadow: none; padding: 0 0 10px; border-radius: 0; border-bottom: 2px solid var(--accent); color: var(--brand); width: fit-content; }
-.hero__title { font-size: clamp(2.8rem, 6.4vw, 5.2rem); line-height: 1; letter-spacing: -.02em; color: var(--ink); font-weight: 600; }
+.hero__title { font-size: clamp(2.6rem, 4.6vw, 4rem); line-height: 1.02; letter-spacing: -.015em; color: var(--ink); font-weight: 600; }
 .hero__title span { color: var(--accent-2); font-style: italic; display: inline-block; }
 /* kata terakhir overlap ke area foto */
 .hero__title .spill { position: relative; z-index: 4; }
