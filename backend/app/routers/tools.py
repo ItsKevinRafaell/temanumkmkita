@@ -20,6 +20,7 @@ from app.core.config import CRM_API_URL, CRM_API_KEY
 from app.core.database import SessionLocal, get_db
 from app.core.mimo_client import generate_gbp_profil
 from app.core.security import check_rate_limit
+from app.tools_assets import preview_render
 from app.core.utils import now_iso
 from app.models import ContactSubmission
 from app.schemas.tool_gbp import GbpProfilIn, GbpProfilOut
@@ -184,3 +185,36 @@ def submit_preview_lead(
     background_tasks.add_task(_forward_preview_lead_sync, submission.id, payload)
 
     return {"success": True, "submission_id": submission.id}
+
+
+# ─── Preview web usaha (22 template per-industri) ─────────────────────────────
+
+
+@router.get("/industries")
+def get_industries():
+    """List industri yang punya template (buat dropdown di form). Public, no limit."""
+    items = preview_render.list_industries()  # [(slug, label), ...]
+    return {"industries": [{"slug": s, "label": l} for s, l in items]}
+
+
+@router.post("/render-preview")
+def render_preview(data: PreviewLeadIn, request: Request):
+    """Render HTML preview web usaha dari template industri + data user.
+
+    Reuse schema PreviewLeadIn (nama_usaha, jenis_usaha, kota — wa/email diabaikan
+    di sini). Rate limit: 20 / 5 menit / IP. Return {ok, slug, label, html}.
+    """
+    ip = _client_ip(request)
+    check_rate_limit(f"tool:render-preview:{ip}", limit=20, window_seconds=300)
+
+    result = preview_render.render_preview_html(
+        nama_usaha=data.nama_usaha,
+        jenis_usaha=data.jenis_usaha,
+        kota=data.kota,
+    )
+    if not result.get("ok"):
+        return JSONResponse(
+            status_code=422,
+            content={"detail": result.get("error", "Gagal render preview.")},
+        )
+    return result

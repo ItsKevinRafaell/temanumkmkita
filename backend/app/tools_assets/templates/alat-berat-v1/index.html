@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{BIZ_NAME}}, Jual dan Sewa Alat Berat {{CITY}}</title>
+<meta name="description" content="{{BIZ_NAME}}, penyedia alat berat di {{CITY}}. Jual, sewa, dan sparepart excavator, forklift, dan crane. Rating {{RATING}} dari {{REVIEWS}} ulasan.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --brand: {{BRAND_HEX}};
+  --accent: {{ACCENT_HEX}};
+  --ink: #16191c;
+  --ink-soft: #565d64;
+  --line: #d9dde1;
+  --paper: #ffffff;
+  --panel: #eef1f4;
+  --dark: #14171a;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;color:var(--ink);background:var(--paper);line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3,.display{font-family:'Oswald',sans-serif;line-height:1.1;text-transform:uppercase;letter-spacing:.01em}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+.wrap{width:100%;max-width:1200px;margin:0 auto;padding:0 24px}
+/* NAV: side rail kiri di desktop (vertikal), fallback bar di mobile. Variasi total dari template lain. */
+.railtop{background:var(--dark);color:#fff}
+.railtop .wrap{display:flex;justify-content:space-between;align-items:center;padding:14px 24px;flex-wrap:wrap;gap:10px}
+.railtop .logo{height:44px;width:auto}
+.railtop .rt-cta{display:flex;gap:12px;align-items:center}
+.railtop .phone{color:#c3cbd2;font-size:14px;display:inline-flex;align-items:center;gap:8px}
+.railtop .phone svg{width:15px;height:15px;stroke:var(--accent)}
+.railtop .quote{background:var(--accent);color:var(--dark);font-weight:700;padding:11px 20px;border-radius:4px;font-size:14px;display:inline-flex;align-items:center;gap:8px;transition:background .18s ease}
+.railtop .quote svg{width:16px;height:16px;stroke:var(--dark)}
+.railtop .quote:hover{background:#fff}
+/* hero industrial */
+.hero{position:relative;background:var(--dark);color:#fff;overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;align-items:center;min-height:80vh}
+.hero-left{padding:76px 48px 76px 0}
+.hero .tagbar{display:inline-flex;align-items:center;gap:10px;border-left:3px solid var(--accent);padding-left:12px;font-family:'Oswald';font-weight:600;font-size:13px;letter-spacing:.14em;color:var(--accent);margin-bottom:22px}
+.hero h1{font-size:clamp(2.4rem,4.8vw,4rem);font-weight:700;margin-bottom:18px}
+.hero h1 em{font-style:normal;color:var(--brand)}
+.hero p{font-size:1.08rem;color:#c3cbd2;max-width:31rem;margin-bottom:30px}
+.hero-cta{display:flex;gap:13px;flex-wrap:wrap;margin-bottom:34px}
+.btn{display:inline-flex;align-items:center;gap:9px;font-weight:600;font-size:15px;padding:15px 26px;border-radius:4px;cursor:pointer;transition:transform .16s ease,background .18s ease,color .18s ease;border:none;font-family:'Inter'}
+.btn svg{width:18px;height:18px}
+.btn-primary{background:var(--brand);color:#fff}
+.btn-primary svg{stroke:#fff}
+.btn-primary:hover{background:#fff;color:var(--dark)}
+.btn-primary:hover svg{stroke:var(--dark)}
+.btn-accent{background:var(--accent);color:var(--dark)}
+.btn-accent svg{stroke:var(--dark)}
+.btn-accent:hover{background:#fff}
+.btn-ghost{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.35)}
+.btn-ghost svg{stroke:#fff}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+.btn-ghost:hover svg{stroke:var(--accent)}
+.hero-right{position:relative;align-self:stretch}
+.hero-right img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hero-right:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--dark) 0%,transparent 38%)}
+/* trust strip */
+.trust{background:var(--accent)}
+.trust .wrap{display:flex;flex-wrap:wrap;gap:36px;padding:20px 24px;justify-content:space-between;align-items:center}
+.trust .ti{display:flex;align-items:center;gap:12px;color:var(--dark)}
+.trust .ti svg{width:24px;height:24px;stroke:var(--dark);flex:none}
+.trust .ti b{font-family:'Oswald';font-size:1.05rem;display:block;line-height:1.1;font-weight:600}
+.trust .ti small{font-size:12px;opacity:.85}
+/* section base */
+.sec{padding:80px 0}
+.sec.alt{background:var(--panel)}
+.sec-head{max-width:40rem;margin-bottom:46px}
+.kicker{color:var(--brand);font-family:'Oswald';font-weight:600;font-size:13px;letter-spacing:.14em;margin-bottom:12px;display:block}
+.sec-head h2{font-size:clamp(1.9rem,3.4vw,2.7rem);font-weight:700;margin-bottom:12px}
+.sec-head p{color:var(--ink-soft);font-size:1.05rem;text-transform:none}
+/* katalog unit */
+.units{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.unit{background:var(--paper);border:1px solid var(--line);border-radius:8px;overflow:hidden;transition:box-shadow .18s ease,transform .16s ease}
+.unit:hover{box-shadow:0 14px 36px rgba(22,25,28,.12)}
+.unit .ph{aspect-ratio:16/10;overflow:hidden;background:var(--panel)}
+.unit .ph img{width:100%;height:100%;object-fit:cover;transition:transform .3s ease}
+.unit:hover .ph img{transform:scale(1.04)}
+.unit .body{padding:22px}
+.unit .cat{font-family:'Oswald';font-size:12px;letter-spacing:.08em;color:var(--brand);font-weight:600;margin-bottom:6px}
+.unit h3{font-size:1.3rem;font-weight:700;margin-bottom:8px}
+.unit p{color:var(--ink-soft);font-size:.94rem;margin-bottom:14px}
+.unit .foot{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:14px}
+.unit .tag{font-family:'Oswald';font-size:13px;font-weight:600;color:var(--dark)}
+.unit .go{display:inline-flex;align-items:center;gap:6px;color:var(--brand);font-weight:600;font-size:14px}
+.unit .go svg{width:16px;height:16px;stroke:var(--brand)}
+/* layanan 3 kolom */
+.svc{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.scard{padding:30px;background:var(--paper);border:1px solid var(--line);border-radius:8px}
+.scard .ic{width:52px;height:52px;border-radius:8px;background:var(--dark);display:flex;align-items:center;justify-content:center;margin-bottom:18px}
+.scard .ic svg{width:26px;height:26px;stroke:var(--accent)}
+.scard h3{font-size:1.25rem;font-weight:700;margin-bottom:8px}
+.scard p{color:var(--ink-soft);font-size:.96rem;text-transform:none}
+/* about */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:center}
+.about-media{border-radius:10px;overflow:hidden;aspect-ratio:4/3}
+.about-media img{width:100%;height:100%;object-fit:cover}
+.about h2{font-size:clamp(1.9rem,3.2vw,2.6rem);font-weight:700;margin-bottom:18px}
+.about p{color:var(--ink-soft);margin-bottom:16px;font-size:1.04rem}
+.about ul{list-style:none;display:grid;gap:13px;margin-top:22px}
+.about li{display:flex;gap:11px;align-items:flex-start}
+.about li svg{width:22px;height:22px;stroke:var(--brand);flex:none;margin-top:2px}
+/* paket */
+.pkg{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.pcard{border:1px solid var(--line);border-radius:10px;padding:32px;display:flex;flex-direction:column;background:var(--paper)}
+.pcard.feat{background:var(--dark);color:#fff;border-color:var(--dark)}
+.pcard .tag{font-family:'Oswald';font-size:12px;letter-spacing:.1em;color:var(--brand);margin-bottom:10px;font-weight:600}
+.pcard.feat .tag{color:var(--accent)}
+.pcard h3{font-size:1.4rem;font-weight:700;margin-bottom:6px}
+.pcard .who{color:var(--ink-soft);font-size:.94rem;margin-bottom:18px;min-height:44px;text-transform:none}
+.pcard.feat .who{color:#c3cbd2}
+.pcard .price{font-family:'Oswald';font-size:1.5rem;font-weight:700;margin-bottom:20px}
+.pcard ul{list-style:none;display:grid;gap:11px;margin-bottom:24px;flex:1}
+.pcard li{display:flex;gap:10px;font-size:.95rem;align-items:flex-start;text-transform:none}
+.pcard li svg{width:18px;height:18px;stroke:var(--brand);flex:none;margin-top:3px}
+.pcard.feat li svg{stroke:var(--accent)}
+.pcard .why{font-size:.9rem;color:var(--ink-soft);border-top:1px solid var(--line);padding-top:14px;margin-bottom:18px;text-transform:none}
+.pcard.feat .why{color:#aeb8c2;border-color:rgba(255,255,255,.14)}
+.pcard .btn{width:100%;justify-content:center}
+.pcard.feat .btn-primary{background:var(--accent);color:var(--dark)}
+.pcard.feat .btn-primary svg{stroke:var(--dark)}
+.pcard.feat .btn-primary:hover{background:#fff}
+/* galeri */
+.gal{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:180px;gap:12px}
+.gal figure{overflow:hidden;border-radius:8px}
+.gal img{width:100%;height:100%;object-fit:cover;transition:transform .3s ease}
+.gal figure:hover img{transform:scale(1.05)}
+.gal .g-wide{grid-column:span 2}
+.gal .g-tall{grid-row:span 2}
+/* CTA band accent */
+.cta{background:var(--brand);color:#fff;padding:70px 0}
+.cta .wrap{display:flex;align-items:center;justify-content:space-between;gap:28px;flex-wrap:wrap}
+.cta h2{font-size:clamp(1.8rem,3.2vw,2.5rem);font-weight:700;max-width:26rem}
+.cta p{color:rgba(255,255,255,.9);max-width:26rem;margin-top:8px;text-transform:none}
+.cta .btn{background:#fff;color:var(--brand)}
+.cta .btn svg{stroke:var(--brand)}
+.cta .btn:hover{background:var(--dark);color:#fff}
+.cta .btn:hover svg{stroke:#fff}
+/* footer */
+footer{background:var(--dark);color:#98a2ab;padding:50px 0 28px}
+footer .fgrid{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:38px;margin-bottom:34px}
+footer .logo{height:42px;margin-bottom:15px}
+footer h4{color:#fff;font-family:'Oswald';font-size:15px;letter-spacing:.05em;margin-bottom:13px}
+footer p,footer a{font-size:14px;line-height:1.85}
+footer a:hover{color:var(--accent)}
+footer .fbot{border-top:1px solid rgba(255,255,255,.1);padding-top:18px;font-size:13px}
+/* WA sticky */
+.wa{position:fixed;right:22px;bottom:22px;z-index:50;background:#25d366;color:#fff;display:inline-flex;align-items:center;gap:10px;padding:14px 20px;border-radius:50px;font-weight:600;box-shadow:0 10px 30px rgba(0,0,0,.22);transition:transform .16s ease}
+.wa svg{width:22px;height:22px;stroke:#fff}
+.wa:hover{transform:translateY(-2px)}
+/* responsive */
+@media(max-width:900px){
+  .hero-grid{grid-template-columns:1fr;min-height:auto}
+  .hero-left{padding:60px 0}
+  .hero-right{height:280px;min-height:280px}
+  .hero-right:after{background:linear-gradient(0deg,var(--dark) 0%,transparent 55%)}
+  .trust .wrap{gap:20px}
+  .units{grid-template-columns:1fr}
+  .svc{grid-template-columns:1fr}
+  .about-grid{grid-template-columns:1fr;gap:30px}
+  .pkg{grid-template-columns:1fr}
+  .gal{grid-template-columns:1fr 1fr;grid-auto-rows:150px}
+  footer .fgrid{grid-template-columns:1fr;gap:24px}
+  .cta .wrap{flex-direction:column;align-items:flex-start}
+}
+@media(prefers-reduced-motion:reduce){
+  *{transition:none!important;scroll-behavior:auto!important}
+  .unit:hover .ph img,.gal figure:hover img{transform:none}
+}
+/* proof variasi ke-5: 2 foto landscape besar + stat overlay */
+.proof{background:var(--panel)}
+.proof-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.proof-card{position:relative;border-radius:10px;overflow:hidden;aspect-ratio:16/10}
+.proof-card img{width:100%;height:100%;object-fit:cover;transition:transform .35s ease}
+.proof-card:hover img{transform:scale(1.04)}
+.proof-card .ov{position:absolute;inset:0;background:linear-gradient(0deg,rgba(20,23,26,.88) 0%,rgba(20,23,26,.1) 55%);display:flex;flex-direction:column;justify-content:flex-end;padding:26px}
+.proof-card .ov b{font-family:'Oswald';font-weight:700;font-size:1.3rem;color:#fff;text-transform:uppercase;line-height:1.1}
+.proof-card .ov small{color:#c3cbd2;font-size:.92rem;margin-top:4px}
+.proof-card .ov .stat{font-family:'Oswald';font-weight:700;font-size:2rem;color:var(--accent);line-height:1;margin-bottom:6px}
+@media(max-width:900px){.proof-grid{grid-template-columns:1fr}}
+
+.railtop .wrap{display:flex;align-items:center;gap:24px}
+.railtop .nav-menu{display:flex;gap:24px;margin-left:28px;align-items:center}
+.railtop .nav-menu a{font-family:'Oswald',sans-serif;font-size:14px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;color:#e8e8e8;transition:color .18s ease}
+.railtop .nav-menu a:hover{color:var(--accent)}
+.railtop .rt-cta{margin-left:auto}
+@media(max-width:900px){.railtop .nav-menu{display:none}}
+
+.testi{background:var(--paper2,#f5f5f3)}
+.testi .tgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:34px}
+.testi .tcard{background:var(--paper,#fff);border:1px solid var(--line,#e3e3e0);border-radius:10px;padding:26px 24px;display:flex;flex-direction:column;gap:16px}
+.testi .stars{display:flex;gap:3px}
+.testi .stars svg{width:16px;height:16px;fill:var(--accent);stroke:none}
+.testi .quote-txt{font-size:15px;line-height:1.65;color:var(--ink);flex:1}
+.testi .who{display:flex;align-items:center;gap:12px;border-top:1px solid var(--line,#e3e3e0);padding-top:15px}
+.testi .who .av{width:42px;height:42px;border-radius:50%;background:var(--brand);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;flex-shrink:0}
+.testi .who .nm{font-weight:600;font-size:14px;color:var(--ink)}
+.testi .who .rl{font-size:12.5px;color:var(--ink-soft)}
+@media(max-width:900px){.testi .tgrid{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.railtop .nav-menu a{transition:none}}
+
+
+/* A+B layer (positional) */
+.sec-head{position:relative}
+.sec-head[data-ghost]::before{content:attr(data-ghost);position:absolute;right:0;top:-52px;font-family:'Oswald',sans-serif;font-weight:800;font-size:clamp(3.6rem,6vw,6rem);line-height:1;color:transparent;-webkit-text-stroke:1.5px rgba(23,26,29,.09);z-index:0;pointer-events:none}
+.sec-head.center[data-ghost]::before{right:auto;left:50%;transform:translateX(-50%)}
+.sec-head>*{position:relative;z-index:1}
+.kicker[data-num]::before{content:attr(data-num) "  ";color:var(--accent);font-weight:800}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .65s cubic-bezier(.16,1,.3,1),transform .65s cubic-bezier(.16,1,.3,1)}
+.reveal.in{opacity:1;transform:none}
+.reveal.d1{transition-delay:.07s}.reveal.d2{transition-delay:.14s}.reveal.d3{transition-delay:.21s}
+.hero .bg img{will-change:transform}
+.pcard.feat .btn-primary{background:color-mix(in srgb,var(--accent) 82%,#000);color:#fff}
+.pcard.feat .btn-primary svg{stroke:#fff}
+.pcard.feat .btn-primary:hover{background:#fff;color:var(--dark)}
+.pcard.feat .btn-primary:hover svg{stroke:var(--dark)}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1!important;transform:none!important}*{animation:none!important}}
+
+</style>
+</head>
+<body>
+
+<!-- TOP RAIL: logo + telepon + tombol quote (variasi nav, bukan navbar link list) -->
+<div class="railtop">
+  <div class="wrap">
+    <a href="#top"><img class="logo" src="{{LOGO_URL}}" alt="{{BIZ_NAME}}"></a>
+    <nav class="nav-menu">
+      <a href="#unit">Unit</a>
+      <a href="#layanan">Layanan</a>
+      <a href="#tentang">Tentang</a>
+      <a href="#paket">Sewa</a>
+      <a href="#kontak">Kontak</a>
+    </nav>
+    <div class="rt-cta">
+      <span class="phone"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>{{PHONE}}</span>
+      <a class="quote" href="https://wa.me/{{PHONE}}"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 15h6M9 11h6"/></svg>Minta Penawaran</a>
+    </div>
+  </div>
+</div>
+
+<!-- HERO industrial -->
+<section class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div class="hero-left">
+      <div class="tagbar">Jual, Sewa, dan Sparepart Alat Berat {{CITY}}</div>
+      <h1>Alat Berat <em>Andal</em> untuk Setiap Proyek Anda</h1>
+      <p>{{COPY_HERO}}</p>
+      <div class="hero-cta">
+        <a class="btn btn-accent" href="#unit"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h18v18H3zM3 9h18M9 21V9"/></svg>Lihat Unit</a>
+        <a class="btn btn-ghost" href="https://wa.me/{{PHONE}}"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>Konsultasi</a>
+      </div>
+    </div>
+    <div class="hero-right"><img src="{{HERO_IMG}}" alt="Alat berat {{BIZ_NAME}}"></div>
+  </div>
+</section>
+
+<!-- TRUST -->
+<section class="trust">
+  <div class="wrap">
+    <div class="ti"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><div><b>{{RATING}} / 5.0</b><small>{{REVIEWS}} ulasan</small></div></div>
+    <div class="ti"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><div><b>Unit Terawat</b><small>Siap operasi di lapangan</small></div></div>
+    <div class="ti"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><div><b>Operator &amp; Support</b><small>Tersedia sesuai kebutuhan</small></div></div>
+    <div class="ti"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 7 8 11.7z"/></svg><div><b>{{CITY}}</b><small>Jangkauan luas</small></div></div>
+  </div>
+</section>
+
+<!-- KATALOG UNIT -->
+<section class="sec" id="unit">
+  <div class="wrap">
+    <div data-ghost="01" class="sec-head reveal">
+      <span class="kicker" data-num="01">Unit Tersedia</span>
+      <h2>Pilihan Alat Berat Kami</h2>
+      <p>Berbagai unit siap untuk jual maupun sewa. Hubungi kami untuk ketersediaan, spesifikasi lengkap, dan penawaran harga.</p>
+    </div>
+    <div class="units">
+      <article class="unit">
+        <div class="ph"><img src="{{IMG_1}}" alt="{{UNIT_1_TITLE}}"></div>
+        <div class="body">
+          <div class="cat">Excavator</div>
+          <h3>{{UNIT_1_TITLE}}</h3>
+          <p>{{UNIT_1_DESC}}</p>
+          <div class="foot"><span class="tag">Jual / Sewa</span><a class="go" href="https://wa.me/{{PHONE}}">Tanya Unit<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
+        </div>
+      </article>
+      <article class="unit">
+        <div class="ph"><img src="{{IMG_3}}" alt="{{UNIT_2_TITLE}}"></div>
+        <div class="body">
+          <div class="cat">Forklift</div>
+          <h3>{{UNIT_2_TITLE}}</h3>
+          <p>{{UNIT_2_DESC}}</p>
+          <div class="foot"><span class="tag">Jual / Sewa</span><a class="go" href="https://wa.me/{{PHONE}}">Tanya Unit<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
+        </div>
+      </article>
+      <article class="unit">
+        <div class="ph"><img src="{{IMG_4}}" alt="{{UNIT_3_TITLE}}"></div>
+        <div class="body">
+          <div class="cat">Crane</div>
+          <h3>{{UNIT_3_TITLE}}</h3>
+          <p>{{UNIT_3_DESC}}</p>
+          <div class="foot"><span class="tag">Jual / Sewa</span><a class="go" href="https://wa.me/{{PHONE}}">Tanya Unit<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- LAYANAN -->
+<section id="layanan" class="sec alt">
+  <div class="wrap">
+    <div data-ghost="02" class="sec-head reveal">
+      <span class="kicker" data-num="02">Layanan</span>
+      <h2>Bukan Sekadar Sewa Unit</h2>
+      <p>Kami dukung kelancaran proyek Anda dari penyediaan unit sampai perawatan dan ketersediaan sparepart.</p>
+    </div>
+    <div class="svc">
+      <div class="reveal scard"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h18v18H3zM3 9h18M9 21V9"/></svg></div><h3>{{SVC_1_TITLE}}</h3><p>{{SVC_1_DESC}}</p></div>
+      <div class="reveal scard"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div><h3>{{SVC_2_TITLE}}</h3><p>{{SVC_2_DESC}}</p></div>
+      <div class="reveal scard"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div><h3>{{SVC_3_TITLE}}</h3><p>{{SVC_3_DESC}}</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="tentang" class="sec about">
+  <div class="wrap about-grid">
+    <div class="reveal about-media"><img src="{{IMG_2}}" alt="Tim {{BIZ_NAME}}"></div>
+    <div>
+      <span class="kicker" data-num="03">Kenapa {{BIZ_NAME}}</span>
+      <h2>Mitra Alat Berat yang Bisa Diandalkan</h2>
+      <p>{{COPY_ABOUT}}</p>
+      <ul>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span><b>Unit terawat.</b> Diperiksa dan dirawat berkala agar siap kerja di lapangan.</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span><b>Harga jelas.</b> Penawaran transparan sesuai kebutuhan dan durasi proyek.</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span><b>Dukungan cepat.</b> Bantuan operator dan perawatan saat Anda butuh.</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- PROOF OF WORK -->
+<section id="proof" class="sec proof">
+  <div class="wrap">
+    <div data-ghost="04" class="sec-head reveal">
+      <span class="kicker" data-num="04">Bukti Kerja</span>
+      <h2>Unit Kami di Proyek Nyata</h2>
+      <p>Dari penggalian sampai pengangkatan berat, unit kami terbukti diandalkan di berbagai medan proyek.</p>
+    </div>
+    <div class="proof-grid">
+      <div class="reveal proof-card"><img src="{{PROOF_IMG_1}}" alt="Unit {{BIZ_NAME}}"><div class="ov"><span class="stat">Andal</span><b>Kerja di Medan Berat</b><small>Unit siap operasi meski kondisi lapangan menantang.</small></div></div>
+      <div class="reveal proof-card"><img src="{{PROOF_IMG_2}}" alt="Unit {{BIZ_NAME}}"><div class="ov"><span class="stat">Terawat</span><b>Perawatan Rutin</b><small>Diperiksa berkala agar performa tetap optimal.</small></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PAKET -->
+<section class="sec alt" id="paket">
+  <div class="wrap">
+    <div data-ghost="05" class="sec-head reveal">
+      <span class="kicker" data-num="05">Cara Kerja Sama</span>
+      <h2>Pilih Sesuai Kebutuhan Proyek</h2>
+      <p>Sewa harian, sewa jangka panjang, atau beli unit. Semua dengan penawaran yang jelas dan tanpa biaya tersembunyi.</p>
+    </div>
+    <div class="pkg">
+      <div class="reveal d1 pcard">
+        <div class="tag">{{PKG_1_NAME}}</div>
+        <h3>Sewa Harian</h3>
+        <p class="who">Untuk kebutuhan proyek jangka pendek atau pekerjaan mendadak.</p>
+        <div class="price">{{PKG_1_PRICE}}</div>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Unit siap pakai dan terawat</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Fleksibel per hari sesuai kebutuhan</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Opsi operator tersedia</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Pengiriman ke lokasi proyek</li>
+        </ul>
+        <p class="why">Pilih ini kalau butuh unit cepat untuk pekerjaan singkat tanpa komitmen jangka panjang.</p>
+        <a class="btn btn-primary" href="https://wa.me/{{PHONE}}"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>Tanya Ketersediaan</a>
+      </div>
+      <div class="reveal d2 pcard feat">
+        <div class="tag">{{PKG_2_NAME}}, Paling Diminati</div>
+        <h3>Sewa Jangka Panjang</h3>
+        <p class="who">Untuk proyek berjalan berbulan-bulan yang butuh unit stabil.</p>
+        <div class="price">{{PKG_2_PRICE}}</div>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Harga lebih hemat untuk durasi panjang</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Perawatan berkala termasuk</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Prioritas unit pengganti bila perlu</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Kontrak dan termin yang jelas</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Dukungan operator dan support</li>
+        </ul>
+        <p class="why">Paling banyak dipilih kontraktor. Biaya lebih terkendali dan unit selalu siap selama proyek berjalan.</p>
+        <a class="btn btn-primary" href="https://wa.me/{{PHONE}}"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>Minta Penawaran</a>
+      </div>
+      <div class="reveal d3 pcard">
+        <div class="tag">{{PKG_3_NAME}}</div>
+        <h3>Beli Unit</h3>
+        <p class="who">Untuk Anda yang ingin memiliki unit sendiri untuk operasional jangka panjang.</p>
+        <div class="price">{{PKG_3_PRICE}}</div>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Unit dengan kondisi jelas dan diperiksa</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Riwayat dan spesifikasi transparan</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Dukungan sparepart setelah pembelian</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Bantuan pengiriman unit</li>
+        </ul>
+        <p class="why">Pilih ini kalau kebutuhan unit Anda rutin dan lebih hemat memiliki daripada terus menyewa.</p>
+        <a class="btn btn-primary" href="https://wa.me/{{PHONE}}"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>Konsultasi Pembelian</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALERI -->
+<section id="galeri" class="sec">
+  <div class="wrap">
+    <div data-ghost="06" class="sec-head reveal">
+      <span class="kicker" data-num="06">Dokumentasi</span>
+      <h2>Unit di Lapangan</h2>
+      <p>Beberapa dokumentasi unit kami saat beroperasi di berbagai proyek.</p>
+    </div>
+    <div class="gal">
+      <figure class="g-wide"><img src="{{IMG_1}}" alt="Alat berat {{BIZ_NAME}}"></figure>
+      <figure><img src="{{IMG_5}}" alt="Alat berat {{BIZ_NAME}}"></figure>
+      <figure><img src="{{IMG_6}}" alt="Alat berat {{BIZ_NAME}}"></figure>
+      <figure><img src="{{IMG_3}}" alt="Alat berat {{BIZ_NAME}}"></figure>
+      <figure class="g-wide"><img src="{{IMG_4}}" alt="Alat berat {{BIZ_NAME}}"></figure>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="testimoni" class="sec testi">
+  <div class="wrap">
+    <div data-ghost="07" class="sec-head center reveal">
+      <span class="kicker" data-num="07">Kata Mereka</span>
+      <h2>{{TESTI_HEAD}}</h2>
+    </div>
+    <div class="tgrid">
+      <div class="reveal d1 tcard"><div class="stars"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div><p class="quote-txt">{{TESTI_1_TEXT}}</p><div class="who"><span class="av">{{TESTI_1_INIT}}</span><div><div class="nm">{{TESTI_1_NAME}}</div><div class="rl">{{TESTI_1_ROLE}}</div></div></div></div>
+      <div class="reveal d2 tcard"><div class="stars"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div><p class="quote-txt">{{TESTI_2_TEXT}}</p><div class="who"><span class="av">{{TESTI_2_INIT}}</span><div><div class="nm">{{TESTI_2_NAME}}</div><div class="rl">{{TESTI_2_ROLE}}</div></div></div></div>
+      <div class="reveal d3 tcard"><div class="stars"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div><p class="quote-txt">{{TESTI_3_TEXT}}</p><div class="who"><span class="av">{{TESTI_3_INIT}}</span><div><div class="nm">{{TESTI_3_NAME}}</div><div class="rl">{{TESTI_3_ROLE}}</div></div></div></div>
+    </div>
+  </div>
+</section>
+<section id="kontak" class="cta">
+  <div class="wrap">
+    <div>
+      <h2>Butuh Unit untuk Proyek Anda?</h2>
+      <p>Sampaikan kebutuhan Anda, kami bantu carikan unit yang tepat dengan penawaran terbaik.</p>
+    </div>
+    <a class="btn" href="https://wa.me/{{PHONE}}"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>Chat via WhatsApp</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="fgrid">
+      <div>
+        <img class="logo" src="{{LOGO_URL}}" alt="{{BIZ_NAME}}">
+        <p>{{BIZ_NAME}} menyediakan jual, sewa, dan sparepart alat berat di {{CITY}} dan sekitarnya dengan unit terawat dan dukungan yang bisa diandalkan.</p>
+      </div>
+      <div>
+        <h4>Kontak</h4>
+        <p><a href="tel:{{PHONE}}">{{PHONE}}</a></p>
+        <p>{{ADDRESS}}</p>
+        <p><a href="{{MAPS}}">Lihat di Peta</a></p>
+      </div>
+      <div>
+        <h4>Layanan</h4>
+        <p><a href="#unit">Jual Unit</a></p>
+        <p><a href="#paket">Sewa Alat Berat</a></p>
+        <p><a href="#paket">Sparepart</a></p>
+      </div>
+    </div>
+    <div class="fbot">&copy; {{BIZ_NAME}}. Jual dan Sewa Alat Berat {{CITY}}.</div>
+  </div>
+</footer>
+
+<!-- WA STICKY -->
+<a class="wa" href="https://wa.me/{{PHONE}}" aria-label="Hubungi via WhatsApp">
+  <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+  WhatsApp
+</a>
+
+<script>
+(function(){
+  var rm=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(rm){document.querySelectorAll('.reveal').forEach(function(e){e.classList.add('in');});return;}
+  var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);}});},{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+  function cu(el){var raw=el.getAttribute('data-count');var t=parseFloat(raw);if(isNaN(t))return;var suf=el.getAttribute('data-suffix')||'';var dec=(raw.indexOf('.')>-1)?1:0;var dur=1100,t0=null;function s(ts){if(!t0)t0=ts;var p=Math.min((ts-t0)/dur,1);el.textContent=(t*p).toFixed(dec)+suf;if(p<1)requestAnimationFrame(s);else el.textContent=(dec?t.toFixed(1):t)+suf;}requestAnimationFrame(s);}
+  var cio=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){cu(en.target);cio.unobserve(en.target);}});},{threshold:.5});
+  document.querySelectorAll('[data-count]').forEach(function(el){cio.observe(el);});
+  var hb=document.querySelector('.hero .bg img');
+  if(hb){window.addEventListener('scroll',function(){var y=window.scrollY;if(y<900){hb.style.transform='translateY('+(y*0.16)+'px) scale(1.04)';}},{passive:true});}
+})();
+</script>
+</body>
+</html>

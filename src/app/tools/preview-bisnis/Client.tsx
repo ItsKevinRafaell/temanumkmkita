@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Sparkles, Store, Tag, MapPin, AlertCircle, MessageCircle, ArrowRight, Check } from "lucide-react";
 import Link from "next/link";
@@ -22,6 +22,8 @@ export default function PreviewBisnisClient() {
   const [jenisUsaha, setJenisUsaha] = useState("");
   const [kota, setKota] = useState("");
 
+  const [industries, setIndustries] = useState<{ slug: string; label: string }[]>([]);
+
   const [loading, setLoading] = useState(false);
   const [stepIdx, setStepIdx] = useState(0);
   const [showResult, setShowResult] = useState(false);
@@ -34,6 +36,14 @@ export default function PreviewBisnisClient() {
   const [leadLoading, setLeadLoading] = useState(false);
 
   const resultRef = useRef<HTMLDivElement>(null);
+
+  // Ambil daftar industri (yang punya template) buat dropdown.
+  useEffect(() => {
+    fetch("/api/tools/industries")
+      .then((r) => (r.ok ? r.json() : Promise.reject()))
+      .then((d) => setIndustries(d.industries || []))
+      .catch(() => setIndustries([]));
+  }, []);
 
   const canSubmit = namaUsaha.trim() && jenisUsaha.trim() && kota.trim() && !loading;
 
@@ -122,9 +132,13 @@ export default function PreviewBisnisClient() {
                   <label className="mb-1.5 flex items-center gap-1.5 text-sm font-bold text-brand-dark">
                     <Tag size={15} className="text-accent" /> Jenis Usaha
                   </label>
-                  <input type="text" value={jenisUsaha} onChange={(e) => setJenisUsaha(e.target.value)}
-                    placeholder="Contoh: Warung bakso, Kedai kopi, Salon" maxLength={100}
-                    className="w-full rounded-lg border border-brand-dark/15 bg-canvas px-4 py-3 text-brand-dark outline-none transition-colors focus:border-accent" />
+                  <select value={jenisUsaha} onChange={(e) => setJenisUsaha(e.target.value)}
+                    className="w-full rounded-lg border border-brand-dark/15 bg-canvas px-4 py-3 text-brand-dark outline-none transition-colors focus:border-accent">
+                    <option value="">Pilih jenis usahamu...</option>
+                    {industries.map((ind) => (
+                      <option key={ind.slug} value={ind.label}>{ind.label}</option>
+                    ))}
+                  </select>
                 </div>
                 <div>
                   <label className="mb-1.5 flex items-center gap-1.5 text-sm font-bold text-brand-dark">
@@ -174,8 +188,8 @@ export default function PreviewBisnisClient() {
                 <>
                   <div>
                     <h2 className="mb-1 text-center text-sm font-bold uppercase tracking-wider text-accent">Tampilan Website Bisnismu</h2>
-                    <p className="mb-3 text-center text-xs text-brand-dark/45">Coba ganti gaya di bawah — semua pakai nama usahamu</p>
-                    <WebPreview namaUsaha={data.nama} jenisUsaha={data.jenis} kota={data.kota} />
+                    <p className="mb-3 text-center text-xs text-brand-dark/45">Website siap pakai — tinggal ganti isi dengan data bisnismu</p>
+                    <WebPreview nama={data.nama} jenis={data.jenis} kota={data.kota} />
                   </div>
 
                   <div>

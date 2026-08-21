@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{BIZ_NAME}}, Properti dan Hunian {{CITY}}</title>
+<meta name="description" content="{{BIZ_NAME}}, properti terpercaya di {{CITY}}. Rating {{RATING}} dari {{REVIEWS}} ulasan. Jual, sewa, dan konsultasi properti. Hubungi via WhatsApp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --brand: {{BRAND_HEX}};
+  --accent: {{ACCENT_HEX}};
+  --ink: #23201c;
+  --ink-soft: #5a544b;
+  --line: #e7e2da;
+  --paper: #fdfcfa;
+  --panel: #f4efe8;
+  --dark: #211d18;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Manrope',system-ui,sans-serif;color:var(--ink);background:var(--paper);line-height:1.65;-webkit-font-smoothing:antialiased}
+h1,h2,h3,.display{font-family:'Fraunces',serif;line-height:1.14;letter-spacing:-.01em;font-weight:600}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+.wrap{width:100%;max-width:1200px;margin:0 auto;padding:0 26px}
+/* NAV: floating minimal, cuma logo tengah-kiri + tombol WA kanan. Transparan di atas hero. */
+.nav{position:absolute;top:0;left:0;right:0;z-index:20;padding:24px 0}
+.hero .htext .btn-primary{background:var(--accent);color:#fff}
+.hero .htext .btn-primary svg{stroke:#fff}
+.hero .htext .btn-primary:hover{background:#fff}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between}
+.nav .logo{height:48px;width:auto}
+.nav .contact{display:inline-flex;align-items:center;gap:9px;background:var(--brand);color:#fff;padding:11px 22px;border-radius:40px;font-weight:600;font-size:14px;transition:background .18s ease,color .18s ease}
+.nav .contact svg{width:16px;height:16px;stroke:#fff;transition:stroke .18s ease}
+.nav .contact:hover{background:#fff;color:var(--dark)}
+.nav .contact:hover svg{stroke:var(--dark)}
+/* hero SPLIT editorial asimetris (bukan full-bleed avg) */
+.hero{position:relative;background:var(--dark);color:#fff;overflow:hidden;padding:150px 0 0}
+.hero .hwrap{width:100%;max-width:1220px;margin:0 auto;padding:0 26px;display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+.hero .htext{padding-bottom:96px;position:relative;z-index:3}
+.hero .eyebrow{font-family:'Manrope';font-weight:600;font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:20px;display:inline-flex;align-items:center;gap:10px}
+.hero .eyebrow::before{content:"";width:34px;height:1px;background:var(--accent)}
+.hero h1{font-family:'Fraunces',serif;font-size:clamp(3.6rem,7vw,7.2rem);font-weight:700;line-height:.94;letter-spacing:-.04em;margin-bottom:24px}
+.hero h1 em{font-style:italic;color:var(--accent)}
+.hero p{font-size:1.12rem;color:#e4ddd2;max-width:30rem;margin-bottom:30px}
+.hero-cta{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:36px}
+.hero-stats{display:flex;gap:36px;padding-top:28px;border-top:1px solid rgba(255,255,255,.16)}
+.hero-stats .hs b{font-family:'Fraunces',serif;font-size:1.9rem;font-weight:700;color:#fff;display:block;line-height:1}
+.hero-stats .hs span{font-size:12.5px;color:#c8c1b6;letter-spacing:.02em}
+/* hero visual: foto dalam frame + kartu spec overlap */
+.hero .hvisual{position:relative;align-self:stretch;min-height:520px}
+.hero .hvisual .frame{position:absolute;inset:0;border-radius:20px 20px 0 0;overflow:hidden}
+.hero .hvisual .frame img{width:100%;height:100%;object-fit:cover}
+.hero .hcard{position:absolute;left:-40px;bottom:80px;z-index:4;background:var(--paper);color:var(--ink);border-radius:16px;padding:22px 24px;box-shadow:0 24px 60px rgba(0,0,0,.4);max-width:270px}
+.hero .hcard .badge{display:inline-block;background:var(--accent);color:#fff;font-family:'Manrope';font-weight:700;font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:5px 11px;border-radius:20px;margin-bottom:12px}
+.hero .hcard b{font-family:'Fraunces';font-size:1.25rem;display:block;margin-bottom:10px;line-height:1.2}
+.hero .hcard .spec{display:flex;gap:16px;border-top:1px solid var(--line);padding-top:12px}
+.hero .hcard .spec div{font-size:12px;color:var(--ink-soft)}
+.hero .hcard .spec div b{font-family:'Manrope';font-size:15px;color:var(--ink);display:block;margin-bottom:0}
+.btn{display:inline-flex;align-items:center;gap:9px;font-weight:600;font-size:15px;padding:15px 28px;border-radius:10px;cursor:pointer;transition:transform .16s ease,background .18s ease,color .18s ease;border:none;font-family:'Manrope'}
+.btn svg{width:18px;height:18px}
+.btn-primary{background:var(--brand);color:#fff}
+.btn-primary svg{stroke:#fff}
+.btn-primary:hover{background:#fff;color:var(--dark)}
+.btn-primary:hover svg{stroke:var(--dark)}
+.btn-ghost{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.4)}
+.btn-ghost svg{stroke:#fff}
+.btn-ghost:hover{border-color:#fff;background:rgba(255,255,255,.1)}
+/* section base */
+.sec{padding:92px 0}
+.sec.alt{background:var(--panel)}
+.sec-head{max-width:42rem;margin-bottom:54px;position:relative}
+.sec-head.center{margin-left:auto;margin-right:auto;text-align:center}
+.sec-head[data-ghost]::before{content:attr(data-ghost);position:absolute;right:-6px;top:-72px;font-family:'Fraunces',serif;font-weight:700;font-size:clamp(7rem,13vw,12rem);line-height:1;color:transparent;-webkit-text-stroke:2px rgba(35,32,28,.16);z-index:0;pointer-events:none}
+.sec-head.center[data-ghost]::before{right:auto;left:50%;transform:translateX(-50%)}
+.sec-head>*{position:relative;z-index:1}
+.kicker{color:var(--brand);font-family:'Manrope';font-weight:600;font-size:12px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:14px;display:inline-flex;align-items:center;gap:12px}
+.kicker::before{content:attr(data-num);font-family:'Fraunces',serif;font-size:15px;font-weight:700;color:var(--accent);font-style:italic}
+.sec-head h2{font-size:clamp(2.3rem,4.4vw,3.6rem);font-weight:700;margin-bottom:14px;letter-spacing:-.025em;line-height:1.02}
+.sec-head p{color:var(--ink-soft);font-size:1.08rem}
+.proof .sec-head[data-ghost]::before,.proc .sec-head[data-ghost]::before{-webkit-text-stroke:2px rgba(255,255,255,.16)}
+/* listing ASIMETRIS: 1 featured besar + 2 kecil bertumpuk (bukan 3 sama rata) */
+.listings{display:grid;grid-template-columns:1.4fr 1fr;grid-template-rows:1fr 1fr;gap:22px}
+.lcard{background:var(--paper);border-radius:16px;overflow:hidden;border:1px solid var(--line);transition:box-shadow .2s ease;display:flex;flex-direction:column}
+.lcard.feat{grid-row:span 2;flex-direction:column}
+.lcard:hover{box-shadow:0 18px 44px rgba(35,32,28,.13)}
+.lcard .ph{overflow:hidden;flex:none}
+.lcard .ph img{width:100%;height:100%;object-fit:cover;transition:transform .35s ease}
+.lcard.feat .ph{aspect-ratio:16/11}
+.lcard:not(.feat){flex-direction:row}
+.lcard:not(.feat) .ph{width:44%;aspect-ratio:auto}
+.lcard:not(.feat) .ph img{height:100%}
+.lcard:hover .ph img{transform:scale(1.05)}
+.lcard .body{padding:22px;flex:1;display:flex;flex-direction:column;justify-content:center}
+.lcard.feat .body{padding:26px 26px 28px}
+.lcard .type{font-family:'Manrope';font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:8px}
+.lcard h3{font-size:1.28rem;font-weight:600;margin-bottom:8px}
+.lcard.feat h3{font-size:1.7rem}
+.lcard p{color:var(--ink-soft);font-size:.94rem;margin-bottom:14px}
+.lcard:not(.feat) p{display:none}
+.lcard .meta{display:flex;gap:16px;font-size:.88rem;color:var(--ink-soft);border-top:1px solid var(--line);padding-top:13px;margin-top:auto}
+.lcard .meta span{display:inline-flex;align-items:center;gap:6px}
+.lcard .meta svg{width:16px;height:16px;stroke:var(--brand)}
+@media(max-width:900px){.listings{grid-template-columns:1fr;grid-template-rows:none}.lcard:not(.feat){flex-direction:column}.lcard:not(.feat) .ph{width:100%;aspect-ratio:16/10}.lcard:not(.feat) p{display:block}.lcard.feat{grid-row:auto}}
+/* about ASIMETRIS: media besar + panel angka overlap (bukan split 50/50 klise) */
+.about-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center;position:relative}
+.about-media{border-radius:18px;overflow:hidden;aspect-ratio:4/3;position:relative}
+.about-media img{width:100%;height:100%;object-fit:cover}
+.about-media .float-stat{position:absolute;right:-28px;bottom:28px;background:var(--brand);color:#fff;border-radius:14px;padding:18px 22px;box-shadow:0 18px 44px rgba(0,0,0,.28)}
+.about-media .float-stat b{font-family:'Fraunces';font-size:2rem;font-weight:700;display:block;line-height:1;color:var(--accent)}
+.about-media .float-stat span{font-size:12.5px;color:#e4ddd2}
+.about h2{font-size:clamp(2rem,3.4vw,2.8rem);font-weight:600;margin-bottom:20px}
+.about p{color:var(--ink-soft);margin-bottom:16px;font-size:1.06rem}
+.about-stats{display:flex;gap:44px;margin-top:34px;padding-top:28px;border-top:1px solid var(--line)}
+.about-stats .s b{font-family:'Fraunces';font-size:2.9rem;font-weight:700;color:var(--brand);display:block;line-height:1}
+.about-stats .s small{color:var(--ink-soft);font-size:14px;margin-top:4px;display:block}
+.about-points{list-style:none;display:grid;gap:12px;margin:24px 0 4px}
+.about-points li{display:flex;gap:11px;align-items:flex-start;font-size:1rem;color:var(--ink)}
+.about-points svg{width:19px;height:19px;stroke:var(--accent);flex:none;margin-top:4px}
+/* layanan tiga kolom ikon */
+.svc{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.scard{padding:30px 28px;background:var(--paper);border:1px solid var(--line);border-radius:14px;transition:box-shadow .2s ease,border-color .2s ease}
+.scard:hover{box-shadow:0 14px 36px rgba(35,32,28,.1);border-color:var(--brand)}
+.scard .ic{width:54px;height:54px;border-radius:13px;background:var(--brand);display:flex;align-items:center;justify-content:center;margin-bottom:18px}
+.scard .ic svg{width:25px;height:25px;stroke:#fff}
+.scard h3{font-size:1.24rem;font-weight:600;margin-bottom:9px}
+.scard p{color:var(--ink-soft);font-size:.97rem;margin-bottom:16px}
+.scard .feat-list{list-style:none;display:grid;gap:9px;border-top:1px solid var(--line);padding-top:16px}
+.scard .feat-list li{display:flex;gap:9px;align-items:flex-start;font-size:.9rem;color:var(--ink)}
+.scard .feat-list svg{width:16px;height:16px;stroke:var(--accent);flex:none;margin-top:3px}
+/* paket */
+.pkg{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.pcard{border:1px solid var(--line);border-radius:18px;padding:36px;display:flex;flex-direction:column;background:var(--paper)}
+.pcard.feat{background:var(--dark);color:#fff;border-color:var(--dark)}
+.pcard .tag{font-family:'Manrope';font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--brand);margin-bottom:10px;font-weight:600}
+.pcard.feat .tag{color:var(--accent)}
+.pcard h3{font-size:1.55rem;font-weight:600;margin-bottom:6px}
+.pcard .who{color:var(--ink-soft);font-size:.95rem;margin-bottom:20px;min-height:46px}
+.pcard.feat .who{color:#e8e2d8}
+.pcard .price{font-family:'Fraunces';font-size:1.7rem;font-weight:700;margin-bottom:22px}
+.pcard ul{list-style:none;display:grid;gap:12px;margin-bottom:26px;flex:1}
+.pcard li{display:flex;gap:10px;font-size:.96rem;align-items:flex-start}
+.pcard li svg{width:19px;height:19px;stroke:var(--brand);flex:none;margin-top:3px}
+.pcard.feat li svg{stroke:var(--accent)}
+.pcard .why{font-size:.92rem;color:var(--ink-soft);border-top:1px solid var(--line);padding-top:16px;margin-bottom:20px}
+.pcard.feat .why{color:#d8d0c4;border-color:rgba(255,255,255,.18)}
+.pcard .btn{width:100%;justify-content:center;border-radius:10px}
+.pcard.feat .btn-primary{background:color-mix(in srgb,var(--accent) 82%,#000);color:#fff}
+.pcard.feat .btn-primary svg{stroke:#fff}
+.pcard.feat .btn-primary:hover{background:#fff}
+/* galeri masonry */
+.gal{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:210px;gap:14px}
+.gal figure{overflow:hidden;border-radius:12px;position:relative}
+.gal img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease}
+.gal figure:hover img{transform:scale(1.06)}
+.gal figure figcaption{position:absolute;left:0;right:0;bottom:0;padding:26px 16px 14px;background:linear-gradient(0deg,rgba(20,16,12,.85),transparent);color:#fff;font-family:'Manrope';font-size:.85rem;font-weight:600;opacity:0;transform:translateY(8px);transition:opacity .25s ease,transform .25s ease}
+.gal figure:hover figcaption{opacity:1;transform:translateY(0)}
+.gal .g-tall{grid-row:span 2}
+.gal .g-wide{grid-column:span 2}
+/* CTA editorial */
+.cta{position:relative;color:#fff;overflow:hidden;padding:96px 0;text-align:center}
+.cta .bg{position:absolute;inset:0}
+.cta .bg img{width:100%;height:100%;object-fit:cover}
+.cta .bg:after{content:"";position:absolute;inset:0;background:rgba(33,29,24,.72)}
+.cta .wrap{position:relative;z-index:2}
+.cta h2{font-size:clamp(2rem,3.6vw,3rem);font-weight:600;margin-bottom:16px}
+.cta p{color:#eae5dd;max-width:34rem;margin:0 auto 30px;font-size:1.1rem}
+.cta .btn-primary{background:#fff;color:var(--dark)}
+.cta .btn-primary svg{stroke:var(--dark)}
+.cta .btn-primary:hover{background:var(--brand);color:#fff}
+.cta .btn-primary:hover svg{stroke:#fff}
+/* footer */
+footer{background:var(--dark);color:#c2b9ab;padding:56px 0 30px}
+footer .fgrid{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:42px;margin-bottom:38px}
+footer .logo{height:44px;margin-bottom:16px}
+footer h4{color:#fff;font-family:'Fraunces';font-size:16px;margin-bottom:14px}
+footer p,footer a{font-size:14px;line-height:1.9}
+footer a:hover{color:var(--accent)}
+footer .fbot{border-top:1px solid rgba(255,255,255,.1);padding-top:20px;font-size:13px}
+/* WA sticky */
+.wa{position:fixed;right:22px;bottom:22px;z-index:50;background:#25d366;color:#fff;display:inline-flex;align-items:center;gap:10px;padding:14px 20px;border-radius:50px;font-weight:600;box-shadow:0 10px 30px rgba(0,0,0,.22);transition:transform .16s ease}
+.wa svg{width:22px;height:22px;stroke:#fff}
+.wa:hover{transform:translateY(-2px)}
+/* proses: TIMELINE horizontal dengan garis penghubung (bukan 3-kolom card avg) */
+.proc{background:var(--dark);color:#fff}
+.proc .kicker{color:var(--accent)}
+.proc .sec-head h2{color:#fff}
+.proc .sec-head p{color:#c9c2b8}
+.proc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:24px;position:relative}
+.proc-step{position:relative;padding:0 32px 0 0}
+.proc-step:not(:last-child)::after{content:"";position:absolute;top:23px;left:56px;right:14px;height:2px;background:linear-gradient(90deg,var(--accent),rgba(193,148,63,.15))}
+.proc-step .pn{width:48px;height:48px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Fraunces';font-weight:700;font-size:1.2rem;position:relative;z-index:2;margin-bottom:24px}
+.proc-step h3{font-size:1.24rem;font-weight:600;margin-bottom:10px;color:#fff}
+.proc-step p{color:#c9c2b8;font-size:.97rem;padding-right:20px}
+@media(max-width:900px){.proc-grid{grid-template-columns:1fr;gap:32px}.proc-step:not(:last-child)::after{display:none}.proc-step{padding:0}}
+/* responsive */
+@media(max-width:900px){
+  .hero{min-height:80vh}
+  .listings{grid-template-columns:1fr}
+  .about-grid{grid-template-columns:1fr;gap:34px}
+  .svc{grid-template-columns:1fr}
+  .pkg{grid-template-columns:1fr}
+  .gal{grid-template-columns:1fr 1fr;grid-auto-rows:160px}
+  footer .fgrid{grid-template-columns:1fr;gap:26px}
+  .nav .contact span{display:none}
+}
+/* MOTION: scroll-reveal editorial */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1)}
+.reveal.in{opacity:1;transform:none}
+.reveal.d1{transition-delay:.08s}.reveal.d2{transition-delay:.16s}.reveal.d3{transition-delay:.24s}
+.hero .frame img{will-change:transform}
+@media(prefers-reduced-motion:reduce){
+  *{transition:none!important;scroll-behavior:auto!important;animation:none!important}
+  .lcard:hover .ph img,.gal figure:hover img{transform:none}
+  .reveal{opacity:1!important;transform:none!important}
+}
+/* proof: properti sudah ditangani (variasi ke-4, kartu foto + badge status) */
+.proof{background:var(--dark);color:#fff}
+.proof .kicker{color:var(--accent)}
+.proof .sec-head h2{color:#fff}
+.proof .sec-head p{color:#c9c2b8}
+.proof-grid{display:grid;grid-template-columns:1.5fr 1fr;grid-template-rows:230px 230px;gap:18px}
+.proof-card{border-radius:14px;overflow:hidden;position:relative}
+.proof-card:first-child{grid-row:span 2}
+@media(max-width:900px){.proof-grid{grid-template-columns:1fr;grid-template-rows:none}.proof-card{aspect-ratio:16/10}.proof-card:first-child{grid-row:auto}}
+.proof-card img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease}
+.proof-card:hover img{transform:scale(1.05)}
+.proof-card .badge{position:absolute;top:16px;left:16px;background:var(--accent);color:#fff;font-family:'Manrope';font-weight:600;font-size:12px;letter-spacing:.05em;text-transform:uppercase;padding:6px 13px;border-radius:30px}
+.proof-card .cap{position:absolute;left:0;right:0;bottom:0;padding:20px 18px 16px;background:linear-gradient(0deg,rgba(33,29,24,.92),transparent);color:#fff}
+.proof-card .cap b{font-family:'Fraunces';font-size:1.1rem;display:block}
+.proof-card .cap small{font-size:.85rem;color:#e4ddd2}
+@media(max-width:900px){.proof-grid{grid-template-columns:1fr}}
+
+.nav .nav-menu{display:flex;gap:32px;align-items:center;margin-left:auto;margin-right:34px}
+.nav .nav-menu a{font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:#fff;opacity:.9;text-shadow:0 1px 8px rgba(0,0,0,.6);transition:opacity .18s ease,color .18s ease}
+.nav .nav-menu a:hover{opacity:1;color:var(--accent)}
+@media(max-width:900px){.nav .nav-menu{display:none}}
+.testi{background:var(--paper2,#f6f4ef)}
+.testi .tgrid{display:grid;grid-template-columns:1.3fr 1fr;grid-template-rows:auto auto;gap:22px;margin-top:36px}
+.testi .tcard{background:var(--paper,#fff);border:1px solid var(--line,#e6e2da);border-radius:14px;padding:30px 28px;display:flex;flex-direction:column;gap:16px}
+.testi .tcard:first-child{grid-row:span 2;background:var(--dark);border-color:var(--dark)}
+.testi .tcard:first-child .quote-txt{color:#f0ebe3;font-size:1.35rem;line-height:1.55;font-family:'Fraunces',serif;font-style:italic}
+.testi .tcard:first-child .nm{color:#fff}
+.testi .tcard:first-child .rl{color:#c8c1b6}
+.testi .tcard:first-child .who{border-top-color:rgba(255,255,255,.15)}
+.testi .stars{display:flex;gap:3px}
+.testi .stars svg{width:15px;height:15px;fill:var(--accent);stroke:none}
+.testi .quote-txt{font-size:15px;line-height:1.7;color:var(--ink);flex:1;font-style:italic}
+.testi .who{display:flex;align-items:center;gap:12px;padding-top:16px;border-top:1px solid var(--line,#e6e2da)}
+.testi .who .av{width:44px;height:44px;border-radius:50%;background:var(--brand);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;flex-shrink:0}
+.testi .tcard:first-child .who .av{background:var(--accent);color:#fff}
+.testi .who .nm{font-weight:600;font-size:14px;color:var(--ink)}
+.testi .who .rl{font-size:12.5px;color:var(--ink-soft)}
+@media(max-width:900px){.testi .tgrid{grid-template-columns:1fr;grid-template-rows:none}.testi .tcard:first-child{grid-row:auto}}
+@media(prefers-reduced-motion:reduce){.nav .nav-menu a{transition:none}}
+
+</style>
+</head>
+<body>
+
+<!-- NAV floating: logo kiri + tombol WA kanan (transparan di atas hero, bukan navbar link) -->
+<nav class="nav">
+  <div class="wrap">
+    <a href="#top"><img class="logo" src="{{LOGO_URL}}" alt="{{BIZ_NAME}}"></a>
+    <nav class="nav-menu">
+      <a href="#top">Beranda</a>
+      <a href="#listing">Listing</a>
+      <a href="#tentang">Tentang</a>
+      <a href="#paket">Paket</a>
+      <a href="#kontak">Kontak</a>
+    </nav>
+    <a class="contact" href="https://wa.me/{{PHONE}}"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg><span>Hubungi Kami</span></a>
+  </div>
+</nav>
+
+<!-- HERO split editorial asimetris -->
+<section class="hero" id="top">
+  <div class="hwrap">
+    <div class="htext">
+      <div class="eyebrow">Properti dan Hunian {{CITY}}</div>
+      <h1>Temukan Hunian yang <em>Tepat</em> untuk Keluarga Anda</h1>
+      <p>{{COPY_HERO}}</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#listing">Lihat Pilihan Properti</a>
+        <a class="btn btn-ghost" href="https://wa.me/{{PHONE}}"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>Konsultasi Gratis</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hs"><b data-count="{{RATING}}">{{RATING}}</b><span>Rating {{REVIEWS}} ulasan</span></div>
+        <div class="hs"><b data-count="10" data-suffix="+">10+</b><span>Tahun pengalaman</span></div>
+        <div class="hs"><b data-count="100" data-suffix="%">100%</b><span>Legalitas dicek</span></div>
+      </div>
+    </div>
+    <div class="hvisual">
+      <div class="frame"><img src="{{HERO_IMG}}" alt="Properti {{BIZ_NAME}}"></div>
+      <div class="hcard">
+        <span class="badge">Baru Tersedia</span>
+        <b>Hunian pilihan siap huni</b>
+        <div class="spec">
+          <div><b>3</b>K. Tidur</div>
+          <div><b>2</b>K. Mandi</div>
+          <div><b>{{CITY}}</b>Lokasi</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LISTING pilihan -->
+<section class="sec" id="listing">
+  <div class="wrap">
+    <div data-ghost="01" class="sec-head reveal">
+      <span class="kicker" data-num="01">Pilihan Kami</span>
+      <h2>Properti yang Sedang Tersedia</h2>
+      <p>Beberapa pilihan hunian dan properti yang bisa Anda pertimbangkan. Hubungi kami untuk informasi lengkap dan jadwal kunjungan.</p>
+    </div>
+    <div class="listings">
+      <article class="reveal d1 lcard feat">
+        <div class="ph"><img src="{{IMG_1}}" alt="Properti {{BIZ_NAME}}"></div>
+        <div class="body">
+          <div class="type">Properti Unggulan</div>
+          <h3>{{LIST_1_TITLE}}</h3>
+          <p>{{LIST_1_DESC}}</p>
+          <div class="meta">
+            <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l7-4 7 4v14"/></svg>{{CITY}}</span>
+            <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Siap Huni</span>
+            <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 22V12h6v10"/><path d="M3 10l9-7 9 7"/></svg>Legalitas Jelas</span>
+          </div>
+        </div>
+      </article>
+      <article class="reveal d2 lcard">
+        <div class="ph"><img src="{{IMG_3}}" alt="Properti {{BIZ_NAME}}"></div>
+        <div class="body">
+          <div class="type">Komersial</div>
+          <h3>{{LIST_2_TITLE}}</h3>
+          <p>{{LIST_2_DESC}}</p>
+          <div class="meta">
+            <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l7-4 7 4v14"/></svg>Lokasi Strategis</span>
+          </div>
+        </div>
+      </article>
+      <article class="reveal d3 lcard">
+        <div class="ph"><img src="{{IMG_4}}" alt="Properti {{BIZ_NAME}}"></div>
+        <div class="body">
+          <div class="type">Tanah / Kavling</div>
+          <h3>{{LIST_3_TITLE}}</h3>
+          <p>{{LIST_3_DESC}}</p>
+          <div class="meta">
+            <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Legalitas Jelas</span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- PROOF: properti yang sudah ditangani -->
+<section class="sec proof">
+  <div class="wrap">
+    <div data-ghost="02" class="sec-head reveal">
+      <span class="kicker" data-num="02">Rekam Jejak</span>
+      <h2>Properti yang Sudah Kami Bantu</h2>
+      <p>Bukan sekadar memasang iklan. Kami dampingi transaksi sampai tuntas, dan ini sebagian rekam jejak kami.</p>
+    </div>
+    <div class="proof-grid">
+      <div class="reveal d1 proof-card"><span class="badge">Terjual</span><img src="{{PROOF_IMG_1}}" alt="Properti {{BIZ_NAME}}"><div class="cap"><b>Rumah Keluarga</b><small>Proses cepat dengan harga yang wajar.</small></div></div>
+      <div class="reveal d2 proof-card"><span class="badge">Tersewa</span><img src="{{PROOF_IMG_2}}" alt="Properti {{BIZ_NAME}}"><div class="cap"><b>Ruko Komersial</b><small>Penyewa serius dalam waktu singkat.</small></div></div>
+      <div class="reveal d3 proof-card"><span class="badge">Terjual</span><img src="{{IMG_6}}" alt="Properti {{BIZ_NAME}}"><div class="cap"><b>Hunian Modern</b><small>Legalitas beres, transaksi aman.</small></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT editorial -->
+<section id="tentang" class="sec alt about">
+  <div class="wrap about-grid">
+    <div class="about-media"><img src="{{IMG_2}}" alt="Tim {{BIZ_NAME}}"><div class="float-stat"><b data-count="{{RATING}}">{{RATING}}</b><span>dari {{REVIEWS}} ulasan</span></div></div>
+    <div>
+      <span class="kicker" data-num="03">Tentang {{BIZ_NAME}}</span>
+      <h2>Pendamping Anda dari Cari sampai Serah Terima</h2>
+      <p>{{COPY_ABOUT}}</p>
+      <p>Kami tidak hanya menjual properti. Kami bantu Anda memahami legalitas, negosiasi harga, sampai proses pembayaran, supaya keputusan Anda tenang dan aman.</p>
+      <ul class="about-points">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Legalitas dicek sebelum transaksi, bukan setelah</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Harga berdasarkan data pasar, bukan tebakan</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Didampingi sampai serah terima, tanpa lepas tangan</li>
+      </ul>
+      <div class="about-stats">
+        <div class="s"><b>Jujur</b><small>Kondisi apa adanya, tanpa ditutupi</small></div>
+        <div class="s"><b>Aman</b><small>Legalitas &amp; dokumen dikawal</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LAYANAN -->
+<section class="sec">
+  <div class="wrap">
+    <div data-ghost="04" class="sec-head center reveal">
+      <span class="kicker" data-num="04">Layanan Kami</span>
+      <h2>Bagaimana Kami Membantu Anda</h2>
+    </div>
+    <div class="svc">
+      <div class="reveal d1 scard">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/></svg></div>
+        <h3>{{SVC_1_TITLE}}</h3>
+        <p>{{SVC_1_DESC}}</p>
+        <ul class="feat-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Pilihan sesuai anggaran</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Dampingi kunjungan lokasi</li>
+        </ul>
+      </div>
+      <div class="reveal d2 scard">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <h3>{{SVC_2_TITLE}}</h3>
+        <p>{{SVC_2_DESC}}</p>
+        <ul class="feat-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Penilaian harga wajar</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Pemasaran sampai laku</li>
+        </ul>
+      </div>
+      <div class="reveal d3 scard">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 15l2 2 4-4"/></svg></div>
+        <h3>{{SVC_3_TITLE}}</h3>
+        <p>{{SVC_3_DESC}}</p>
+        <ul class="feat-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Cek legalitas dokumen</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Pertimbangan potensi nilai</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROSES: cara kerja 3 langkah -->
+<section class="sec proc">
+  <div class="wrap">
+    <div data-ghost="05" class="sec-head reveal">
+      <span class="kicker" data-num="05">Cara Kerja</span>
+      <h2>Prosesnya Sederhana dan Jelas</h2>
+      <p>Dari pertama menghubungi sampai serah terima, Anda tahu persis di tahap mana dan apa yang terjadi. Tidak ada yang disembunyikan.</p>
+    </div>
+    <div class="proc-grid">
+      <div class="reveal d1 proc-step">
+        <div class="pn">01</div>
+        <h3>Ceritakan Kebutuhan</h3>
+        <p>Hubungi kami lewat WhatsApp. Ceritakan Anda ingin cari, jual, atau sewa, beserta anggaran dan lokasi yang diinginkan.</p>
+      </div>
+      <div class="reveal d2 proc-step">
+        <div class="pn">02</div>
+        <h3>Kami Carikan dan Dampingi</h3>
+        <p>Kami siapkan pilihan yang sesuai, atur kunjungan lokasi, dan bantu cek legalitas serta negosiasi harga bersama Anda.</p>
+      </div>
+      <div class="reveal d3 proc-step">
+        <div class="pn">03</div>
+        <h3>Transaksi Aman sampai Selesai</h3>
+        <p>Kami dampingi pengurusan dokumen dan pembayaran sampai serah terima, supaya transaksi Anda tenang dan aman.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PAKET -->
+<section class="sec alt" id="paket">
+  <div class="wrap">
+    <div data-ghost="06" class="sec-head reveal">
+      <span class="kicker" data-num="06">Cara Kerja Sama</span>
+      <h2>Pilih Layanan Sesuai Kebutuhan Anda</h2>
+      <p>Baik Anda mencari, menjual, atau butuh pendampingan, semua kami tangani dengan transparan dan tanpa biaya tersembunyi.</p>
+    </div>
+    <div class="pkg">
+      <div class="reveal d1 pcard">
+        <div class="tag">{{PKG_1_NAME}}</div>
+        <h3>Bantu Cari Properti</h3>
+        <p class="who">Untuk Anda yang sedang mencari rumah, ruko, atau tanah sesuai kebutuhan dan anggaran.</p>
+        <div class="price">{{PKG_1_PRICE}}</div>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Rekomendasi properti sesuai kriteria</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Pendampingan kunjungan lokasi</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Pengecekan legalitas dokumen</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Bantuan negosiasi harga</li>
+        </ul>
+        <p class="why">Pilih ini kalau Anda ingin ditemani orang yang paham pasar, supaya tidak salah pilih dan tidak kena harga terlalu tinggi.</p>
+        <a class="btn btn-primary" href="https://wa.me/{{PHONE}}"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>Mulai Konsultasi</a>
+      </div>
+      <div class="reveal d2 pcard feat">
+        <div class="tag">{{PKG_2_NAME}}, Paling Diminati</div>
+        <h3>Jual Properti Anda</h3>
+        <p class="who">Untuk Anda yang ingin menjual properti dengan cepat dan harga yang wajar.</p>
+        <div class="price">{{PKG_2_PRICE}}</div>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Penilaian harga pasar yang wajar</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Foto dan pemasaran properti</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Penyaringan calon pembeli serius</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Pendampingan sampai akad</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Bantuan urus dokumen</li>
+        </ul>
+        <p class="why">Paling banyak dipilih. Anda tidak perlu repot mengurus calon pembeli dan dokumen sendiri, kami dampingi sampai selesai.</p>
+        <a class="btn btn-primary" href="https://wa.me/{{PHONE}}"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>Jual Sekarang</a>
+      </div>
+      <div class="reveal d3 pcard">
+        <div class="tag">{{PKG_3_NAME}}</div>
+        <h3>Konsultasi Investasi</h3>
+        <p class="who">Untuk Anda yang ingin membeli properti sebagai investasi jangka panjang.</p>
+        <div class="price">{{PKG_3_PRICE}}</div>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Analisa potensi kawasan</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Pertimbangan potensi sewa dan nilai jual</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Pengecekan legalitas menyeluruh</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Rekomendasi properti prospektif</li>
+        </ul>
+        <p class="why">Pilih ini kalau tujuan Anda bukan sekadar tempat tinggal, tapi menumbuhkan nilai aset dalam jangka panjang.</p>
+        <a class="btn btn-primary" href="https://wa.me/{{PHONE}}"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>Konsultasi Investasi</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALERI -->
+<section id="galeri" class="sec">
+  <div class="wrap">
+    <div data-ghost="07" class="sec-head center reveal">
+      <span class="kicker" data-num="07">Galeri</span>
+      <h2>Properti yang Pernah Kami Tangani</h2>
+    </div>
+    <div class="gal">
+      <figure class="reveal d1 g-tall"><img src="{{IMG_5}}" alt="Properti {{BIZ_NAME}}"><figcaption>Hunian keluarga, serah terima tuntas</figcaption></figure>
+      <figure class="reveal d2 g-wide"><img src="{{IMG_1}}" alt="Properti {{BIZ_NAME}}"><figcaption>Rumah siap huni, legalitas beres</figcaption></figure>
+      <figure><img src="{{IMG_6}}" alt="Properti {{BIZ_NAME}}"><figcaption>Ruko komersial, lokasi ramai</figcaption></figure>
+      <figure><img src="{{IMG_3}}" alt="Properti {{BIZ_NAME}}"><figcaption>Tanah kavling siap bangun</figcaption></figure>
+      <figure class="reveal d3 g-wide"><img src="{{IMG_4}}" alt="Properti {{BIZ_NAME}}"><figcaption>Hunian di lokasi strategis</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- CTA editorial -->
+<section id="testimoni" class="sec testi">
+  <div class="wrap">
+    <div data-ghost="08" class="sec-head center reveal">
+      <span class="kicker" data-num="08">Kata Mereka</span>
+      <h2>{{TESTI_HEAD}}</h2>
+    </div>
+    <div class="tgrid">
+      <div class="reveal d1 tcard"><div class="stars"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div><p class="quote-txt">{{TESTI_1_TEXT}}</p><div class="who"><span class="av">{{TESTI_1_INIT}}</span><div><div class="nm">{{TESTI_1_NAME}}</div><div class="rl">{{TESTI_1_ROLE}}</div></div></div></div>
+      <div class="reveal d2 tcard"><div class="stars"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div><p class="quote-txt">{{TESTI_2_TEXT}}</p><div class="who"><span class="av">{{TESTI_2_INIT}}</span><div><div class="nm">{{TESTI_2_NAME}}</div><div class="rl">{{TESTI_2_ROLE}}</div></div></div></div>
+      <div class="reveal d3 tcard"><div class="stars"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div><p class="quote-txt">{{TESTI_3_TEXT}}</p><div class="who"><span class="av">{{TESTI_3_INIT}}</span><div><div class="nm">{{TESTI_3_NAME}}</div><div class="rl">{{TESTI_3_ROLE}}</div></div></div></div>
+    </div>
+  </div>
+</section>
+<section id="kontak" class="cta">
+  <div class="bg"><img src="{{HERO_IMG}}" alt=""></div>
+  <div class="wrap">
+    <h2>Siap Menemukan Properti Impian Anda?</h2>
+    <p>Ceritakan apa yang Anda cari. Kami bantu carikan pilihan terbaik sesuai kebutuhan dan anggaran, tanpa keharusan langsung membeli.</p>
+    <a class="btn btn-primary" href="https://wa.me/{{PHONE}}"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>Hubungi Kami via WhatsApp</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="fgrid">
+      <div>
+        <img class="logo" src="{{LOGO_URL}}" alt="{{BIZ_NAME}}">
+        <p>{{BIZ_NAME}} membantu jual, beli, dan sewa properti di {{CITY}} dan sekitarnya dengan pendampingan yang jujur dan transparan.</p>
+      </div>
+      <div>
+        <h4>Kontak</h4>
+        <p><a href="tel:{{PHONE}}">{{PHONE}}</a></p>
+        <p>{{ADDRESS}}</p>
+        <p><a href="{{MAPS}}">Lihat di Peta</a></p>
+      </div>
+      <div>
+        <h4>Layanan</h4>
+        <p><a href="#listing">Cari Properti</a></p>
+        <p><a href="#paket">Jual Properti</a></p>
+        <p><a href="#paket">Konsultasi Investasi</a></p>
+      </div>
+    </div>
+    <div class="fbot">&copy; {{BIZ_NAME}}. Properti dan Hunian {{CITY}}.</div>
+  </div>
+</footer>
+
+<!-- WA STICKY -->
+<a class="wa" href="https://wa.me/{{PHONE}}" aria-label="Hubungi via WhatsApp">
+  <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+  WhatsApp
+</a>
+
+<script>
+(function(){
+  var rm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(rm) return;
+  // scroll-reveal
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:.12, rootMargin:'0px 0px -8% 0px'});
+  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+  // count-up angka (elemen ber-atribut data-count)
+  function animateCount(el){
+    var raw = el.getAttribute('data-count'); var target = parseFloat(raw);
+    var dec = (raw.indexOf('.')>-1)?1:0; var suf = el.getAttribute('data-suffix')||'';
+    var start=null, dur=1100;
+    function step(ts){ if(!start)start=ts; var p=Math.min((ts-start)/dur,1);
+      var eased=1-Math.pow(1-p,3); el.textContent=(target*eased).toFixed(dec)+suf;
+      if(p<1) requestAnimationFrame(step); else el.textContent=raw+suf; }
+    requestAnimationFrame(step);
+  }
+  var cio = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ animateCount(e.target); cio.unobserve(e.target); } });
+  }, {threshold:.6});
+  document.querySelectorAll('[data-count]').forEach(function(el){ cio.observe(el); });
+  // hero parallax halus
+  var frame = document.querySelector('.hero .frame img');
+  if(frame){ window.addEventListener('scroll', function(){
+    var y = window.scrollY; if(y<800){ frame.style.transform='translateY('+(y*0.06)+'px) scale(1.04)'; }
+  }, {passive:true}); }
+})();
+</script>
+
+</body>
+</html>

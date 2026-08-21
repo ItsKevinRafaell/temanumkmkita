@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{BIZ_NAME}}, Bengkel dan Servis Mobil {{CITY}}</title>
+<meta name="description" content="{{BIZ_NAME}}, bengkel terpercaya di {{CITY}}. Rating {{RATING}} dari {{REVIEWS}} ulasan. Servis, sparepart, dan perbaikan. Booking cepat via WhatsApp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chivo:wght@400;700;900&family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --brand: {{BRAND_HEX}};
+  --accent: {{ACCENT_HEX}};
+  --ink: #0f1620;
+  --ink-soft: #4a5563;
+  --line: #dfe4ea;
+  --paper: #ffffff;
+  --panel: #f1f4f8;
+  --dark: #0c1219;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Inter Tight',system-ui,sans-serif;color:var(--ink);background:var(--paper);line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3,.display{font-family:'Chivo',sans-serif;line-height:1.08;letter-spacing:-.02em}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+.wrap{width:100%;max-width:1180px;margin:0 auto;padding:0 24px}
+/* header slim: info jam + telepon, BUKAN nav-link panjang */
+.bar{background:var(--dark);color:#fff;font-size:13px}
+.bar .wrap{display:flex;justify-content:space-between;align-items:center;padding:9px 24px;flex-wrap:wrap;gap:8px}
+.bar .bl{display:flex;gap:20px;align-items:center;color:#aeb8c4}
+.bar .bl span{display:inline-flex;align-items:center;gap:7px}
+.bar .bl svg{width:14px;height:14px;stroke:var(--accent)}
+.bar a.wa-top{color:#fff;font-weight:600;display:inline-flex;align-items:center;gap:7px}
+.bar a.wa-top svg{width:15px;height:15px;stroke:#fff}
+.head{background:var(--paper);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:30}
+.head .wrap{display:flex;align-items:center;gap:24px;padding:16px 24px}
+.head .logo{height:46px;width:auto}
+.head .book{background:var(--brand);color:#fff;padding:12px 22px;border-radius:6px;font-weight:600;font-size:14px;display:inline-flex;align-items:center;gap:8px;transition:background .18s ease}
+.head .book svg{width:17px;height:17px;stroke:#fff}
+.head .book:hover{background:var(--dark)}
+/* hero overlay */
+.hero{position:relative;color:#fff;min-height:74vh;display:flex;align-items:center;overflow:hidden}
+.hero .bg{position:absolute;inset:0}
+.hero .bg img{width:100%;height:100%;object-fit:cover}
+.hero .bg:after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,var(--dark) 18%,rgba(12,18,25,.72) 55%,rgba(12,18,25,.35) 100%)}
+.hero .inner{position:relative;z-index:2;padding:70px 0;max-width:38rem}
+.hero .eyebrow{display:inline-flex;align-items:center;gap:9px;background:var(--brand);color:#fff;padding:6px 14px;border-radius:4px;font-family:'Chivo';font-weight:700;font-size:12px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:22px}
+.hero h1{font-size:clamp(2.2rem,4.6vw,3.6rem);font-weight:900;margin-bottom:18px;text-transform:uppercase}
+.hero h1 em{font-style:normal;color:var(--brand)}
+.hero p{font-size:1.08rem;color:#cdd5de;margin-bottom:30px;max-width:31rem}
+.hero-cta{display:flex;gap:13px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:9px;font-weight:600;font-size:15px;padding:15px 26px;border-radius:6px;cursor:pointer;transition:transform .16s ease,background .18s ease,color .18s ease;border:none;font-family:'Inter Tight'}
+.btn svg{width:18px;height:18px}
+.btn-primary{background:var(--brand);color:#fff}
+.btn-primary svg{stroke:#fff}
+.btn-primary:hover{background:#fff;color:var(--dark)}
+.btn-primary:hover svg{stroke:var(--dark)}
+.btn-accent{background:var(--accent);color:var(--dark)}
+.btn-accent svg{stroke:var(--dark)}
+.btn-accent:hover{background:#fff}
+.btn-ghost{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.35)}
+.btn-ghost svg{stroke:#fff}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+.btn-ghost:hover svg{stroke:var(--accent)}
+/* quick stats bar bawah hero */
+.qbar{background:var(--brand);color:#fff}
+.qbar .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+.qbar .qi{padding:24px;text-align:center;border-right:1px solid rgba(255,255,255,.18)}
+.qbar .qi:last-child{border-right:none}
+.qbar .qi b{font-family:'Chivo';font-size:1.7rem;font-weight:900;display:block;line-height:1}
+.qbar .qi small{font-size:13px;color:rgba(255,255,255,.85)}
+/* section base */
+.sec{padding:82px 0}
+.sec.alt{background:var(--panel)}
+.sec-head{max-width:40rem;margin-bottom:48px}
+.kicker{color:var(--brand);font-family:'Chivo';font-weight:700;font-size:12px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:12px;display:block}
+.sec-head h2{font-size:clamp(1.8rem,3.2vw,2.5rem);font-weight:900;margin-bottom:12px;text-transform:uppercase}
+.sec-head p{color:var(--ink-soft);font-size:1.05rem}
+/* layanan grid ikon bengkel */
+.svc{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.scard{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:28px;display:flex;gap:18px;align-items:flex-start;transition:box-shadow .18s ease,border-color .18s ease,transform .16s ease}
+.scard:hover{box-shadow:0 10px 30px rgba(15,22,32,.1);border-color:var(--brand)}
+.scard .ic{width:50px;height:50px;border-radius:8px;background:var(--dark);display:flex;align-items:center;justify-content:center;flex:none}
+.scard .ic svg{width:26px;height:26px;stroke:var(--accent)}
+.scard h3{font-size:1.15rem;font-weight:700;margin-bottom:6px}
+.scard p{color:var(--ink-soft);font-size:.94rem;line-height:1.5}
+/* proses 3 langkah */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.step{position:relative;padding:32px 26px;background:var(--paper);border:1px solid var(--line);border-radius:12px}
+.step .num{font-family:'Chivo';font-weight:900;font-size:2.6rem;color:var(--accent);line-height:1;margin-bottom:14px}
+.step h3{font-size:1.2rem;font-weight:700;margin-bottom:8px}
+.step p{color:var(--ink-soft);font-size:.96rem}
+/* about split media kanan */
+.about-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:52px;align-items:center}
+.about h2{font-size:clamp(1.8rem,3vw,2.4rem);font-weight:900;margin-bottom:18px;text-transform:uppercase}
+.about p{color:var(--ink-soft);margin-bottom:16px;font-size:1.04rem}
+.about ul{list-style:none;display:grid;gap:13px;margin-top:22px}
+.about li{display:flex;gap:11px;align-items:flex-start}
+.about li svg{width:22px;height:22px;stroke:var(--brand);flex:none;margin-top:2px}
+.about-media{border-radius:14px;overflow:hidden;aspect-ratio:1/1}
+.about-media img{width:100%;height:100%;object-fit:cover}
+/* paket layanan detail */
+.pkg{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.pcard{border:1px solid var(--line);border-radius:14px;padding:32px;display:flex;flex-direction:column;background:var(--paper)}
+.pcard.feat{background:var(--dark);color:#fff;border-color:var(--dark)}
+.pcard .tag{font-family:'Chivo';font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--brand);margin-bottom:10px;font-weight:700}
+.pcard.feat .tag{color:var(--accent)}
+.pcard h3{font-size:1.4rem;font-weight:900;margin-bottom:6px}
+.pcard .who{color:var(--ink-soft);font-size:.94rem;margin-bottom:18px;min-height:42px}
+.pcard.feat .who{color:#c3cbd3}
+.pcard .price{font-family:'Chivo';font-size:1.5rem;font-weight:900;margin-bottom:20px}
+.pcard ul{list-style:none;display:grid;gap:11px;margin-bottom:24px;flex:1}
+.pcard li{display:flex;gap:10px;font-size:.95rem;align-items:flex-start}
+.pcard li svg{width:18px;height:18px;stroke:var(--brand);flex:none;margin-top:3px}
+.pcard.feat li svg{stroke:var(--accent)}
+.pcard .why{font-size:.9rem;color:var(--ink-soft);border-top:1px solid var(--line);padding-top:14px;margin-bottom:18px}
+.pcard.feat .why{color:#aeb8c2;border-color:rgba(255,255,255,.14)}
+.pcard .btn{width:100%;justify-content:center}
+.pcard.feat .btn-primary{background:var(--accent);color:var(--dark)}
+.pcard.feat .btn-primary svg{stroke:var(--dark)}
+.pcard.feat .btn-primary:hover{background:#fff}
+/* galeri */
+.gal{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:190px;gap:12px}
+.gal figure{overflow:hidden;border-radius:10px}
+.gal img{width:100%;height:100%;object-fit:cover;transition:transform .3s ease}
+.gal figure:hover img{transform:scale(1.05)}
+.gal .g-wide{grid-column:span 2}
+.gal .g-tall{grid-row:span 2}
+/* CTA band gelap (bukan brand-full, variasi dari V1) */
+.cta{background:var(--dark);color:#fff;padding:70px 0;position:relative;overflow:hidden}
+.cta .wrap{display:flex;align-items:center;justify-content:space-between;gap:30px;flex-wrap:wrap;position:relative;z-index:2}
+.cta h2{font-size:clamp(1.7rem,3vw,2.3rem);font-weight:900;text-transform:uppercase;max-width:24rem}
+.cta .accent-line{width:56px;height:5px;background:var(--accent);margin-bottom:16px}
+.cta .btn{background:var(--accent);color:var(--dark)}
+.cta .btn svg{stroke:var(--dark)}
+.cta .btn:hover{background:#fff}
+/* footer */
+footer{background:#080d13;color:#8b96a3;padding:50px 0 28px}
+footer .fgrid{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:38px;margin-bottom:34px}
+footer .logo{height:42px;margin-bottom:15px}
+footer h4{color:#fff;font-family:'Chivo';font-size:14px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:13px}
+footer p,footer a{font-size:14px;line-height:1.85}
+footer a:hover{color:var(--accent)}
+footer .fbot{border-top:1px solid rgba(255,255,255,.09);padding-top:18px;font-size:13px}
+/* WA sticky */
+.wa{position:fixed;right:22px;bottom:22px;z-index:50;background:#25d366;color:#fff;display:inline-flex;align-items:center;gap:10px;padding:14px 20px;border-radius:50px;font-weight:600;box-shadow:0 10px 30px rgba(0,0,0,.22);transition:transform .16s ease}
+.wa svg{width:22px;height:22px;stroke:#fff}
+.wa:hover{transform:translateY(-2px)}
+/* responsive */
+@media(max-width:900px){
+  .bar .bl{display:none}
+  .qbar .wrap{grid-template-columns:1fr 1fr}
+  .qbar .qi:nth-child(2){border-right:none}
+  .qbar .qi{border-bottom:1px solid rgba(255,255,255,.18)}
+  .svc{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr}
+  .about-grid{grid-template-columns:1fr;gap:30px}
+  .pkg{grid-template-columns:1fr}
+  .gal{grid-template-columns:1fr 1fr;grid-auto-rows:150px}
+  footer .fgrid{grid-template-columns:1fr;gap:24px}
+  .cta .wrap{flex-direction:column;align-items:flex-start}
+}
+@media(prefers-reduced-motion:reduce){
+  *{transition:none!important;scroll-behavior:auto!important}
+  .gal figure:hover img{transform:none}
+}
+/* proof-of-work: 3 foto rata + caption di bawah (variasi ke-3, beda B2B/Kontraktor) */
+.proof{background:var(--panel)}
+.proof-row{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.proof-item{background:var(--paper);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.proof-item .ph{aspect-ratio:4/3;overflow:hidden}
+.proof-item .ph img{width:100%;height:100%;object-fit:cover;transition:transform .35s ease}
+.proof-item:hover .ph img{transform:scale(1.05)}
+.proof-item .txt{padding:18px 20px}
+.proof-item .txt b{font-family:'Chivo';font-size:1.08rem;display:block;margin-bottom:4px;text-transform:uppercase;letter-spacing:-.01em}
+.proof-item .txt small{color:var(--ink-soft);font-size:.9rem}
+@media(max-width:900px){.proof-row{grid-template-columns:1fr}}
+
+.head .brand{display:inline-flex;align-items:center}
+@media(max-width:900px){.nav-menu{display:none}.head .wrap{grid-template-columns:auto 1fr;gap:12px}}
+.testi{background:var(--paper2,#f6f5f2)}
+.testi .tgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:34px}
+.testi .tcard{background:var(--paper,#fff);border:1px solid var(--line);border-radius:12px;padding:26px 24px;display:flex;flex-direction:column;gap:16px}
+.testi .stars{display:flex;gap:3px}
+.testi .stars svg{width:16px;height:16px;fill:var(--accent);stroke:none}
+.testi .quote-txt{font-size:15px;line-height:1.65;color:var(--ink);flex:1}
+.testi .who{display:flex;align-items:center;gap:12px;border-top:1px solid var(--line);padding-top:15px}
+.testi .who .av{width:42px;height:42px;border-radius:50%;background:var(--brand);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;flex-shrink:0}
+.testi .who .nm{font-weight:600;font-size:14px;color:var(--ink)}
+.testi .who .rl{font-size:12.5px;color:var(--ink-soft)}
+@media(max-width:900px){.testi .tgrid{grid-template-columns:1fr}}
+.nav-menu{display:flex;gap:6px;justify-self:center;align-items:center}
+.nav-menu a{font-size:14px;font-weight:500;color:var(--ink-soft);padding:8px 15px;border-radius:7px;transition:background .18s ease,color .18s ease}
+.nav-menu a:hover{background:var(--brand);color:#fff}
+@media(prefers-reduced-motion:reduce){.nav-menu a{transition:none}}
+
+.head .nav-menu{margin-left:auto}
+.head .right{margin-left:24px}
+@media(max-width:900px){.head .nav-menu{display:none}}
+
+/* A+B layer (head-flex) */
+.sec-head{position:relative}
+.sec-head[data-ghost]::before{content:attr(data-ghost);position:absolute;right:0;top:-52px;font-family:'Chivo',sans-serif;font-weight:800;font-size:clamp(3.6rem,6vw,6rem);line-height:1;color:transparent;-webkit-text-stroke:1.5px rgba(23,26,29,.09);z-index:0;pointer-events:none}
+.sec-head.center[data-ghost]::before{right:auto;left:50%;transform:translateX(-50%)}
+.sec-head>*{position:relative;z-index:1}
+.kicker[data-num]::before{content:attr(data-num) "  ";color:var(--accent);font-weight:800}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .65s cubic-bezier(.16,1,.3,1),transform .65s cubic-bezier(.16,1,.3,1)}
+.reveal.in{opacity:1;transform:none}
+.reveal.d1{transition-delay:.07s}.reveal.d2{transition-delay:.14s}.reveal.d3{transition-delay:.21s}
+.hero .bg img{will-change:transform}
+/* GOLD+putih (koreksi Kevin) */
+.pcard.feat .btn-primary{background:color-mix(in srgb,var(--accent) 82%,#000);color:#fff}
+.pcard.feat .btn-primary svg{stroke:#fff}
+.pcard.feat .btn-primary:hover{background:#fff;color:var(--dark)}
+.pcard.feat .btn-primary:hover svg{stroke:var(--dark)}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1!important;transform:none!important}*{animation:none!important}}
+
+</style>
+</head>
+<body>
+
+<!-- TOP BAR: info jam + telepon (khas bengkel), bukan nav-link -->
+<div class="bar">
+  <div class="wrap">
+    <div class="bl">
+      <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>Senin - Sabtu, 08.00 - 17.00</span>
+      <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 7 8 11.7z"/></svg>{{CITY}}</span>
+    </div>
+    <a class="wa-top" href="https://wa.me/{{PHONE}}"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>{{PHONE}}</a>
+  </div>
+</div>
+
+<!-- HEADER: logo kiri + tombol booking kanan (bukan nav-link panjang) -->
+<header class="head">
+  <div class="wrap">
+    <a href="#top" class="brand"><img class="logo" src="{{LOGO_URL}}" alt="{{BIZ_NAME}}"></a>
+    <nav class="nav-menu">
+      <a href="#layanan">Layanan</a>
+      <a href="#tentang">Tentang</a>
+      <a href="#galeri">Portofolio</a>
+      <a href="#paket">Paket</a>
+      <a href="#kontak">Kontak</a>
+    </nav>
+    <div class="right"><a class="quote" href="https://wa.me/{{PHONE}}"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Hubungi Kami</a></div>
+  </div>
+</header>
+
+<!-- HERO overlay -->
+<section class="hero" id="top">
+  <div class="bg"><img src="{{HERO_IMG}}" alt="Bengkel {{BIZ_NAME}}"></div>
+  <div class="wrap">
+    <div class="inner">
+      <div class="eyebrow">Bengkel Mobil {{CITY}}</div>
+      <h1>Servis Mobil Rapi, <em>Cepat</em>, dan Bergaransi</h1>
+      <p>{{COPY_HERO}}</p>
+      <div class="hero-cta">
+        <a class="btn btn-accent" href="https://wa.me/{{PHONE}}"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>Booking Sekarang</a>
+        <a class="btn btn-ghost" href="#layanan">Lihat Layanan</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUICK STATS -->
+<div class="qbar">
+  <div class="wrap">
+    <div class="qi"><b>{{RATING}}</b><small>Rating {{REVIEWS}} ulasan</small></div>
+    <div class="qi"><b>10+</b><small>Tahun pengalaman</small></div>
+    <div class="qi"><b>Garansi</b><small>Servis bergaransi</small></div>
+    <div class="qi"><b>Cepat</b><small>Estimasi jelas di awal</small></div>
+  </div>
+</div>
+
+<!-- LAYANAN -->
+<section class="sec" id="layanan">
+  <div class="wrap">
+    <div data-ghost="01" class="sec-head reveal">
+      <span class="kicker" data-num="01">Layanan Kami</span>
+      <h2>Semua Kebutuhan Mobil Anda</h2>
+      <p>Ditangani mekanik berpengalaman dengan peralatan lengkap dan estimasi biaya yang jelas sebelum pengerjaan.</p>
+    </div>
+    <div class="svc">
+      <div class="reveal scard"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div><div><h3>{{SVC_1_TITLE}}</h3><p>{{SVC_1_DESC}}</p></div></div>
+      <div class="reveal scard"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2-6 4 12 2-6h6"/></svg></div><div><h3>{{SVC_2_TITLE}}</h3><p>{{SVC_2_DESC}}</p></div></div>
+      <div class="reveal scard"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg></div><div><h3>{{SVC_3_TITLE}}</h3><p>{{SVC_3_DESC}}</p></div></div>
+      <div class="reveal scard"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17a2 2 0 1 0 4 0 2 2 0 0 0-4 0zM15 17a2 2 0 1 0 4 0 2 2 0 0 0-4 0zM5 17H3v-6l2-5h9l4 5h2v6h-2M9 17h6"/></svg></div><div><h3>{{SVC_4_TITLE}}</h3><p>{{SVC_4_DESC}}</p></div></div>
+      <div class="reveal scard"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg></div><div><h3>{{SVC_5_TITLE}}</h3><p>{{SVC_5_DESC}}</p></div></div>
+      <div class="reveal scard"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div><div><h3>{{SVC_6_TITLE}}</h3><p>{{SVC_6_DESC}}</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROSES 3 LANGKAH -->
+<section class="sec alt">
+  <div class="wrap">
+    <div data-ghost="02" class="sec-head reveal">
+      <span class="kicker" data-num="02">Cara Kerja</span>
+      <h2>Tiga Langkah, Mobil Beres</h2>
+      <p>Tanpa ribet. Anda cukup hubungi kami, sisanya kami urus dengan transparan.</p>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="num">01</div><h3>Hubungi &amp; Ceritakan Keluhan</h3><p>Chat via WhatsApp, sampaikan keluhan mobil Anda. Kami bantu jadwalkan waktu servis.</p></div>
+      <div class="step"><div class="num">02</div><h3>Pemeriksaan &amp; Estimasi</h3><p>Mobil diperiksa menyeluruh. Anda dapat estimasi biaya yang jelas sebelum pengerjaan dimulai.</p></div>
+      <div class="step"><div class="num">03</div><h3>Pengerjaan &amp; Serah Terima</h3><p>Dikerjakan mekanik berpengalaman, lalu diserahkan dalam kondisi siap jalan dengan garansi.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROOF OF WORK -->
+<section class="sec proof">
+  <div class="wrap">
+    <div data-ghost="03" class="sec-head reveal">
+      <span class="kicker" data-num="03">Bukti Kerja</span>
+      <h2>Pekerjaan yang Bisa Anda Percaya</h2>
+      <p>Kami tunjukkan apa adanya. Setiap perbaikan dikerjakan teliti oleh mekanik berpengalaman.</p>
+    </div>
+    <div class="proof-row">
+      <div class="proof-item"><div class="ph"><img src="{{PROOF_IMG_1}}" alt="Servis {{BIZ_NAME}}"></div><div class="txt"><b>Diagnosa Teliti</b><small>Sumber masalah dicari sampai akar sebelum dikerjakan.</small></div></div>
+      <div class="proof-item"><div class="ph"><img src="{{PROOF_IMG_2}}" alt="Servis {{BIZ_NAME}}"></div><div class="txt"><b>Pengerjaan Rapi</b><small>Setiap komponen ditangani dengan alat yang tepat.</small></div></div>
+      <div class="proof-item"><div class="ph"><img src="{{IMG_6}}" alt="Servis {{BIZ_NAME}}"></div><div class="txt"><b>Siap Jalan</b><small>Mobil dikembalikan dalam kondisi prima dan bergaransi.</small></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="tentang" class="sec about">
+  <div class="wrap about-grid">
+    <div>
+      <span class="kicker" data-num="04">Kenapa {{BIZ_NAME}}</span>
+      <h2>Dipercaya Karena Jujur dan Rapi</h2>
+      <p>{{COPY_ABOUT}}</p>
+      <ul>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span><b>Estimasi transparan.</b> Biaya dijelaskan di awal, tidak ada tambahan diam-diam.</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span><b>Sparepart berkualitas.</b> Kami sarankan yang sesuai kebutuhan dan anggaran Anda.</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span><b>Servis bergaransi.</b> Kami bertanggung jawab atas hasil pengerjaan.</span></li>
+      </ul>
+    </div>
+    <div class="reveal about-media"><img src="{{IMG_2}}" alt="Mekanik {{BIZ_NAME}}"></div>
+  </div>
+</section>
+
+<!-- PAKET -->
+<section class="sec alt" id="paket">
+  <div class="wrap">
+    <div data-ghost="05" class="sec-head reveal">
+      <span class="kicker" data-num="05">Paket Servis</span>
+      <h2>Pilih Sesuai Kebutuhan Mobil Anda</h2>
+      <p>Semua paket sudah termasuk pemeriksaan awal dan estimasi biaya yang jelas. Tidak ada biaya tersembunyi.</p>
+    </div>
+    <div class="pkg">
+      <div class="reveal d1 pcard">
+        <div class="tag">{{PKG_1_NAME}}</div>
+        <h3>Servis Rutin</h3>
+        <p class="who">Untuk perawatan berkala agar mobil tetap sehat dan awet.</p>
+        <div class="price">{{PKG_1_PRICE}}</div>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Ganti oli mesin dan filter</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Pemeriksaan rem, aki, dan cairan</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Cek tekanan dan kondisi ban</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Laporan kondisi mobil</li>
+        </ul>
+        <p class="why">Pilih ini untuk servis berkala rutin. Mencegah kerusakan besar dengan biaya perawatan yang ringan.</p>
+        <a class="btn btn-primary" href="https://wa.me/{{PHONE}}"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>Booking Servis</a>
+      </div>
+      <div class="reveal d2 pcard feat">
+        <div class="tag">{{PKG_2_NAME}}, Paling Diminati</div>
+        <h3>Tune Up Lengkap</h3>
+        <p class="who">Untuk mobil yang terasa kurang bertenaga atau menjelang perjalanan jauh.</p>
+        <div class="price">{{PKG_2_PRICE}}</div>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Semua item servis rutin</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Pembersihan ruang bakar dan throttle</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Pemeriksaan kelistrikan dan pengapian</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Setel ulang performa mesin</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Garansi pengerjaan</li>
+        </ul>
+        <p class="why">Paling banyak dipilih. Mobil terasa lebih responsif dan siap untuk perjalanan penting.</p>
+        <a class="btn btn-primary" href="https://wa.me/{{PHONE}}"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>Booking Servis</a>
+      </div>
+      <div class="reveal d3 pcard">
+        <div class="tag">{{PKG_3_NAME}}</div>
+        <h3>Perbaikan Besar</h3>
+        <p class="who">Untuk penanganan kerusakan berat seperti mesin, transmisi, atau kaki-kaki.</p>
+        <div class="price">{{PKG_3_PRICE}}</div>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Diagnosa menyeluruh sumber masalah</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Estimasi rinci sebelum pengerjaan</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Penggantian sparepart sesuai kebutuhan</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Uji jalan setelah perbaikan</li>
+        </ul>
+        <p class="why">Pilih ini untuk masalah berat yang butuh penanganan serius, bukan sekadar servis biasa.</p>
+        <a class="btn btn-primary" href="https://wa.me/{{PHONE}}"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>Konsultasi Dulu</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALERI -->
+<section id="galeri" class="sec">
+  <div class="wrap">
+    <div data-ghost="06" class="sec-head reveal">
+      <span class="kicker" data-num="06">Dokumentasi</span>
+      <h2>Suasana Bengkel dan Hasil Kerja</h2>
+      <p>Kami tunjukkan apa adanya. Bengkel yang rapi dan pengerjaan yang bisa Anda percaya.</p>
+    </div>
+    <div class="gal">
+      <figure class="g-wide"><img src="{{IMG_1}}" alt="Bengkel {{BIZ_NAME}}"></figure>
+      <figure><img src="{{IMG_3}}" alt="Servis mobil {{BIZ_NAME}}"></figure>
+      <figure><img src="{{IMG_4}}" alt="Servis mobil {{BIZ_NAME}}"></figure>
+      <figure><img src="{{IMG_5}}" alt="Servis mobil {{BIZ_NAME}}"></figure>
+      <figure class="g-wide"><img src="{{IMG_6}}" alt="Servis mobil {{BIZ_NAME}}"></figure>
+      <figure><img src="{{IMG_2}}" alt="Mekanik {{BIZ_NAME}}"></figure>
+    </div>
+  </div>
+</section>
+
+<!-- CTA gelap -->
+<section id="testimoni" class="sec testi">
+  <div class="wrap">
+    <div data-ghost="07" class="sec-head center reveal">
+      <span class="kicker" data-num="07">Kata Mereka</span>
+      <h2>{{TESTI_HEAD}}</h2>
+    </div>
+    <div class="tgrid">
+      <div class="reveal d1 tcard"><div class="stars"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div><p class="quote-txt">{{TESTI_1_TEXT}}</p><div class="who"><span class="av">{{TESTI_1_INIT}}</span><div><div class="nm">{{TESTI_1_NAME}}</div><div class="rl">{{TESTI_1_ROLE}}</div></div></div></div>
+      <div class="reveal d2 tcard"><div class="stars"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div><p class="quote-txt">{{TESTI_2_TEXT}}</p><div class="who"><span class="av">{{TESTI_2_INIT}}</span><div><div class="nm">{{TESTI_2_NAME}}</div><div class="rl">{{TESTI_2_ROLE}}</div></div></div></div>
+      <div class="reveal d3 tcard"><div class="stars"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div><p class="quote-txt">{{TESTI_3_TEXT}}</p><div class="who"><span class="av">{{TESTI_3_INIT}}</span><div><div class="nm">{{TESTI_3_NAME}}</div><div class="rl">{{TESTI_3_ROLE}}</div></div></div></div>
+    </div>
+  </div>
+</section>
+<section id="kontak" class="cta">
+  <div class="wrap">
+    <div>
+      <div class="accent-line"></div>
+      <h2>Mobil Bermasalah? Jangan Ditunda</h2>
+    </div>
+    <a class="btn" href="https://wa.me/{{PHONE}}"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>Chat Bengkel Sekarang</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="fgrid">
+      <div>
+        <img class="logo" src="{{LOGO_URL}}" alt="{{BIZ_NAME}}">
+        <p>{{BIZ_NAME}} melayani servis, perawatan, dan perbaikan mobil di {{CITY}} dan sekitarnya dengan mekanik berpengalaman dan estimasi transparan.</p>
+      </div>
+      <div>
+        <h4>Kontak</h4>
+        <p><a href="tel:{{PHONE}}">{{PHONE}}</a></p>
+        <p>{{ADDRESS}}</p>
+        <p><a href="{{MAPS}}">Lihat di Peta</a></p>
+      </div>
+      <div>
+        <h4>Jam Buka</h4>
+        <p>Senin - Sabtu</p>
+        <p>08.00 - 17.00 WITA</p>
+      </div>
+    </div>
+    <div class="fbot">&copy; {{BIZ_NAME}}. Bengkel dan Servis Mobil {{CITY}}.</div>
+  </div>
+</footer>
+
+<!-- WA STICKY -->
+<a class="wa" href="https://wa.me/{{PHONE}}" aria-label="Hubungi via WhatsApp">
+  <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+  WhatsApp
+</a>
+
+<script>
+(function(){
+  var rm=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(rm){document.querySelectorAll('.reveal').forEach(function(e){e.classList.add('in');});return;}
+  var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);}});},{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+  function cu(el){var raw=el.getAttribute('data-count');var t=parseFloat(raw);if(isNaN(t))return;var suf=el.getAttribute('data-suffix')||'';var dec=(raw.indexOf('.')>-1)?1:0;var dur=1100,t0=null;function s(ts){if(!t0)t0=ts;var p=Math.min((ts-t0)/dur,1);el.textContent=(t*p).toFixed(dec)+suf;if(p<1)requestAnimationFrame(s);else el.textContent=(dec?t.toFixed(1):t)+suf;}requestAnimationFrame(s);}
+  var cio=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){cu(en.target);cio.unobserve(en.target);}});},{threshold:.5});
+  document.querySelectorAll('[data-count]').forEach(function(el){cio.observe(el);});
+  var hb=document.querySelector('.hero .bg img');
+  if(hb){window.addEventListener('scroll',function(){var y=window.scrollY;if(y<900){hb.style.transform='translateY('+(y*0.16)+'px) scale(1.04)';}},{passive:true});}
+})();
+</script>
+</body>
+</html>
