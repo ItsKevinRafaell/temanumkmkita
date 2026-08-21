@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{BIZ_NAME}}, Laundry Profesional untuk Bisnis {{CITY}}</title>
+<meta name="description" content="{{BIZ_NAME}}, laundry profesional untuk bisnis di {{CITY}}. Hasil bersih, jadwal andal, harga bersaing. Rating {{RATING}} dari {{REVIEWS}} ulasan.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --brand: {{BRAND_HEX}};
+  --accent: {{ACCENT_HEX}};
+  --ink: #171a1d;
+  --ink-soft: #545b62;
+  --line: #dde1e5;
+  --paper: #ffffff;
+  --panel: #f2f5f7;
+  --dark: #12161a;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;color:var(--ink);background:var(--paper);line-height:1.62;-webkit-font-smoothing:antialiased}
+h1,h2,h3,.display{font-family:'Archivo',sans-serif;line-height:1.12;letter-spacing:-.01em;font-weight:700}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+.wrap{width:100%;max-width:1180px;margin:0 auto;padding:0 24px}
+/* NAV: centered logo + split contact (variasi: logo di tengah) */
+.head{background:var(--paper);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:30}
+.head .wrap{display:grid;grid-template-columns:auto 1fr auto;align-items:center;padding:14px 24px;gap:24px}
+.head .left{font-size:13px;color:var(--ink-soft);display:inline-flex;align-items:center;gap:8px}
+.head .left svg{width:15px;height:15px;stroke:var(--brand)}
+.head .logo{height:44px;width:auto;justify-self:start;display:block}
+.head .right{justify-self:end}
+.head .quote{background:var(--brand);color:#fff;padding:11px 22px;border-radius:6px;font-weight:600;font-size:14px;display:inline-flex;align-items:center;gap:8px;transition:background .18s ease}
+.head .quote svg{width:16px;height:16px;stroke:#fff}
+.head .quote:hover{background:var(--dark)}
+/* hero FULL-BLEED foto + overlay (beda dari template lain) */
+.hero{position:relative;color:#fff;overflow:hidden;min-height:82vh;display:flex;align-items:flex-end}
+.hero .bg{position:absolute;inset:0}
+.hero .bg img{width:100%;height:100%;object-fit:cover}
+.hero .bg:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(18,22,26,.55) 0%,rgba(18,22,26,.15) 40%,rgba(18,22,26,.85) 100%)}
+.hero .inner{position:relative;z-index:2;padding:70px 0;max-width:44rem}
+.hero .eyebrow{display:inline-flex;align-items:center;gap:9px;background:var(--brand);color:#fff;padding:7px 15px;border-radius:5px;font-family:'Archivo';font-weight:600;font-size:12px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:22px}
+.hero h1{font-size:clamp(2.7rem,5.4vw,4.8rem);font-weight:800;line-height:1.02;letter-spacing:-.02em;margin-bottom:18px}
+.hero h1 em{font-style:normal;color:var(--brand)}
+.hero p{font-size:1.1rem;color:#dce1e6;max-width:34rem;margin-bottom:30px}
+.hero-cta{display:flex;gap:13px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:9px;font-weight:600;font-size:15px;padding:15px 26px;border-radius:6px;cursor:pointer;transition:transform .16s ease,background .18s ease,color .18s ease;border:none;font-family:'Inter'}
+.btn svg{width:18px;height:18px}
+.btn-primary{background:var(--brand);color:#fff}
+.btn-primary svg{stroke:#fff}
+.btn-primary:hover{background:#fff;color:var(--dark)}
+.btn-primary:hover svg{stroke:var(--dark)}
+.btn-ghost{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.4)}
+.btn-ghost svg{stroke:#fff}
+.btn-ghost:hover{border-color:#fff;background:rgba(255,255,255,.12)}
+/* proof-of-work section (foto pekerjaan nyata) */
+.proof{background:var(--paper)}
+.proof-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+.proof-card{border-radius:12px;overflow:hidden;position:relative;aspect-ratio:16/10}
+.proof-card img{width:100%;height:100%;object-fit:cover;transition:transform .35s ease}
+.proof-card:hover img{transform:scale(1.04)}
+.proof-card .cap{position:absolute;left:0;right:0;bottom:0;padding:22px 20px 18px;background:linear-gradient(0deg,rgba(18,22,26,.9),transparent);color:#fff}
+.proof-card .cap b{font-family:'Archivo';font-size:1.1rem;display:block;margin-bottom:3px}
+.proof-card .cap small{font-size:.86rem;color:#cfd5da}
+/* kapabilitas + foto samping */
+.cap-split{display:grid;grid-template-columns:1.05fr .95fr;gap:44px;align-items:center}
+.cap-media{border-radius:12px;overflow:hidden;aspect-ratio:4/3}
+.cap-media img{width:100%;height:100%;object-fit:cover}
+/* trust logos strip */
+.trust{background:var(--dark);color:#fff}
+.trust .wrap{display:flex;flex-wrap:wrap;gap:38px;padding:22px 24px;justify-content:space-between;align-items:center}
+.trust .ti{display:flex;align-items:center;gap:12px}
+.trust .ti svg{width:24px;height:24px;stroke:var(--accent);flex:none}
+.trust .ti b{font-family:'Archivo';font-size:1.05rem;display:block;line-height:1.1;font-weight:700}
+.trust .ti small{font-size:12px;color:#a2abb3}
+/* section base */
+.sec{padding:82px 0}
+.sec.alt{background:var(--panel)}
+.sec-head{max-width:40rem;margin-bottom:48px}
+.sec-head.center{margin-left:auto;margin-right:auto;text-align:center}
+.kicker{color:var(--brand);font-family:'Archivo';font-weight:600;font-size:12px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:12px;display:block}
+.sec-head h2{font-size:clamp(1.9rem,3.4vw,2.6rem);font-weight:800;margin-bottom:12px}
+.sec-head p{color:var(--ink-soft);font-size:1.05rem}
+/* kapabilitas grid */
+.caps{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.cap{padding:26px;background:var(--paper);border:1px solid var(--line);border-radius:10px;text-align:left}
+.cap .ic{width:46px;height:46px;border-radius:8px;background:var(--panel);display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+.cap .ic svg{width:24px;height:24px;stroke:var(--brand)}
+.cap h3{font-size:1.1rem;font-weight:700;margin-bottom:6px}
+.cap p{color:var(--ink-soft);font-size:.9rem}
+/* katalog produk */
+.prods{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.prod{background:var(--paper);border:1px solid var(--line);border-radius:10px;overflow:hidden;transition:box-shadow .18s ease}
+.prod:hover{box-shadow:0 14px 34px rgba(23,26,29,.11)}
+.prod .ph{aspect-ratio:3/2;overflow:hidden;background:var(--panel)}
+.prod .ph img{width:100%;height:100%;object-fit:cover;transition:transform .3s ease}
+.prod:hover .ph img{transform:scale(1.04)}
+.prod .body{padding:24px}
+.prod .cat{font-family:'Archivo';font-size:12px;letter-spacing:.06em;color:var(--brand);font-weight:600;margin-bottom:6px}
+.prod h3{font-size:1.25rem;font-weight:700;margin-bottom:8px}
+.prod p{color:var(--ink-soft);font-size:.94rem}
+/* about */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:center}
+.about-media{border-radius:12px;overflow:hidden;aspect-ratio:4/3}
+.about-media img{width:100%;height:100%;object-fit:cover}
+.about h2{font-size:clamp(1.9rem,3.2vw,2.6rem);font-weight:800;margin-bottom:18px}
+.about p{color:var(--ink-soft);margin-bottom:16px;font-size:1.04rem}
+.about ul{list-style:none;display:grid;gap:13px;margin-top:22px}
+.about li{display:flex;gap:11px;align-items:flex-start}
+.about li svg{width:22px;height:22px;stroke:var(--brand);flex:none;margin-top:2px}
+/* paket */
+.pkg{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.pcard{border:1px solid var(--line);border-radius:12px;padding:32px;display:flex;flex-direction:column;background:var(--paper)}
+.pcard.feat{background:var(--dark);color:#fff;border-color:var(--dark)}
+.pcard .tag{font-family:'Archivo';font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--brand);margin-bottom:10px;font-weight:600}
+.pcard.feat .tag{color:var(--accent)}
+.pcard h3{font-size:1.4rem;font-weight:700;margin-bottom:6px}
+.pcard .who{color:var(--ink-soft);font-size:.94rem;margin-bottom:18px;min-height:44px}
+.pcard.feat .who{color:#a2abb3}
+.pcard .price{font-family:'Archivo';font-size:1.5rem;font-weight:800;margin-bottom:20px}
+.pcard ul{list-style:none;display:grid;gap:11px;margin-bottom:24px;flex:1}
+.pcard li{display:flex;gap:10px;font-size:.95rem;align-items:flex-start}
+.pcard li svg{width:18px;height:18px;stroke:var(--brand);flex:none;margin-top:3px}
+.pcard.feat li svg{stroke:var(--accent)}
+.pcard .why{font-size:.9rem;color:var(--ink-soft);border-top:1px solid var(--line);padding-top:14px;margin-bottom:18px}
+.pcard.feat .why{color:#9aa3ab;border-color:rgba(255,255,255,.14)}
+.pcard .btn{width:100%;justify-content:center}
+.pcard.feat .btn-primary{background:var(--accent);color:var(--dark)}
+.pcard.feat .btn-primary svg{stroke:var(--dark)}
+.pcard.feat .btn-primary:hover{background:#fff}
+/* galeri */
+.gal{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:180px;gap:12px}
+.gal figure{overflow:hidden;border-radius:8px}
+.gal img{width:100%;height:100%;object-fit:cover;transition:transform .3s ease}
+.gal figure:hover img{transform:scale(1.05)}
+.gal .g-wide{grid-column:span 2}
+.gal .g-tall{grid-row:span 2}
+/* CTA */
+.cta{background:var(--brand);color:#fff;padding:72px 0}
+.cta .wrap{display:flex;align-items:center;justify-content:space-between;gap:28px;flex-wrap:wrap}
+.cta h2{font-size:clamp(1.8rem,3.2vw,2.5rem);font-weight:800;max-width:27rem;color:#fff}
+.cta p{color:rgba(255,255,255,.9);max-width:27rem;margin-top:8px}
+.cta .btn{background:#fff;color:var(--brand)}
+.cta .btn svg{stroke:var(--brand)}
+.cta .btn:hover{background:var(--dark);color:#fff}
+.cta .btn:hover svg{stroke:#fff}
+/* footer */
+footer{background:var(--dark);color:#98a2ab;padding:50px 0 28px}
+footer .fgrid{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:38px;margin-bottom:34px}
+footer .logo{height:42px;margin-bottom:15px}
+footer h4{color:#fff;font-family:'Archivo';font-size:15px;margin-bottom:13px}
+footer p,footer a{font-size:14px;line-height:1.85}
+footer a:hover{color:var(--accent)}
+footer .fbot{border-top:1px solid rgba(255,255,255,.1);padding-top:18px;font-size:13px}
+/* WA sticky */
+.wa{position:fixed;right:22px;bottom:22px;z-index:50;background:#25d366;color:#fff;display:inline-flex;align-items:center;gap:10px;padding:14px 20px;border-radius:50px;font-weight:600;box-shadow:0 10px 30px rgba(0,0,0,.22);transition:transform .16s ease}
+.wa svg{width:22px;height:22px;stroke:#fff}
+.wa:hover{transform:translateY(-2px)}
+/* responsive */
+@media(max-width:900px){
+  .head .wrap{grid-template-columns:auto 1fr;gap:12px}
+  .head .left{display:none}
+  .head .logo{justify-self:start}
+  .hero{min-height:auto}
+  .cap-split{grid-template-columns:1fr;gap:30px}
+  .proof-grid{grid-template-columns:1fr}
+  .caps{grid-template-columns:1fr 1fr}
+  .prods{grid-template-columns:1fr}
+  .about-grid{grid-template-columns:1fr;gap:30px}
+  .pkg{grid-template-columns:1fr}
+  .gal{grid-template-columns:1fr 1fr;grid-auto-rows:150px}
+  footer .fgrid{grid-template-columns:1fr;gap:24px}
+  .cta .wrap{flex-direction:column;align-items:flex-start}
+}
+@media(prefers-reduced-motion:reduce){
+  *{transition:none!important;scroll-behavior:auto!important}
+  .prod:hover .ph img,.gal figure:hover img{transform:none}
+}
+
+.head .brand{display:inline-flex;align-items:center}
+@media(max-width:900px){.nav-menu{display:none}.head .wrap{grid-template-columns:auto 1fr;gap:12px}}
+.testi{background:var(--paper2,#f6f5f2)}
+.testi .tgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:34px}
+.testi .tcard{background:var(--paper,#fff);border:1px solid var(--line);border-radius:12px;padding:26px 24px;display:flex;flex-direction:column;gap:16px}
+.testi .stars{display:flex;gap:3px}
+.testi .stars svg{width:16px;height:16px;fill:var(--accent);stroke:none}
+.testi .quote-txt{font-size:15px;line-height:1.65;color:var(--ink);flex:1}
+.testi .who{display:flex;align-items:center;gap:12px;border-top:1px solid var(--line);padding-top:15px}
+.testi .who .av{width:42px;height:42px;border-radius:50%;background:var(--brand);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;flex-shrink:0}
+.testi .who .nm{font-weight:600;font-size:14px;color:var(--ink)}
+.testi .who .rl{font-size:12.5px;color:var(--ink-soft)}
+@media(max-width:900px){.testi .tgrid{grid-template-columns:1fr}}
+.nav-menu{display:flex;gap:30px;justify-self:center;align-items:center}
+.nav-menu a{font-size:14.5px;font-weight:500;color:var(--ink-soft);position:relative;padding:4px 0;transition:color .18s ease}
+.nav-menu a::after{content:"";position:absolute;left:0;bottom:-2px;width:0;height:2px;background:var(--brand);transition:width .2s ease}
+.nav-menu a:hover{color:var(--ink)}
+.nav-menu a:hover::after{width:100%}
+@media(prefers-reduced-motion:reduce){.nav-menu a::after{transition:none}}
+
+
+/* A+B layer (B2B) */
+.sec-head{position:relative}
+.sec-head[data-ghost]::before{content:attr(data-ghost);position:absolute;right:0;top:-52px;font-family:'Archivo',sans-serif;font-weight:800;font-size:clamp(3.6rem,6vw,6rem);line-height:1;color:transparent;-webkit-text-stroke:1.5px rgba(23,26,29,.09);z-index:0;pointer-events:none}
+.sec-head.center[data-ghost]::before{right:auto;left:50%;transform:translateX(-50%)}
+.sec-head>*{position:relative;z-index:1}
+.proof .sec-head[data-ghost]::before{-webkit-text-stroke:1.5px rgba(23,26,29,.09)}
+.kicker[data-num]::before{content:attr(data-num) "  ";color:var(--accent);font-weight:800;font-family:'Archivo',sans-serif}
+/* motion */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .65s cubic-bezier(.16,1,.3,1),transform .65s cubic-bezier(.16,1,.3,1)}
+.reveal.in{opacity:1;transform:none}
+.reveal.d1{transition-delay:.07s}.reveal.d2{transition-delay:.14s}.reveal.d3{transition-delay:.21s}
+.hero .bg img{will-change:transform}
+/* GOLD+putih (koreksi Kevin): pcard feat pakai deep accent + teks putih */
+.pcard.feat{background:var(--dark);color:#fff;border-color:var(--dark)}
+.pcard.feat .btn-primary{background:color-mix(in srgb,var(--accent) 82%,#000);color:#fff}
+.pcard.feat .btn-primary svg{stroke:#fff}
+.pcard.feat .btn-primary:hover{background:#fff;color:var(--dark)}
+.pcard.feat .btn-primary:hover svg{stroke:var(--dark)}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1!important;transform:none!important}*{animation:none!important}}
+
+</style>
+</head>
+<body>
+
+<!-- HEAD: logo di TENGAH, info kiri + tombol kanan (variasi nav) -->
+<header class="head">
+  <div class="wrap">
+    <a href="#top" class="brand"><img class="logo" src="{{LOGO_URL}}" alt="{{BIZ_NAME}}"></a>
+    <nav class="nav-menu">
+      <a href="#produk">Layanan</a>
+      <a href="#tentang">Tentang</a>
+      <a href="#galeri">Portofolio</a>
+      <a href="#paket">Paket</a>
+      <a href="#kontak">Kontak</a>
+    </nav>
+    <div class="right"><a class="quote" href="https://wa.me/{{PHONE}}"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Hubungi Kami</a></div>
+  </div>
+</header>
+
+<!-- HERO full-bleed foto + overlay -->
+<section class="hero" id="top">
+  <div class="bg"><img src="{{HERO_IMG}}" alt="Fasilitas laundry {{BIZ_NAME}}"></div>
+  <div class="wrap">
+    <div class="inner">
+      <div class="eyebrow">Laundry Profesional untuk Bisnis {{CITY}}</div>
+      <h1>Laundry <em>Bersih</em> dan Tepat Waktu untuk Bisnis Anda</h1>
+      <p>{{COPY_HERO}}</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="https://wa.me/{{PHONE}}"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 15h6M9 11h6"/></svg>Minta Penawaran</a>
+        <a class="btn btn-ghost" href="#produk">Lihat Layanan</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST -->
+<section class="trust">
+  <div class="wrap">
+    <div class="ti"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><div><b><span data-count="{{RATING}}">{{RATING}}</span> / 5.0</b><small>{{REVIEWS}} ulasan</small></div></div>
+    <div class="ti"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><path d="M16 8h4l3 3v5h-7V8zM5.5 18.5a2.5 2.5 0 1 0 5 0 2.5 2.5 0 0 0-5 0zM14.5 18.5a2.5 2.5 0 1 0 5 0 2.5 2.5 0 0 0-5 0z"/></svg><div><b>Selesai Tepat Waktu</b><small>Jadwal cuci terjaga rapi</small></div></div>
+    <div class="ti"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82zM7 7h.01"/></svg><div><b>Harga Bersaing</b><small>Penawaran khusus untuk volume</small></div></div>
+    <div class="ti"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 7 8 11.7z"/></svg><div><b>{{CITY}}</b><small>Jangkauan luas</small></div></div>
+  </div>
+</section>
+
+<!-- KAPABILITAS + foto samping -->
+<section class="sec">
+  <div class="wrap cap-split">
+    <div>
+      <div class="sec-head" style="margin-bottom:32px">
+        <span class="kicker" data-num="01">Kapabilitas Kami</span>
+        <h2>Apa yang Bisa Kami Tangani</h2>
+        <p>Kami melayani kebutuhan laundry hotel, restoran, dan kos dengan hasil bersih dan jadwal yang bisa diandalkan.</p>
+      </div>
+      <div class="caps">
+        <div class="reveal cap"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.27 6.96L12 12.01l8.73-5.05M12 22.08V12"/></svg></div><h3>{{CAP_1_TITLE}}</h3><p>{{CAP_1_DESC}}</p></div>
+        <div class="reveal cap"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div><h3>{{CAP_2_TITLE}}</h3><p>{{CAP_2_DESC}}</p></div>
+        <div class="reveal cap"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg></div><h3>{{CAP_3_TITLE}}</h3><p>{{CAP_3_DESC}}</p></div>
+        <div class="reveal cap"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div><h3>{{CAP_4_TITLE}}</h3><p>{{CAP_4_DESC}}</p></div>
+      </div>
+    </div>
+    <div class="reveal cap-media"><img src="{{IMG_5}}" alt="Operasional {{BIZ_NAME}}"></div>
+  </div>
+</section>
+
+<!-- KATALOG PRODUK -->
+<section class="sec alt" id="produk">
+  <div class="wrap">
+    <div data-ghost="02" class="sec-head reveal">
+      <span class="kicker" data-num="02">Layanan Kami</span>
+      <h2>Layanan Laundry yang Tersedia</h2>
+      <p>Beberapa layanan laundry untuk kebutuhan bisnis Anda. Hubungi kami untuk penawaran harga sesuai volume.</p>
+    </div>
+    <div class="prods">
+      <article class="reveal prod">
+        <div class="ph"><img src="{{IMG_1}}" alt="{{PROD_1_TITLE}}"></div>
+        <div class="body"><div class="cat">Kategori 1</div><h3>{{PROD_1_TITLE}}</h3><p>{{PROD_1_DESC}}</p></div>
+      </article>
+      <article class="reveal prod">
+        <div class="ph"><img src="{{IMG_3}}" alt="{{PROD_2_TITLE}}"></div>
+        <div class="body"><div class="cat">Kategori 2</div><h3>{{PROD_2_TITLE}}</h3><p>{{PROD_2_DESC}}</p></div>
+      </article>
+      <article class="reveal prod">
+        <div class="ph"><img src="{{IMG_4}}" alt="{{PROD_3_TITLE}}"></div>
+        <div class="body"><div class="cat">Kategori 3</div><h3>{{PROD_3_TITLE}}</h3><p>{{PROD_3_DESC}}</p></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- PROOF OF WORK: foto pekerjaan nyata (kunci B2B) -->
+<section class="sec proof">
+  <div class="wrap">
+    <div data-ghost="03" class="sec-head reveal">
+      <span class="kicker" data-num="03">Bukti Kerja</span>
+      <h2>Yang Kami Kerjakan Setiap Hari</h2>
+      <p>Bukan sekadar janji. Beginilah operasional kami memastikan cucian Anda bersih dan selesai tepat waktu.</p>
+    </div>
+    <div class="proof-grid">
+      <div class="reveal proof-card">
+        <img src="{{PROOF_IMG_1}}" alt="Operasional {{BIZ_NAME}}">
+        <div class="reveal cap"><b>Sortir dan Pengecekan</b><small>Setiap cucian diperiksa dan dipisah sebelum diproses.</small></div>
+      </div>
+      <div class="reveal proof-card">
+        <img src="{{PROOF_IMG_2}}" alt="Pengiriman {{BIZ_NAME}}">
+        <div class="reveal cap"><b>Antar Tepat Waktu</b><small>Cucian bersih diantar kembali sesuai jadwal.</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="tentang" class="sec about">
+  <div class="wrap about-grid">
+    <div class="reveal about-media"><img src="{{IMG_2}}" alt="Tim {{BIZ_NAME}}"></div>
+    <div>
+      <span class="kicker" data-num="04">Kenapa {{BIZ_NAME}}</span>
+      <h2>Partner Laundry yang Menjaga Operasional Anda</h2>
+      <p>{{COPY_ABOUT}}</p>
+      <ul>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span><b>Kapasitas terjaga.</b> Mesin kami cukup untuk volume besar agar cucian Anda tidak menumpuk.</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span><b>Harga transparan.</b> Penawaran jelas, lebih hemat untuk pembelian dalam jumlah besar.</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span><b>Jadwal andal.</b> Cucian selesai dan dikembalikan tepat waktu sesuai kesepakatan.</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- PAKET -->
+<section class="sec alt" id="paket">
+  <div class="wrap">
+    <div data-ghost="05" class="sec-head reveal">
+      <span class="kicker" data-num="05">Cara Kerja Sama</span>
+      <h2>Pilih Skema yang Sesuai Bisnis Anda</h2>
+      <p>Baik pembelian satuan, kontrak rutin, atau kebutuhan proyek besar, semua kami layani dengan penawaran yang jelas.</p>
+    </div>
+    <div class="pkg">
+      <div class="reveal d1 pcard">
+        <div class="tag">{{PKG_1_NAME}}</div>
+        <h3>{{PKG_1_NAME}}</h3>
+        <p class="who">Untuk kebutuhan sekali beli atau dalam jumlah terbatas.</p>
+        <div class="price">{{PKG_1_PRICE}}</div>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Penawaran harga sesuai kuantitas</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Cuci, setrika, dan lipat rapi</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Ambil dan antar dari lokasi Anda</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Opsi pengiriman ke lokasi</li>
+        </ul>
+        <p class="why">Pilih ini untuk kebutuhan tidak rutin, tetap dapat hasil bersih dan harga wajar.</p>
+        <a class="btn btn-primary" href="https://wa.me/{{PHONE}}"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 15h6M9 11h6"/></svg>Minta Penawaran</a>
+      </div>
+      <div class="reveal d2 pcard feat">
+        <div class="tag">{{PKG_2_NAME}}, Paling Diminati</div>
+        <h3>{{PKG_2_NAME}}</h3>
+        <p class="who">Untuk bisnis yang butuh layanan laundry berkala dengan harga stabil.</p>
+        <div class="price">{{PKG_2_PRICE}}</div>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Harga khusus pelanggan tetap</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Prioritas jadwal dan antar-jemput</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Jadwal pengiriman terencana</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Termin pembayaran yang disepakati</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Kontak khusus untuk pemesanan</li>
+        </ul>
+        <p class="why">Paling banyak dipilih pelaku usaha. Jadwal terjamin dan biaya lebih terkendali karena harga stabil.</p>
+        <a class="btn btn-primary" href="https://wa.me/{{PHONE}}"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 15h6M9 11h6"/></svg>Mulai Kerja Sama</a>
+      </div>
+      <div class="reveal d3 pcard">
+        <div class="tag">{{PKG_3_NAME}}</div>
+        <h3>{{PKG_3_NAME}}</h3>
+        <p class="who">Untuk kebutuhan volume besar seperti hotel dan rumah sakit.</p>
+        <div class="price">{{PKG_3_PRICE}}</div>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Penawaran khusus sesuai volume proyek</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Koordinasi jadwal pengiriman bertahap</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Kontrak dan jadwal rutin</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Penanganan sampai cucian diterima rapi</li>
+        </ul>
+        <p class="why">Pilih ini untuk volume besar yang butuh jadwal tetap dan harga khusus.</p>
+        <a class="btn btn-primary" href="https://wa.me/{{PHONE}}"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 15h6M9 11h6"/></svg>Konsultasi Proyek</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALERI -->
+<section id="galeri" class="sec">
+  <div class="wrap">
+    <div data-ghost="06" class="sec-head center reveal">
+      <span class="kicker" data-num="06">Dokumentasi</span>
+      <h2>Fasilitas dan Operasional Kami</h2>
+    </div>
+    <div class="gal">
+      <figure class="g-wide"><img src="{{IMG_1}}" alt="{{BIZ_NAME}}"></figure>
+      <figure><img src="{{IMG_5}}" alt="{{BIZ_NAME}}"></figure>
+      <figure><img src="{{IMG_6}}" alt="{{BIZ_NAME}}"></figure>
+      <figure><img src="{{IMG_3}}" alt="{{BIZ_NAME}}"></figure>
+      <figure class="g-wide"><img src="{{IMG_4}}" alt="{{BIZ_NAME}}"></figure>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="testimoni" class="sec testi">
+  <div class="wrap">
+    <div data-ghost="07" class="sec-head center reveal">
+      <span class="kicker" data-num="07">Kata Mereka</span>
+      <h2>{{TESTI_HEAD}}</h2>
+    </div>
+    <div class="tgrid">
+      <div class="reveal d1 tcard"><div class="stars"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div><p class="quote-txt">{{TESTI_1_TEXT}}</p><div class="who"><span class="av">{{TESTI_1_INIT}}</span><div><div class="nm">{{TESTI_1_NAME}}</div><div class="rl">{{TESTI_1_ROLE}}</div></div></div></div>
+      <div class="reveal d2 tcard"><div class="stars"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div><p class="quote-txt">{{TESTI_2_TEXT}}</p><div class="who"><span class="av">{{TESTI_2_INIT}}</span><div><div class="nm">{{TESTI_2_NAME}}</div><div class="rl">{{TESTI_2_ROLE}}</div></div></div></div>
+      <div class="reveal d3 tcard"><div class="stars"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div><p class="quote-txt">{{TESTI_3_TEXT}}</p><div class="who"><span class="av">{{TESTI_3_INIT}}</span><div><div class="nm">{{TESTI_3_NAME}}</div><div class="rl">{{TESTI_3_ROLE}}</div></div></div></div>
+    </div>
+  </div>
+</section>
+<section id="kontak" class="cta">
+  <div class="wrap">
+    <div>
+      <h2>Butuh Partner Laundry yang Andal?</h2>
+      <p>Sampaikan kebutuhan Anda, kami siapkan penawaran terbaik sesuai kuantitas dan jadwal.</p>
+    </div>
+    <a class="btn" href="https://wa.me/{{PHONE}}"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>Chat via WhatsApp</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="fgrid">
+      <div>
+        <img class="logo" src="{{LOGO_URL}}" alt="{{BIZ_NAME}}">
+        <p>{{BIZ_NAME}} adalah layanan laundry profesional di {{CITY}} dan sekitarnya, melayani hotel, restoran, dan kos dengan hasil bersih dan andal.</p>
+      </div>
+      <div>
+        <h4>Kontak</h4>
+        <p><a href="tel:{{PHONE}}">{{PHONE}}</a></p>
+        <p>{{ADDRESS}}</p>
+        <p><a href="{{MAPS}}">Lihat di Peta</a></p>
+      </div>
+      <div>
+        <h4>Layanan</h4>
+        <p><a href="#produk">Layanan</a></p>
+        <p><a href="#paket">Langganan Rutin</a></p>
+        <p><a href="#paket">Kebutuhan Proyek</a></p>
+      </div>
+    </div>
+    <div class="fbot">&copy; {{BIZ_NAME}}. Laundry Profesional untuk Bisnis {{CITY}}.</div>
+  </div>
+</footer>
+
+<!-- WA STICKY -->
+<a class="wa" href="https://wa.me/{{PHONE}}" aria-label="Hubungi via WhatsApp">
+  <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+  WhatsApp
+</a>
+
+<script>
+(function(){
+  var rm=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(rm){document.querySelectorAll('.reveal').forEach(function(e){e.classList.add('in');});return;}
+  var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);}});},{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+  function cu(el){var raw=el.getAttribute('data-count');var t=parseFloat(raw);if(isNaN(t))return;var suf=el.getAttribute('data-suffix')||'';var dec=(raw.indexOf('.')>-1)?1:0;var dur=1100,t0=null;function s(ts){if(!t0)t0=ts;var p=Math.min((ts-t0)/dur,1);el.textContent=(t*p).toFixed(dec)+suf;if(p<1)requestAnimationFrame(s);else el.textContent=(dec?t.toFixed(1):t)+suf;}requestAnimationFrame(s);}
+  var cio=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){cu(en.target);cio.unobserve(en.target);}});},{threshold:.5});
+  document.querySelectorAll('[data-count]').forEach(function(el){cio.observe(el);});
+  var hb=document.querySelector('.hero .bg img');
+  if(hb){window.addEventListener('scroll',function(){var y=window.scrollY;if(y<900){hb.style.transform='translateY('+(y*0.16)+'px) scale(1.04)';}},{passive:true});}
+})();
+</script>
+</body>
+</html>
