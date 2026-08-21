@@ -7,6 +7,7 @@ import Link from "next/link";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import GbpPreview from "./GbpPreview";
+import WebPreview from "./WebPreview";
 import SeoSimulation from "./SeoSimulation";
 
 const LOADING_STEPS = [
@@ -171,6 +172,12 @@ export default function PreviewBisnisClient() {
 
               {showResult && data && (
                 <>
+                  <div>
+                    <h2 className="mb-1 text-center text-sm font-bold uppercase tracking-wider text-accent">Tampilan Website Bisnismu</h2>
+                    <p className="mb-3 text-center text-xs text-brand-dark/45">Coba ganti gaya di bawah — semua pakai nama usahamu</p>
+                    <WebPreview namaUsaha={data.nama} jenisUsaha={data.jenis} kota={data.kota} />
+                  </div>
+
                   <div>
                     <h2 className="mb-3 text-center text-sm font-bold uppercase tracking-wider text-accent">Proyeksi Pertumbuhan</h2>
                     <SeoSimulation namaUsaha={data.nama} active={showResult} />
