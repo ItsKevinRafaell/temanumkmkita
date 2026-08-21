@@ -1,7 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "https://api.temanumkmkita.com";
-const ALLOWED_TOOLS = new Set(["generate-profil"]);
+const ALLOWED_TOOLS = new Set(["generate-profil", "preview-lead"]);
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
