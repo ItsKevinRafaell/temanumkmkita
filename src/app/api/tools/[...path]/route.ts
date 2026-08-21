@@ -1,15 +1,54 @@
 import { type NextRequest, NextResponse } from "next/server";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "https://api.temanumkmkita.com";
-const ALLOWED_TOOLS = new Set(["generate-profil", "preview-lead"]);
+const ALLOWED_TOOLS_POST = new Set(["generate-profil", "preview-lead", "render-preview"]);
+const ALLOWED_TOOLS_GET = new Set(["industries"]);
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
+export async function GET(_request: NextRequest, { params }: { params: { path?: string[] } }) {
+  const path = params.path ?? [];
+
+  if (path.length === 0 || !ALLOWED_TOOLS_GET.has(path[0])) {
+    return NextResponse.json({ detail: "Not found" }, { status: 404 });
+  }
+
+  const upstream = new URL(`/api/tools/${path.map(encodeURIComponent).join("/")}`, API_BASE);
+
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 15000);
+
+  try {
+    const response = await fetch(upstream.toString(), {
+      method: "GET",
+      cache: "no-store",
+      headers: { Accept: "application/json" },
+      signal: controller.signal,
+    });
+    const text = await response.text();
+
+    return new NextResponse(text, {
+      status: response.status,
+      headers: {
+        "Cache-Control": "no-store",
+        "Content-Type": response.headers.get("content-type") ?? "application/json",
+      },
+    });
+  } catch {
+    return NextResponse.json(
+      { detail: "Gagal terhubung ke server. Coba lagi." },
+      { status: 502, headers: { "Cache-Control": "no-store" } }
+    );
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
 export async function POST(request: NextRequest, { params }: { params: { path?: string[] } }) {
   const path = params.path ?? [];
 
-  if (path.length === 0 || !ALLOWED_TOOLS.has(path[0])) {
+  if (path.length === 0 || !ALLOWED_TOOLS_POST.has(path[0])) {
     return NextResponse.json({ detail: "Not found" }, { status: 404 });
   }
 
