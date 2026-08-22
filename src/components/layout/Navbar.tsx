@@ -10,7 +10,7 @@ import Logo from "@/components/ui/Logo";
 
 const navLinks = [
   { label: "Beranda", href: "/" },
-  { label: "Tools", href: "/tools/profil-google", badge: "Gratis" },
+  { label: "Tools", href: "/tools/preview-bisnis", badge: "Gratis" },
   { label: "Tentang Kami", href: "/tentang-kami" },
   { label: "Portofolio", href: "/portofolio/", external: true },
   { label: "Artikel", href: "/blog" },
@@ -167,7 +167,7 @@ export default function Navbar() {
             {/* Rest of nav links */}
             {navLinks.slice(1).map((link) => {
               const active =
-                link.href === "/tools/profil-google"
+                link.href === "/tools/preview-bisnis"
                   ? pathname.startsWith("/tools")
                   : pathname === link.href || pathname.startsWith(link.href + "/");
               return (
@@ -311,7 +311,7 @@ export default function Navbar() {
 
               {navLinks.slice(1).map((link) => {
                 const active =
-                  link.href === "/tools/profil-google"
+                  link.href === "/tools/preview-bisnis"
                     ? pathname.startsWith("/tools")
                     : pathname === link.href;
                 return (

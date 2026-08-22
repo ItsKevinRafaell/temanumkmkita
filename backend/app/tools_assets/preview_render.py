@@ -112,15 +112,21 @@ def render_preview_html(nama_usaha: str, jenis_usaha: str, kota: str) -> dict:
     def g(i: int) -> str:
         return photos[i % len(photos)]
 
-    # Logo = inisial di lingkaran (SVG data-uri) biar ga perlu asset logo per-usaha.
-    initials = _initials(nama)
-    logo_svg = (
-        f'<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80">'
-        f'<rect width="80" height="80" rx="16" fill="{accent}"/>'
-        f'<text x="40" y="52" font-family="Arial,sans-serif" font-size="34" font-weight="bold" '
-        f'fill="{brand}" text-anchor="middle">{initials}</text></svg>'
-    )
+    # Logo = teks NAMA USAHA (bukan inisial lingkaran). SVG data-uri biar tetap
+    # dipakai lewat <img src="{{LOGO_URL}}"> di template tanpa jebol layout.
+    import html as _html
     import urllib.parse
+
+    # Escape utk XML/SVG + lebar auto ngikut panjang nama (biar ga kepotong).
+    _logo_text = _html.escape(nama, quote=True)
+    _char_w = 15  # perkiraan lebar per-karakter (font-size 26, bold)
+    _logo_w = max(120, min(len(nama) * _char_w + 24, 420))
+    logo_svg = (
+        f'<svg xmlns="http://www.w3.org/2000/svg" width="{_logo_w}" height="48" '
+        f'viewBox="0 0 {_logo_w} 48">'
+        f'<text x="0" y="34" font-family="Arial,Helvetica,sans-serif" font-size="26" '
+        f'font-weight="800" fill="{brand}">{_logo_text}</text></svg>'
+    )
 
     logo_uri = "data:image/svg+xml," + urllib.parse.quote(logo_svg)
 
