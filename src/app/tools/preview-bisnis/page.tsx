@@ -1,16 +1,16 @@
 import type { Metadata } from "next";
 import { SITE_URL } from "@/lib/seo/site";
-import PreviewBisnisClient from "./Client";
+import MulaiClient from "./MulaiClient";
 
 export const metadata: Metadata = {
-  title: "Simulasi Bisnismu di Google — Preview Gratis untuk UMKM | Teman UMKM Kita",
+  title: "Mulai — Temukan Solusi Digital untuk Usahamu | Teman UMKM Kita",
   description:
-    "Lihat simulasi tampilan bisnismu di Google Maps & prediksi pertumbuhan ranking SEO dalam hitungan detik. Gratis untuk UMKM Indonesia.",
+    "Jawab beberapa pertanyaan singkat dan lihat langsung simulasi bisnismu di Google Maps, preview website siap pakai, hingga prediksi pertumbuhan ranking. Gratis untuk UMKM Indonesia.",
   alternates: { canonical: `${SITE_URL}/tools/preview-bisnis` },
   openGraph: {
-    title: "Simulasi Bisnismu di Google — Preview Gratis untuk UMKM",
+    title: "Mulai — Temukan Solusi Digital untuk Usahamu",
     description:
-      "Lihat simulasi tampilan bisnismu di Google Maps & prediksi pertumbuhan ranking. Gratis untuk UMKM.",
+      "Jawab beberapa pertanyaan singkat, lihat simulasi bisnismu di Google, preview website, dan rekomendasi solusi digital yang pas untuk UMKM-mu.",
     url: `${SITE_URL}/tools/preview-bisnis`,
     type: "website",
   },
@@ -19,13 +19,13 @@ export const metadata: Metadata = {
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  name: "Simulasi Bisnis di Google",
+  name: "Simulasi & Onboarding Bisnis di Google",
   applicationCategory: "BusinessApplication",
   operatingSystem: "Web",
   offers: { "@type": "Offer", price: "0", priceCurrency: "IDR" },
   provider: { "@type": "Organization", name: "Teman UMKM Kita", url: SITE_URL },
   description:
-    "Tool gratis simulasi tampilan bisnis UMKM di Google Maps dan prediksi pertumbuhan ranking SEO untuk UMKM Indonesia.",
+    "Alur onboarding interaktif untuk UMKM: simulasi tampilan bisnis di Google Maps, preview website siap pakai per industri, dan prediksi pertumbuhan ranking SEO. Gratis untuk UMKM Indonesia.",
 };
 
 export default function Page() {
@@ -35,7 +35,7 @@ export default function Page() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <PreviewBisnisClient />
+      <MulaiClient />
     </>
   );
 }

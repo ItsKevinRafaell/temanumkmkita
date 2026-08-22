@@ -2,7 +2,7 @@
 
 import { MapPin } from "lucide-react";
 import type { StepProps } from "../types";
-import GbpPreview from "@/app/tools/preview-bisnis/GbpPreview";
+import GbpPreview from "../GbpPreview";
 
 // Step 3 — Realita GBP.
 // "Ini yang orang lihat pas nyari kamu di Google" -> render GbpPreview (existing).

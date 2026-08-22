@@ -2,7 +2,7 @@
 
 import { TrendingUp } from "lucide-react";
 import type { StepProps } from "../types";
-import SeoSimulation from "@/app/tools/preview-bisnis/SeoSimulation";
+import SeoSimulation from "../SeoSimulation";
 
 // Step 6 — Hasil kalau dioptimasi.
 // "Ini masa depan bisnismu kalau dioptimasi" -> grafik naik (page 5 -> #1), awareness.

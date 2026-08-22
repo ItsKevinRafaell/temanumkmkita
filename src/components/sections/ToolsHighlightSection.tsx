@@ -39,7 +39,7 @@ export default function ToolsHighlightSection() {
               </p>
 
               <Link
-                href="/tools/profil-google"
+                href="/tools/preview-bisnis"
                 className="mt-7 inline-flex items-center gap-2 rounded-lg bg-accent px-6 py-3.5 text-base font-bold text-white transition-all hover:bg-accent/90 hover:shadow-md"
               >
                 <Sparkles size={18} /> Coba Sekarang, Gratis <ArrowRight size={16} />
