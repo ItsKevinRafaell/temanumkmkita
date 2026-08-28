@@ -41,15 +41,43 @@ function articlePriority(publishedAt: string | null, featured: boolean): number 
   return 0.7;
 }
 
+async function fetchArticlesWithTimeout(params: {
+  per_page: number;
+  page: number;
+}): Promise<Awaited<ReturnType<typeof fetchArticles>>> {
+  const url = buildPublicApiUrl("articles");
+  if (params.page) url.searchParams.set("page", String(params.page));
+  if (params.per_page) url.searchParams.set("per_page", String(params.per_page));
+
+  let lastErr: Error | null = null;
+  for (let attempt = 0; attempt < 3; attempt++) {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 25000);
+    try {
+      const res = await fetch(url.toString(), {
+        next: { revalidate: 300 },
+        signal: controller.signal,
+      });
+      if (!res.ok) throw new Error(`API ${res.status}`);
+      return res.json();
+    } catch (err) {
+      lastErr = err instanceof Error ? err : new Error(String(err));
+    } finally {
+      clearTimeout(timeout);
+    }
+  }
+  throw lastErr!;
+}
+
 async function fetchAllPublishedArticles(): Promise<
   Awaited<ReturnType<typeof fetchArticles>>["items"]
 > {
-  const PAGE_SIZE = 500;
-  const first = await fetchArticles({ per_page: PAGE_SIZE, page: 1 });
+  const PAGE_SIZE = 100;
+  const first = await fetchArticlesWithTimeout({ per_page: PAGE_SIZE, page: 1 });
   if (first.pages <= 1) return first.items;
   const rest: typeof first.items = [];
   for (let page = 2; page <= first.pages; page++) {
-    const next = await fetchArticles({ per_page: PAGE_SIZE, page });
+    const next = await fetchArticlesWithTimeout({ per_page: PAGE_SIZE, page });
     rest.push(...next.items);
   }
   return [...first.items, ...rest];
