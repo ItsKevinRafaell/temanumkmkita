@@ -1,12 +1,29 @@
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
+import type { Metadata } from "next";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import BlogListClient from "@/components/blog/BlogListClient";
 import { type BlogPost, type ContentBlock } from "@/lib/data/blog";
 import { fetchArticles, fetchPublicCategories, type Article } from "@/lib/api/blog";
+import { SITE_URL } from "@/lib/seo/site";
 
 export const revalidate = 300;
+
+export const metadata: Metadata = {
+  title: "Artikel dan Panduan Digital untuk UMKM — Blog Teman UMKM Kita",
+  description:
+    "Tips, strategi, dan panduan praktis seputar web development, SEO, sosial media, dan branding untuk UMKM Indonesia.",
+  robots: { index: true, follow: true },
+  alternates: { canonical: `${SITE_URL}/blog` },
+  openGraph: {
+    title: "Artikel dan Panduan Digital untuk UMKM — Blog Teman UMKM Kita",
+    description:
+      "Tips, strategi, dan panduan praktis seputar web development, SEO, sosial media, dan branding untuk UMKM Indonesia.",
+    url: `${SITE_URL}/blog`,
+    type: "website",
+  },
+};
 
 const PER_PAGE = 6;
 

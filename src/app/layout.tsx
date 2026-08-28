@@ -39,6 +39,7 @@ export const metadata: Metadata = {
   description:
     "Kami bantu UMKM kamu hadir dan berkembang secara online. Web development, SEO Google Maps, kelola sosial media, dan lebih banyak lagi.",
   keywords: ["UMKM", "web development", "SEO", "sosial media", "digital marketing", "Indonesia"],
+  robots: { index: true, follow: true },
   alternates: {
     canonical: SITE_URL,
     languages: {

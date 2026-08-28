@@ -71,6 +71,7 @@ export async function generateMetadata({
       description:
         author.bio ??
         `Artikel oleh ${author.name}${author.role ? `, ${author.role}` : ""} di Teman UMKM Kita.`,
+      robots: { index: true, follow: true },
       alternates: { canonical: `${SITE_URL}/blog/author/${slug}` },
     };
   } catch {

@@ -144,6 +144,7 @@ export async function generateMetadata({
     return {
       title: metaTitle,
       description: metaDesc,
+      robots: { index: true, follow: true },
       openGraph: {
         title: article.seo_title ?? article.title,
         description: metaDesc,

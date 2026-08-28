@@ -68,6 +68,7 @@ export async function generateMetadata({
   return {
     title: `Topik ${label} — Panduan Lengkap | Teman UMKM Kita`,
     description: `Semua panduan seputar ${label} untuk UMKM Indonesia. Dari dasar sampai strategi lanjut, tersusun rapi per topik.`,
+    robots: { index: true, follow: true },
     alternates: { canonical: url },
     openGraph: {
       title: `Topik ${label} — Panduan Lengkap`,
