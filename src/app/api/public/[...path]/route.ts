@@ -19,7 +19,7 @@ export async function GET(request: NextRequest, { params }: { params: { path?: s
   });
 
   const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 10000);
+  const timeout = setTimeout(() => controller.abort(), 30000);
 
   try {
     const response = await fetch(upstream.toString(), {
