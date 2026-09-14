@@ -3,13 +3,14 @@ import { SITE_URL } from "@/lib/seo/site";
 import MaintenanceClient from "./Client";
 
 export const metadata: Metadata = {
-  title: "Maintenance Website — Pemeliharaan Berkala | Teman UMKM Kita",
+  title: "Maintenance Website untuk UMKM: Backup, Update & Keamanan | Teman UMKM Kita",
   description:
-    "Jasa maintenance website untuk UMKM. Backup rutin, security patch, update konten, dan monitoring uptime.",
+    "Layanan maintenance website untuk UMKM: backup, update WordPress, scan malware, pembaruan informasi bisnis, dan pengamanan sesuai paket.",
   alternates: { canonical: `${SITE_URL}/layanan/maintenance` },
   openGraph: {
     title: "Maintenance Website untuk UMKM",
-    description: "Backup rutin, security patch, update konten, monitoring uptime.",
+    description:
+      "Backup, update WordPress, scan malware, pembaruan informasi bisnis, dan pengamanan sesuai paket.",
     url: `${SITE_URL}/layanan/maintenance`,
     type: "website",
   },

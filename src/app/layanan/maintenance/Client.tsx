@@ -164,12 +164,12 @@ export default function MaintenancePage() {
                   Maintenance Website
                 </p>
                 <h1 className="mb-4 text-4xl font-extrabold leading-tight text-brand-dark sm:text-5xl">
-                  Website Anda Tetap Aman,
+                  Website Terawat,
                   <br />
-                  <span className="text-accent">Cepat, Dan Berjalan.</span>
+                  <span className="text-accent">Informasi Bisnis Tetap Siap Dipakai.</span>
                 </h1>
                 <p className="text-lg text-brand-dark/60">
-                  Backup rutin, scan malware, dan update teknis — dikerjakan tanpa Anda harus minta.
+                  Kami bantu jaga fondasi teknis website melalui backup, update WordPress, scan malware, serta pembaruan informasi bisnis sesuai paket yang dipilih.
                 </p>
               </motion.div>
               <motion.div
