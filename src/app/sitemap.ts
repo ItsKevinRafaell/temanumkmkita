@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { fetchArticles, fetchAllAuthorSlugs } from "@/lib/api/blog";
+import { buildPublicApiUrl } from "@/lib/api/public";
 import { SITE_URL } from "@/lib/seo/site";
 
 export const revalidate = 3600;
